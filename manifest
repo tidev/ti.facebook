@@ -6,8 +6,8 @@ version: 1.0.0
 apiversion: 2
 description: FacebookIOS
 author: Mark Mokryn
-license: Specify your license
-copyright: Copyright (c) 2014 by Your Company
+license: Apache License Version 2.0
+copyright: Copyright (c) 2014 by Mark Mokryn
 
 # these should not be edited
 name: FacebookIOS

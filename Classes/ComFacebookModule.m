@@ -115,7 +115,6 @@ BOOL temporarilySuspended = NO;
         if (FBSession.activeSession.isOpen) {
             FBRequestConnection *connection = [[FBRequestConnection alloc] init];
             connection.errorBehavior = FBRequestConnectionErrorBehaviorReconnectSession
-            | FBRequestConnectionErrorBehaviorAlertUser
             | FBRequestConnectionErrorBehaviorRetry;
             
             [connection addRequest:[FBRequest requestForMe]
@@ -129,19 +128,69 @@ BOOL temporarilySuspended = NO;
                          // Error on /me call
                          // In a future rev perhaps use stored user info
                          // But for now bail out
-                         NSLog(@"/me graph call error");
-                         TiThreadPerformOnMainThread(^{
-                             [FBSession.activeSession closeAndClearTokenInformation];
-                         }, YES);
-                         loggedIn = NO;
-                         // We set error to nil since any useful message was already surfaced
-                         [self fireLogin:nil cancelled:NO withError:nil];
-                         
+                         switch(error.fberrorCategory) {
+                             case FBErrorCategoryAuthenticationReopenSession:
+                                 // will be handled by authentication error handling
+                                 NSLog(@"[ERROR] /me FBErrorCategoryAuthenticationReopenSession");
+                                 return;
+                                 break;
+                             case FBErrorCategoryInvalid:
+                             case FBErrorCategoryServer:
+                             case FBErrorCategoryThrottling:
+                             case FBErrorCategoryFacebookOther:
+                             case FBErrorCategoryBadRequest:
+                             case FBErrorCategoryPermissions:
+                             case FBErrorCategoryRetry:
+                             case FBErrorCategoryUserCancelled:
+                             default:
+                                 NSLog(@"[ERROR] /me error.description: ", error.description);
+                                 TiThreadPerformOnMainThread(^{
+                                     [FBSession.activeSession closeAndClearTokenInformation];
+                                 }, YES);
+                                 loggedIn = NO;
+                                 // We set error to nil since any useful message was already surfaced
+                                 [self fireLogin:nil cancelled:NO withError:error];
+                                 break;
+                         }
                      }
                  }];
             [connection start];
         }
     }, NO);
+}
+
+
+- (void)handleAuthError:(NSError *)error
+{
+    loggedIn = NO;
+    BOOL cancelled = NO;
+    NSString *errorMessage;
+    long code = [error code];
+    if (code == 0) {
+        code = -1;
+    }
+    if ([FBErrorUtility shouldNotifyUserForError:error] == YES){
+        // Error requires people using you app to make an action outside your app to recover
+        errorMessage = [FBErrorUtility userMessageForError:error];
+    } else {
+        // You need to find more information to handle the error within your app
+        if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled) {
+            //The user refused to log in into your app, either ignore or...
+            cancelled = YES;
+            errorMessage = @"User cancelled the login process.";
+        } else {
+            // All other errors that can happen need retries
+            // Show the user a generic error message
+            errorMessage = @"GENERIC_ERROR_PLEASE_RETRY";
+        }
+    }
+    NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                  NUMBOOL(cancelled),@"cancelled",
+                                  NUMBOOL(NO),@"success",
+                                  NUMLONG(code),@"code",nil];
+    
+    [event setObject:errorMessage forKey:@"error"];
+    [self fireEvent:@"login" withObject:event];
 }
 
 - (void)sessionStateChanged:(FBSession *)session
@@ -150,27 +199,34 @@ BOOL temporarilySuspended = NO;
 {
     RELEASE_TO_NIL(uid);
     if (error) {
-        NSLog(@"sessionStateChanged error");
-        loggedIn = NO;
-        BOOL userCancelled = error.fberrorCategory == FBErrorCategoryUserCancelled;
-        [self fireLogin:nil cancelled:userCancelled withError:error];
+        NSLog(@"[ERROR] sessionStateChanged error");
+        [self handleAuthError:error];
     } else {
         switch (state) {
             case FBSessionStateOpen:
                 NSLog(@"[DEBUG] FBSessionStateOpen");
-                [self populateUserDetails];
+                [session refreshPermissionsWithCompletionHandler:
+                 ^(FBSession *session, NSError *error) {
+                     if (error != nil) {
+                         TiThreadPerformOnMainThread(^{
+                             [FBSession.activeSession closeAndClearTokenInformation];
+                         }, YES);
+                         
+                         loggedIn = NO;
+                         [self fireEvent:@"logout"];
+                     } else {
+                        [self populateUserDetails];
+                     }
+                 }];
                 break;
             case FBSessionStateClosed:
             case FBSessionStateClosedLoginFailed:
                 NSLog(@"[DEBUG] facebook session closed");
-                TiThreadPerformOnMainThread(^{
-                    [FBSession.activeSession closeAndClearTokenInformation];
-                }, YES);
-                
                 loggedIn = NO;
                 [self fireEvent:@"logout"];
                 break;
             default:
+                NSLog(@"[DEBUG] sessionStateChanged default case reached, state %d", state);
                 break;
         }
     }
@@ -333,9 +389,10 @@ BOOL temporarilySuspended = NO;
 {
     NSLog(@"[DEBUG] facebook authorize");
     BOOL allowUI = args == nil ? YES : NO;
-    
+
     TiThreadPerformOnMainThread(^{
         NSArray *permissions_ = permissions == nil ? [NSArray array] : permissions;
+/*
         FBSession *session = [[[FBSession alloc] initWithPermissions:permissions] autorelease];
         [FBSession setActiveSession:session];
         [session openWithBehavior:FBSessionLoginBehaviorUseSystemAccountIfPresent
@@ -343,15 +400,16 @@ BOOL temporarilySuspended = NO;
                                     FBSessionState state, NSError *error) {
                     [self sessionStateChanged:fbsession state:state error:error];
                 }];
-        /*
-         [FBSession openActiveSessionWithReadPermissions:permissions_
-         allowLoginUI:allowUI
-         completionHandler:
-         ^(FBSession *session,
-         FBSessionState state, NSError *error) {
-         [self sessionStateChanged:session state:state error:error];
-         }];
-         */
+*/
+
+        BOOL sessionOpened = [FBSession openActiveSessionWithReadPermissions: allowUI ? permissions_ : FBSession.activeSession.permissions
+            allowLoginUI:allowUI
+            completionHandler:
+            ^(FBSession *session,
+            FBSessionState state, NSError *error) {
+                [self sessionStateChanged:session state:state error:error];
+            }];
+        NSLog(@"[DEBUG] openActiveSessionWithReadPermissions returned: %d", sessionOpened);
     }, NO);
 }
 
@@ -582,7 +640,7 @@ BOOL temporarilySuspended = NO;
  *
  * facebook.requestWithGraphPath('me',{}, 'post', function(e) {
  *    if (e.success) {
- *      // e.path contains original path (e.g. 'me'), e.graphData contains the result
+ *      // e.path contains original path (e.g. 'me'), e.data contains the result
  *    }
  *    else {
  *      // note that we use new Facebook error handling
@@ -619,16 +677,40 @@ BOOL temporarilySuspended = NO;
                  if (!error) {
                      success = YES;
                      returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                       result,@"graphData", NUMBOOL(success), @"success",
+                                       result,@"data", NUMBOOL(success), @"success",
                                        path, @"path",nil];
                  } else {
-                     NSLog(@"/me graph call error");
+                     NSLog(@"requestWithGraphPath error for path, ", path);
                      success = NO;
                      NSString * errorString;
                      if (error.fberrorShouldNotifyUser) {
                          errorString = error.fberrorUserMessage;
                      } else {
-                         errorString = @"An unexpected error";
+                         switch(error.fberrorCategory) {
+                             case FBErrorCategoryAuthenticationReopenSession:
+                                 // will be handled by authentication error handling
+                                 NSLog(@"[ERROR] requestWithGraphPath FBErrorCategoryAuthenticationReopenSession");
+                                 errorString = @"authentication error";
+                                 break;
+                             case FBErrorCategoryInvalid:
+                             case FBErrorCategoryServer:
+                             case FBErrorCategoryThrottling:
+                             case FBErrorCategoryFacebookOther:
+                             case FBErrorCategoryRetry:
+                             case FBErrorCategoryUserCancelled:
+                                 errorString = @"Retry";
+                                 break;
+                             case FBErrorCategoryBadRequest:
+                                 errorString = @"Bad request";
+                                 break;
+                             case FBErrorCategoryPermissions:
+                                 errorString = @"Permission error";
+                                 break;
+                             default:
+                                 NSLog(@"[ERROR] requestWithGraphPath error.description: ", error.description);
+                                 errorString = @"An unexpected error";
+                                 break;
+                         }
                      }
                      returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys:
                                        NUMBOOL(success), @"success",
@@ -660,7 +742,7 @@ BOOL temporarilySuspended = NO;
                                   NUMBOOL(success),@"success",
                                   NUMLONG(code),@"code",nil];
     if(error != nil){
-        NSString * errorMessage = @"OTHER: ";
+        NSString * errorMessage = @"OTHER:*:";
         if (error.fberrorShouldNotifyUser) {
             if ([[error userInfo][FBErrorLoginFailedReason]
                  isEqualToString:FBErrorLoginFailedReasonSystemDisallowedWithoutErrorValue]) {
@@ -670,14 +752,6 @@ BOOL temporarilySuspended = NO;
                 // If the SDK has a message for the user, surface it.
                 errorMessage = error.fberrorUserMessage;
             }
-        } else if (error.fberrorCategory == FBErrorCategoryAuthenticationReopenSession) {
-            // It is important to handle session closures as mentioned. You can inspect
-            // the error for more context but this sample generically notifies the user.
-            errorMessage = @"Session Login Error";
-        } else if (error.fberrorCategory == FBErrorCategoryUserCancelled) {
-            // The user has cancelled a login. You can inspect the error
-            // for more context. For this sample, we will simply ignore it.
-            errorMessage = @"User cancelled the login process.";
         } else {
             // For simplicity, this sample treats other errors blindly, but you should
             // refer to https://developers.facebook.com/docs/technical-guides/iossdk/errors/ for more information.
