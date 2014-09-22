@@ -2,7 +2,7 @@
 # this is your module manifest and used by Titanium
 # during compilation, packaging, distribution, etc.
 #
-version: 1.0.0
+version: 3.18.01
 apiversion: 2
 description: FacebookIOS
 author: Mark Mokryn
