@@ -17,6 +17,8 @@ BOOL temporarilySuspended = NO;
 
 #pragma mark Internal
 
+BOOL nativeLogin = false;
+
 // this is generated for your module, please do not change it
 -(id)moduleGUID
 {
@@ -181,7 +183,7 @@ BOOL temporarilySuspended = NO;
         } else {
             // All other errors that can happen need retries
             // Show the user a generic error message
-            errorMessage = @"GENERIC_ERROR_PLEASE_RETRY";
+            errorMessage = @"Please login again";
         }
     }
     NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -392,24 +394,23 @@ BOOL temporarilySuspended = NO;
 
     TiThreadPerformOnMainThread(^{
         NSArray *permissions_ = permissions == nil ? [NSArray array] : permissions;
-/*
-        FBSession *session = [[[FBSession alloc] initWithPermissions:permissions] autorelease];
-        [FBSession setActiveSession:session];
-        [session openWithBehavior:FBSessionLoginBehaviorUseSystemAccountIfPresent
+
+        if (nativeLogin) {
+            FBSession *session = [[[FBSession alloc] initWithPermissions:allowUI ? permissions_ : FBSession.activeSession.permissions] autorelease];
+            [FBSession setActiveSession:session];
+            [session openWithBehavior:FBSessionLoginBehaviorUseSystemAccountIfPresent
                 completionHandler:^(FBSession *fbsession,
                                     FBSessionState state, NSError *error) {
                     [self sessionStateChanged:fbsession state:state error:error];
                 }];
-*/
-
-        BOOL sessionOpened = [FBSession openActiveSessionWithReadPermissions: allowUI ? permissions_ : FBSession.activeSession.permissions
-            allowLoginUI:allowUI
-            completionHandler:
-            ^(FBSession *session,
-            FBSessionState state, NSError *error) {
-                [self sessionStateChanged:session state:state error:error];
+        } else {
+            BOOL sessionOpened = [FBSession openActiveSessionWithReadPermissions: allowUI ? permissions_ : FBSession.activeSession.permissions allowLoginUI:allowUI completionHandler:
+                                  ^(FBSession *session,
+                                    FBSessionState state, NSError *error) {
+                                      [self sessionStateChanged:session state:state error:error];
             }];
-        NSLog(@"[DEBUG] openActiveSessionWithReadPermissions returned: %d", sessionOpened);
+            NSLog(@"[DEBUG] openActiveSessionWithReadPermissions returned: %d", sessionOpened);
+        }
     }, NO);
 }
 
@@ -418,6 +419,9 @@ BOOL temporarilySuspended = NO;
 // else loggedIn will be false
 -(void)initialize:(id)args
 {
+    id arg = [args objectAtIndex:0];
+    nativeLogin = [TiUtils boolValue:arg def:NO];
+    
     TiThreadPerformOnMainThread(^{
         NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
         //NSString * savedToken = [TiUtils stringValue:args];
@@ -742,7 +746,7 @@ BOOL temporarilySuspended = NO;
                                   NUMBOOL(success),@"success",
                                   NUMLONG(code),@"code",nil];
     if(error != nil){
-        NSString * errorMessage = @"OTHER:*:";
+        NSString * errorMessage = @"OTHER:";
         if (error.fberrorShouldNotifyUser) {
             if ([[error userInfo][FBErrorLoginFailedReason]
                  isEqualToString:FBErrorLoginFailedReasonSystemDisallowedWithoutErrorValue]) {
