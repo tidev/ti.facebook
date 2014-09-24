@@ -1,0 +1,18 @@
+#
+# this is your module manifest and used by Titanium
+# during compilation, packaging, distribution, etc.
+#
+version: 3.18.01
+apiversion: 2
+description: ti-facebook
+author: Mark Mokryn
+license: Apache License Version 2.0
+copyright: Copyright (c) 2014 by Mark Mokryn
+respackage: com.facebook.android
+
+# these should not be edited
+name: ti-facebook
+moduleid: com.ti.facebook
+guid: a0ddb4d2-2a9d-4e93-b3d7-761a5ec33536
+platform: android
+minsdk: 3.5.0
