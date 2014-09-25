@@ -53,6 +53,7 @@ Module API
 * `fb.requestNewReadPermissions([new read permissions], function(e) {....});` The callback will indicate `success`, `error` or `cancelled`. If `success`, then you need to get `fb.permissions` to check the actually active permissions on the session.
 * `requestNewPublishPermissions` - same as for requestNewReadPermissions. Note these functions take on added importance since users can decline individual permissions when initially logging in, except for `public_profile` which is mandatory.
 * `fb.requestWithGraphPath` - same as in Appcelerator's Titanium module.
+* `fb.authorize()` should be called to initiate the login process if the user is logged out and the user clicks on the login button
 * Share Dialog: see below.
 
 Events and error handling
@@ -105,7 +106,12 @@ if (!fb.loggedIn) {
 	// you want to show your login UI in this case
 	// if the user is loggedIn, just wait for the login event
 	// when you want the user to login, call fb.authorize()
-}	
+}
+
+myLoginButton.addEventListener('click', function(e) {
+	fb.authorize(); // this will show the Facebook login UI
+	.....
+});
 ```
 
 Share Dialog
