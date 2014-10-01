@@ -19,7 +19,7 @@ Current Functionality
 Installation Details
 --------------------
 * The minimum required SDK version is 3.5.0
-* You must implement this pull request: [synchronous activity callbacks](https://github.com/appcelerator/titanium_mobile/pull/6160)
+* You must implement this pull request: [Update Activity lifecycle events](https://github.com/appcelerator/titanium_mobile/pull/6179)
 * In tiapp.xml or AndroidManifest.xml you must declare the following inside the `<application>` node
 `<activity android:name="com.facebook.LoginActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" 
 	android:label="YourAppName"/>`
@@ -32,20 +32,20 @@ Module Versioning
 -----------------
 
 x.y.zt, where x.y.z is the Facebook iOS SDK version, t denotes the Titanium module version for this SDK.
-This module version is 3.18.01 - i.e. uses Facebook Android SDK 3.18.0
+For example, module version 3.18.01 uses Facebook Android SDK 3.18.0
 
 Proxy required per Android activity
 -----------------------------------
 Unlike iOS, where the entire app is active in memory, in Android only a single Activity is active at any time. An Activity corresponds to a Ti.UI.Window or Ti.UI.TabGroup. The Facebook SDK contains tools to synchronize state between the various activities in the app, and this module implements that functionality, but for this to work we need to tell the module which is the currently active Activity. Thus the following is required:
-* All Windows/TabGroup that require Facebook functionality must create a proxy: `var fb = fbModule.createActivityWorker();`
-* To tell the module which is the current activity we must call `fb.activityResumed();` during the window/tabGroup.activity.onResume function. See code example below.
+* All Windows/TabGroup that require Facebook functionality must create a proxy: `var fb = fbModule.createActivityWorker({lifecycleContainer: aWindowOrTabGroup});`
+* We must pass to the proxy the Ti.UI.Window or Ti.UI.TabGroup that will be using the proxy, so that the proxy can attach itself to the window's or tabgroup's activity.
+* The proxy object must be created prior to calling open() on the window or tabgroup in order to make sure the Activity onCreate event is captured correctly.
 
 Module API
 ----------
 
 * Require the module: `var fbModule = require('com.ti.facebook');`
-* Create a proxy for each Activity (Window or TabGroup) that needs Facebook functionality: `var fb = fbModule.createActivityWorker();`
-* You must call `fb.activityResumed();` during the Activity's onResume function. See example below. This may change when [TIMOB-15443](https://jira.appcelerator.org/browse/TIMOB-15443) is resolved. Until then this call is required, as is this fix to the SDK: [sync activity lifecycle calls](https://github.com/appcelerator/titanium_mobile/pull/6160)
+* Create a proxy for each Activity (Window or TabGroup) that needs Facebook functionality: `var fb = fbModule.createActivityWorker({lifecycleContainer: win);`
 * The permissions array may be set by calling `setPermissions(['public_profile', 'email', etc])` on the proxy object, or in the proxy creation dictionary `var fb = fbModule.createActivityWorker({permissions: [.....]});`, or passed to the `initialize` function detailed below. Note that these are just the requested read permissions, and not necessarily the permissions granted to the app. These permissions will only be used when initially authenticating with Facebook. You need to set the permissions only once, for the initial proxy used in the app.
 * The actual permissions granted to the app may be read at any time by checking `var permissions = fb.permissions;` 
 * Add login and logout event listeners on the proxy object. The syntax and functionality is identical to the current Titanium Facebook module.
