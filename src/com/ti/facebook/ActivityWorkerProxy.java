@@ -30,6 +30,7 @@ import android.content.Intent;
 
 import com.facebook.*;
 import com.facebook.Session.NewPermissionsRequest;
+import com.facebook.model.GraphPlace;
 import com.facebook.model.GraphUser;
 import com.facebook.model.GraphObject;
 import com.facebook.model.GraphObjectList;
@@ -436,14 +437,13 @@ public class ActivityWorkerProxy extends KrollProxy implements onActivityResultE
 
 				OpenGraphAction action = OpenGraphAction.Factory.createForPost(namespaceAction);
 				action.setProperty(objectName, ogObject);
-/*						
-						// https://developers.facebook.com/bugs/363119770486799
-						if (placeId != null){
-							GraphPlace place = GraphObject.Factory.create(GraphPlace.class);
-							place.setId(placeId);
-							action.setPlace(place);
-						}
-*/
+
+				if (placeId != null){
+					GraphPlace place = GraphObject.Factory.create(GraphPlace.class);
+					place.setId(placeId);
+					action.setPlace(place);
+				}
+
 				shareDialog = new FacebookDialog.OpenGraphActionDialogBuilder(getActivity(), action, objectName)
 					.build();
 			}

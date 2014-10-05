@@ -14,6 +14,7 @@ Current Functionality
 * Additional permissions requests
 * Graph API (version 2.1, read Facebook's docs for the changes, in particular regarding the user_friends permission).
 * Share dialog
+* Like button
 * Additional functionality will be implemented over time, pull requests greatly appreciated
 
 Installation Details
@@ -131,6 +132,24 @@ fb.share({url: someUrl, namespaceObject: 'myAppnameSpace:graphObject', objectNam
 ```
 For the graph action apparently only placeId is optional. Note: There appears to be [a bug](https://developers.facebook.com/bugs/363119770486799) currently where place tagging doesn't work for Android.
 
+Like Button
+-----------
+
+We can create a Like button just like any other view, with specific parameters documented in Facebook docs. Note there is no completion callback or event, and Facebook policies state "If you use the Like button on iOS or Android, don’t collect or use any information from it."
+ 
+```
+var likeButton = fbModule.createLikeButton({
+	top: 10,
+	height: Ti.UI.SIZE,
+	width: Ti.UI.SIZE, // just like any other view
+	objectId: "https://www.facebook.com/NYKnicks", // URL or Facebook ID
+	foregroundColor: "white", // A color in Titanium format - see Facebook docs
+	likeViewStyle: 'box_count', // standard, button, box_count - see FB docs
+	auxiliaryViewPosition: 'inline', // bottom, inline, top - see FB docs
+	horizontalAlignment: 'left' // center, left, right - see FB docs
+});
+someView.add(likeButton);
+```
 
 Feel free to comment and help out! :)
 -------------------------------------
