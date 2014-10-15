@@ -9,6 +9,8 @@
 
 //
 // How to add a Framework (example)
+FRAMEWORK_SEARCH_PATHS=$(SRCROOT)/../../modules/iphone/com.facebook/3.19.01/platform
+OTHER_LDFLAGS=$(inherited) -framework FacebookSDK
 //
 // OTHER_LDFLAGS=$(inherited) -framework Foo
 //
@@ -25,4 +27,3 @@
 //
 // IMPORTANT NOTE: always use $(inherited) in your overrides
 // 
-OTHER_LDFLAGS=$(inherited) -F"/Users/Marek/Documents/Titanium_Studio_Workspace/FacebookIOS/iphone" -framework FacebookSDK

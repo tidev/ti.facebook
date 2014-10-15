@@ -16,15 +16,12 @@
 
 @interface ComFacebookModule : TiModule
 {
-    BOOL loggedIn;
     BOOL canShare;
     NSString *uid;
-    //NSString *url;
     NSArray *permissions;
     NSMutableArray *stateListeners;
 }
 
--(BOOL)isLoggedIn;
 -(BOOL)passedShareDialogCheck;
 -(void)addListener:(id<TiFacebookStateListener>)listener;
 -(void)removeListener:(id<TiFacebookStateListener>)listener;

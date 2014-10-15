@@ -49,6 +49,10 @@ BOOL nativeLogin = false;
         NSString *urlString = [launchOptions objectForKey:@"url"];
         NSString *sourceApplication = [launchOptions objectForKey:@"source"];
         if (urlString != nil) {
+            [FBSession.activeSession setStateChangeHandler:
+             ^(FBSession *session, FBSessionState state, NSError *error) {
+                 [self sessionStateChanged:session state:state error:error];
+             }];
             return [FBAppCall handleOpenURL:[NSURL URLWithString:urlString] sourceApplication:sourceApplication];
         } else {
             return NO;
@@ -72,7 +76,13 @@ BOOL nativeLogin = false;
 
 -(void)startup
 {
-    NSLog(@"[DEBUG] facebook startup");
+    NSLog(@"[DEBUG] startup: running FB sdk version: %@", [FBSettings sdkVersion]);
+/* Uncomment to get a ton of debug prints
+    [FBSettings setLoggingBehavior:
+     [NSSet setWithObjects:FBLoggingBehaviorFBRequests, FBLoggingBehaviorFBURLConnections,
+      FBLoggingBehaviorAccessTokens, FBLoggingBehaviorSessionStateTransitions, FBLoggingBehaviorAppEvents,
+      FBLoggingBehaviorInformational, FBLoggingBehaviorCacheErrors, FBLoggingBehaviorDeveloperErrors, nil]];
+*/
     [super startup];
 }
 
@@ -100,11 +110,6 @@ BOOL nativeLogin = false;
     temporarilySuspended = NO; // Since we are guaranteed full resume logic following this
 }
 
--(BOOL)isLoggedIn
-{
-    return loggedIn;
-}
-
 -(BOOL)passedShareDialogCheck
 {
     return canShare;
@@ -124,7 +129,6 @@ BOOL nativeLogin = false;
                      RELEASE_TO_NIL(uid);
                      if (!error) {
                          uid = [[user objectForKey:@"id"] copy];
-                         loggedIn = YES;
                          [self fireLogin:user cancelled:NO withError:nil];
                      } else {
                          // Error on /me call
@@ -149,7 +153,6 @@ BOOL nativeLogin = false;
                                  TiThreadPerformOnMainThread(^{
                                      [FBSession.activeSession closeAndClearTokenInformation];
                                  }, YES);
-                                 loggedIn = NO;
                                  // We set error to nil since any useful message was already surfaced
                                  [self fireLogin:nil cancelled:NO withError:error];
                                  break;
@@ -164,7 +167,6 @@ BOOL nativeLogin = false;
 
 - (void)handleAuthError:(NSError *)error
 {
-    loggedIn = NO;
     BOOL cancelled = NO;
     NSString *errorMessage;
     long code = [error code];
@@ -210,12 +212,11 @@ BOOL nativeLogin = false;
                 [session refreshPermissionsWithCompletionHandler:
                  ^(FBSession *session, NSError *error) {
                      if (error != nil) {
+                         NSLog(@"[DEBUG] refreshPermissionsWithCompletionHandler error");
                          TiThreadPerformOnMainThread(^{
                              [FBSession.activeSession closeAndClearTokenInformation];
                          }, YES);
-                         
-                         loggedIn = NO;
-                         [self fireEvent:@"logout"];
+                         [self fireLogin:nil cancelled:NO withError:error];
                      } else {
                         [self populateUserDetails];
                      }
@@ -224,7 +225,6 @@ BOOL nativeLogin = false;
             case FBSessionStateClosed:
             case FBSessionStateClosedLoginFailed:
                 NSLog(@"[DEBUG] facebook session closed");
-                loggedIn = NO;
                 [self fireEvent:@"logout"];
                 break;
             default:
@@ -258,7 +258,8 @@ BOOL nativeLogin = false;
  */
 -(id)loggedIn
 {
-    return NUMBOOL([self isLoggedIn]);
+    NSLog(@"[DEBUG] BSession.activeSession.state: %d", FBSession.activeSession.state);
+    return NUMBOOL(FBSession.activeSession.state == FBSessionStateOpenTokenExtended || FBSession.activeSession.state == FBSessionStateOpen || FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded);
 }
 
 -(id)canPresentShareDialog
@@ -434,11 +435,10 @@ BOOL nativeLogin = false;
         
         if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
             // Start with logged-in state, guaranteed no login UX is fired since logged-in
-            loggedIn = YES;
             //skipMeCall = [FBSession.activeSession.accessTokenData.accessToken isEqualToString:savedToken];
             [self authorize:YES];
         } else {
-            loggedIn = NO;
+            [self handleRelaunch];
         }
     }, YES);
 }
@@ -453,13 +453,11 @@ BOOL nativeLogin = false;
 -(void)logout:(id)args
 {
     NSLog(@"[DEBUG] facebook logout");
-    if ([self isLoggedIn])
-    {
-        RELEASE_TO_NIL(uid);
-        TiThreadPerformOnMainThread(^{
-            [FBSession.activeSession closeAndClearTokenInformation];
-        }, NO);
-    }
+
+    RELEASE_TO_NIL(uid);
+    TiThreadPerformOnMainThread(^{
+        [FBSession.activeSession closeAndClearTokenInformation];
+    }, NO);
 }
 
 -(void)share:(id)args

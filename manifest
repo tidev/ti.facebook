@@ -2,7 +2,7 @@
 # this is your module manifest and used by Titanium
 # during compilation, packaging, distribution, etc.
 #
-version: 3.18.01
+version: 3.19.01
 apiversion: 2
 description: FacebookIOS
 author: Mark Mokryn
@@ -14,4 +14,4 @@ name: FacebookIOS
 moduleid: com.facebook
 guid: 7ac4bcd0-eb97-4e43-89fc-03f7f4d0a2a0
 platform: iphone
-minsdk: 3.5.0
+minsdk: 3.4.0
