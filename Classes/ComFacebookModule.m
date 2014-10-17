@@ -395,9 +395,12 @@ BOOL nativeLogin = false;
 
     TiThreadPerformOnMainThread(^{
         NSArray *permissions_ = permissions == nil ? [NSArray array] : permissions;
+        BOOL hasIntegratedFacebookAtAll = ([SLComposeViewController class] != nil);
+        BOOL userHasIntegratedFacebookAccountSetup = hasIntegratedFacebookAtAll && ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]);
 
-        if (nativeLogin) {
-            FBSession *session = [[[FBSession alloc] initWithPermissions:allowUI ? permissions_ : FBSession.activeSession.permissions] autorelease];
+        if (nativeLogin && userHasIntegratedFacebookAccountSetup) {
+            NSArray *deviceLoginPerms = @[ @"public_profile"];
+            FBSession *session = [[[FBSession alloc] initWithPermissions:allowUI ? deviceLoginPerms : FBSession.activeSession.permissions] autorelease];
             [FBSession setActiveSession:session];
             [session openWithBehavior:FBSessionLoginBehaviorUseSystemAccountIfPresent
                 completionHandler:^(FBSession *fbsession,

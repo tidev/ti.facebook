@@ -55,9 +55,9 @@ fb.addEventListener('logout', function(e) { .....
 // We have a separate initialization function so that we can set up the event listeners in time
 // Note that if a cached session exists, the login event will be fired immediately after initialize is called
 fb.initialize(false); // initialize takes an optional nativeLogin parameter (default: false) which if true enables iOS native login
-
-
-
+// If passing true to use nativeLogin, the native login will request the public_profile only. This is because the user cannot
+// decline the other permissions in native login, and there are bugs such as this:
+// https://developers.facebook.com/bugs/359391504210257/
 ```
 
 Events and error handling

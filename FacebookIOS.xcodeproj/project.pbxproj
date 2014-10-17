@@ -29,6 +29,7 @@
 		AA747D9F0F9514B9006C5449 /* ComFacebook_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* ComFacebook_Prefix.pch */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 		EA7E24F619EC4A3A001B4B0C /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA7E24F519EC4A3A001B4B0C /* FacebookSDK.framework */; };
+		EAC238AA19F1280B00E8103C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC238A919F1280B00E8103C /* Social.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2AAC07E0554694100DB518D /* libComFacebook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libComFacebook.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA7E24F519EC4A3A001B4B0C /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = platform/FacebookSDK.framework; sourceTree = "<group>"; };
+		EAC238A919F1280B00E8103C /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAC238AA19F1280B00E8103C /* Social.framework in Frameworks */,
 				AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */,
 				EA7E24F619EC4A3A001B4B0C /* FacebookSDK.framework in Frameworks */,
 			);
@@ -88,6 +91,7 @@
 		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EAC238A919F1280B00E8103C /* Social.framework */,
 				EA7E24F519EC4A3A001B4B0C /* FacebookSDK.framework */,
 				AACBBE490F95108600F1A2B1 /* Foundation.framework */,
 			);
