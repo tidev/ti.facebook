@@ -20,7 +20,7 @@ Current Functionality
 Installation Details
 --------------------
 * The minimum required SDK version is 3.5.0
-* You must implement this pull request: [Update Activity lifecycle events](https://github.com/appcelerator/titanium_mobile/pull/6179)
+* You must implement this pull request: [Update Activity lifecycle events](https://github.com/appcelerator/titanium_mobile/pull/6179). Until merged, you can use this branch, which is kept current with Appcelerator's 3_4_X: https://github.com/mokesmokes/titanium_mobile/tree/3_4_M
 * In tiapp.xml or AndroidManifest.xml you must declare the following inside the `<application>` node
 `<activity android:name="com.facebook.LoginActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" 
 	android:label="YourAppName"/>`

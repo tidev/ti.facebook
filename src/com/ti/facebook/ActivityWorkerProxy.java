@@ -29,6 +29,7 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.facebook.*;
+import com.facebook.Session;
 import com.facebook.Session.NewPermissionsRequest;
 import com.facebook.model.GraphPlace;
 import com.facebook.model.GraphUser;
@@ -83,7 +84,9 @@ public class ActivityWorkerProxy extends KrollProxy implements onActivityResultE
 			Log.d(TAG, "StatusCallback cancelled");			
 			data.put("cancelled", true);
 			data.put("success", false);
-			proxy.fireEvent(EVENT_LOGIN, data);
+			if (proxy.hasListeners(EVENT_LOGIN)) {
+				proxy.fireEvent(EVENT_LOGIN, data);
+			}
 			if (permissionCallback != null) {
 				permissionCallback.callAsync(proxy.getKrollObject(), data);
 				permissionCallback = null;
@@ -96,23 +99,32 @@ public class ActivityWorkerProxy extends KrollProxy implements onActivityResultE
 			data.put("error", exception.getMessage());
 			data.put("success", false);
 			data.put("cancelled", false);
-			proxy.fireEvent(EVENT_LOGIN, data);
+			if (proxy.hasListeners(EVENT_LOGIN)) {
+				proxy.fireEvent(EVENT_LOGIN, data);
+			}
 			if (permissionCallback != null) {
 				permissionCallback.callAsync(proxy.getKrollObject(), data);
 				permissionCallback = null;
 			}
 		} else if (exception != null) {
 			// some other error
-			ignoreClose = false;
 			loggedIn = false;
 			Log.e(TAG, "StatusCallback error: " + exception.getMessage() + " state: " + state);
 			data.put("error", "Please try to login again");
 			data.put("success", false);
-			data.put("cancelled", false);
-			proxy.fireEvent(EVENT_LOGIN, data);	
+			data.put("cancelled", false);	
 			if (permissionCallback != null) {
 				permissionCallback.callAsync(proxy.getKrollObject(), data);
 				permissionCallback = null;
+			}
+			if (ignoreClose) {
+				ignoreClose = false;
+				if (state == SessionState.CLOSED_LOGIN_FAILED) {
+					return; // we sometimes see this immediately after login attempt but login continues
+				}
+			}
+			if (proxy.hasListeners(EVENT_LOGIN)) {
+				proxy.fireEvent(EVENT_LOGIN, data);
 			}
 		} else if (state.isOpened()) {
 			// fire login
@@ -135,7 +147,9 @@ public class ActivityWorkerProxy extends KrollProxy implements onActivityResultE
 			loggedIn = true;
 			data.put("success", true);
 			data.put("cancelled", false);
-	    	makeMeRequest(proxy, session);
+			if (proxy.hasListeners(EVENT_LOGIN)) {
+				makeMeRequest(proxy, session);
+			}
 		} else if (state.isClosed()) {
 			Log.d(TAG, "StatusCallback closed");
 			if (ignoreClose) {
@@ -148,7 +162,9 @@ public class ActivityWorkerProxy extends KrollProxy implements onActivityResultE
 				return;
 			}
 			loggedIn = false;
-			proxy.fireEvent(EVENT_LOGOUT, null);
+			if (proxy.hasListeners(EVENT_LOGOUT)) {
+				proxy.fireEvent(EVENT_LOGOUT, null);
+			}
 			if (permissionCallback != null) {
 				data.put("logout", true);
 				permissionCallback.callAsync(proxy.getKrollObject(), data);
@@ -184,7 +200,9 @@ public class ActivityWorkerProxy extends KrollProxy implements onActivityResultE
 						data.put(PROPERTY_DATA, userJson.toString());
 						data.put(PROPERTY_CODE, 0);
 						Log.d(TAG, "firing login event from module");
-						proxy.fireEvent(EVENT_LOGIN, data);	                    
+						if (proxy.hasListeners(EVENT_LOGIN)) {
+							proxy.fireEvent(EVENT_LOGIN, data);
+						}
 	                }
 	            }
 	            if (err != null) {
@@ -199,7 +217,9 @@ public class ActivityWorkerProxy extends KrollProxy implements onActivityResultE
     					session.closeAndClearTokenInformation();
     				};
 	            	data.put(PROPERTY_ERROR, errorString);
-	            	proxy.fireEvent(EVENT_LOGIN, data);
+	            	if (proxy.hasListeners(EVENT_LOGIN)) {
+	            		proxy.fireEvent(EVENT_LOGIN, data);
+	            	}
 	            }
 	        }
 	    });
