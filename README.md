@@ -19,8 +19,8 @@ Current Functionality
 
 Installation Details
 --------------------
-* The minimum required SDK version is 3.5.0
-* You must implement this pull request: [Update Activity lifecycle events](https://github.com/appcelerator/titanium_mobile/pull/6179). Until merged, you can use this branch, which is kept current with Appcelerator's 3_4_X: https://github.com/mokesmokes/titanium_mobile/tree/3_4_M
+* The minimum required SDK version is 3.5.0 (lifecycleContainer merged October 24th)
+* If you want to use the production 3_4_X branch, you may use this, which is kept current with Appcelerator's 3_4_X: https://github.com/mokesmokes/titanium_mobile/tree/3_4_M
 * In tiapp.xml or AndroidManifest.xml you must declare the following inside the `<application>` node
 `<activity android:name="com.facebook.LoginActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" 
 	android:label="YourAppName"/>`
@@ -69,9 +69,6 @@ In that case - the module will close the session. Below is the integrated flow f
 ```javascript
 var fbModule = require('com.ti.facebook');
 var fb = fbModule.createActivityWorker();
-window.activity.onResume = function() {
-	fb.activityResumed();
-};
 fb.permissions = ['public_profile', 'email', 'user_friends'];
 // now set up listeners
 fb.addEventListener('login', function(e) {
