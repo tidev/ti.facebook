@@ -67,6 +67,7 @@ BOOL nativeLogin = false;
     if (!temporarilySuspended) {
         [self handleRelaunch];
     }
+    [FBAppEvents activateApp];
 }
 
 -(void)activateApp:(NSNotification *)notification
