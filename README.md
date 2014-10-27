@@ -7,6 +7,7 @@ Overview
 * This module is based on Facebook's latest Android SDK (3.18.0, currently), and in accordance with Facebook's samples and recommendations.
 * The API is similar to the iOS Facebook module I wrote, differing in some places where required.
 * The module uses the Facebook SDK with no modifications
+* AppEvents: activateApp can monitor app installs and usage patterns. All you need to do is create a proxy for each activity in your app, and view the data on Facebook Insights.
 
 Current Functionality
 ---------------------

@@ -512,12 +512,14 @@ public class ActivityWorkerProxy extends KrollProxy implements onActivityResultE
         	Log.d(TAG, "session is null or session is in intermediate state");
         }
 	    uiHelper.onResume();
+	    AppEventsLogger.activateApp(activity);
 	}
 	
 	@Override
 	public void onPause(Activity activity) {
 		Log.d(TAG, "Facebook proxy onPause");
 	    uiHelper.onPause();
+	    AppEventsLogger.deactivateApp(activity);
 	}
 
 	@Override
