@@ -20,7 +20,7 @@ import org.appcelerator.kroll.common.Log;
 import org.appcelerator.titanium.TiApplication;
 import org.appcelerator.titanium.TiBaseActivity;
 import org.appcelerator.titanium.TiLifecycle.OnInstanceStateEvent;
-import org.appcelerator.titanium.TiLifecycle.onActivityResultEvent;
+import org.appcelerator.titanium.TiLifecycle.OnActivityResultEvent;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
@@ -40,7 +40,7 @@ import com.facebook.model.OpenGraphObject;
 import com.facebook.widget.FacebookDialog;
 
 @Kroll.proxy(creatableInModule=TiFacebookModule.class)
-public class ActivityWorkerProxy extends KrollProxy implements onActivityResultEvent, OnInstanceStateEvent
+public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultEvent, OnInstanceStateEvent
 {
 	private static final String TAG = "FacebookProxy";
 	public static final String EVENT_LOGIN = "login";
