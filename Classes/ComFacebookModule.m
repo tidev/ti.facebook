@@ -683,7 +683,7 @@ BOOL nativeLogin = false;
                  if (!error) {
                      success = YES;
                      returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                       result,@"data", NUMBOOL(success), @"success",
+                                       result,@"result", NUMBOOL(success), @"success",
                                        path, @"path",nil];
                  } else {
                      NSLog(@"requestWithGraphPath error for path, ", path);
