@@ -410,7 +410,7 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
 							responseString = responseJsonArray.toString();
 						}
 					}
-					data.put(PROPERTY_DATA, responseString);
+					data.put(PROPERTY_RESULT, responseString);
 					callback.callAsync(proxy.getKrollObject(), data);
 				}});
 		request.executeAsync();
