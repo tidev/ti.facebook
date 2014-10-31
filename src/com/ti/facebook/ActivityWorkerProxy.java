@@ -60,6 +60,7 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
 	private KrollFunction permissionCallback = null;
 	private boolean ignoreClose = false;
 	private boolean loggedIn = false;
+	private static AppEventsLogger logger;
 	
 	private static String uid = null;
 	private static String[] permissions = new String[]{};
@@ -150,6 +151,7 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
 			if (proxy.hasListeners(EVENT_LOGIN)) {
 				makeMeRequest(proxy, session);
 			}
+			logger = uiHelper.getAppEventsLogger();
 		} else if (state.isClosed()) {
 			Log.d(TAG, "StatusCallback closed");
 			if (ignoreClose) {
@@ -429,6 +431,13 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
 	}
 	
 	@Kroll.method
+	public void logCustomEvent(String event) {
+		if (logger != null) {
+			logger.logEvent(event);
+		}
+	}
+	
+	@Kroll.method
 	public void share(@Kroll.argument(optional = true) final KrollDict args)
 	{
 		FacebookDialog shareDialog = null;
@@ -513,6 +522,7 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
         }
 	    uiHelper.onResume();
 	    AppEventsLogger.activateApp(activity);
+	    logger = uiHelper.getAppEventsLogger();
 	}
 	
 	@Override

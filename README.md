@@ -7,7 +7,7 @@ Overview
 * This module is based on Facebook's latest Android SDK (3.18.0, currently), and in accordance with Facebook's samples and recommendations.
 * The API is similar to the iOS Facebook module I wrote, differing in some places where required.
 * The module uses the Facebook SDK with no modifications
-* AppEvents: activateApp can monitor app installs and usage patterns. All you need to do is create a proxy for each activity in your app, and view the data on Facebook Insights.
+* AppEvents: activateApp can monitor app installs and usage patterns. All you need to do is create a proxy for each activity in your app, and view the data on Facebook Insights. Additionally we can log custom events.
 
 Current Functionality
 ---------------------
@@ -69,7 +69,7 @@ You will not get the `login` event if there was no cached session.
 In that case - the module will close the session. Below is the integrated flow for both Android and iOS:
 ```javascript
 var fbModule = require('com.ti.facebook');
-var fb = fbModule.createActivityWorker();
+var fb = fbModule.createActivityWorker({lifecycleContainer: win1});
 fb.permissions = ['public_profile', 'email', 'user_friends'];
 // now set up listeners
 fb.addEventListener('login', function(e) {
@@ -148,6 +148,10 @@ var likeButton = fbModule.createLikeButton({
 });
 someView.add(likeButton);
 ```
+
+Custom App Events
+-----------------
+fbActivityWorker.logCustomEvent('handsClapped'); // Pass a string for the event name, view the events on Facebook Insights
 
 Feel free to comment and help out! :)
 -------------------------------------
