@@ -360,6 +360,18 @@ BOOL nativeLogin = false;
 /**
  * JS example:
  *
+ * facebook.logCustomEvent('clappedHands');
+ *
+ */
+-(void)logCustomEvent:(id)args
+{
+    NSString* event = [args objectAtIndex:0];
+    [FBAppEvents logEvent:event];
+}
+
+/**
+ * JS example:
+ *
  * var facebook = require('facebook');
  *
  * facebook.addEventListener('login',function(e) {
