@@ -30,10 +30,14 @@ Module API
 The module tries to stick to the original Titanium Facebook iOS module API (distributed with Ti SDK 3.1.0).
 However, there are some differences, so read carefully.
 
-*	`appid` - parameter unused.
-	In addition to the required `<property name="ti.facebook.appid">FACEBOOK_APP_ID</property>`, we also need to add the following in the ios plist dictionary in tiapp.xml:
-*	`<key>FacebookAppID</key> <string>1234567891011</string>`
-*	`<key>FacebookDisplayName</key> <string>SomeName</string>` where SomeName is exactly as appears in the Facebook developer settings page
+*	`appid` - parameter unused. Instead, add the following to the `<ios><plist><dict>` section in tiapp.xml:
+```
+<key>FacebookAppID</key>
+<string>1234567891011</string>
+<key>FacebookDisplayName</key>
+<string>SomeName</string>
+```
+where SomeName is exactly as appears in the Facebook developer settings page
 *	Also make sure you have a URL Scheme in tiapp.xml that looks like fb1234567891010. See [Facebook docs](https://developers.facebook.com/docs/ios/getting-started/) for details on this. Add an entry to `<ios><plist><dict>` that looks like this, modify it for your app:
 ```
 <key>CFBundleURLTypes</key>
