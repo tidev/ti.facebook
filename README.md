@@ -30,11 +30,25 @@ Module API
 The module tries to stick to the original Titanium Facebook iOS module API (distributed with Ti SDK 3.1.0).
 However, there are some differences, so read carefully.
 
-*	`appid` - parameter unused. However, per the SDK docs, the app ID needs to be added in an additional key in plist.info (or tiapp.xml).
+*	`appid` - parameter unused.
 	In addition to the required `<property name="ti.facebook.appid">FACEBOOK_APP_ID</property>`, we also need to add the following in the ios plist dictionary in tiapp.xml:
 *	`<key>FacebookAppID</key> <string>1234567891011</string>`
 *	`<key>FacebookDisplayName</key> <string>SomeName</string>` where SomeName is exactly as appears in the Facebook developer settings page
-*	Also make sure you have a URL Scheme in tiapp.xmp that looks like fb1234567891010. See [Facebook docs](https://developers.facebook.com/docs/ios/getting-started/) for details on this.
+*	Also make sure you have a URL Scheme in tiapp.xml that looks like fb1234567891010. See [Facebook docs](https://developers.facebook.com/docs/ios/getting-started/) for details on this. Add an entry to `<ios><plist><dict>` that looks like this, modify it for your app:
+```
+<key>CFBundleURLTypes</key>
+<array>
+    <dict>
+        <key>CFBundleURLName</key>
+        <string>com.appcelerator.kitchensink</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+            <string>kitchensink</string>
+            <string>fb134793934930</string>
+        </array>
+    </dict>
+</array>
+```
 *	`forceDialogAuth` - parameter unused.
 *	The login button functionality is for now removed. It makes no sense to use a button besides the Facebook branded buttons in the SDK, and that is left for the future. 
 *	Instead of "reauthorize" there is now requestNewReadPermissions and a separate requestNewPublishPermissions, as per the Facebook SDK. This provides much more flexibility and less nuisance to the users.
