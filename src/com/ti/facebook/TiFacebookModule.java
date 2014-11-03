@@ -11,9 +11,9 @@ package com.ti.facebook;
 import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.kroll.common.Log;
-
 import org.appcelerator.titanium.TiApplication;
 
+import com.facebook.Settings;
 import com.facebook.widget.FacebookDialog;
 
 @Kroll.module(name="TiFacebook", id="com.ti.facebook")
@@ -31,7 +31,7 @@ public class TiFacebookModule extends KrollModule
 	@Kroll.onAppCreate
 	public static void onAppCreate(TiApplication app)
 	{
-		Log.d(TAG, "inside onAppCreate");
+		Log.d(TAG, "Facebook module using SDK version " + Settings.getSdkVersion());
 		// put module init code that needs to run when the application is created
 	}		
 	

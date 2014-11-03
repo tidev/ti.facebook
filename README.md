@@ -128,7 +128,7 @@ Unfortunately this is less concise than the iOS module, due to the SDK.
 fb.share({url: someUrl, namespaceObject: 'myAppnameSpace:graphObject', objectName: 'graphObject', imageUrl: someImageUrl, 
 		title: aTitle, description: blahBlah, namespaceAction: 'myAppnameSpace:actionType', placeId: facebookPlaceId}`
 ```
-For the graph action apparently only placeId is optional. Note: There appears to be [a bug](https://developers.facebook.com/bugs/363119770486799) currently where place tagging doesn't work for Android.
+For the graph action apparently only placeId is optional.
 
 Like Button
 -----------
