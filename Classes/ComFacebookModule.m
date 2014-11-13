@@ -111,11 +111,6 @@ BOOL nativeLogin = false;
     temporarilySuspended = NO; // Since we are guaranteed full resume logic following this
 }
 
--(BOOL)passedShareDialogCheck
-{
-    return canShare;
-}
-
 #pragma mark Auth Internals
 
 - (void)populateUserDetails {
@@ -265,7 +260,7 @@ BOOL nativeLogin = false;
 
 -(id)canPresentShareDialog
 {
-    return NUMBOOL([self passedShareDialogCheck]);
+    return NUMBOOL([FBDialogs canPresentShareDialog]);
 }
 
 
@@ -447,7 +442,6 @@ BOOL nativeLogin = false;
         
         FBLinkShareParams *params = [[FBLinkShareParams alloc] init];
         params.link = [NSURL URLWithString:@"http://developers.facebook.com/ios"];
-        canShare = [FBDialogs canPresentShareDialogWithParams:params];
         
         if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
             // Start with logged-in state, guaranteed no login UX is fired since logged-in
@@ -479,7 +473,7 @@ BOOL nativeLogin = false;
 -(void)share:(id)args
 {
     NSLog(@"[DEBUG] facebook share");
-    if (canShare){
+    if ([FBDialogs canPresentShareDialog]){
         
         NSDictionary* params = [args objectAtIndex:0];
         NSString* urlStr = [params objectForKey:@"url"];
@@ -532,6 +526,8 @@ BOOL nativeLogin = false;
                                                          }];
             }
         }, NO);
+    } else {
+        NSLog(@"[ERROR] must have Facebook app installed to present Share Dialog");
     }
 }
 
