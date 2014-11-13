@@ -1,5 +1,6 @@
 Titanium Facebook Module
 ================================
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/mokesmokes/titanium-ios-facebook?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Notes
 ------------
