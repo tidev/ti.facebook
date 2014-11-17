@@ -42,6 +42,7 @@ Unlike iOS, where the entire app is active in memory, in Android only a single A
 * All Windows/TabGroup that require Facebook functionality must create a proxy: `var fb = fbModule.createActivityWorker({lifecycleContainer: aWindowOrTabGroup});`
 * We must pass to the proxy the Ti.UI.Window or Ti.UI.TabGroup that will be using the proxy, so that the proxy can attach itself to the window's or tabgroup's activity.
 * The proxy object must be created prior to calling open() on the window or tabgroup in order to make sure the Activity onCreate event is captured correctly.
+* **The entire Facebook module API**, including methods, properties, and events **occurs on the proxy object** and not on the module object.
 
 Module API
 ----------

@@ -305,6 +305,20 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
 		return uid;
 	}
 	
+	@Kroll.getProperty @Kroll.method
+	public boolean canPresentShareDialog()
+	{
+		return FacebookDialog.canPresentShareDialog(TiApplication.getInstance(),
+				FacebookDialog.ShareDialogFeature.SHARE_DIALOG);
+	}
+
+	@Kroll.getProperty @Kroll.method
+	public boolean canPresentOpenGraphActionDialog()
+	{
+		return FacebookDialog.canPresentOpenGraphActionDialog(TiApplication.getInstance(),
+				FacebookDialog.OpenGraphActionDialogFeature.OG_ACTION_DIALOG);
+	}
+
 	@Kroll.getProperty
 	public String getAccessToken() {
 		Log.d(TAG, "get accessToken");
