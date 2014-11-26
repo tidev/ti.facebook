@@ -18,6 +18,7 @@ BOOL temporarilySuspended = NO;
 #pragma mark Internal
 
 BOOL nativeLogin = false;
+NSTimeInterval meRequestTimeout = 180.0;
 
 // this is generated for your module, please do not change it
 -(id)moduleGUID
@@ -116,7 +117,7 @@ BOOL nativeLogin = false;
 - (void)populateUserDetails {
     TiThreadPerformOnMainThread(^{
         if (FBSession.activeSession.isOpen) {
-            FBRequestConnection *connection = [[FBRequestConnection alloc] init];
+            FBRequestConnection *connection = [[FBRequestConnection alloc] initWithTimeout:meRequestTimeout];
             connection.errorBehavior = FBRequestConnectionErrorBehaviorReconnectSession
             | FBRequestConnectionErrorBehaviorRetry;
             
@@ -205,18 +206,7 @@ BOOL nativeLogin = false;
         switch (state) {
             case FBSessionStateOpen:
                 NSLog(@"[DEBUG] FBSessionStateOpen");
-                [session refreshPermissionsWithCompletionHandler:
-                 ^(FBSession *session, NSError *error) {
-                     if (error != nil) {
-                         NSLog(@"[DEBUG] refreshPermissionsWithCompletionHandler error");
-                         TiThreadPerformOnMainThread(^{
-                             [FBSession.activeSession closeAndClearTokenInformation];
-                         }, YES);
-                         [self fireLogin:nil cancelled:NO withError:error];
-                     } else {
-                        [self populateUserDetails];
-                     }
-                 }];
+                [self populateUserDetails];
                 break;
             case FBSessionStateClosed:
             case FBSessionStateClosedLoginFailed:
@@ -431,8 +421,15 @@ BOOL nativeLogin = false;
 // else loggedIn will be false
 -(void)initialize:(id)args
 {
-    id arg = [args objectAtIndex:0];
-    nativeLogin = [TiUtils boolValue:arg def:NO];
+    id arg0 = [args objectAtIndex:0];
+    double timeoutInMs = [TiUtils intValue:arg0 def:0];
+    if (timeoutInMs == 0) {
+        meRequestTimeout = 180.0;
+    } else {
+        meRequestTimeout = (double)timeoutInMs / 1000.0;
+    }
+    id arg1 = [args objectAtIndex:1];
+    nativeLogin = [TiUtils boolValue:arg1 def:NO];
     
     TiThreadPerformOnMainThread(^{
         NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
