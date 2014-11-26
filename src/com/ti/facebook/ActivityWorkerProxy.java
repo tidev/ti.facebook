@@ -60,6 +60,7 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
 	private KrollFunction permissionCallback = null;
 	private boolean ignoreClose = false;
 	private boolean loggedIn = false;
+	private int meRequestTimeout;
 	private static AppEventsLogger logger;
 	
 	private static String uid = null;
@@ -183,6 +184,7 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
 	    // Make an API call to get user data and define a 
 	    // new callback to handle the response.
 		Log.d(TAG, "makeMeRequest");
+		RequestBatch requestBatch = new RequestBatch();		
 	    Request request = Request.newMeRequest(session, 
 	            new Request.GraphUserCallback() {
 	        @Override
@@ -225,7 +227,9 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
 	            }
 	        }
 	    });
-	    request.executeAsync();
+	    requestBatch.add(request);
+	    requestBatch.setTimeout(meRequestTimeout);
+	    requestBatch.executeAsync();
 	}
 	
     private String handleError(FacebookRequestError error) {
@@ -358,11 +362,9 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
 	}
 	
 	@Kroll.method
-	public void initialize(Object[] perms) {
-		if (perms != null && perms.length > 0){
-			setPermissions(perms);
-		}
-		Log.d(TAG, "initialize called");
+	public void initialize(@Kroll.argument(optional=true) int timeout) {
+		meRequestTimeout = timeout;
+		Log.d(TAG, "initialize called with timeout: " + meRequestTimeout);
 		Session session = Session.openActiveSessionFromCache(TiApplication.getInstance());
 		if (session != null){
 			Log.d(TAG, "cached session found");

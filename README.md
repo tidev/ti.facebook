@@ -52,7 +52,7 @@ Module API
 * The permissions array may be set by calling `setPermissions(['public_profile', 'email', etc])` on the proxy object, or in the proxy creation dictionary `var fb = fbModule.createActivityWorker({permissions: [.....]});`, or passed to the `initialize` function detailed below. Note that these are just the requested read permissions, and not necessarily the permissions granted to the app. These permissions will only be used when initially authenticating with Facebook. You need to set the permissions only once, for the initial proxy used in the app.
 * The actual permissions granted to the app may be read at any time by checking `var permissions = fb.permissions;` 
 * Add login and logout event listeners on the proxy object. The syntax and functionality is identical to the current Titanium Facebook module.
-* After setting up the login and logout listeners, call `fb.initialize([optional permissions array]);`. If there is a cached Facebook session available, the login event will be fired immediately. `initialize` should only be called once, for the initial proxy in the app.
+* After setting up the login and logout listeners, call `fb.initialize([optional timeout]);`. If there is a cached Facebook session available, the login event will be fired immediately. `initialize` should only be called once, for the initial proxy in the app.
 * `fb.requestNewReadPermissions([new read permissions], function(e) {....});` The callback will indicate `success`, `error` or `cancelled`. If `success`, then you need to get `fb.permissions` to check the actually active permissions on the session.
 * `requestNewPublishPermissions` - same as for requestNewReadPermissions. Note these functions take on added importance since users can decline individual permissions when initially logging in, except for `public_profile` which is mandatory.
 * `fb.requestWithGraphPath` - same as in Appcelerator's Titanium module.
@@ -100,7 +100,9 @@ fb.addEventListener('login', function(e) {
 
 fb.addEventListener('logout', function(e)........
 		
-fb.initialize(); // the module will do nothing prior to this. This enabled you to set up listeners anywhere in the app	
+fb.initialize(5000); // the module will do nothing prior to this. This enabled you to set up listeners anywhere in the app	
+                     // You can (and should) pass a timeout (in ms) for the /me request that occurs upon login,
+                     // the default value is 0 (no timeout)
 
 if (!fb.loggedIn) {
 	// you want to show your login UI in this case
