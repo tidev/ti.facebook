@@ -113,7 +113,7 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
 			// some other error
 			loggedIn = false;
 			Log.e(TAG, "StatusCallback error: " + exception.getMessage() + " state: " + state);
-			data.put("error", "Please try to login again");
+			data.put("error", "Please check your network connection and try again");
 			data.put("success", false);
 			data.put("cancelled", false);	
 			if (permissionCallback != null) {
