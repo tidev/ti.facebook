@@ -528,6 +528,20 @@ NSTimeInterval meRequestTimeout = 180.0;
     }
 }
 
+-(void)refreshPermissionsFromServer:(id)args
+{
+    TiThreadPerformOnMainThread(^{
+        [FBSession.activeSession refreshPermissionsWithCompletionHandler:
+         ^(FBSession *session, NSError *error) {
+             if (error != nil) {
+                 NSLog(@"[ERROR] refreshPermissionsWithCompletionHandler error");
+             } else {
+                 [self fireEvent:@"tokenUpdated" withObject:nil];
+             }
+         }];
+    }, NO);
+}
+
 /**
  * JS example:
  *
