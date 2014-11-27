@@ -45,6 +45,7 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
 	private static final String TAG = "FacebookProxy";
 	public static final String EVENT_LOGIN = "login";
 	public static final String EVENT_LOGOUT = "logout";
+	public static final String EVENT_TOKEN_UPDATED = "tokenUpdated";
 	public static final String PROPERTY_SUCCESS = "success";
 	public static final String PROPERTY_CANCELLED = "cancelled";
 	public static final String PROPERTY_ERROR = "error";
@@ -135,11 +136,14 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
 			if (state == SessionState.OPENED_TOKEN_UPDATED) {
 				Log.d(TAG, "Session.state == OPENED_TOKEN_UPDATED");
 				if (permissionCallback != null) {
+					data.put("success", true);
 					permissionCallback.callAsync(proxy.getKrollObject(), data);
 					permissionCallback = null;
-					data.put("success", true);
-					return;
 				}
+				if (proxy.hasListeners(EVENT_TOKEN_UPDATED)) {
+					proxy.fireEvent(EVENT_TOKEN_UPDATED, null);
+				}
+				return;
 			}
 			if (loggedIn) {
 				// do not fire this again
@@ -368,7 +372,6 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
 		Session session = Session.openActiveSessionFromCache(TiApplication.getInstance());
 		if (session != null){
 			Log.d(TAG, "cached session found");
-			session.refreshPermissions(); // permissions on Facebook server may have been updated
 			loggedIn = true;
 			Log.d(TAG, "session opened from cache, state: " + session.getState());
 			makeMeRequest(this, session);
@@ -434,6 +437,11 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
 		request.executeAsync();
 	}
 	
+	@Kroll.method
+	public void refreshPermissionsFromServer() {
+		Session.getActiveSession().refreshPermissions();
+	}
+
 	@Kroll.method
 	public void logout() {
 		Log.d(TAG, "logout in facebook proxy");

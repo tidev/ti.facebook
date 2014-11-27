@@ -116,6 +116,14 @@ myLoginButton.addEventListener('click', function(e) {
 });
 ```
 
+Refreshing Permissions
+----------------------
+
+Facebook now grants total control over granted permissions, and if the user modified the permissions
+outside of your app your cached token may not be updated. To get the current permissions from
+Facebook's servers you can call `fb.refreshPermissionsFromServer()`. You may listen for the `tokenUpdated`
+event to be notified of this operation's successful completion.
+
 Share Dialog
 -------------
 
