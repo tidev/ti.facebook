@@ -8,21 +8,13 @@
  */
 package com.ti.facebook;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollProxy;
-import org.appcelerator.kroll.KrollFunction;
 import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.kroll.common.Log;
-import org.appcelerator.titanium.TiApplication;
 import org.appcelerator.titanium.TiBaseActivity;
 import org.appcelerator.titanium.TiLifecycle.OnInstanceStateEvent;
 import org.appcelerator.titanium.TiLifecycle.OnActivityResultEvent;
-import org.json.JSONObject;
-import org.json.JSONArray;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -30,268 +22,20 @@ import android.content.Intent;
 
 import com.facebook.*;
 import com.facebook.Session;
-import com.facebook.Session.NewPermissionsRequest;
-import com.facebook.model.GraphPlace;
-import com.facebook.model.GraphUser;
-import com.facebook.model.GraphObject;
-import com.facebook.model.GraphObjectList;
-import com.facebook.model.OpenGraphAction;
-import com.facebook.model.OpenGraphObject;
-import com.facebook.widget.FacebookDialog;
 
 @Kroll.proxy(creatableInModule=TiFacebookModule.class)
 public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultEvent, OnInstanceStateEvent
 {
 	private static final String TAG = "FacebookProxy";
-	public static final String EVENT_LOGIN = "login";
-	public static final String EVENT_LOGOUT = "logout";
-	public static final String EVENT_TOKEN_UPDATED = "tokenUpdated";
-	public static final String PROPERTY_SUCCESS = "success";
-	public static final String PROPERTY_CANCELLED = "cancelled";
-	public static final String PROPERTY_ERROR = "error";
-	public static final String PROPERTY_CODE = "code";
-	public static final String PROPERTY_DATA = "data";
-	public static final String PROPERTY_UID = "uid";
-	public static final String PROPERTY_RESULT = "result";
-	public static final String PROPERTY_PATH = "path";
-	public static final String PROPERTY_METHOD = "method";
 	
-	private KrollProxy proxy;
+	private TiFacebookModule module;
 	private UiLifecycleHelper uiHelper;
-	private KrollFunction permissionCallback = null;
-	private boolean ignoreClose = false;
-	private boolean loggedIn = false;
-	private int meRequestTimeout;
-	private static AppEventsLogger logger;
-	
-	private static String uid = null;
-	private static String[] permissions = new String[]{};
-		
-	private Session.StatusCallback callback = new Session.StatusCallback() {
-		@Override
-	    public void call(Session session, 
-	    	SessionState state, Exception exception) {
-		    onSessionStateChange(session, state, exception);
-		}
-	};
-
-	private void onSessionStateChange(Session session, SessionState state, Exception exception) {
-		// We consider Opened, Closed, Cancelled and Error "final" states and finish off
-		// All other states are "intermediate"
-		
-		KrollDict data = new KrollDict();
-		
-		if (exception instanceof FacebookOperationCanceledException) {
-			ignoreClose = false;
-			loggedIn = false;
-			Log.d(TAG, "StatusCallback cancelled");			
-			data.put("cancelled", true);
-			data.put("success", false);
-			if (proxy.hasListeners(EVENT_LOGIN)) {
-				proxy.fireEvent(EVENT_LOGIN, data);
-			}
-			if (permissionCallback != null) {
-				permissionCallback.callAsync(proxy.getKrollObject(), data);
-				permissionCallback = null;
-			}
-		} else if (exception instanceof FacebookAuthorizationException) {
-			// login error
-			ignoreClose = false;
-			loggedIn = false;
-			Log.e(TAG, "StatusCallback error: " + exception.getMessage());
-			data.put("error", exception.getMessage());
-			data.put("success", false);
-			data.put("cancelled", false);
-			if (proxy.hasListeners(EVENT_LOGIN)) {
-				proxy.fireEvent(EVENT_LOGIN, data);
-			}
-			if (permissionCallback != null) {
-				permissionCallback.callAsync(proxy.getKrollObject(), data);
-				permissionCallback = null;
-			}
-		} else if (exception != null) {
-			// some other error
-			loggedIn = false;
-			Log.e(TAG, "StatusCallback error: " + exception.getMessage() + " state: " + state);
-			data.put("error", "Please check your network connection and try again");
-			data.put("success", false);
-			data.put("cancelled", false);	
-			if (permissionCallback != null) {
-				permissionCallback.callAsync(proxy.getKrollObject(), data);
-				permissionCallback = null;
-			}
-			if (ignoreClose) {
-				ignoreClose = false;
-				if (state == SessionState.CLOSED_LOGIN_FAILED) {
-					return; // we sometimes see this immediately after login attempt but login continues
-				}
-			}
-			if (proxy.hasListeners(EVENT_LOGIN)) {
-				proxy.fireEvent(EVENT_LOGIN, data);
-			}
-		} else if (state.isOpened()) {
-			// fire login
-			ignoreClose = false;
-			Log.d(TAG, "StatusCallback opened");
-			if (state == SessionState.OPENED_TOKEN_UPDATED) {
-				Log.d(TAG, "Session.state == OPENED_TOKEN_UPDATED");
-				if (permissionCallback != null) {
-					data.put("success", true);
-					permissionCallback.callAsync(proxy.getKrollObject(), data);
-					permissionCallback = null;
-				}
-				if (proxy.hasListeners(EVENT_TOKEN_UPDATED)) {
-					proxy.fireEvent(EVENT_TOKEN_UPDATED, null);
-				}
-				return;
-			}
-			if (loggedIn) {
-				// do not fire this again
-				// for example, may happen when refresh permissions or a request for new permissions succeeds
-				return;
-			}
-			loggedIn = true;
-			data.put("success", true);
-			data.put("cancelled", false);
-			if (proxy.hasListeners(EVENT_LOGIN)) {
-				makeMeRequest(proxy, session);
-			}
-			logger = uiHelper.getAppEventsLogger();
-		} else if (state.isClosed()) {
-			Log.d(TAG, "StatusCallback closed");
-			if (ignoreClose) {
-				// since we sometimes see Closed immediately after open is called
-				ignoreClose = false;
-				return;
-			}
-			if (!loggedIn) {
-				// do not fire if already !loggedIn
-				return;
-			}
-			loggedIn = false;
-			if (proxy.hasListeners(EVENT_LOGOUT)) {
-				proxy.fireEvent(EVENT_LOGOUT, null);
-			}
-			if (permissionCallback != null) {
-				data.put("logout", true);
-				permissionCallback.callAsync(proxy.getKrollObject(), data);
-				permissionCallback = null;
-			}
-		} else {
-			// log state
-			ignoreClose = false;
-			Log.d(TAG, "StatusCallback other state: " + state);
-		}
-	}
-		
-	private void makeMeRequest(final KrollProxy proxy, final Session session) {
-	    // Make an API call to get user data and define a 
-	    // new callback to handle the response.
-		Log.d(TAG, "makeMeRequest");
-		RequestBatch requestBatch = new RequestBatch();		
-	    Request request = Request.newMeRequest(session, 
-	            new Request.GraphUserCallback() {
-	        @Override
-	        public void onCompleted(GraphUser user, Response response) {
-	        	Log.d(TAG, "me response completed");
-	            // If the response is successful
-	        	FacebookRequestError err = response.getError();
-	        	KrollDict data = new KrollDict();
-	            if (session == Session.getActiveSession() && err == null) {
-	                if (user != null) {
-	                	Log.d(TAG, "user is not null");
-	                    uid = user.getId();
-						data.put(PROPERTY_CANCELLED, false);
-						data.put(PROPERTY_SUCCESS, true);
-						data.put(PROPERTY_UID, uid);
-						JSONObject userJson = user.getInnerJSONObject();
-						data.put(PROPERTY_DATA, userJson.toString());
-						data.put(PROPERTY_CODE, 0);
-						Log.d(TAG, "firing login event from module");
-						if (proxy.hasListeners(EVENT_LOGIN)) {
-							proxy.fireEvent(EVENT_LOGIN, data);
-						}
-	                }
-	            }
-	            if (err != null) {
-	            	String errorString = handleError(err);
-	                // Handle errors, will do so later.
-	            	Log.e(TAG, "me request callback error");
-	            	Log.e(TAG, "error userActionMessageId: " + err.getUserActionMessageId());
-	            	Log.e(TAG, "should notify user: " + err.shouldNotifyUser());
-	            	Log.e(TAG, "error message: " + err.getErrorMessage());
-      				Session session = Session.getActiveSession();
-    				if (session != null && !session.isClosed()) {
-    					session.closeAndClearTokenInformation();
-    				};
-	            	data.put(PROPERTY_ERROR, errorString);
-	            	if (proxy.hasListeners(EVENT_LOGIN)) {
-	            		proxy.fireEvent(EVENT_LOGIN, data);
-	            	}
-	            }
-	        }
-	    });
-	    requestBatch.add(request);
-	    requestBatch.setTimeout(meRequestTimeout);
-	    requestBatch.executeAsync();
-	}
-	
-    private String handleError(FacebookRequestError error) {
-        String errorMessage = null;
-
-        if (error == null) {
-        	errorMessage = "An error occurred. Please try again.";
-        } else {
-            switch (error.getCategory()) {
-                case AUTHENTICATION_RETRY:
-                    // tell the user what happened by getting the message id, and
-                    // retry the operation later
-                	if (error.shouldNotifyUser()) {
-                		errorMessage = TiApplication.getInstance().getString(error.getUserActionMessageId());
-                	} else {
-                		errorMessage = "Please login again";
-                	}
-                    break;
-
-                case AUTHENTICATION_REOPEN_SESSION:
-                    // close the session and reopen it.
-                	errorMessage = "Please login again";
-                    break;
-
-                case PERMISSION:
-                    // request the publish permission
-                    errorMessage = "The app does not have the required permissions. Please login again to provide additional permissions.";
-                    break;
-
-                case SERVER:
-                case THROTTLING:
-                    // this is usually temporary, don't clear the fields, and
-                    // ask the user to try again
-                    errorMessage = "Please retry, request failed due to heavy load";
-                    break;
-
-                case BAD_REQUEST:
-                    // this is likely a coding error, ask the user to file a bug
-                    errorMessage = "Bad request, contact the developer and log a bug";
-                    break;
-
-                case OTHER:
-                case CLIENT:
-                default:
-                    // an unknown issue occurred, this could be a code error, or
-                    // a server side issue, log the issue, and either ask the
-                    // user to retry, or file a bug
-                    errorMessage = "An error occurred, please retry.";
-            }
-        }
-        return errorMessage;
-    }	
 
 	// Constructor
 	public ActivityWorkerProxy()
 	{
 		super();
-		proxy = this;
+		module = TiFacebookModule.getFacebookModule();
 	}
 
 	// Handle creation options
@@ -299,279 +43,63 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
 	public void handleCreationDict(KrollDict options)
 	{
 		super.handleCreationDict(options);
-		if (options.containsKey("permissions")) {
-			String[] permissions = options.getStringArray("permissions");
-			ActivityWorkerProxy.permissions = Arrays.copyOf(permissions, permissions.length, String[].class);
-		}
 	}
 	
 	@Override
 	public void initActivity(Activity activity) {}
 	
-	@Kroll.getProperty @Kroll.method
-	public String getUid() {
-		return uid;
-	}
-	
-	@Kroll.getProperty @Kroll.method
-	public boolean canPresentShareDialog()
-	{
-		return FacebookDialog.canPresentShareDialog(TiApplication.getInstance(),
-				FacebookDialog.ShareDialogFeature.SHARE_DIALOG);
-	}
 
-	@Kroll.getProperty @Kroll.method
-	public boolean canPresentOpenGraphActionDialog()
-	{
-		return FacebookDialog.canPresentOpenGraphActionDialog(TiApplication.getInstance(),
-				FacebookDialog.OpenGraphActionDialogFeature.OG_ACTION_DIALOG);
-	}
-
-	@Kroll.getProperty
-	public String getAccessToken() {
-		Log.d(TAG, "get accessToken");
-		return Session.getActiveSession().getAccessToken();
-	}
-	
-	@Kroll.getProperty @Kroll.method
-	public Date getExpirationDate() {
-		return Session.getActiveSession().getExpirationDate();
-	}	
-	
-	@Kroll.getProperty @Kroll.method
-	public boolean getLoggedIn() {
-        Session session = Session.getActiveSession();
-        if (session != null && session.isOpened()) {
-        	loggedIn = true;
-            return true;
-        }
-        loggedIn = false;
-		return false;
-	}
-	
-	@Kroll.getProperty @Kroll.method
-	public String[] getPermissions() {
-		Session activeSession = Session.getActiveSession();
-		if (activeSession != null){
-			List<String> permissionsList = activeSession.getPermissions();
-			String[] permissionsArray = permissionsList.toArray(new String[permissionsList.size()]);
-			return permissionsArray;			
-		}
-		return null;	
-	}
-	
-	@Kroll.setProperty @Kroll.method
-	public void setPermissions(Object[] permissions) {
-		ActivityWorkerProxy.permissions = Arrays.copyOf(permissions, permissions.length, String[].class);
-	}
-	
-	@Kroll.method
-	public void initialize(@Kroll.argument(optional=true) int timeout) {
-		meRequestTimeout = timeout;
-		Log.d(TAG, "initialize called with timeout: " + meRequestTimeout);
-		Session session = Session.openActiveSessionFromCache(TiApplication.getInstance());
-		if (session != null){
-			Log.d(TAG, "cached session found");
-			loggedIn = true;
-			Log.d(TAG, "session opened from cache, state: " + session.getState());
-			makeMeRequest(this, session);
-		} else {
-			loggedIn = false;
-			Log.d(TAG, "no cached session, user will need to login");
-		}
-	}
-	
-	@Kroll.method
-	public void authorize() {
-		Activity activity = this.getActivity();
-		ignoreClose = true;
-		Log.d(TAG, "authorize called, permissions length: " + ActivityWorkerProxy.permissions.length);
-		for (int i=0; i < ActivityWorkerProxy.permissions.length; i++){
-			Log.d(TAG, "authorizing permission: " + ActivityWorkerProxy.permissions[i]);
-		}
-		Session.openActiveSession(activity, true, Arrays.asList(ActivityWorkerProxy.permissions), callback);		
-	}
-	
-	@Kroll.method
-	public void requestWithGraphPath(String path, KrollDict params, String httpMethod, final KrollFunction callback){
-	    Session session = Session.getActiveSession();
-	    if (httpMethod == null || httpMethod.length() == 0) {
-			httpMethod = "GET";
-		}
-	    Bundle paramBundle = Utils.mapToBundle(params);
-		Request request = new Request(session, path, paramBundle, 
-			HttpMethod.valueOf(httpMethod.toUpperCase()),  
-	        new Request.Callback() {
-				@Override
-				public void onCompleted(Response response) {
-		        	FacebookRequestError err = response.getError();
-		        	KrollDict data = new KrollDict();
-		            if (err != null) {
-		            	String errorString = handleError(err);
-		                // Handle errors, will do so later.
-		            	Log.e(TAG, "requestWithGraphPath callback error");
-		            	Log.e(TAG, "error userActionMessageId: " + err.getUserActionMessageId());
-		            	Log.e(TAG, "should notify user: " + err.shouldNotifyUser());
-		            	Log.e(TAG, "error message: " + err.getErrorMessage());
-		            	data.put(PROPERTY_ERROR, errorString);
-		            	callback.callAsync(proxy.getKrollObject(), data);
-		            	return;
-		            }
-		            
-					data.put(PROPERTY_SUCCESS, true);
-					String responseString = "";
-					GraphObject graphObject = response.getGraphObject();
-					if (graphObject != null) {
-						JSONObject responseJsonObject = graphObject.getInnerJSONObject();
-						responseString = responseJsonObject.toString();
-					} else {
-						GraphObjectList<GraphObject> graphObjectList = response.getGraphObjectList();
-						if (graphObjectList != null) {
-							JSONArray responseJsonArray = graphObjectList.getInnerJSONArray();
-							responseString = responseJsonArray.toString();
-						}
-					}
-					data.put(PROPERTY_RESULT, responseString);
-					callback.callAsync(proxy.getKrollObject(), data);
-				}});
-		request.executeAsync();
-	}
-	
-	@Kroll.method
-	public void refreshPermissionsFromServer() {
-		Session.getActiveSession().refreshPermissions();
-	}
-
-	@Kroll.method
-	public void logout() {
-		Log.d(TAG, "logout in facebook proxy");
-		Session session = Session.getActiveSession();
-		if (session != null && !session.isClosed()) {
-			Log.d(TAG, "closing session");
-			session.closeAndClearTokenInformation();
-		} else {
-			Log.d(TAG, "session is null or already closed");
-		}
-	}
-	
-	@Kroll.method
-	public void logCustomEvent(String event) {
-		if (logger != null) {
-			logger.logEvent(event);
-		}
-	}
-	
-	@Kroll.method
-	public void share(@Kroll.argument(optional = true) final KrollDict args)
-	{
-		FacebookDialog shareDialog = null;
-		if (args == null || args.isEmpty()) {
-			shareDialog = new FacebookDialog.ShareDialogBuilder(getActivity())
-				.build();
-		} else {
-			String url = (String) args.get("url");
-			String namespaceObject = (String) args.get("namespaceObject");
-			String namespaceAction = (String) args.get("namespaceAction");
-			String objectName = (String) args.get("objectName");
-			String imageUrl = (String) args.get("imageUrl");
-			String title = (String) args.get("title");
-			String description = (String) args.get("description");
-			String placeId = (String) args.get("placeId");
-			if (url != null && namespaceObject == null) {
-				shareDialog = new FacebookDialog.ShareDialogBuilder(getActivity())
-		        .setLink(url)
-		        .build();
-			} else {
-				OpenGraphObject ogObject = OpenGraphObject.Factory.createForPost(namespaceObject);
-				ogObject.setProperty("title", title);
-				ogObject.setProperty("image", imageUrl);
-				ogObject.setProperty("url", url);
-				ogObject.setProperty("description", description);
-
-				OpenGraphAction action = OpenGraphAction.Factory.createForPost(namespaceAction);
-				action.setProperty(objectName, ogObject);
-
-				if (placeId != null){
-					GraphPlace place = GraphObject.Factory.create(GraphPlace.class);
-					place.setId(placeId);
-					action.setPlace(place);
-				}
-
-				shareDialog = new FacebookDialog.OpenGraphActionDialogBuilder(getActivity(), action, objectName)
-					.build();
-			}
-			
-		}
-		if (shareDialog != null){
-			shareDialog.present();
-		}
-	}
-	
-	@Kroll.method
-	public void requestNewReadPermissions(String[] permissions, final KrollFunction callback) {
-		permissionCallback = callback;
-		Session.getActiveSession().requestNewReadPermissions(
-				new NewPermissionsRequest(getActivity(), Arrays.asList(permissions)));
-	}
-	
-	@Kroll.method
-	public void requestNewPublishPermissions(String[] permissions, final KrollFunction callback) {
-		permissionCallback = callback;
-		Session.getActiveSession().requestNewPublishPermissions(
-				new NewPermissionsRequest(getActivity(), Arrays.asList(permissions)));		
-	}
 	
 	@Override
 	public void onCreate(Activity activity, Bundle savedInstanceState) {
 		Log.d(TAG,  "onCreate called for facebook proxy");
-	    uiHelper = new UiLifecycleHelper(activity, callback);
-	    ((TiBaseActivity) activity).addOnInstanceStateEventListener(this);
-	    ((TiBaseActivity) activity).addOnActivityResultListener(this);
-	    uiHelper.onCreate(savedInstanceState);
+		uiHelper = new UiLifecycleHelper(activity, module.getSessionStatusCallback());
+		((TiBaseActivity) activity).addOnInstanceStateEventListener(this);
+		((TiBaseActivity) activity).addOnActivityResultListener(this);
+		uiHelper.onCreate(savedInstanceState);
 	}
 	
 	@Override
 	public void onResume(Activity activity){
 		Log.d(TAG, "Facebook proxy onResume");
-	    // For scenarios where the main activity is launched and user
-        // session is not null, the session state change notification
-        // may not be triggered. Trigger it if it's open/closed.
-        Session session = Session.getActiveSession();
-        if (session != null && (session.isOpened() && !loggedIn || 
-        		session.isClosed() && loggedIn)) {
-        	Log.d(TAG, "triggering onSessionStateChange in onResume");
-            onSessionStateChange(session, session.getState(), null);
-        } else {
-        	Log.d(TAG, "session is null or session is in intermediate state");
-        }
-	    uiHelper.onResume();
-	    AppEventsLogger.activateApp(activity);
-	    logger = uiHelper.getAppEventsLogger();
+		// For scenarios where the main activity is launched and user
+		// session is not null, the session state change notification
+		// may not be triggered. Trigger it if it's open/closed.
+		Session session = Session.getActiveSession();
+		if (session != null && (session.isOpened() && !module.getLoggedInVar() ||
+				session.isClosed() && module.getLoggedInVar())) {
+			Log.d(TAG, "triggering onSessionStateChange in onResume");
+			module.onSessionStateChange(session, session.getState(), null);
+		} else {
+			Log.d(TAG, "session is null or session is in intermediate state");
+		}
+		uiHelper.onResume();
+		AppEventsLogger.activateApp(activity);
 	}
 	
 	@Override
 	public void onPause(Activity activity) {
 		Log.d(TAG, "Facebook proxy onPause");
-	    uiHelper.onPause();
-	    AppEventsLogger.deactivateApp(activity);
+		uiHelper.onPause();
+		AppEventsLogger.deactivateApp(activity);
 	}
 
 	@Override
 	public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
 		Log.d(TAG, "Facebook proxy onActivityResult");
-	    uiHelper.onActivityResult(requestCode, resultCode, data);
+		uiHelper.onActivityResult(requestCode, resultCode, data);
 	}
 
 	@Override
 	public void onDestroy(Activity activity) {
 		Log.d(TAG, "Facebook proxy onDestroy");
-	    uiHelper.onDestroy();
+		uiHelper.onDestroy();
 	}
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		Log.d(TAG, "Facebook proxy onSaveInstanceState");
-	    uiHelper.onSaveInstanceState(outState);
+		uiHelper.onSaveInstanceState(outState);
 	}
 
 	@Override
