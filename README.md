@@ -167,7 +167,7 @@ someView.add(likeButton);
 Custom App Events
 -----------------
 ```
-fbActivityWorker.logCustomEvent('handsClapped'); // Pass a string for the event name, view the events on Facebook Insights
+fb.logCustomEvent('handsClapped'); // Pass a string for the event name, view the events on Facebook Insights
 ```
 
 Feel free to comment and help out! :)
