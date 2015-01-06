@@ -244,7 +244,7 @@ NSTimeInterval meRequestTimeout = 180.0;
  */
 -(id)loggedIn
 {
-    NSLog(@"[DEBUG] BSession.activeSession.state: %d", FBSession.activeSession.state);
+    NSLog(@"[DEBUG] FBSession.activeSession.state: %d", FBSession.activeSession.state);
     return NUMBOOL(FBSession.activeSession.state == FBSessionStateOpenTokenExtended || FBSession.activeSession.state == FBSessionStateOpen || FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded);
 }
 

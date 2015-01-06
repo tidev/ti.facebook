@@ -28,6 +28,10 @@
 		24DE9E1211C5FE74003F90F6 /* ComFacebookModuleAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DE9E1011C5FE74003F90F6 /* ComFacebookModuleAssets.m */; };
 		AA747D9F0F9514B9006C5449 /* ComFacebook_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* ComFacebook_Prefix.pch */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
+		EA625DDD1A5B0EDC004E82CA /* ComFacebookLikeButton.h in Headers */ = {isa = PBXBuildFile; fileRef = EA625DDB1A5B0EDC004E82CA /* ComFacebookLikeButton.h */; };
+		EA625DDE1A5B0EDC004E82CA /* ComFacebookLikeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EA625DDC1A5B0EDC004E82CA /* ComFacebookLikeButton.m */; };
+		EA625DE91A5C2742004E82CA /* ComFacebookLikeButtonProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = EA625DE71A5C2742004E82CA /* ComFacebookLikeButtonProxy.h */; };
+		EA625DEA1A5C2742004E82CA /* ComFacebookLikeButtonProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = EA625DE81A5C2742004E82CA /* ComFacebookLikeButtonProxy.m */; };
 		EA7E24F619EC4A3A001B4B0C /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA7E24F519EC4A3A001B4B0C /* FacebookSDK.framework */; };
 		EAC238AA19F1280B00E8103C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC238A919F1280B00E8103C /* Social.framework */; };
 /* End PBXBuildFile section */
@@ -51,6 +55,10 @@
 		AA747D9E0F9514B9006C5449 /* ComFacebook_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComFacebook_Prefix.pch; sourceTree = SOURCE_ROOT; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2AAC07E0554694100DB518D /* libComFacebook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libComFacebook.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA625DDB1A5B0EDC004E82CA /* ComFacebookLikeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComFacebookLikeButton.h; path = Classes/ComFacebookLikeButton.h; sourceTree = "<group>"; };
+		EA625DDC1A5B0EDC004E82CA /* ComFacebookLikeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ComFacebookLikeButton.m; path = Classes/ComFacebookLikeButton.m; sourceTree = "<group>"; };
+		EA625DE71A5C2742004E82CA /* ComFacebookLikeButtonProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComFacebookLikeButtonProxy.h; path = Classes/ComFacebookLikeButtonProxy.h; sourceTree = "<group>"; };
+		EA625DE81A5C2742004E82CA /* ComFacebookLikeButtonProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ComFacebookLikeButtonProxy.m; path = Classes/ComFacebookLikeButtonProxy.m; sourceTree = "<group>"; };
 		EA7E24F519EC4A3A001B4B0C /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = platform/FacebookSDK.framework; sourceTree = "<group>"; };
 		EAC238A919F1280B00E8103C /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -105,6 +113,10 @@
 				24DE9E1011C5FE74003F90F6 /* ComFacebookModuleAssets.m */,
 				24DD6CF71134B3F500162E58 /* ComFacebookModule.h */,
 				24DD6CF81134B3F500162E58 /* ComFacebookModule.m */,
+				EA625DDB1A5B0EDC004E82CA /* ComFacebookLikeButton.h */,
+				EA625DDC1A5B0EDC004E82CA /* ComFacebookLikeButton.m */,
+				EA625DE71A5C2742004E82CA /* ComFacebookLikeButtonProxy.h */,
+				EA625DE81A5C2742004E82CA /* ComFacebookLikeButtonProxy.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -128,6 +140,8 @@
 				AA747D9F0F9514B9006C5449 /* ComFacebook_Prefix.pch in Headers */,
 				24DD6CF91134B3F500162E58 /* ComFacebookModule.h in Headers */,
 				24DE9E1111C5FE74003F90F6 /* ComFacebookModuleAssets.h in Headers */,
+				EA625DDD1A5B0EDC004E82CA /* ComFacebookLikeButton.h in Headers */,
+				EA625DE91A5C2742004E82CA /* ComFacebookLikeButtonProxy.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,7 +216,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				24DD6CFA1134B3F500162E58 /* ComFacebookModule.m in Sources */,
+				EA625DDE1A5B0EDC004E82CA /* ComFacebookLikeButton.m in Sources */,
 				24DE9E1211C5FE74003F90F6 /* ComFacebookModuleAssets.m in Sources */,
+				EA625DEA1A5C2742004E82CA /* ComFacebookLikeButtonProxy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,7 +303,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INSTALL_PATH = /usr/local/lib;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "-DTI_POST_1_2";
 				OTHER_LDFLAGS = "-ObjC";
