@@ -1,39 +1,61 @@
-// This is a test harness for your module
-// You should do something interesting in this harness
-// to test out the module and to provide instructions
-// to users on how to use it by example.
+var fb = require('com.ti.facebook');
 
-
-// open a single window
 var win = Ti.UI.createWindow({
-	backgroundColor:'white'
+	title : 'facebook sample',
+	backgroundColor : '#fff',
+	fullscreen: false
 });
-var label = Ti.UI.createLabel();
-win.add(label);
+win.fbProxy = fb.createActivityWorker({lifecycleContainer: win});
+//create table view data object
+var data = [{
+	title : 'Login/Logout',
+	hasChild : true,
+	test : 'facebook_login_logout'
+}, {
+	title : 'Query',
+	hasChild : true,
+	test : 'facebook_query'
+}, {
+	title : 'Properties',
+	hasChild : true,
+	test : 'facebook_properties'
+}, {
+	title : 'Publish Stream',
+	hasChild : true,
+	test : 'facebook_publish_stream'
+}, {
+	title : 'Photos',
+	hasChild : true,
+	test : 'facebook_photos'
+}, {
+	title : 'Share Dialog',
+	hasChild : true,
+	test : 'facebook_share_dialog'
+}];
+
+// create table view
+for (var i = 0; i < data.length; i++) {
+	data[i].color = '#000';
+	data[i].font = {
+		fontWeight : 'bold',
+		fontSize : 20
+	};
+};
+var tableview = Titanium.UI.createTableView({
+	data : data
+});
+
+// create table view event listener
+tableview.addEventListener('click', function(e) {
+	if (e.rowData.test) {
+		var ExampleWindow = require(e.rowData.test), 
+			win = new ExampleWindow();
+		win.open();
+	}
+});
+
+// add table view to the window
+win.add(tableview); 
+
 win.open();
-
-// TODO: write your module tests here
-var ti_facebook = require('com.ti.facebook');
-Ti.API.info("module is => " + ti_facebook);
-
-label.text = ti_facebook.example();
-
-Ti.API.info("module exampleProp is => " + ti_facebook.exampleProp);
-ti_facebook.exampleProp = "This is a test value";
-
-if (Ti.Platform.name == "android") {
-	var proxy = ti_facebook.createExample({
-		message: "Creating an example Proxy",
-		backgroundColor: "red",
-		width: 100,
-		height: 100,
-		top: 100,
-		left: 150
-	});
-
-	proxy.printMessage("Hello world!");
-	proxy.message = "Hi world!.  It's me again.";
-	proxy.printMessage("Hello world!");
-	win.add(proxy);
-}
-
+fb.initialize(0);

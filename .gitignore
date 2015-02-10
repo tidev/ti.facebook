@@ -1,1 +1,6 @@
+# Eclipse
 build
+.project
+.classpath
+.settings/
+bin/**

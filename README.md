@@ -24,7 +24,7 @@ Current Functionality
 
 Installation Details
 --------------------
-* The minimum required SDK version is 3.6.0
+* The minimum required SDK version is 4.0.0
 * If you want to use the production 3_4_X branch, you may use this, which is kept current with Appcelerator's 3_4_X: https://github.com/mokesmokes/titanium_mobile/tree/3_4_M
 * In tiapp.xml or AndroidManifest.xml you must declare the following inside the `<application>` node
 `<activity android:name="com.facebook.LoginActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" 

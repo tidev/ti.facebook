@@ -8,6 +8,7 @@
  */
 package com.ti.facebook;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -16,12 +17,16 @@ import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollFunction;
 import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.annotations.Kroll;
+import org.appcelerator.kroll.common.CurrentActivityListener;
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.titanium.TiApplication;
+import org.appcelerator.titanium.util.TiUIHelper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import com.facebook.AppEventsLogger;
@@ -36,6 +41,7 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.Settings;
 import com.facebook.Session.NewPermissionsRequest;
+import com.facebook.android.Facebook;
 import com.facebook.model.GraphObject;
 import com.facebook.model.GraphObjectList;
 import com.facebook.model.GraphPlace;
@@ -60,20 +66,41 @@ public class TiFacebookModule extends KrollModule
 	public static final String PROPERTY_DATA = "data";
 	public static final String PROPERTY_UID = "uid";
 	public static final String PROPERTY_RESULT = "result";
+	public static final String PROPERTY_PATH = "path";
+	public static final String PROPERTY_METHOD = "method";
+	
+    @Kroll.constant public static final int BUTTON_STYLE_NORMAL = 0;
+    @Kroll.constant public static final int BUTTON_STYLE_WIDE = 1;
 
 	private static TiFacebookModule module;
 	private static String uid = null;
 	private static String[] permissions = new String[]{};
 
+	private ArrayList<TiFacebookStateListener> stateListeners = new ArrayList<TiFacebookStateListener>();
+	protected Facebook facebook = null;
+
 	private KrollFunction permissionCallback = null;
 	private boolean ignoreClose = false;
 	private boolean loggedIn = false;
 	private int meRequestTimeout;
+	
+	// Resource app id
+	private String app_id;
 
 	public TiFacebookModule()
 	{
 		super();
 		module = this;
+		loadResourceIds(TiApplication.getInstance());
+		facebook = new Facebook(app_id);
+	}
+	
+	private void loadResourceIds(Context context)
+	{
+		String packageName = context.getPackageName();
+		Resources resources = context.getResources();
+		int app_id_res_id = resources.getIdentifier("app_id", "string", packageName);
+		app_id = resources.getString(app_id_res_id);
 	}
 
 	@Kroll.onAppCreate
@@ -86,6 +113,7 @@ public class TiFacebookModule extends KrollModule
 	private Session.StatusCallback callback = new Session.StatusCallback() {
 		@Override
 	    public void call(Session session, SessionState state, Exception exception) {
+			Log.d(TAG, "onSessionStateChange called");
 			onSessionStateChange(session, state, exception);
 		}
 	};
@@ -103,6 +131,7 @@ public class TiFacebookModule extends KrollModule
 			data.put("cancelled", true);
 			data.put("success", false);
 			fireEvent(EVENT_LOGIN, data);
+			fireLoginChange();
 			if (permissionCallback != null) {
 				permissionCallback.callAsync(getKrollObject(), data);
 				permissionCallback = null;
@@ -116,6 +145,7 @@ public class TiFacebookModule extends KrollModule
 			data.put("success", false);
 			data.put("cancelled", false);
 			fireEvent(EVENT_LOGIN, data);
+			fireLoginChange();
 			if (permissionCallback != null) {
 				permissionCallback.callAsync(getKrollObject(), data);
 				permissionCallback = null;
@@ -138,6 +168,7 @@ public class TiFacebookModule extends KrollModule
 				}
 			}
 			fireEvent(EVENT_LOGIN, data);
+			fireLoginChange();
 		} else if (state.isOpened()) {
 			// fire login
 			ignoreClose = false;
@@ -150,6 +181,7 @@ public class TiFacebookModule extends KrollModule
 					permissionCallback = null;
 				}
 				fireEvent(EVENT_TOKEN_UPDATED, null);
+				fireLoginChange();
 				return;
 			}
 			if (loggedIn) {
@@ -165,15 +197,14 @@ public class TiFacebookModule extends KrollModule
 			Log.d(TAG, "StatusCallback closed");
 			if (ignoreClose) {
 				// since we sometimes see Closed immediately after open is called
+				Log.d(TAG, "Ignore close");
 				ignoreClose = false;
 				return;
 			}
-			if (!loggedIn) {
-				// do not fire if already !loggedIn
-				return;
-			}
 			loggedIn = false;
+			Log.d(TAG, "Fire event logout");
 			fireEvent(EVENT_LOGOUT, null);
+			fireLoginChange();
 			if (permissionCallback != null) {
 				data.put("logout", true);
 				permissionCallback.callAsync(getKrollObject(), data);
@@ -222,6 +253,7 @@ public class TiFacebookModule extends KrollModule
 						data.put(PROPERTY_CODE, 0);
 						Log.d(TAG, "firing login event from module");
 						fireEvent(EVENT_LOGIN, data);
+						fireLoginChange();
 					}
 				}
 				if (err != null) {
@@ -237,6 +269,7 @@ public class TiFacebookModule extends KrollModule
 					};
 					data.put(PROPERTY_ERROR, errorString);
 					fireEvent(EVENT_LOGIN, data);
+					fireLoginChange();
 				}
 			}
 		});
@@ -433,10 +466,8 @@ public class TiFacebookModule extends KrollModule
 		for (int i=0; i < TiFacebookModule.permissions.length; i++){
 			Log.d(TAG, "authorizing permission: " + TiFacebookModule.permissions[i]);
 		}
-		Session.openActiveSession(activity, true, Arrays.asList(TiFacebookModule.permissions), callback);		
+		Session.openActiveSession(activity, true, Arrays.asList(TiFacebookModule.permissions), callback);
 	}
-	
-
 	
 	@Kroll.method
 	public void refreshPermissionsFromServer() {
@@ -513,6 +544,62 @@ public class TiFacebookModule extends KrollModule
 		permissionCallback = callback;
 		Session.getActiveSession().requestNewPublishPermissions(
 				new NewPermissionsRequest(TiApplication.getInstance().getCurrentActivity(), Arrays.asList(permissions)));		
+	}
+
+	@Kroll.method
+	public TiFacebookModuleLoginButtonProxy createLoginButton(@Kroll.argument(optional=true) KrollDict options)
+	{
+		TiFacebookModuleLoginButtonProxy login = new TiFacebookModuleLoginButtonProxy(this);
+		if (options != null) {
+			login.extend(options);
+		}
+		return login;
+	}
+
+	private void fireLoginChange()
+	{
+		for (TiFacebookStateListener listener : stateListeners) {
+			if (getLoggedIn()) {
+				listener.login();
+			} else {
+				listener.logout();
+			}
+		}
+	}
+
+	protected void addListener(TiFacebookStateListener listener)
+	{
+		if (!stateListeners.contains(listener)) {
+			stateListeners.add(listener);
+		}
+	}
+
+	protected void removeListener(TiFacebookStateListener listener)
+	{
+		stateListeners.remove(listener);
+	}
+
+	// This method is deprecated. Please use share or requestWithGraphPath instead
+	@Kroll.method
+	public void dialog(final String action, final KrollDict params, final KrollFunction callback)
+	{
+		Log.w(TAG, "dialog is deprecated, use share or requestWithGraphPath instead");
+		TiUIHelper.waitForCurrentActivity(new CurrentActivityListener() {
+			@Override
+			public void onCurrentActivityReady(Activity activity)
+			{
+				final Activity fActivity = activity;
+				fActivity.runOnUiThread(new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						facebook.dialog(fActivity, action, Utils.mapToBundle(params),
+							new TiDialogListener(TiFacebookModule.this, callback, action));
+					}
+				});
+			}
+		});
 	}
 }
 

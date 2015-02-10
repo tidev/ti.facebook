@@ -4,6 +4,7 @@
 #
 version: 3.20.05
 apiversion: 2
+architectures: armeabi armeabi-v7a x86
 description: ti-facebook
 author: Mark Mokryn
 license: Apache License Version 2.0
