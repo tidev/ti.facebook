@@ -8,6 +8,7 @@
  */
 package com.ti.facebook;
 
+import java.net.HttpURLConnection;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +24,8 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.facebook.AppEventsLogger;
 import com.facebook.FacebookAuthorizationException;
@@ -30,7 +33,7 @@ import com.facebook.FacebookOperationCanceledException;
 import com.facebook.FacebookRequestError;
 import com.facebook.HttpMethod;
 import com.facebook.Request;
-import com.facebook.RequestBatch;
+import com.facebook.RequestAsyncTask;
 import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.SessionState;
@@ -201,48 +204,51 @@ public class TiFacebookModule extends KrollModule
 	public void makeMeRequest(final Session session) {
 		// Make an API call to get user data and define a
 		// new callback to handle the response.
-		Log.d(TAG, "makeMeRequest");
-		RequestBatch requestBatch = new RequestBatch();
-		Request request = Request.newMeRequest(session, new Request.GraphUserCallback() {
-			@Override
-			public void onCompleted(GraphUser user, Response response) {
-				Log.d(TAG, "me response completed");
-				// If the response is successful
-				FacebookRequestError err = response.getError();
-				KrollDict data = new KrollDict();
-				if (session == Session.getActiveSession() && err == null) {
-					if (user != null) {
-						Log.d(TAG, "user is not null");
-						uid = user.getId();
-						data.put(PROPERTY_CANCELLED, false);
-						data.put(PROPERTY_SUCCESS, true);
-						data.put(PROPERTY_UID, uid);
-						JSONObject userJson = user.getInnerJSONObject();
-						data.put(PROPERTY_DATA, userJson.toString());
-						data.put(PROPERTY_CODE, 0);
-						Log.d(TAG, "firing login event from module");
-						fireEvent(EVENT_LOGIN, data);
+		new Handler(Looper.getMainLooper()).post(new Runnable() {
+		    @Override
+		    public void run() {
+				Request request = Request.newMeRequest(session, new Request.GraphUserCallback() {
+					@Override
+					public void onCompleted(GraphUser user, Response response) {
+						// If the response is successful
+						FacebookRequestError err = response.getError();
+						KrollDict data = new KrollDict();
+						if (session == Session.getActiveSession() && err == null) {
+							if (user != null) {
+								Log.d(TAG, "user is not null");
+								uid = user.getId();
+								data.put(PROPERTY_CANCELLED, false);
+								data.put(PROPERTY_SUCCESS, true);
+								data.put(PROPERTY_UID, uid);
+								JSONObject userJson = user.getInnerJSONObject();
+								data.put(PROPERTY_DATA, userJson.toString());
+								data.put(PROPERTY_CODE, 0);
+								Log.d(TAG, "firing login event from module");
+								fireEvent(EVENT_LOGIN, data);
+							}
+						}
+						if (err != null) {
+							String errorString = handleError(err);
+							Log.e(TAG, "me request callback error");
+							Log.e(TAG, "error userActionMessageId: " + err.getUserActionMessageId());
+							Log.e(TAG, "should notify user: " + err.shouldNotifyUser());
+							Log.e(TAG, "error message: " + err.getErrorMessage());
+							Session session = Session.getActiveSession();
+							if (session != null && !session.isClosed()) {
+								session.closeAndClearTokenInformation();
+							};
+							data.put(PROPERTY_ERROR, errorString);
+							fireEvent(EVENT_LOGIN, data);
+						}
 					}
-				}
-				if (err != null) {
-					String errorString = handleError(err);
-					// Handle errors, will do so later.
-					Log.e(TAG, "me request callback error");
-					Log.e(TAG, "error userActionMessageId: " + err.getUserActionMessageId());
-					Log.e(TAG, "should notify user: " + err.shouldNotifyUser());
-					Log.e(TAG, "error message: " + err.getErrorMessage());
-					Session session = Session.getActiveSession();
-					if (session != null && !session.isClosed()) {
-						session.closeAndClearTokenInformation();
-					};
-					data.put(PROPERTY_ERROR, errorString);
-					fireEvent(EVENT_LOGIN, data);
-				}
-			}
+				});
+				HttpURLConnection connection = Request.toHttpConnection(request);
+				connection.setConnectTimeout(meRequestTimeout);
+				connection.setReadTimeout(meRequestTimeout);
+				RequestAsyncTask task = new RequestAsyncTask(connection, request);
+				task.execute();
+		    }
 		});
-		requestBatch.add(request);
-		requestBatch.setTimeout(meRequestTimeout);
-		requestBatch.executeAsync();
 	}
 	
 	private String handleError(FacebookRequestError error) {
@@ -290,7 +296,7 @@ public class TiFacebookModule extends KrollModule
 				// an unknown issue occurred, this could be a code error, or
 				// a server side issue, log the issue, and either ask the
 				// user to retry, or file a bug
-				errorMessage = "An error occurred, please retry.";
+				errorMessage = "Please check your network connection and try again.";
 			}
 		}
 		return errorMessage;
