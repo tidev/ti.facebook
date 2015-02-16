@@ -5,7 +5,7 @@
   *
   */
 
-package com.ti.facebook;
+package facebook;
 
 import org.appcelerator.titanium.view.TiUIView;
 import org.appcelerator.kroll.KrollDict;

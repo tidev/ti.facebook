@@ -6,7 +6,7 @@
  * Please see the LICENSE included with this distribution for details.
  *
  */
-package com.ti.facebook;
+package facebook;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,7 +50,7 @@ import com.facebook.model.OpenGraphAction;
 import com.facebook.model.OpenGraphObject;
 import com.facebook.widget.FacebookDialog;
 
-@Kroll.module(name="TiFacebook", id="com.ti.facebook")
+@Kroll.module(name="Facebook", id="facebook")
 public class TiFacebookModule extends KrollModule
 {
 

@@ -1,4 +1,4 @@
-<project name="ti-facebook" default="dist">
+<project name="facebook" default="dist">
 	<description>
 		Ant build script for Titanium Android module ti-facebook
 	</description>

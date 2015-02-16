@@ -1,5 +1,5 @@
 function fb_pub_stream() {
-	var fb = require('com.ti.facebook');
+	var fb = require('facebook');
 	
 	var win = Ti.UI.createWindow({
 		title: 'Publish Stream',

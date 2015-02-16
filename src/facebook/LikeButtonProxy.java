@@ -5,7 +5,7 @@
   *
   */
 
-package com.ti.facebook;
+package facebook;
 
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.annotations.Kroll;

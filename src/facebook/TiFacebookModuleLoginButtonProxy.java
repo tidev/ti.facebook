@@ -4,7 +4,7 @@
  * Please see the LICENSE included with this distribution for details.
  */
 
-package com.ti.facebook;
+package facebook;
 
 import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.kroll.common.Log;
