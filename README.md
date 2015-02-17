@@ -4,10 +4,10 @@ Titanium Facebook Module
 
 Notes
 ------------
-* Install locally to your Titanium project, not globally. If you wish to install globally for all projects, you will need to modify module.xcconfig to point Xcode to the location of the FacebookSDK framework (in iphone/platform directory)
 * Note that the FacebookSDK.framework directory is the prebuilt Facebook SDK directly downloaded from Facebook, zero modifications. 
 * Facebook is moving away from the native iOS login, and towards login through the Facebook app. The default behavior of this module is the same as in the Facebook SDK: app login with a fallback to webview. The advantages of the app login are: user control over individual permissions, and a uniform login experience over iOS, Android, and web. Additionally, the device login is quite prone to user error: for example, if the user declines to login initially with Facebook, then the next login will fail and the user needs to go into "Settings" on his phone and enable the app for Facebook. Many users will fail to do this. The only advantage of native device login is that it is faster. I recommend you leave the default as is, and if you do indeed elect nativeLogin then I recommend you do not request additional permissions beyond public_profile.
 * AppEvents are automatically logged. Check out the app Insights on Facebook. We can also log custom events for Insights.
+* Choose to use LogInButton, rather than a customized UI, since it's directly from facebook and it's easier in maintaining facebook sessions.
 
 Module Goals
 ------------
@@ -16,14 +16,6 @@ Module Goals
 * Reliable Facebook authorization
 * Proper error recovery mechanisms and user messaging - per Facebook's specs
 * Use recent, preferably current, Facebook SDKs otherwise the above is unlikely....
-* Feature parity with Titanium's Android Facebook module would be nice
-* Future: include additional Facebook SDK functionality, such as friend and place pickers
-
-Module Versioning
------------------
-
-x.y.zt, where x.y.z is the Facebook iOS SDK version, t denotes the Titanium module version for this SDK.
-This module version is 3.8.01 - i.e. uses Facebook iOS SDK 3.8.0
 
 Module API
 ----------
