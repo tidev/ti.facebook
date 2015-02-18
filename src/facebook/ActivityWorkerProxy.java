@@ -21,7 +21,7 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.facebook.*;
-import com.facebook.Session;
+import com.facebook.widget.FacebookDialog;
 
 @Kroll.proxy(creatableInModule=TiFacebookModule.class)
 public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultEvent, OnInstanceStateEvent
@@ -30,6 +30,7 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
 	
 	private TiFacebookModule module;
 	private UiLifecycleHelper uiHelper;
+	public static final String EVENT_SHARE_COMPLETE = "shareCompleted";
 
 	// Constructor
 	public ActivityWorkerProxy()
@@ -48,12 +49,11 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
 	@Override
 	public void initActivity(Activity activity) {}
 	
-
-	
 	@Override
 	public void onCreate(Activity activity, Bundle savedInstanceState) {
 		Log.d(TAG,  "onCreate called for facebook proxy");
 		uiHelper = new UiLifecycleHelper(activity, module.getSessionStatusCallback());
+		module.setUiHelper(uiHelper);
 		((TiBaseActivity) activity).addOnInstanceStateEventListener(this);
 		((TiBaseActivity) activity).addOnActivityResultListener(this);
 		uiHelper.onCreate(savedInstanceState);
@@ -87,7 +87,34 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
 	@Override
 	public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
 		Log.d(TAG, "Facebook proxy onActivityResult");
-		uiHelper.onActivityResult(requestCode, resultCode, data);
+		uiHelper.onActivityResult(requestCode, resultCode, data, new FacebookDialog.Callback() {
+			KrollDict dict = new KrollDict();
+	        @Override
+	        public void onError(FacebookDialog.PendingCall pendingCall, Exception error, Bundle data) {
+	            Log.e("TiAsh", String.format("Error: %s", error.toString()));
+	            Log.d("TiAsh", "Error True");
+	            dict.put("error", error.toString());
+	            dict.put("success", false);
+	            dict.put("cancelled", false);
+				fireEvent(EVENT_SHARE_COMPLETE, dict);
+	        }
+
+	        @Override
+	        public void onComplete(FacebookDialog.PendingCall pendingCall, Bundle data) {
+	            if(FacebookDialog.getNativeDialogDidComplete(data) && FacebookDialog.getNativeDialogCompletionGesture(data) != null 
+	            		&& !FacebookDialog.COMPLETION_GESTURE_CANCEL.equals(FacebookDialog.getNativeDialogCompletionGesture(data))){
+	            	Log.d("TiAsh", "Success True");
+	            	dict.put("success", true);
+	            	dict.put("cancelled", false);
+	    			fireEvent(EVENT_SHARE_COMPLETE, dict);
+	            } else {
+	            	Log.d("TiAsh", "Cancelled True");
+	            	dict.put("success", false);
+	            	dict.put("cancelled", true);
+	    			fireEvent(EVENT_SHARE_COMPLETE, dict);
+	            }
+	        }
+	    });
 	}
 
 	@Override

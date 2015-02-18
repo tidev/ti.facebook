@@ -41,6 +41,7 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.Settings;
 import com.facebook.Session.NewPermissionsRequest;
+import com.facebook.UiLifecycleHelper;
 import com.facebook.android.Facebook;
 import com.facebook.model.GraphObject;
 import com.facebook.model.GraphObjectList;
@@ -89,6 +90,7 @@ public class TiFacebookModule extends KrollModule
 	private boolean ignoreClose = false;
 	private boolean loggedIn = false;
 	private int meRequestTimeout;
+	private UiLifecycleHelper uiLifecycleHelper;
 	
 	// Resource app id
 	private String app_id;
@@ -530,13 +532,15 @@ public class TiFacebookModule extends KrollModule
 			}
 			
 		}
-		if (shareDialog != null){
+		if (shareDialog != null && uiLifecycleHelper != null) {
+			uiLifecycleHelper.trackPendingDialogCall(shareDialog.present());
+		} else if (shareDialog != null) {
 			shareDialog.present();
 		}
 	}
 	
 	@Kroll.method
-	public void presentWebShareDialog(@Kroll.argument(optional = true) final KrollDict args, final KrollFunction callback)
+	public void presentWebShareDialog(final KrollFunction callback, @Kroll.argument(optional = true) final KrollDict args)
 	{
 		WebDialog feedDialog = null;
 		if (args == null || args.isEmpty()) {
@@ -626,7 +630,7 @@ public class TiFacebookModule extends KrollModule
 	}
 
 	@Kroll.method
-	public void presentSendRequestDialog(@Kroll.argument(optional = true) final KrollDict args, final KrollFunction callback)
+	public void presentSendRequestDialog(final KrollFunction callback, @Kroll.argument(optional = true) final KrollDict args)
 	{
 		Bundle params = new Bundle();
 		if (args == null || args.isEmpty()) {
@@ -705,6 +709,10 @@ public class TiFacebookModule extends KrollModule
 				});
 			}
 		});
+	}
+
+	public void setUiHelper(UiLifecycleHelper uiHelper) {
+		uiLifecycleHelper = uiHelper;
 	}
 }
 
