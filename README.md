@@ -7,6 +7,7 @@ The Facebook proxy must still be created for each Activity, but it no longer has
 
 Overview
 ------------
+* See [the sample app](https://github.com/mokesmokes/facebook-titanium-sample) for usage examples.
 * Please read thie carefully since this module is (by necessity) different from previous Facebook Android modules
 * This module is based on Facebook's latest Android SDK (3.18.0, currently), and in accordance with Facebook's samples and recommendations.
 * The API is similar to the iOS Facebook module I wrote, differing in some places where required.
