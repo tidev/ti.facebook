@@ -71,54 +71,7 @@ you *will* get a `login` event. It's important to understand the reason for this
 However, there is a possibility this token is invalid without the SDK's knowledge (e.g. the user changed her password, etc).
 Thus, the only way to verify the token's and session's validity is to make a call to Facebook's servers. 
 You will not get the `login` event if there was no cached session. 
-In that case - the module will close the session. Below is the integrated flow for both Android and iOS:
-```javascript
-var fb = require('com.ti.facebook');
-var win1.fbProxy = fb.createActivityWorker({lifecycleContainer: win1});
-fb.permissions = ['public_profile', 'email', 'user_friends'];
-// now set up listeners
-fb.addEventListener('login', function(e) {
-	if(e.success) {
-		// do your thang.... 
-	} else if (e.cancelled) {
-		// login was cancelled, just show your login UI again
-	} else if (e.error) {
-		if (Ti.Platform.name === 'iPhone OS') {
-			var loginAlert = Ti.UI.createAlertDialog({title: 'Login Error'});
-			if (e.error.indexOf('OTHER:') !== 0){
-				// guaranteed a string suitable for display to user
-				loginAlert.message = e.error;
-			} else {
-				//alert('Please check your network connection and try again.');
-				// after "OTHER:" there may be useful error data, not suitable for user display
-				loginAlert.message = 'Please check your network connection and try again';
-			}
-		} else {
-			loginAlert.message = e.error;
-		}
-	} else {
-		// if not success, nor cancelled, nor error message then pop a generic message
-		// e.g. "Check your network, etc" . This is per Facebook's instructions
-	}
-});
-
-fb.addEventListener('logout', function(e)........
-		
-fb.initialize(5000); // the module will do nothing prior to this. This enabled you to set up listeners anywhere in the app	
-                     // You can (and should) pass a timeout (in ms) for the /me request that occurs upon login,
-                     // the default value is 0 (no timeout)
-
-if (!fb.loggedIn) {
-	// you want to show your login UI in this case
-	// if the user is loggedIn, just wait for the login event
-	// when you want the user to login, call fb.authorize()
-}
-
-myLoginButton.addEventListener('click', function(e) {
-	fb.authorize(); // this will show the Facebook login UI
-	.....
-});
-```
+See [the sample app](https://github.com/mokesmokes/facebook-titanium-sample) for a full example.
 
 Refreshing Permissions
 ----------------------
