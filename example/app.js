@@ -5,20 +5,24 @@ var win = Ti.UI.createWindow({
 	backgroundColor : '#fff',
 	fullscreen: false
 });
-win.fbProxy = fb.createActivityWorker({lifecycleContainer: win});
+
+if (Ti.Platform.osname == 'android') {
+	win.fbProxy = fb.createActivityWorker({lifecycleContainer: win});
+}
+
 //create table view data object
 var data = [{
 	title : 'Login/Logout',
 	hasChild : true,
 	test : 'facebook_login_logout'
 }, {
-	title : 'Query',
-	hasChild : true,
-	test : 'facebook_query'
-}, {
 	title : 'Properties',
 	hasChild : true,
 	test : 'facebook_properties'
+}, {
+	title : 'Read Stream',
+	hasChild : true,
+	test : 'facebook_read_stream'
 }, {
 	title : 'Publish Stream',
 	hasChild : true,
@@ -56,6 +60,6 @@ tableview.addEventListener('click', function(e) {
 
 // add table view to the window
 win.add(tableview); 
-
+fb.initialize(4000);
 win.open();
-fb.initialize(0);
+

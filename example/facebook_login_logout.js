@@ -7,7 +7,9 @@ function fb_login_logout() {
 		fullscreen: false
 	});
 	
-	win.fbProxy = fb.createActivityWorker({lifecycleContainer: win});
+	if (Ti.Platform.osname == 'android') {
+		win.fbProxy = fb.createActivityWorker({lifecycleContainer: win});
+	}
 	
 	//
 	// Login Status
@@ -29,14 +31,13 @@ function fb_login_logout() {
 	fb.addEventListener('login', updateLoginStatus);
 	fb.addEventListener('logout', updateLoginStatus);
 	
-	//
-	// Login Button
-	//
-	win.add(fb.createLoginButton({
-		style : fb.BUTTON_STYLE_WIDE,
+
+	var loginButton = fb.createLoginButton({
+		readPermissions: ['read_stream','email'],
 		bottom : 30
-	})); 
-	
+	});
+	loginButton.readPermissions = ['email'];
+	win.add(loginButton); 
 
 	return win;
 };

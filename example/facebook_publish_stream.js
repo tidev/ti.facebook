@@ -7,8 +7,9 @@ function fb_pub_stream() {
 		fullscreen: false
 	});
 	
-	win.fbProxy = fb.createActivityWorker({lifecycleContainer: win});
-
+	if (Ti.Platform.osname == 'android') {
+		win.fbProxy = fb.createActivityWorker({lifecycleContainer: win});
+	}
 	function showRequestResult(e) {
 		var s = '';
 		if (e.success) {
@@ -46,20 +47,6 @@ function fb_pub_stream() {
 	fb.addEventListener('login', function(e) {
 		if (e.success) {
 			actionsView.show();
-			//If publish_actions permission is not granted, request it
-			if(fb.permissions.indexOf('publish_actions') < 0) {
-				fb.requestNewPublishPermissions(['publish_actions'],function(e){
-					if(e.success) {
-						Ti.API.info('Permissions:'+fb.permissions);
-					}
-					if(e.error) {
-						Ti.API.info('Publish permission error');
-					}
-					if(e.cancelled) {
-						Ti.API.info('Publish permission cancelled');
-					}
-				});
-			}
 		}
 		if (e.error) {
 			alert(e.error);
@@ -86,7 +73,23 @@ function fb_pub_stream() {
 		if( (text === '')){
 			Ti.UI.createAlertDialog({ tile:'ERROR', message:'No text to Publish !! '}).show();
 		}else {
-			fb.requestWithGraphPath('me/feed', {message: text}, "POST", showRequestResult);
+			//If publish_actions permission is not granted, request it
+			if(fb.permissions.indexOf('publish_actions') < 0) {
+					fb.requestNewPublishPermissions(['publish_actions'],function(e){
+						if(e.success) {
+							Ti.API.info('Permissions:'+fb.permissions);
+							fb.requestWithGraphPath('me/feed', {message: text}, "POST", showRequestResult);
+						}
+						if(e.error) {
+							Ti.API.info('Publish permission error');
+						}
+						if(e.cancelled) {
+							Ti.API.info('Publish permission cancelled');
+						}
+					});
+			} else {
+				fb.requestWithGraphPath('me/feed', {message: text}, "POST", showRequestResult);
+			}
 		}	
 	});
 	actionsView.add(statusBtn);
@@ -105,7 +108,24 @@ function fb_pub_stream() {
 			description: "This section of the site is dedicated to JavaScript-the-language, the parts that are not specific to web pages or other host environments...",
 			test: [ {foo:'Encoding test', bar:'Durp durp'}, 'test' ]
 		};
-		fb.requestWithGraphPath('me/feed', data, 'POST', showRequestResult);
+		//If publish_actions permission is not granted, request it
+		if(fb.permissions.indexOf('publish_actions') < 0) {
+				fb.requestNewPublishPermissions(['publish_actions'],function(e){
+					if(e.success) {
+						Ti.API.info('Permissions:'+fb.permissions);
+						fb.requestWithGraphPath('me/feed', data, 'POST', showRequestResult);
+					}
+					if(e.error) {
+						Ti.API.info('Publish permission error');
+					}
+					if(e.cancelled) {
+						Ti.API.info('Publish permission cancelled');
+					}
+				});
+		} else {
+			fb.requestWithGraphPath('me/feed', data, 'POST', showRequestResult);
+		} 
+		
 	});
 	actionsView.add(wall);
 	
@@ -125,12 +145,27 @@ function fb_pub_stream() {
 			picture: "http://developer.appcelerator.com/assets/img/DEV_titmobile_image.png",
 			description: "You've got the ideas, now you've got the power. Titanium translates your hard won web skills..."
 		};
-		//Dialog is deprecated, use requestWithGraphPath or share insstead
+		//Dialog is deprecated, use requestWithGraphPath or share instead
 		//fb.dialog("feed", data, showRequestResult);
-		fb.requestWithGraphPath('me/feed', data, 'POST', showRequestResult);
+		//If publish_actions permission is not granted, request it
+		if(fb.permissions.indexOf('publish_actions') < 0) {
+				fb.requestNewPublishPermissions(['publish_actions'],function(e){
+					if(e.success) {
+						Ti.API.info('Permissions:'+fb.permissions);
+						fb.requestWithGraphPath('me/feed', data, 'POST', showRequestResult);
+					}
+					if(e.error) {
+						Ti.API.info('Publish permission error');
+					}
+					if(e.cancelled) {
+						Ti.API.info('Publish permission cancelled');
+					}
+				});
+		}  else {
+			fb.requestWithGraphPath('me/feed', data, 'POST', showRequestResult);
+		}
 	});
 	actionsView.add(wallDialog);
-	
 	
 	var description = "FYI, the 'Publish wall post with GRAPH API with no cache data' button will publish a post with a link to the Mozilla MDN JavaScript page, saying 'Best online Javascript reference'.\n\nDo the 'Publish wall post with GRAPH API with no cache data' option more than once, and be sure the 'iteration n' gets incremented each time.  This proves that cached post data is *not* being re-used, which is important.";
 	actionsView.add(Ti.UI.createLabel({bottom: 10, text: description, color:'#000'}));

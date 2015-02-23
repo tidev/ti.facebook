@@ -7,7 +7,9 @@ function fb_photos() {
 		fullscreen: false
 	});
 	
-	win.fbProxy = fb.createActivityWorker({lifecycleContainer: win});
+	if (Ti.Platform.osname == 'android') {
+		win.fbProxy = fb.createActivityWorker({lifecycleContainer: win});
+	}
 	
 	var B1_TITLE = 'Upload Photo from Gallery with Graph API';
 	var B2_TITLE = 'Upload Photo from file with Graph API';
@@ -55,20 +57,6 @@ function fb_photos() {
 	fb.addEventListener('login', function(e) {
 		if (e.success) {
 			actionsView.show();
-			//If publish_actions permission is not granted, request it
-			if(fb.permissions.indexOf('publish_actions') < 0) {
-				fb.requestNewPublishPermissions(['publish_actions'],function(e){
-					if(e.success) {
-						Ti.API.info('Permissions:'+fb.permissions);
-					}
-					if(e.error) {
-						Ti.API.info('Publish permission error');
-					}
-					if(e.cancelled) {
-						Ti.API.info('Publish permission cancelled');
-					}
-				});
-			}
 		}
 		if (e.error) {
 			alert(e.error);
@@ -86,7 +74,23 @@ function fb_photos() {
 			{
 				b1.title = 'Uploading Photo...';
 				var data = {picture: event.media};
-				fb.requestWithGraphPath('me/photos', data, "POST", showRequestResult);
+				//If publish_actions permission is not granted, request it
+				if(fb.permissions.indexOf('publish_actions') < 0) {
+					fb.requestNewPublishPermissions(['publish_actions'],function(e){
+						if(e.success) {
+							Ti.API.info('Permissions:'+fb.permissions);
+							fb.requestWithGraphPath('me/photos', data, "POST", showRequestResult);
+						}
+						if(e.error) {
+							Ti.API.info('Publish permission error');
+						}
+						if(e.cancelled) {
+							Ti.API.info('Publish permission cancelled');
+						}
+					});
+				} else {
+					fb.requestWithGraphPath('me/photos', data, "POST", showRequestResult);
+				}
 			},
 			cancel:function()
 			{
@@ -107,8 +111,23 @@ function fb_photos() {
 			caption: 'behold, a flower',
 			picture: blob
 		};
-		// Rest API is deprecated. Please use requestWithGraphPath
-		fb.requestWithGraphPath('me/photos', data, "POST", showRequestResult);
+		//If publish_actions permission is not granted, request it
+		if(fb.permissions.indexOf('publish_actions') < 0) {
+			fb.requestNewPublishPermissions(['publish_actions'],function(e){
+				if(e.success) {
+					Ti.API.info('Permissions:'+fb.permissions);
+					fb.requestWithGraphPath('me/photos', data, "POST", showRequestResult);
+				}
+				if(e.error) {
+					Ti.API.info('Publish permission error');
+				}
+				if(e.cancelled) {
+					Ti.API.info('Publish permission cancelled');
+				}
+			});
+		} else {
+			fb.requestWithGraphPath('me/photos', data, "POST", showRequestResult);
+		}
 	});
 	
 	
