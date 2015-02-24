@@ -16,16 +16,12 @@ import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollFunction;
 import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.annotations.Kroll;
-import org.appcelerator.kroll.common.CurrentActivityListener;
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.titanium.TiApplication;
-import org.appcelerator.titanium.util.TiUIHelper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 
 import com.facebook.AppEventsLogger;
@@ -42,7 +38,6 @@ import com.facebook.SessionState;
 import com.facebook.Settings;
 import com.facebook.Session.NewPermissionsRequest;
 import com.facebook.UiLifecycleHelper;
-import com.facebook.android.Facebook;
 import com.facebook.model.GraphObject;
 import com.facebook.model.GraphObjectList;
 import com.facebook.model.GraphPlace;
@@ -84,31 +79,16 @@ public class TiFacebookModule extends KrollModule
 	private static String uid = null;
 	private static String[] permissions = new String[]{};
 
-	protected Facebook facebook = null;
-
 	private KrollFunction permissionCallback = null;
 	private boolean ignoreClose = false;
 	private boolean loggedIn = false;
 	private int meRequestTimeout;
 	private UiLifecycleHelper uiLifecycleHelper;
 	
-	// Resource app id
-	private String app_id;
-
 	public TiFacebookModule()
 	{
 		super();
 		module = this;
-		loadResourceIds(TiApplication.getInstance());
-		facebook = new Facebook(app_id);
-	}
-	
-	private void loadResourceIds(Context context)
-	{
-		String packageName = context.getPackageName();
-		Resources resources = context.getResources();
-		int app_id_res_id = resources.getIdentifier("app_id", "string", packageName);
-		app_id = resources.getString(app_id_res_id);
 	}
 
 	@Kroll.onAppCreate
@@ -686,29 +666,6 @@ public class TiFacebookModule extends KrollModule
 		permissionCallback = callback;
 		Session.getActiveSession().requestNewPublishPermissions(
 				new NewPermissionsRequest(TiApplication.getInstance().getCurrentActivity(), Arrays.asList(permissions)));		
-	}
-		
-	// This method is deprecated. Please use share or requestWithGraphPath instead
-	@Kroll.method
-	public void dialog(final String action, final KrollDict params, final KrollFunction callback)
-	{
-		Log.w(TAG, "dialog is deprecated, use share or requestWithGraphPath instead");
-		TiUIHelper.waitForCurrentActivity(new CurrentActivityListener() {
-			@Override
-			public void onCurrentActivityReady(Activity activity)
-			{
-				final Activity fActivity = activity;
-				fActivity.runOnUiThread(new Runnable()
-				{
-					@Override
-					public void run()
-					{
-						facebook.dialog(fActivity, action, Utils.mapToBundle(params),
-							new TiDialogListener(TiFacebookModule.this, callback, action));
-					}
-				});
-			}
-		});
 	}
 
 	public void setUiHelper(UiLifecycleHelper uiHelper) {

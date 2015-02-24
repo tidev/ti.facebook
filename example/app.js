@@ -16,10 +16,6 @@ var data = [{
 	hasChild : true,
 	test : 'facebook_login_logout'
 }, {
-	title : 'Properties',
-	hasChild : true,
-	test : 'facebook_properties'
-}, {
 	title : 'Read Stream',
 	hasChild : true,
 	test : 'facebook_read_stream'
