@@ -522,136 +522,158 @@ public class TiFacebookModule extends KrollModule
 	@Kroll.method
 	public void presentWebShareDialog(final KrollFunction callback, @Kroll.argument(optional = true) final KrollDict args)
 	{
-		WebDialog feedDialog = null;
-		if (args == null || args.isEmpty()) {
-			feedDialog =
-					new WebDialog.FeedDialogBuilder(TiApplication.getInstance().getCurrentActivity(),
-					Session.getActiveSession())
-			.setOnCompleteListener(new OnCompleteListener() {
-	            @Override
-	            public void onComplete(Bundle values,
-	                FacebookException error) {
-	            	KrollDict data = new KrollDict();
-	                if (error == null) {
-	                    // When the story is posted, echo the success
-	                    // and the post Id.
-	                    final String postId = values.getString("post_id");
-	                    if (postId != null) {
-	                    	data.put(PROPERTY_SUCCESS, true);
-	                    	data.put(PROPERTY_RESULT, postId);
-	                    	callback.callAsync(getKrollObject(), data);
-	                    } else {
-	                        // User clicked the Cancel button
-	                    	data.put(PROPERTY_ERROR, "Publish cancelled");
-	                    	callback.callAsync(getKrollObject(), data);
-	                    }
-	                } else if (error instanceof FacebookOperationCanceledException) {
-	                    // User clicked the "x" button
-	                	data.put(PROPERTY_ERROR, "Publish cancelled");
-                    	callback.callAsync(getKrollObject(), data);
-	                } else {
-	                    // Generic, ex: network error
-	                	data.put(PROPERTY_ERROR, "Error posting story");
-                    	callback.callAsync(getKrollObject(), data);
-	                }
-	            }
+		//Important note: WebDialog uses a WebView. When this is created normally via Titanium SDK, this will not work correctly.
+		//This is solved by explicitly running this code on the UiThread.
+		//This is mentioned in the Android docs here: https://developer.android.com/guide/webapps/migrating.html
+		//If you call methods on WebView from any thread other than your app's UI thread, it can cause unexpected results. 
+		//For example, if your app uses multiple threads, you can use the runOnUiThread() method to ensure your code 
+		//executes on the UI thread
+		TiApplication.getInstance().getCurrentActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				WebDialog feedDialog = null;
+				if (args == null || args.isEmpty()) {
+					feedDialog =
+							new WebDialog.FeedDialogBuilder(TiApplication.getInstance().getCurrentActivity(),
+									Session.getActiveSession())
+					.setOnCompleteListener(new OnCompleteListener() {
+						@Override
+						public void onComplete(Bundle values,
+								FacebookException error) {
+							KrollDict data = new KrollDict();
+							if (error == null) {
+								// When the story is posted, echo the success
+								// and the post Id.
+								final String postId = values.getString("post_id");
+								if (postId != null) {
+									data.put(PROPERTY_SUCCESS, true);
+									data.put(PROPERTY_RESULT, postId);
+									callback.callAsync(getKrollObject(), data);
+								} else {
+									// User clicked the Cancel button
+									data.put(PROPERTY_ERROR, "Publish cancelled");
+									callback.callAsync(getKrollObject(), data);
+								}
+							} else if (error instanceof FacebookOperationCanceledException) {
+								// User clicked the "x" button
+								data.put(PROPERTY_ERROR, "Publish cancelled");
+								callback.callAsync(getKrollObject(), data);
+							} else {
+								// Generic, ex: network error
+								data.put(PROPERTY_ERROR, "Error posting story");
+								callback.callAsync(getKrollObject(), data);
+							}
+						}
+					})
+					.build();
+				} else {
+					String url = (String) args.get("url");
+					String imageUrl = (String) args.get("imageUrl");
+					String title = (String) args.get("title");
+					String description = (String) args.get("description");
+					Bundle params = new Bundle();
+					params.putString("name", title);
+					params.putString("description", description);
+					params.putString("link", url);
+					params.putString("picture", imageUrl);
+					feedDialog = (
+							new WebDialog.FeedDialogBuilder(TiApplication.getInstance().getCurrentActivity(),
+									Session.getActiveSession(),
+									params))
+									.setOnCompleteListener(new OnCompleteListener() {
+										@Override
+										public void onComplete(Bundle values,
+												FacebookException error) {
+											KrollDict data = new KrollDict();
+											if (error == null) {
+												// When the story is posted, echo the success
+												// and the post Id.
+												final String postId = values.getString("post_id");
+												if (postId != null) {
+													data.put(PROPERTY_SUCCESS, true);
+													data.put(PROPERTY_RESULT, postId);
+													callback.callAsync(getKrollObject(), data);
+												} else {
+													// User clicked the Cancel button
+													data.put(PROPERTY_ERROR, "Publish cancelled");
+													callback.callAsync(getKrollObject(), data);
+												}
+											} else if (error instanceof FacebookOperationCanceledException) {
+												// User clicked the "x" button
+												data.put(PROPERTY_ERROR, "Publish cancelled");
+												callback.callAsync(getKrollObject(), data);
+											} else {
+												// Generic, ex: network error
+												data.put(PROPERTY_ERROR, "Error posting story");
+												callback.callAsync(getKrollObject(), data);
+											}
+										}
 
-	        })
-			.build();
-		} else {
-		String url = (String) args.get("url");
-		String imageUrl = (String) args.get("imageUrl");
-		String title = (String) args.get("title");
-		String description = (String) args.get("description");
-		Bundle params = new Bundle();
-	    params.putString("name", title);
-	    params.putString("description", description);
-	    params.putString("link", url);
-	    params.putString("picture", imageUrl);
-	    feedDialog = (
-	        new WebDialog.FeedDialogBuilder(TiApplication.getInstance().getCurrentActivity(),
-	            Session.getActiveSession(),
-	            params))
-			.setOnCompleteListener(new OnCompleteListener() {
-	            @Override
-	            public void onComplete(Bundle values,
-	                FacebookException error) {
-	            	KrollDict data = new KrollDict();
-	                if (error == null) {
-	                    // When the story is posted, echo the success
-	                    // and the post Id.
-	                    final String postId = values.getString("post_id");
-	                    if (postId != null) {
-	                    	data.put(PROPERTY_SUCCESS, true);
-	                    	data.put(PROPERTY_RESULT, postId);
-	                    	callback.callAsync(getKrollObject(), data);
-	                    } else {
-	                        // User clicked the Cancel button
-	                    	data.put(PROPERTY_ERROR, "Publish cancelled");
-	                    	callback.callAsync(getKrollObject(), data);
-	                    }
-	                } else if (error instanceof FacebookOperationCanceledException) {
-	                    // User clicked the "x" button
-	                	data.put(PROPERTY_ERROR, "Publish cancelled");
-                    	callback.callAsync(getKrollObject(), data);
-	                } else {
-	                    // Generic, ex: network error
-	                	data.put(PROPERTY_ERROR, "Error posting story");
-                    	callback.callAsync(getKrollObject(), data);
-	                }
-	            }
+									})
+									.build();
+				}
+				if (feedDialog != null){
+					feedDialog.show();
+				}
+			}
+		});
 
-	        })
-	        .build();
-		}
-		if (feedDialog != null){
-		    feedDialog.show();
-		}
 	}
 
 	@Kroll.method
 	public void presentSendRequestDialog(final KrollFunction callback, @Kroll.argument(optional = true) final KrollDict args)
 	{
-		Bundle params = new Bundle();
-		if (args == null || args.isEmpty()) {
-			params.putString("message", (String) args.get("message"));
-			params.putString("data", (String) args.get("data"));
-			params.putString("to", (String) args.get("to"));
-			params.putString("action_type", (String) args.get("action_type"));
-			params.putString("object_id", (String) args.get("object_id"));
-		}
-	    WebDialog requestsDialog = (
-	        new WebDialog.RequestsDialogBuilder(TiApplication.getAppCurrentActivity(),
-	            Session.getActiveSession(),
-	            params))
-	            .setOnCompleteListener(new OnCompleteListener() {
-	                @Override
-	                public void onComplete(Bundle values,
-	                    FacebookException error) {
-	                	KrollDict data = new KrollDict();
-	                    if (error != null) {
-	                        if (error instanceof FacebookOperationCanceledException) {
-		                    	data.put(PROPERTY_ERROR, "Request cancelled");
-		                    	callback.callAsync(getKrollObject(), data);
-	                        } else {
-	    	                	data.put(PROPERTY_ERROR, "Network Error");
-	                        	callback.callAsync(getKrollObject(), data);
-	                        }
-	                    } else {
-	                        final String requestId = values.getString("request");
-	                        if (requestId != null) {
-		                    	data.put(PROPERTY_SUCCESS, true);
-		                    	data.put(PROPERTY_RESULT, requestId);
-		                    	callback.callAsync(getKrollObject(), data);
-	                        } else {
-	    	                	data.put(PROPERTY_ERROR, "Request cancelled");
-	                        	callback.callAsync(getKrollObject(), data);
-	                        }
-	                    }
-	                }
-	            })
-	            .build();
-	    requestsDialog.show();
+		//Important note: WebDialog uses a WebView. When this is created normally via Titanium SDK, this will not work correctly.
+		//This is solved by explicitly running this code on the UiThread.
+		//This is mentioned in the Android docs here: https://developer.android.com/guide/webapps/migrating.html
+		//If you call methods on WebView from any thread other than your app's UI thread, it can cause unexpected results. 
+		//For example, if your app uses multiple threads, you can use the runOnUiThread() method to ensure your code 
+		//executes on the UI thread
+		TiApplication.getInstance().getCurrentActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				Bundle params = new Bundle();
+				if (args == null || args.isEmpty()) {
+					params.putString("message", (String) args.get("message"));
+					params.putString("data", (String) args.get("data"));
+					params.putString("to", (String) args.get("to"));
+					params.putString("action_type", (String) args.get("action_type"));
+					params.putString("object_id", (String) args.get("object_id"));
+				}
+				WebDialog requestsDialog = (
+						new WebDialog.RequestsDialogBuilder(TiApplication.getAppCurrentActivity(),
+								Session.getActiveSession(),
+								params))
+								.setOnCompleteListener(new OnCompleteListener() {
+									@Override
+									public void onComplete(Bundle values,
+											FacebookException error) {
+										KrollDict data = new KrollDict();
+										if (error != null) {
+											if (error instanceof FacebookOperationCanceledException) {
+												data.put(PROPERTY_ERROR, "Request cancelled");
+												callback.callAsync(getKrollObject(), data);
+											} else {
+												data.put(PROPERTY_ERROR, "Network Error");
+												callback.callAsync(getKrollObject(), data);
+											}
+										} else {
+											final String requestId = values.getString("request");
+											if (requestId != null) {
+												data.put(PROPERTY_SUCCESS, true);
+												data.put(PROPERTY_RESULT, requestId);
+												callback.callAsync(getKrollObject(), data);
+											} else {
+												data.put(PROPERTY_ERROR, "Request cancelled");
+												callback.callAsync(getKrollObject(), data);
+											}
+										}
+									}
+								})
+								.build();
+				requestsDialog.show();
+			}
+		});
 	}
 
 	@Kroll.method
