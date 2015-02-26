@@ -24,6 +24,13 @@ function fb_photos() {
 		title:B2_TITLE,
 		left: 10, right: 10, top: 100, height: 80
 	});
+	
+	var B3_TITLE = 'Request Dialog';
+	
+	var b3 = Ti.UI.createButton({
+		title:B3_TITLE,
+		left: 10, right: 10, top: 200, height: 80
+	});
 			
 	var login = fb.createLoginButton({
 		top: 10
@@ -34,8 +41,13 @@ function fb_photos() {
 	var actionsView = Ti.UI.createView({
 		top: 80, left: 0, right: 0, visible: fb.loggedIn, height: 'auto'
 	});
+
 	actionsView.add(b1);
 	actionsView.add(b2);
+	
+	if (Ti.Platform.osname == 'android') {
+		actionsView.add(b3);
+	}
 	
 	fb.addEventListener('login', function(e) {
 		if (e.success) {
@@ -58,26 +70,39 @@ function fb_photos() {
 	});
 
 	win.fbProxy.addEventListener('shareCompleted', function(e) {
-		if (e.success) {
-         alert('share completed');
-     }
-     else if (e.cancelled) {
-           alert('share cancelled');
-     }
-     else {
-           alert('error ' + e.error);           
-     }
+	if (e.success) {
+		alert('share completed');
+	}
+	else if (e.cancelled) {
+		alert('share cancelled');
+	}
+	else {
+		alert('error ' + e.error);           
+	}
 	});
 	
 	b2.addEventListener('click', function() {
 		fb.presentWebShareDialog(function(e){
-		if (e.success) {
-			alert("Success");
-		}
-		if (e.error) {
-			alert(e.error);
-		}
+			if (e.success) {
+				alert("Success");
+			}
+			if (e.error) {
+				alert(e.error);
+			}
 		});
+
+	});
+	
+	b3.addEventListener('click', function() {
+		fb.presentSendRequestDialog(function(e){
+			if (e.success) {
+				alert("Success");
+			}
+			if (e.error) {
+				alert(e.error);
+			}
+		}, 
+		{message: 'Go to https://appcelerator.com/'});
 
 	});
 	

@@ -533,8 +533,7 @@ public class TiFacebookModule extends KrollModule
 			public void run() {
 				WebDialog feedDialog = null;
 				if (args == null || args.isEmpty()) {
-					feedDialog =
-							new WebDialog.FeedDialogBuilder(TiApplication.getInstance().getCurrentActivity(),
+					feedDialog = new WebDialog.FeedDialogBuilder(TiApplication.getInstance().getCurrentActivity(),
 									Session.getActiveSession())
 					.setOnCompleteListener(new OnCompleteListener() {
 						@Override
@@ -576,10 +575,8 @@ public class TiFacebookModule extends KrollModule
 					params.putString("description", description);
 					params.putString("link", url);
 					params.putString("picture", imageUrl);
-					feedDialog = (
-							new WebDialog.FeedDialogBuilder(TiApplication.getInstance().getCurrentActivity(),
-									Session.getActiveSession(),
-									params))
+					feedDialog = (new WebDialog.FeedDialogBuilder(TiApplication.getInstance().getCurrentActivity(),
+									Session.getActiveSession(), params))
 									.setOnCompleteListener(new OnCompleteListener() {
 										@Override
 										public void onComplete(Bundle values,
@@ -612,7 +609,7 @@ public class TiFacebookModule extends KrollModule
 									})
 									.build();
 				}
-				if (feedDialog != null){
+				if (feedDialog != null) {
 					feedDialog.show();
 				}
 			}
@@ -632,46 +629,78 @@ public class TiFacebookModule extends KrollModule
 		TiApplication.getInstance().getCurrentActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				Bundle params = new Bundle();
-				if (args == null || args.isEmpty()) {
-					params.putString("message", (String) args.get("message"));
-					params.putString("data", (String) args.get("data"));
-					params.putString("to", (String) args.get("to"));
-					params.putString("action_type", (String) args.get("action_type"));
-					params.putString("object_id", (String) args.get("object_id"));
-				}
-				WebDialog requestsDialog = (
-						new WebDialog.RequestsDialogBuilder(TiApplication.getAppCurrentActivity(),
-								Session.getActiveSession(),
-								params))
-								.setOnCompleteListener(new OnCompleteListener() {
-									@Override
-									public void onComplete(Bundle values,
-											FacebookException error) {
-										KrollDict data = new KrollDict();
-										if (error != null) {
-											if (error instanceof FacebookOperationCanceledException) {
-												data.put(PROPERTY_ERROR, "Request cancelled");
-												callback.callAsync(getKrollObject(), data);
+				WebDialog requestsDialog = null;
+			    if (args == null || args.isEmpty()) {
+					requestsDialog = (new WebDialog.RequestsDialogBuilder(TiApplication.getAppCurrentActivity(),
+									Session.getActiveSession()))
+					.setOnCompleteListener(new OnCompleteListener() {
+							@Override
+							public void onComplete(Bundle values,
+									FacebookException error) {
+								KrollDict data = new KrollDict();
+								if (error != null) {
+									if (error instanceof FacebookOperationCanceledException) {
+										data.put(PROPERTY_ERROR, "Request cancelled");
+										callback.callAsync(getKrollObject(), data);
+									} else {
+										data.put(PROPERTY_ERROR, "Network Error");
+										callback.callAsync(getKrollObject(), data);
+									}
+								} else {
+									final String requestId = values.getString("request");
+									if (requestId != null) {
+										data.put(PROPERTY_SUCCESS, true);
+										data.put(PROPERTY_RESULT, requestId);
+										callback.callAsync(getKrollObject(), data);
+									} else {
+										data.put(PROPERTY_ERROR, "Request cancelled");
+										callback.callAsync(getKrollObject(), data);
+									}
+								}
+							}
+						})
+						.build();
+			    } else {
+					String message = (String) args.get("message");
+					String data = (String) args.get("data");
+					Bundle params = new Bundle();
+				    params.putString("message", message);
+				    params.putString("data", data);
+			    	requestsDialog = (
+							new WebDialog.RequestsDialogBuilder(TiApplication.getAppCurrentActivity(),
+									Session.getActiveSession(),
+									params))
+									.setOnCompleteListener(new OnCompleteListener() {
+										@Override
+										public void onComplete(Bundle values,
+												FacebookException error) {
+											KrollDict data = new KrollDict();
+											if (error != null) {
+												if (error instanceof FacebookOperationCanceledException) {
+													data.put(PROPERTY_ERROR, "Request cancelled");
+													callback.callAsync(getKrollObject(), data);
+												} else {
+													data.put(PROPERTY_ERROR, "Network Error");
+													callback.callAsync(getKrollObject(), data);
+												}
 											} else {
-												data.put(PROPERTY_ERROR, "Network Error");
-												callback.callAsync(getKrollObject(), data);
-											}
-										} else {
-											final String requestId = values.getString("request");
-											if (requestId != null) {
-												data.put(PROPERTY_SUCCESS, true);
-												data.put(PROPERTY_RESULT, requestId);
-												callback.callAsync(getKrollObject(), data);
-											} else {
-												data.put(PROPERTY_ERROR, "Request cancelled");
-												callback.callAsync(getKrollObject(), data);
+												final String requestId = values.getString("request");
+												if (requestId != null) {
+													data.put(PROPERTY_SUCCESS, true);
+													data.put(PROPERTY_RESULT, requestId);
+													callback.callAsync(getKrollObject(), data);
+												} else {
+													data.put(PROPERTY_ERROR, "Request cancelled");
+													callback.callAsync(getKrollObject(), data);
+												}
 											}
 										}
-									}
-								})
-								.build();
-				requestsDialog.show();
+									})
+									.build();
+			    }
+			    if (requestsDialog != null) {
+			    	requestsDialog.show();
+				}
 			}
 		});
 	}
