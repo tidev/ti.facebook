@@ -48,7 +48,7 @@ def read_ti_xcconfig():
 	return config
 
 def generate_doc(config):
-	docdir = os.path.join(cwd,'documentation')
+	docdir = os.path.join(cwd,'..','documentation')
 	if not os.path.exists(docdir):
 		print "Couldn't find documentation file at: %s" % docdir
 		return None
