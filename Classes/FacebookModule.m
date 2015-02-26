@@ -473,10 +473,8 @@ NSTimeInterval meRequestTimeout = 180.0;
                                       handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
                                           BOOL success = NO;
                                           BOOL cancelled = NO;
-                                          long code = 0;
                                           NSString *errorDescription = @"";
                                           if (error) {
-                                              code = [error code];
                                               errorDescription = [FBErrorUtility userMessageForError:error];
                                           } else {
                                               success = YES;
@@ -490,8 +488,7 @@ NSTimeInterval meRequestTimeout = 180.0;
                                           NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                                                         NUMBOOL(cancelled),@"cancelled",
                                                                         NUMBOOL(success),@"success",
-                                                                        NUMLONG(code),@"code",
-                                                                        [error description], @"errorDescription", nil];
+                                                                        [error description], @"error", nil];
                                           [self fireEvent:@"shareCompleted" withObject:event];
                                       }];
     }, NO);
@@ -507,10 +504,8 @@ NSTimeInterval meRequestTimeout = 180.0;
                                                   handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
                                                       BOOL cancelled = NO;
                                                       BOOL success = NO;
-                                                      long code = 0;
                                                       NSString *errorDescription = @"";
                                                       if (error) {
-                                                          code = [error code];
                                                           errorDescription = [FBErrorUtility userMessageForError:error];
                                                       } else {
                                                           if (result == FBWebDialogResultDialogNotCompleted) {
@@ -532,13 +527,55 @@ NSTimeInterval meRequestTimeout = 180.0;
                                                       NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                                                                     NUMBOOL(cancelled),@"cancelled",
                                                                                     NUMBOOL(success),@"success",
-                                                                                    NUMLONG(code),@"code",
-                                                                                    errorDescription,@"errorDescription",nil];
+                                                                                    errorDescription,@"error",nil];
                                                       [self fireEvent:@"shareCompleted" withObject:event];
                                                   }];
     }, NO);
 }
 
+//presents game request dialog.
+-(void)presentSendRequestDialog:(id)args
+{
+    id params = [args objectAtIndex:0];
+    ENSURE_SINGLE_ARG(params, NSDictionary);
+    NSString *message = [params objectForKey:@"message"];
+    NSString *data = [params objectForKey:@"data"];
+    NSDictionary *additionalParams = [NSDictionary dictionaryWithObjectsAndKeys:data,@"data", nil];
+    
+    TiThreadPerformOnMainThread(^{
+        [FBWebDialogs presentRequestsDialogModallyWithSession:FBSession.activeSession
+                                                      message:message title:nil parameters:additionalParams
+                                                  handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+                                                      BOOL cancelled = NO;
+                                                      BOOL success = NO;
+                                                      NSString *errorDescription = @"";
+                                                      if (error) {
+                                                          errorDescription = [FBErrorUtility userMessageForError:error];
+                                                      } else {
+                                                          if (result == FBWebDialogResultDialogNotCompleted) {
+                                                              cancelled = YES;
+                                                              success = NO;
+                                                          } else {
+                                                              // Handle the publish feed callback
+                                                              NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
+                                                              if (![urlParams valueForKey:@"request"]) {
+                                                                  // User cancelled.
+                                                                  cancelled = YES;
+                                                                  success = NO;
+                                                              } else {
+                                                                  cancelled = NO;
+                                                                  success = YES;
+                                                              }
+                                                          }
+                                                      }
+                                                      NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                                                                    NUMBOOL(cancelled),@"cancelled",
+                                                                                    NUMBOOL(success),@"success",
+                                                                                    errorDescription,@"error",nil];
+                                                      [self fireEvent:@"requestDialogCompleted" withObject:event];
+                                                  }];
+    }, NO);
+}
 
 -(void)refreshPermissionsFromServer:(id)args
 {
