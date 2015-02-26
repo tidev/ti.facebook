@@ -17,7 +17,6 @@ BOOL temporarilySuspended = NO;
 
 #pragma mark Internal
 
-BOOL nativeLogin = false;
 NSTimeInterval meRequestTimeout = 180.0;
 
 // this is generated for your module, please do not change it
@@ -393,26 +392,13 @@ NSTimeInterval meRequestTimeout = 180.0;
 
     TiThreadPerformOnMainThread(^{
         NSArray *permissions_ = permissions == nil ? [NSArray array] : permissions;
-        BOOL hasIntegratedFacebookAtAll = ([SLComposeViewController class] != nil);
-        BOOL userHasIntegratedFacebookAccountSetup = hasIntegratedFacebookAtAll && ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]);
-
-        if (nativeLogin && userHasIntegratedFacebookAccountSetup) {
-            NSArray *deviceLoginPerms = @[ @"public_profile"];
-            FBSession *session = [[[FBSession alloc] initWithPermissions:allowUI ? deviceLoginPerms : FBSession.activeSession.permissions] autorelease];
-            [FBSession setActiveSession:session];
-            [session openWithBehavior:FBSessionLoginBehaviorUseSystemAccountIfPresent
-                completionHandler:^(FBSession *fbsession,
-                                    FBSessionState state, NSError *error) {
-                    [self sessionStateChanged:fbsession state:state error:error];
-                }];
-        } else {
-            BOOL sessionOpened = [FBSession openActiveSessionWithReadPermissions: allowUI ? permissions_ : FBSession.activeSession.permissions allowLoginUI:allowUI completionHandler:
+        BOOL sessionOpened = [FBSession openActiveSessionWithReadPermissions: allowUI ? permissions_ : FBSession.activeSession.permissions allowLoginUI:allowUI completionHandler:
                                   ^(FBSession *session,
                                     FBSessionState state, NSError *error) {
                                       [self sessionStateChanged:session state:state error:error];
             }];
             NSLog(@"[DEBUG] openActiveSessionWithReadPermissions returned: %d", sessionOpened);
-        }
+        
     }, NO);
 }
 
@@ -421,17 +407,13 @@ NSTimeInterval meRequestTimeout = 180.0;
 // else loggedIn will be false
 -(void)initialize:(id)args
 {
-    id arg0 = [args objectAtIndex:0];
-    ENSURE_SINGLE_ARG_OR_NIL(arg0, NSNumber);
-    double timeoutInMs = [TiUtils intValue:arg0 def:0];
+    ENSURE_SINGLE_ARG_OR_NIL(args, NSNumber);
+    double timeoutInMs = [TiUtils intValue:args def:0];
     if (timeoutInMs == 0) {
         meRequestTimeout = 180.0;
     } else {
         meRequestTimeout = (double)timeoutInMs / 1000.0;
     }
-    id arg1 = [args objectAtIndex:1];
-    ENSURE_SINGLE_ARG_OR_NIL(arg1, NSNumber);
-    nativeLogin = [TiUtils boolValue:arg1 def:NO];
     
     TiThreadPerformOnMainThread(^{
         NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
