@@ -69,6 +69,8 @@ public class TiFacebookModule extends KrollModule
 	public static final String PROPERTY_RESULT = "result";
 	public static final String PROPERTY_PATH = "path";
 	public static final String PROPERTY_METHOD = "method";
+	public static final String EVENT_SHARE_COMPLETE = "shareCompleted";
+	public static final String EVENT_REQUEST_DIALOG_COMPLETE = "requestDialogCompleted";
 	
     @Kroll.constant public static final int AUDIENCE_NONE = 0;
     @Kroll.constant public static final int AUDIENCE_ONLY_ME = 1;
@@ -526,7 +528,7 @@ public class TiFacebookModule extends KrollModule
 	}
 	
 	@Kroll.method
-	public void presentWebShareDialog(final KrollFunction callback, @Kroll.argument(optional = true) final KrollDict args)
+	public void presentWebShareDialog(@Kroll.argument(optional = true) final KrollDict args)
 	{
 		//Important note: WebDialog uses a WebView. When this is created normally via Titanium SDK, this will not work correctly.
 		//This is solved by explicitly running this code on the UiThread.
@@ -552,21 +554,26 @@ public class TiFacebookModule extends KrollModule
 								final String postId = values.getString("post_id");
 								if (postId != null) {
 									data.put(PROPERTY_SUCCESS, true);
+									data.put(PROPERTY_CANCELLED, false);
 									data.put(PROPERTY_RESULT, postId);
-									callback.callAsync(getKrollObject(), data);
+									fireEvent(EVENT_SHARE_COMPLETE, data);
 								} else {
 									// User clicked the Cancel button
-									data.put(PROPERTY_ERROR, "Publish cancelled");
-									callback.callAsync(getKrollObject(), data);
+									data.put(PROPERTY_SUCCESS, false);
+									data.put(PROPERTY_CANCELLED, true);
+									fireEvent(EVENT_SHARE_COMPLETE, data);
 								}
 							} else if (error instanceof FacebookOperationCanceledException) {
 								// User clicked the "x" button
-								data.put(PROPERTY_ERROR, "Publish cancelled");
-								callback.callAsync(getKrollObject(), data);
+								data.put(PROPERTY_SUCCESS, false);
+								data.put(PROPERTY_CANCELLED, true);
+								fireEvent(EVENT_SHARE_COMPLETE, data);
 							} else {
 								// Generic, ex: network error
+								data.put(PROPERTY_SUCCESS, false);
+								data.put(PROPERTY_CANCELLED, false);
 								data.put(PROPERTY_ERROR, "Error posting story");
-								callback.callAsync(getKrollObject(), data);
+								fireEvent(EVENT_SHARE_COMPLETE, data);
 							}
 						}
 					})
@@ -594,21 +601,27 @@ public class TiFacebookModule extends KrollModule
 												final String postId = values.getString("post_id");
 												if (postId != null) {
 													data.put(PROPERTY_SUCCESS, true);
+													data.put(PROPERTY_CANCELLED, false);
 													data.put(PROPERTY_RESULT, postId);
-													callback.callAsync(getKrollObject(), data);
+													fireEvent(EVENT_SHARE_COMPLETE, data);
 												} else {
 													// User clicked the Cancel button
-													data.put(PROPERTY_ERROR, "Publish cancelled");
-													callback.callAsync(getKrollObject(), data);
+													Log.d("TiAsh", "Cancelled Pressed");
+													data.put(PROPERTY_SUCCESS, false);
+													data.put(PROPERTY_CANCELLED, true);
+													fireEvent(EVENT_SHARE_COMPLETE, data);
 												}
 											} else if (error instanceof FacebookOperationCanceledException) {
 												// User clicked the "x" button
-												data.put(PROPERTY_ERROR, "Publish cancelled");
-												callback.callAsync(getKrollObject(), data);
+												data.put(PROPERTY_SUCCESS, false);
+												data.put(PROPERTY_CANCELLED, true);
+												fireEvent(EVENT_SHARE_COMPLETE, data);
 											} else {
 												// Generic, ex: network error
+												data.put(PROPERTY_SUCCESS, false);
+												data.put(PROPERTY_CANCELLED, false);
 												data.put(PROPERTY_ERROR, "Error posting story");
-												callback.callAsync(getKrollObject(), data);
+												fireEvent(EVENT_SHARE_COMPLETE, data);
 											}
 										}
 
@@ -624,7 +637,7 @@ public class TiFacebookModule extends KrollModule
 	}
 
 	@Kroll.method
-	public void presentSendRequestDialog(final KrollFunction callback, @Kroll.argument(optional = true) final KrollDict args)
+	public void presentSendRequestDialog(@Kroll.argument(optional = true) final KrollDict args)
 	{
 		//Important note: WebDialog uses a WebView. When this is created normally via Titanium SDK, this will not work correctly.
 		//This is solved by explicitly running this code on the UiThread.
@@ -646,21 +659,26 @@ public class TiFacebookModule extends KrollModule
 								KrollDict data = new KrollDict();
 								if (error != null) {
 									if (error instanceof FacebookOperationCanceledException) {
-										data.put(PROPERTY_ERROR, "Request cancelled");
-										callback.callAsync(getKrollObject(), data);
+										data.put(PROPERTY_SUCCESS, false);
+							            data.put(PROPERTY_CANCELLED, true);
+										fireEvent(EVENT_REQUEST_DIALOG_COMPLETE, data);
 									} else {
+										data.put(PROPERTY_SUCCESS, false);
+										data.put(PROPERTY_CANCELLED, false);
 										data.put(PROPERTY_ERROR, "Network Error");
-										callback.callAsync(getKrollObject(), data);
+										fireEvent(EVENT_REQUEST_DIALOG_COMPLETE, data);
 									}
 								} else {
 									final String requestId = values.getString("request");
 									if (requestId != null) {
 										data.put(PROPERTY_SUCCESS, true);
+										data.put(PROPERTY_CANCELLED, false);
 										data.put(PROPERTY_RESULT, requestId);
-										callback.callAsync(getKrollObject(), data);
+										fireEvent(EVENT_REQUEST_DIALOG_COMPLETE, data);
 									} else {
-										data.put(PROPERTY_ERROR, "Request cancelled");
-										callback.callAsync(getKrollObject(), data);
+							            data.put(PROPERTY_SUCCESS, false);
+							            data.put(PROPERTY_CANCELLED, true);
+										fireEvent(EVENT_REQUEST_DIALOG_COMPLETE, data);
 									}
 								}
 							}
@@ -683,21 +701,26 @@ public class TiFacebookModule extends KrollModule
 											KrollDict data = new KrollDict();
 											if (error != null) {
 												if (error instanceof FacebookOperationCanceledException) {
-													data.put(PROPERTY_ERROR, "Request cancelled");
-													callback.callAsync(getKrollObject(), data);
+										            data.put(PROPERTY_SUCCESS, false);
+										            data.put(PROPERTY_CANCELLED, true);
+													fireEvent(EVENT_REQUEST_DIALOG_COMPLETE, data);
 												} else {
+										            data.put(PROPERTY_SUCCESS, false);
+										            data.put(PROPERTY_CANCELLED, false);
 													data.put(PROPERTY_ERROR, "Network Error");
-													callback.callAsync(getKrollObject(), data);
+													fireEvent(EVENT_REQUEST_DIALOG_COMPLETE, data);
 												}
 											} else {
 												final String requestId = values.getString("request");
 												if (requestId != null) {
 													data.put(PROPERTY_SUCCESS, true);
+													data.put(PROPERTY_CANCELLED, false);
 													data.put(PROPERTY_RESULT, requestId);
-													callback.callAsync(getKrollObject(), data);
+													fireEvent(EVENT_REQUEST_DIALOG_COMPLETE, data);
 												} else {
-													data.put(PROPERTY_ERROR, "Request cancelled");
-													callback.callAsync(getKrollObject(), data);
+										            data.put(PROPERTY_SUCCESS, false);
+										            data.put(PROPERTY_CANCELLED, true);
+													fireEvent(EVENT_REQUEST_DIALOG_COMPLETE, data);
 												}
 											}
 										}

@@ -68,42 +68,41 @@ function fb_photos() {
 			fb.presentShareDialog({url: 'https://appcelerator.com/' });
 		} 
 	});
-
-	win.fbProxy.addEventListener('shareCompleted', function(e) {
-	if (e.success) {
-		alert('share completed');
-	}
-	else if (e.cancelled) {
-		alert('share cancelled');
-	}
-	else {
-		alert('error ' + e.error);           
-	}
-	});
 	
 	b2.addEventListener('click', function() {
-		fb.presentWebShareDialog(function(e){
-			if (e.success) {
-				alert("Success");
-			}
-			if (e.error) {
-				alert(e.error);
-			}
-		});
-
+		fb.presentWebShareDialog({url: 'https://appcelerator.com/' });
 	});
 	
 	b3.addEventListener('click', function() {
-		fb.presentSendRequestDialog(function(e){
-			if (e.success) {
-				alert("Success");
-			}
-			if (e.error) {
-				alert(e.error);
-			}
-		}, 
-		{message: 'Go to https://appcelerator.com/'});
-
+		fb.presentSendRequestDialog( 
+			{message: 'Go to https://appcelerator.com/'}, 
+			{data:
+	        "{\"badge_of_awesomeness\":\"1\"," +
+	        "\"social_karma\":\"5\"}"});
+	});
+	
+	fb.addEventListener('shareCompleted', function(e) {
+		if (e.success) {
+			alert('Share completed');
+		}
+		else if (e.cancelled) {
+			alert('Share cancelled');
+		}
+		else {
+			alert('error ' + e.error);           
+		}
+	});
+	
+	fb.addEventListener('requestDialogCompleted', function(e) {
+		if (e.success) {
+			alert('Request dialog completed');
+		}
+		else if (e.cancelled) {
+			alert('Request dialog cancelled');
+		}
+		else {
+			alert('error ' + e.error);           
+		}
 	});
 	
 	win.add(actionsView);
