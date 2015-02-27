@@ -7,7 +7,7 @@ apiversion: 2
 description: Allows facebook integration for Titanium apps
 author: Mark Mokryn and Ng Chee Kiat
 license: Apache License Version 2.0
-copyright: Copyright (c) 2009-2013 by Appcelerator, Inc.
+copyright: Copyright (c) 2009-2015 by Appcelerator, Inc.
 
 # these should not be edited
 name: Facebook

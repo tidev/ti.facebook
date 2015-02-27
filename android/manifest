@@ -6,9 +6,9 @@ version: 4.0.0
 apiversion: 2
 architectures: armeabi armeabi-v7a x86
 description: facebook
-author: Mark Mokryn
+author: Mark Mokryn and Ashraf A. S. (Appcelerator)
 license: Apache License Version 2.0
-copyright: Copyright (c) 2014 by Mark Mokryn
+copyright: Copyright (c) 2014 by Mark Mokryn, Copyright (c) 2009-2015 by Appcelerator
 respackage: com.facebook.android
 
 # these should not be edited
