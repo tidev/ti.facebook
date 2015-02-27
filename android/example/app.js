@@ -1,61 +1,41 @@
+// this sets the background color of the master UIView (when there are no windows/tab groups on it)
+Titanium.UI.setBackgroundColor('#000');
+
+// create tab group
+var tabGroup = Titanium.UI.createTabGroup({backgroundColor:'#fff'});
 var fb = require('facebook');
+//
+// create base UI tab and root window
+//
 
-var win = Ti.UI.createWindow({
-	title : 'facebook sample',
-	backgroundColor : '#fff',
-	fullscreen: false
-});
+tabGroup.addTab(Titanium.UI.createTab({  
+    icon:'KS_nav_views.png',
+    title:'Login',
+    window:require('facebook_login_logout').window()
+}));
+tabGroup.addTab(Titanium.UI.createTab({  
+    icon:'KS_nav_views.png',
+    title:'Read',
+    window:require('facebook_read_stream').window()
+}));
 
+tabGroup.addTab(Titanium.UI.createTab({  
+    icon:'KS_nav_views.png',
+    title:'Publish',
+    window:require('facebook_publish_stream').window()
+}));
+
+tabGroup.addTab(Titanium.UI.createTab({  
+    icon:'KS_nav_views.png',
+    title:'Photo',
+    window:require('facebook_photos').window()
+}));
+
+fb.initialize(1000); // after you set up login/logout listeners and permissions
+
+// open tab group
 if (Ti.Platform.osname == 'android') {
-	win.fbProxy = fb.createActivityWorker({lifecycleContainer: win});
+	tabGroup.fbProxy = fb.createActivityWorker({lifecycleContainer: tabGroup});
 }
-
-//create table view data object
-var data = [{
-	title : 'Login/Logout',
-	hasChild : true,
-	test : 'facebook_login_logout'
-}, {
-	title : 'Read Stream',
-	hasChild : true,
-	test : 'facebook_read_stream'
-}, {
-	title : 'Publish Stream',
-	hasChild : true,
-	test : 'facebook_publish_stream'
-}, {
-	title : 'Photos',
-	hasChild : true,
-	test : 'facebook_photos'
-}, {
-	title : 'Share Dialog',
-	hasChild : true,
-	test : 'facebook_share_dialog'
-}];
-
-// create table view
-for (var i = 0; i < data.length; i++) {
-	data[i].color = '#000';
-	data[i].font = {
-		fontWeight : 'bold',
-		fontSize : 20
-	};
-};
-var tableview = Titanium.UI.createTableView({
-	data : data
-});
-
-// create table view event listener
-tableview.addEventListener('click', function(e) {
-	if (e.rowData.test) {
-		var ExampleWindow = require(e.rowData.test), 
-			win = new ExampleWindow();
-		win.open();
-	}
-});
-
-// add table view to the window
-win.add(tableview); 
-fb.initialize(4000);
-win.open();
-
+	
+tabGroup.open();

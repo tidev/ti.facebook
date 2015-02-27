@@ -32,11 +32,9 @@ exports.window = function(value){
 				return;
 			}
 			var result;
-			if (Ti.Platform.osname == 'android') {
-				result = JSON.parse(r.result).data;
-			} else {
-				result = r.result.data;
-			}
+
+			result = JSON.parse(r.result).data;
+			
 			var data = [];
 			for (var c=0;c<result.length;c++)
 			{
@@ -45,7 +43,7 @@ exports.window = function(value){
 	
 				var tvRow = Ti.UI.createTableViewRow({
 					height:'auto',
-					selectedBackgroundColor:'#fff',
+					backgroundSelectedColor:'#fff',
 					backgroundColor:'#fff'
 				});
 	

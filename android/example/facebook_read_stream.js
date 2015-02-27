@@ -1,4 +1,4 @@
-function fb_query() {
+exports.window = function(value){
 	var fb = require('facebook');
 	
 	var win = Ti.UI.createWindow({
@@ -6,19 +6,6 @@ function fb_query() {
 		backgroundColor:'#fff',
 		fullscreen: false
 	});
-
-	if (Ti.Platform.osname == 'android') {
-		win.fbProxy = fb.createActivityWorker({lifecycleContainer: win});
-	}
-	
-	//
-	// Login Button
-	//
-	var fbButton = fb.createLoginButton({
-		bottom:10
-	});
-	fbButton.style = fb.BUTTON_STYLE_NORMAL;
-	win.add(fbButton);
 	
 	var b1 = Ti.UI.createButton({
 		title:'Read User\'s Groups',
@@ -27,16 +14,15 @@ function fb_query() {
 		top:10
 	});
 	win.add(b1);
+	
+	var tableView = Ti.UI.createTableView({top:100,minRowHeight:100});
+	win.add(tableView);
 		
 	function runQuery() {
 		b1.title = 'Loading...';
 	
 		fb.requestWithGraphPath('me/groups', {}, 'GET',  function(r)
 		{
-			var tableView = Ti.UI.createTableView({minRowHeight:30});
-			var window = Ti.UI.createWindow({title:'Facebook Query'});
-			window.add(tableView);
-			
 			if (!r.success) {
 				if (r.error) {
 					alert(r.error);
@@ -45,8 +31,10 @@ function fb_query() {
 				}
 				return;
 			}
-			var resultsNew = JSON.parse(r.result);
-			var result = JSON.parse(r.result).data;
+			var result;
+
+			result = JSON.parse(r.result).data;
+			
 			var data = [];
 			for (var c=0;c<result.length;c++)
 			{
@@ -55,31 +43,24 @@ function fb_query() {
 	
 				var tvRow = Ti.UI.createTableViewRow({
 					height:'auto',
-					selectedBackgroundColor:'#fff',
+					backgroundSelectedColor:'#fff',
 					backgroundColor:'#fff'
 				});
 	
 				var userLabel = Ti.UI.createLabel({
 					font:{fontSize:16, fontWeight:'bold'},
-					left:70,
+					left:5,
 					top:5,
 					right:5,
-					height:20,
 					color:'#576996',
 					text:row.name
 				});
 				tvRow.add(userLabel);
-
-				data[c] = tvRow;			
-				
+				data[c] = tvRow;				
 				tvRow.uid = row.id;
-
-			}
-			
+			}	
 			tableView.setData(data, { animationStyle : Titanium.UI.iPhone.RowAnimationStyle.DOWN });
-			
-			window.open({modal:true});
-			b1.title = 'Run Query';
+			b1.title = 'Read User\'s Groups';
 		});
 	}
 	
@@ -104,5 +85,3 @@ function fb_query() {
 	});
 	return win;
 };
-
-module.exports = fb_query;

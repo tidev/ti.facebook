@@ -66,7 +66,7 @@ exports.window = function(value){
 				var data = {picture: event.media};
 				//If publish_actions permission is not granted, request it
 				if(fb.permissions.indexOf('publish_actions') < 0) {
-					fb.requestNewPublishPermissions(['publish_actions'],function(e){
+					fb.requestNewPublishPermissions(['publish_actions'],fb.AUDIENCE_FRIENDS,function(e){
 						if(e.success) {
 							Ti.API.info('Permissions:'+fb.permissions);
 							fb.requestWithGraphPath('me/photos', data, "POST", showRequestResult);
@@ -103,7 +103,7 @@ exports.window = function(value){
 		};
 		//If publish_actions permission is not granted, request it
 		if(fb.permissions.indexOf('publish_actions') < 0) {
-			fb.requestNewPublishPermissions(['publish_actions'],function(e){
+			fb.requestNewPublishPermissions(['publish_actions'],fb.AUDIENCE_FRIENDS,function(e){
 				if(e.success) {
 					Ti.API.info('Permissions:'+fb.permissions);
 					fb.requestWithGraphPath('me/photos', data, "POST", showRequestResult);

@@ -1,3 +1,9 @@
+/**
+  * Copyright (c) 2015 by Appcelerator, Inc. All Rights Reserved.
+  * Licensed under the terms of the Apache Public License 2.0
+  * Please see the LICENSE included with this distribution for details.
+  *
+  */
 package facebook;
 
 import java.util.Arrays;

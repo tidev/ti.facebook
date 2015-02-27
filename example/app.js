@@ -31,11 +31,8 @@ tabGroup.addTab(Titanium.UI.createTab({
     window:require('facebook_photos').window()
 }));
 
-if (Ti.Platform.osname == 'android') {
-	fb.initialize(1000); // after you set up login/logout listeners and permissions
-} else {
-	fb.initialize(); // after you set up login/logout listeners and permissions
-}
+fb.initialize(1000); // after you set up login/logout listeners and permissions
+
 // open tab group
 if (Ti.Platform.osname == 'android') {
 	tabGroup.fbProxy = fb.createActivityWorker({lifecycleContainer: tabGroup});

@@ -23,12 +23,7 @@ exports.window = function(value){
 		// You *will* get this event if loggedIn == false below
      	// Make sure to handle all possible cases of this event
      	if (e.success) {
- 			
- 			if (Ti.Platform.osname == 'android') {
-				alert('login from uid: '+e.uid+', name: '+JSON.parse(e.data).name);
-			} else {
-				alert('login from uid: '+e.uid+', name: '+e.data.name);
-			}
+ 			alert('login from uid: '+e.uid+', name: '+JSON.parse(e.data).name);
  			label.text = 'Logged In = ' + fb.loggedIn;
      	}
      	else if (e.cancelled) {
@@ -48,12 +43,18 @@ exports.window = function(value){
 		readPermissions: ['read_stream','email'],
 		top: 260
 	});
+	
+	//Android's LoginButton width shouldn't be fixed
+	if (Ti.Platform.osname != 'android') {
+		loginButton.width = 200;
+	} 
+	
 	loginButton.readPermissions = ['email'];
 	win.add(loginButton); 
 
 
 	var loginButton = Ti.UI.createButton({
-		title:'Log in',
+		title:'Custom Log in',
 		top:50,
 		width:160,
 		height:40
@@ -68,7 +69,7 @@ exports.window = function(value){
 	});
 	
 		var logoutButton = Ti.UI.createButton({
-		title:'Logout',
+		title:'Custom Logout',
 		top:100,
 		width:160,
 		height:40
@@ -107,8 +108,7 @@ exports.window = function(value){
 	
 	function updatePublishPerms(){
 		if (doPublish.value && fb.loggedIn) {
-			if (Ti.Platform.osname == 'android') {
-				fb.requestNewPublishPermissions(['publish_actions'], function(e) {
+			fb.requestNewPublishPermissions(['publish_actions'],fb.AUDIENCE_FRIENDS, function(e) {
 					if(e.success) {
 						alert('request publish permission success');
 					} else if (e.cancelled) {
@@ -117,17 +117,6 @@ exports.window = function(value){
 						Ti.API.debug('Failed authorization due to: ' + e.error);
 					}
 				});
-			} else {
-				fb.requestNewPublishPermissions(['publish_actions'],fb.AUDIENCE_FRIENDS, function(e) {
-					if(e.success) {
-						alert('request publish permission success');
-					} else if (e.cancelled) {
-						alert('user cancelled');
-					} else {
-						Ti.API.debug('Failed authorization due to: ' + e.error);
-					}
-				});
-			}
 		} else if (doPublish.value && !fb.loggedIn){
 			alert('Please log in first');
 		}

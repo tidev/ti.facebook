@@ -184,20 +184,7 @@ exports.window = function(value){
 	actionsView.add(requestDialog);	
 	win.add(actionsView);
 
-	var likeButton;	
-	if (Ti.Platform.osname == 'android') {
-	likeButton = fb.createLikeButton({
-		    top: 230,
-		    height: Ti.UI.SIZE,
-		    width: Ti.UI.SIZE, // just like any other view
-		    objectId: "https://www.facebook.com/appcelerator", // URL or Facebook ID
-		    foregroundColor: "white", // A color in Titanium format - see Facebook docs
-		    likeViewStyle: 'box_count', // standard, button, box_count - see FB docs
-		    auxiliaryViewPosition: 'inline', // bottom, inline, top - see FB docs
-		    horizontalAlignment: 'left' // center, left, right - see FB docs
-		});
-	} else {
-	likeButton = fb.createLikeButton({
+	var likeButton = fb.createLikeButton({
 		    top: 230,
 		    height: "50%", // Note: on iOS setting Ti.UI.SIZE dimensions prevented the button click
 		    width: "50%",
@@ -209,10 +196,12 @@ exports.window = function(value){
 		    objectType: 'page', // iOS only, 'page', 'openGraphObject', or 'unknown' - see FB docs
 		    soundEnabled: true // boolean, iOS only
 		});
-	}
+	
+	if (Ti.Platform.osname == 'android') {
+		likeButton.height = Ti.UI.SIZE;
+		likeButton.width = Ti.UI.SIZE;
+	} 
 	win.add(likeButton);
 
-
-	
 	return win;
 };

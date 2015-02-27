@@ -37,6 +37,7 @@ import com.facebook.Request;
 import com.facebook.RequestAsyncTask;
 import com.facebook.Response;
 import com.facebook.Session;
+import com.facebook.SessionDefaultAudience;
 import com.facebook.SessionState;
 import com.facebook.Settings;
 import com.facebook.Session.NewPermissionsRequest;
@@ -741,19 +742,61 @@ public class TiFacebookModule extends KrollModule
 			}
 		});
 	}
-
+	
 	@Kroll.method
 	public void requestNewReadPermissions(String[] permissions, final KrollFunction callback) {
+		requestNewReadPermissions(permissions, AUDIENCE_EVERYONE, callback);
+	}
+
+	@Kroll.method
+	public void requestNewReadPermissions(String[] permissions, int audienceChoice, final KrollFunction callback) {
+		SessionDefaultAudience audience;
+		switch(audienceChoice){
+			case TiFacebookModule.AUDIENCE_NONE:
+				audience = SessionDefaultAudience.NONE;
+				break;
+			case TiFacebookModule.AUDIENCE_ONLY_ME:
+				audience = SessionDefaultAudience.ONLY_ME;
+				break;
+			case TiFacebookModule.AUDIENCE_FRIENDS:
+				audience = SessionDefaultAudience.FRIENDS;
+				break;
+			default:
+			case TiFacebookModule.AUDIENCE_EVERYONE:
+				audience = SessionDefaultAudience.EVERYONE;
+				break;
+		}
 		permissionCallback = callback;
 		Session.getActiveSession().requestNewReadPermissions(
-				new NewPermissionsRequest(TiApplication.getInstance().getCurrentActivity(), Arrays.asList(permissions)));
+				new NewPermissionsRequest(TiApplication.getInstance().getCurrentActivity(), Arrays.asList(permissions)).setDefaultAudience(audience));
 	}
 	
 	@Kroll.method
 	public void requestNewPublishPermissions(String[] permissions, final KrollFunction callback) {
+		requestNewPublishPermissions(permissions, AUDIENCE_EVERYONE, callback);
+	}
+	
+	@Kroll.method
+	public void requestNewPublishPermissions(String[] permissions, int audienceChoice, final KrollFunction callback) {
+		SessionDefaultAudience audience;
+		switch(audienceChoice){
+			case TiFacebookModule.AUDIENCE_NONE:
+				audience = SessionDefaultAudience.NONE;
+				break;
+			case TiFacebookModule.AUDIENCE_ONLY_ME:
+				audience = SessionDefaultAudience.ONLY_ME;
+				break;
+			case TiFacebookModule.AUDIENCE_FRIENDS:
+				audience = SessionDefaultAudience.FRIENDS;
+				break;
+			default:
+			case TiFacebookModule.AUDIENCE_EVERYONE:
+				audience = SessionDefaultAudience.EVERYONE;
+				break;
+		}
 		permissionCallback = callback;
 		Session.getActiveSession().requestNewPublishPermissions(
-				new NewPermissionsRequest(TiApplication.getInstance().getCurrentActivity(), Arrays.asList(permissions)));		
+				new NewPermissionsRequest(TiApplication.getInstance().getCurrentActivity(), Arrays.asList(permissions)).setDefaultAudience(audience));		
 	}
 
 	public void setUiHelper(UiLifecycleHelper uiHelper) {
