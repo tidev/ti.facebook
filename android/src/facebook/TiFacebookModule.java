@@ -325,14 +325,14 @@ public class TiFacebookModule extends KrollModule
 	// Properties and methods
 	
 	@Kroll.getProperty @Kroll.method
-	public boolean canPresentShareDialog()
+	public boolean getCanPresentShareDialog()
 	{
 		return FacebookDialog.canPresentShareDialog(TiApplication.getInstance(), 
 				FacebookDialog.ShareDialogFeature.SHARE_DIALOG);
 	}	
 	
 	@Kroll.getProperty @Kroll.method
-	public boolean canPresentOpenGraphActionDialog()
+	public boolean getCanPresentOpenGraphActionDialog()
 	{
 		return FacebookDialog.canPresentOpenGraphActionDialog(TiApplication.getInstance(), 
 				FacebookDialog.OpenGraphActionDialogFeature.OG_ACTION_DIALOG);
@@ -487,7 +487,15 @@ public class TiFacebookModule extends KrollModule
 			shareDialog = new FacebookDialog.ShareDialogBuilder(TiApplication.getInstance().getCurrentActivity())
 				.build();
 		} else {
+			
 			String url = (String) args.get("url");
+			if  (url == null) {
+				url = (String) args.get("link");
+			}
+			String name = (String) args.get("name");
+			String caption = (String) args.get("caption");
+			String picture = (String) args.get("picture");
+			
 			String namespaceObject = (String) args.get("namespaceObject");
 			String namespaceAction = (String) args.get("namespaceAction");
 			String objectName = (String) args.get("objectName");
@@ -497,7 +505,7 @@ public class TiFacebookModule extends KrollModule
 			String placeId = (String) args.get("placeId");
 			if (url != null && namespaceObject == null) {
 				shareDialog = new FacebookDialog.ShareDialogBuilder(TiApplication.getInstance().getCurrentActivity())
-		        .setLink(url)
+		        .setLink(url).setName(name).setCaption(caption).setPicture(picture).setDescription(description)
 		        .build();
 			} else {
 				OpenGraphObject ogObject = OpenGraphObject.Factory.createForPost(namespaceObject);

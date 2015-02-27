@@ -1,4 +1,4 @@
-function fb_photos() {
+exports.window = function(value){
 	var fb = require('facebook');
 	
 	var win = Ti.UI.createWindow({
@@ -6,10 +6,6 @@ function fb_photos() {
 		backgroundColor:'#fff',
 		fullscreen: false
 	});
-	
-	if (Ti.Platform.osname == 'android') {
-		win.fbProxy = fb.createActivityWorker({lifecycleContainer: win});
-	}
 	
 	var B1_TITLE = 'Upload Photo from Gallery with Graph API';
 	var B2_TITLE = 'Upload Photo from file with Graph API';
@@ -41,12 +37,6 @@ function fb_photos() {
 		b2.title = B2_TITLE;
 		alert(s);
 	}
-	
-	var login = fb.createLoginButton({
-		top: 10
-	});
-	login.style = fb.BUTTON_STYLE_WIDE;
-	win.add(login);
 
 	var actionsView = Ti.UI.createView({
 		top: 80, left: 0, right: 0, visible: fb.loggedIn, height: 'auto'
@@ -134,5 +124,3 @@ function fb_photos() {
 	win.add(actionsView);
 	return win;
 };
-
-module.exports = fb_photos;
