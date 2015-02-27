@@ -736,8 +736,10 @@ NSTimeInterval meRequestTimeout = 180.0;
                  BOOL success;
                  if (!error) {
                      success = YES;
+                     //for parity with android, have to stringify json object
+                     NSString *resultString = [TiUtils jsonStringify:result];
                      returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                       result,@"result", NUMBOOL(success), @"success",
+                                       resultString,@"result", NUMBOOL(success), @"success",
                                        path, @"path",nil];
                  } else {
                      DebugLog(@"requestWithGraphPath error for path, %@", path);
@@ -819,7 +821,8 @@ NSTimeInterval meRequestTimeout = 180.0;
     }
     
     if(result != nil){
-        [event setObject:result forKey:@"data"];
+        NSString *resultString = [TiUtils jsonStringify:result];
+        [event setObject:resultString forKey:@"data"];
         if (uid != nil){
             [event setObject:uid forKey:@"uid"];
         }
