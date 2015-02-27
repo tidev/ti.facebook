@@ -1,0 +1,9 @@
+titanium.sdk=/Users/msamah/Library/Application\ Support/Titanium/
+titanium.version=4.0.0
+titanium.os=osx
+android.sdk=/Users/msamah/android-sdk
+android.ndk=/Users/msamah/android-ndk-r10d
+
+titanium.platform=/Users/msamah//Library/Application Support/Titanium/mobilesdk/osx/4.0.0/android
+android.platform=/Users/msamah/android-sdk/platforms/android-16
+google.apis=/Users/msamah/android-sdk/add-ons/addon-google_apis-google-16

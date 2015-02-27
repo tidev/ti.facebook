@@ -1,2 +1,6 @@
+# Eclipse
 build
-libs
+.project
+.classpath
+.settings/
+bin/**
