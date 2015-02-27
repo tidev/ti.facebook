@@ -1,6 +1,6 @@
 # Change Log
 <pre>
-v4.0.0 Updated the Facebook module by using https://github.com/mokesmokes/titanium-android-facebook/tree/51c53424a6cd81c7615bd33eaeb8166df5be53c2
+v4.0.0 Combined and updated the Facebook module from https://github.com/mokesmokes/titanium-android-facebook/ and https://github.com/mokesmokes/titanium-ios-facebook
 
 v3.0.3 Adding publishInstall method. [TIMODOPEN-246]
        Built with SDK 3.4.0 to fix a bug on Android L. [TIMOB-17478]
