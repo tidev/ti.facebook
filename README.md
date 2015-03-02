@@ -3,14 +3,13 @@ Titanium Facebook Module
 
 The Facebook module is used for connecting your application with Facebook. This module supports the following features:
 
-Logging in to Facebook and authorizing your application.
-Requesting read and publish permissions.
-Refreshing existing permissions.
-Making requests through the Facebook Graph API using the requestWithGraphPath method.
-Posting web and native share dialogs.
-Posting send request dialogs.
-Like button.
-
+* Logging in to Facebook and authorizing your application
+* Requesting read and publish permissions
+* Refreshing existing permission
+* Making requests through the Facebook Graph API using the requestWithGraphPath method
+* Posting web and native share dialogs
+* Posting send request dialogs
+* Like button
 
 Getting Started
 ---------------
@@ -243,12 +242,4 @@ The error handling adheres to the new Facebook guideline for events such as `log
         label.text = 'Logged In = ' + fb.loggedIn;
     });
 ```
-
-Custom App Events
------------------
-```javascript
-    var fb = require('facebook');
-    fb.logCustomEvent('handsClapped'); // Pass a string for the event name, view the events on Facebook Insights
-```
-
 
