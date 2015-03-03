@@ -11,16 +11,11 @@ description: |
     * Making requests through the Facebook Graph API using the
       [requestWithGraphPath](Modules.Facebook.requestWithGraphPath) method.
       
-    * Making requests through the legacy Facebook REST API using the
-      [request](Modules.Facebook.request) method. 
-
     * Posting Facebook dialogs.
-
-    For releases prior to 3.1.0, use the built-in Titanium.Facebook module.
 
     #### Getting Started
 
-    -   Note that this module is only available for Release 3.1 and later, and is included with the
+    -   Note that this module is only available for Release 3.5.1 and later, and is included with the
         Titanium SDK.  You do not need to download or unpack it.
 
     -   Edit the `modules` section of your tiapp.xml file to include this module:
@@ -31,131 +26,179 @@ description: |
                 <module platform="iphone">facebook</module>
             </modules>
 
-    -    On the iOS platform, add the following property to your tiapp.xml file and replace
-         FACEBOOK_APP_ID with your Facebook application ID:
+    -   On the iOS platform, add the following property to your tiapp.xml file and replace
+        FACEBOOK_APP_ID with your Facebook application ID:
 
              <property name="ti.facebook.appid">FACEBOOK_APP_ID</property>
+
+    -   On the Android platform, add the following property to your tiapp.xml file:
+
+        <android xmlns:android="http://schemas.android.com/apk/res/android">
+            <manifest>
+                <application>
+                    <activity android:label="SampleFB"
+                        android:name="com.facebook.LoginActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+                    <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
+                </application>
+            </manifest>
+        </android>
+
+        Also add the following string resource in a strings.xml file in the project folder 
+        /platform/android/res/values/strings.xml and replace FACEBOOK_APP_ID with yout Facebook
+        application ID:
+
+        <resources><string name="app_id">495338853813822</string></resources>
+
+    -   On the Android platform, all Windows/TabGroup in the app must create a proxy. We must 
+        pass to the proxy the Ti.UI.Window or Ti.UI.TabGroup that will be using the proxy, so 
+        that the proxy can attach itself to the window's or tabgroup's activity. The proxy object 
+        must be created prior to calling open() on the window or tabgroup in order to make sure 
+        the Activity onCreate event is captured correctly. 
+
+            win1.fbProxy = fb.createActivityWorker({lifecycleContainer: win1});
+
+        In Android only a single Activity is active at any time. In Titanium, an Activity corresponds 
+        to a standalone (i.e. not a Tab window) Ti.UI.Window or Ti.UI.TabGroup. The Facebook SDK 
+        contains tools to synchronize state between the various activities in the app, and this module 
+        implements that functionality, but for this to work we need to tell the module which is the 
+        currently active Activity.
 
     -    Instantiate the module with the `require('facebook')` method, then make subsequent API calls
          with the new Facebook object.
 
              var fb = require('facebook');
-             fb.appid = FACEBOOK_APP_ID;
              fb.permissions = [FACEBOOK_APP_PERMISSIONS];
+             fb.initialize(1000);
              fb.authorize();
 
     #### Facebook Login and Authorization
 
-    To use Facebook, a user must log in to Facebook and explicitly authorize the
-    application to perform certain actions, such as accessing profile information or 
-    posting status messages. 
-
-    For iOS, review the "iOS Support Notes" section below in addition to this section.
+    To use Facebook, a user must log in to Facebook and explicitly authorize the application to 
+    perform certain actions, such as accessing profile information or posting status messages.
 
     There are two ways to initiate the login process:
-    
+
     * Call [authorize](Modules.Facebook.authorize) to prompt the user to login and authorize
       the application.
 
     * Create a Facebook [LoginButton](Modules.Facebook.LoginButton) to allow the user to 
-      log in if desired.
+      log in if desired. You can also add either readPermissions or publishPermissions, 
+      otherwise the default is request for `public_profile`. Doing so will let the LoginButton 
+      request for permissions when logging in. Note that Facebook does not support setting 
+      both parameters at the same time to the LoginButton. 
 
     Which approach you take depends on your UI and how central Facebook is to your
     application.
 
-    Before calling `authorize` or creating a login button, you must set the
-    [appid](Modules.Facebook.appid) and [permissions](Modules.Facebook.permissions)
-    properties. 
-
     To create a Facebook App ID, go to the Facebook Developer App:
     [developers.facebook.com/apps](https://developers.facebook.com/apps)
 
-    For a complete list of permissions, see the 
-    [official Facebook Permissions Reference](http://developers.facebook.com/docs/reference/api/permissions/)
+    #### Requesting read and publish permissions
 
-    #### Facebook Graph API
+    requestNewReadPermissions
 
-    The Facebook Graph API is the preferred method for getting information about a user's friends, 
-    news feed, and so on. Each object in the Facebook social graph is represented by a
-    graph API *object*, such as a user, photo, or status message. 
+        var fb = require('facebook');
+        fb.requestNewReadPermissions(['read_stream','user_hometown', etc...], function(e){
+            if(e.success){
+                fb.requestWithGraphPath(...);
+            } else if (e.cancelled){
+                ....
+            } else {
+                Ti.API.debug('Failed authorization due to: ' + e.error);
+            }
+        });
 
-    The Graph API allows you to make requests on behalf of the user, such as posting a
-    picture or status message. 
+    requestNewPublishPermissions
 
-    Use the [requestWithGraphPath](Modules.Facebook.requestWithGraphPath) method to make a 
-    request to the Graph API.
+    You must use the audience constants from the module, either AUDIENCE_NONE, AUDIENCE_ONLY_ME, 
+    AUDIENCE_FRIENDS, or AUDIENCE_EVERYONE. Note that it is not an error for the user to 'Skip' 
+    your requested permissions, so you should check the module's permissions property following the call.
 
-    For details on each of the Graph API objects and the supported operations, see the 
-    [official Facebook Graph API documentation](http://developers.facebook.com/docs/reference/api/).
+        var fb = require('facebook');
+        fb.requestNewPublishPermissions(['read_stream','user_hometown', etc...], fb.AUDIENCE_FRIENDS, function(e){
+            if(e.success){
+                fb.requestWithGraphPath(...);
+            } else if (e.cancelled){
+            ....
+            } else {
+                Ti.API.debug('Failed authorization due to: ' + e.error);
+            }
+        });
 
-    #### Facebook REST API
-
-    The Facebook REST API is in the process of being deprecated, and should not be used 
-    unless your application relies on an API that doesn't exist in the Graph API.
-
-    Use the [request](Modules.Facebook.request) method to make a request to the REST API.
-
-    For details on the REST API, see the 
-    [official Facebook REST API documentation](http://developers.facebook.com/docs/reference/rest/).
+    For a complete list of permissions, see the [official Facebook Permissions Reference](https://developers.facebook.com/docs/facebook-login/permissions/)        
     
-    #### Facebook Dialogs
+    #### Share Dialogs
 
-    Facebook dialogs are standard user-interface components for used to prompt users to
-    interact with Facebook in a specific way, such as:
-        
-    * Sending an application request
+    The Share dialog prompts a person to publish an individual story or an Open Graph story 
+    to their timeline. This does not require Facebook Login or any extended permissions, 
+    so it is the easiest way to enable sharing on web.
 
-    * Sending a status update
-
-    * Adding a friend
+    * First check if you can use it - call fb.getCanPresentShareDialog() which returns a boolean.
     
-    Because dialogs require user interaction, they do not require Facebook permissions.
+    * To share a user's status just call fb.share({}); Note: this is documented for iOS but not Android, so use with caution.
+    
+    * To share a link call fb.share({url: 'http://example.com' });
+    
+    * To post a graph action call:
 
-    For details on different dialogs see the 
-    [official Facebook Dialogs documentation](http://developers.facebook.com/docs/reference/dialogs/).  
+        fb.share({url: someUrl, namespaceObject: 'myAppnameSpace:graphObject', objectName: 'graphObject', imageUrl: someImageUrl,
+        title: aTitle, description: blahBlah, namespaceAction: 'myAppnameSpace:actionType', placeId: facebookPlaceId});
 
-    #### iOS Support Notes
-    
-    As of Facebook Module 3.1, the iOS module will try to silently login on application startup
-    if the application was logged in when it exited. This is done to maintain a consistent
-    appearance regardless if your app was paused and resumed, or stopped and started, especially
-    in light of iOS 6's single sign-on.
+    For details on dialog see the 
+    [official Facebook Share Dialogs documentation](https://developers.facebook.com/docs/sharing/reference/share-dialog).  
 
-    To use iOS 6's built-in Facebook login, some changes may be required of your application.
-    iOS 6 does not support having required [permissions](Modules.Facebook.permissions) of
-    offline_access and any write access. Furthermore, Facebook's native SDK makes the
-    old login auth and using iOS 6's login mutually exclusive options. In other words,
-    the following must happen to use iOS 6's built-in facebook login:
-    
-    * When registering your Facebook application, the bundle ID must match the Titanium project's app ID.
-      See instructions below.
+    #### Send Requests Dialogs
 
-    * The device must be running iOS 6.
-    
-    * Enable the Facebook login on your iOS 6 device: Enter your credentials in **Settings** > **Facebook**.
-    
-    * The [forceDialogAuth](Modules.Facebook.forceDialogAuth) property MUST be false.
+    Sends an application request. Fires a `sendRequestCompleted` event.
 
-    *   The [permissions](Modules.Facebook.permissions) property MUST NOT contain any of the
-        following: offline_access, publish_actions, publish_stream, publish_checkins,
-        ads_management, create_event, rsvp_event, manage_friendlists, manage_notifications,
-        or manage_pages
-    
-    * Use the [reauthorize](Modules.Facebook.reauthorize) method to request write permissions if needed.
+        var fb = require('facebook');
+        fb.presentSendRequestDialog({message: 'Go to https://appcelerator.com/'});
 
-    In the event that these requirements aren't met, the facebook module will gracefully
-    degrade to legacy login support, using the dialog authorization, single sign-on with
-    the facebook app, or authentication via Safari as previously done.
+    For details on dialog see the 
+    [official Facebook Share Dialogs documentation](https://developers.facebook.com/docs/games/requests/v2.2).  
+
+    #### Like Button
+
+    We can create a Like button just like any other view, with specific parameters documented in Facebook docs. 
+    Note there is no completion callback or event, and Facebook policies state "If you use the Like button on iOS 
+    or Android, don’t collect or use any information from it."
+
+        var likeButton = fb.createLikeButton({
+            objectId: "https://www.facebook.com/appcelerator", // URL or Facebook ID
+            foregroundColor: "white", // A color in Titanium format - see Facebook docs
+            likeViewStyle: 'box_count', // standard, button, box_count - see FB docs
+            auxiliaryViewPosition: 'inline', // bottom, inline, top - see FB docs
+            horizontalAlignment: 'left', // center, left, right - see FB docs,
+            objectType: 'page', // iOS only, 'page', 'openGraphObject', or 'unknown' - see FB docs
+            soundEnabled: true // boolean, iOS only
+        });
+        win.add(likeButton); 
     
-    For security reasons, authorization through iOS 6 also requires your Facebook
-    bundle ID to be associated with your Titanium application's app ID
-    specified in your tiapp.xml. This is the same bundle identifier mentioned in step 4
-    of Facebook's [getting started guide](http://developers.facebook.com/docs/getting-started/facebook-sdk-for-ios/3.1/).
-    
-    Since iOS 6 does not allow for required permissions to contain write actions, write
-    actions are now done via the [reauthorize](Modules.Facebook.reauthorize) method. This
-    method will work even without iOS 6 support. For more details about iOS 6, see the
-    [official Facebook iOS 6 documentation](http://developers.facebook.com/docs/howtos/ios-6/).
+    #### Events and error handling
+
+    The error handling adheres to the new Facebook guideline for events such as login, shareCompleted and 
+    requestSendCompleted. Here is how to handle login events:
+
+        var fb = require('facebook');
+        fb.addEventListener('login',function(e) {
+            // You *will* get this event if loggedIn == false below
+            // Make sure to handle all possible cases of this event
+            if (e.success) {
+                alert('login from uid: '+e.uid+', name: '+JSON.parse(e.data).name);
+                label.text = 'Logged In = ' + fb.loggedIn;
+            }
+            else if (e.cancelled) {
+                // user cancelled 
+                alert('cancelled');
+            }
+            else {
+                alert(e.error);         
+            }
+        });
+        fb.addEventListener('logout', function(e) {
+            alert('logged out');
+            label.text = 'Logged In = ' + fb.loggedIn;
+        });
 
     #### Submitting an iOS Application to the iTunes Store
 
