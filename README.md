@@ -242,4 +242,3 @@ The error handling adheres to the new Facebook guideline for events such as `log
         label.text = 'Logged In = ' + fb.loggedIn;
     });
 ```
-
