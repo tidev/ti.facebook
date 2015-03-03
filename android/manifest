@@ -16,4 +16,4 @@ name: Facebook
 moduleid: facebook
 guid: a0ddb4d2-2a9d-4e93-b3d7-761a5ec33536
 platform: android
-minsdk: 3.5.0.GA
+minsdk: 3.5.1.RC

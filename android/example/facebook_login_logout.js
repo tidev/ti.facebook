@@ -127,7 +127,7 @@ exports.window = function(value){
 			top:viewTop, left:10, width:200, text:title, height:40
 		}));
 		var result = Ti.UI.createSwitch({
-			value:false, left:220, top:viewTop
+			value:false, top:viewTop
 		});
 		win.add(result);
 		result.addEventListener('change',updatePublishPerms);
