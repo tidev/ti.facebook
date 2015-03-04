@@ -1,9 +1,8 @@
-titanium.sdk=/Users/msamah/Library/Application\ Support/Titanium/
-titanium.version=4.0.0
+titanium.sdk=/Library/Application\ Support/Titanium/
 titanium.os=osx
-android.sdk=/Users/msamah/android-sdk
-android.ndk=/Users/msamah/android-ndk-r10d
+titanium.version=3.5.1.RC
+android.sdk=/usr/android-sdk
 
-titanium.platform=/Users/msamah//Library/Application Support/Titanium/mobilesdk/osx/4.0.0/android
-android.platform=/Users/msamah/android-sdk/platforms/android-16
-google.apis=/Users/msamah/android-sdk/add-ons/addon-google_apis-google-16
+titanium.platform=${titanium.sdk}/mobilesdk/${titanium.os}/${titanium.version}/android
+android.platform=${android.sdk}/platforms/android-8
+google.apis=${android.sdk}/add-ons/addon_google_apis_google_inc_8
