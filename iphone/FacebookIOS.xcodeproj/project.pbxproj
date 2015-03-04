@@ -288,7 +288,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				RUN_CLANG_STATIC_ANALYZER = NO;
 				SDKROOT = iphoneos;
-				TITANIUM_SDK = "";
+				TITANIUM_SDK = "~/Library/Application Support/Titanium/mobilesdk/osx/3.5.1.RC";
 				TITANIUM_SDK_VERSION = 3.5.1.RC;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -328,7 +328,7 @@
 				PRODUCT_NAME = Facebook;
 				RUN_CLANG_STATIC_ANALYZER = NO;
 				SDKROOT = iphoneos;
-				TITANIUM_SDK = "";
+				TITANIUM_SDK = "~/Library/Application Support/Titanium/mobilesdk/osx/3.5.1.RC";
 				TITANIUM_SDK_VERSION = 3.5.1.RC;
 				USER_HEADER_SEARCH_PATHS = "";
 			};

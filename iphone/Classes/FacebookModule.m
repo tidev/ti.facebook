@@ -717,7 +717,7 @@ NSTimeInterval meRequestTimeout = 180.0;
     id path = [args objectAtIndex:0];
     ENSURE_SINGLE_ARG(path, NSString);
     id args1 = [args objectAtIndex:1];
-    ENSURE_SINGLE_ARG(args1, NSMutableDictionary);
+    ENSURE_SINGLE_ARG_OR_NIL(args1, NSMutableDictionary);
     NSMutableDictionary *params = args1;
     id httpMethod = [args objectAtIndex:2];
     ENSURE_SINGLE_ARG(httpMethod, NSString);
