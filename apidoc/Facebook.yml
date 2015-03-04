@@ -235,11 +235,33 @@ methods:
     summary: |
         Prompts the user to log in (if not already logged in) and authorize your application.  
     description: |
-        Be sure to set your [appid](Modules.Facebook.appid) and your required 
-        [permissions](Modules.Facebook.permissions) before calling `authorize`.
+        Be sure to set your required [permissions](Modules.Facebook.permissions) before 
+        calling `authorize`.
 
         A [login](Modules.Facebook.login) event is generated to indicate successful or
         unsuccessful login attempt.
+
+  - name: presentShareDialog
+    summary: Opens a supported Facebook Share dialog from the Facebook App.
+    description: |
+        For a list of parameters, and response formats, see the 
+        [official documentation for Facebook Dialogs](https://developers.facebook.com/docs/sharing/reference/share-dialog).  
+
+        The callback is invoked when the dialog is closed, either because the user
+        approved the action, or canceled the dialog.
+    parameters:
+      - name: action
+        summary: Specifies which dialog to show, such as "feed".
+        type: String
+
+      - name: params
+        summary: |
+            A dictionary object for pre-filling some of the dialog's fields.  
+        type: Object
+
+      - name: callback
+        summary: Callback to invoke  when the user completes or cancels the dialog.
+        type: Callback<FacebookDialogResponse>
 
   - name: dialog
     summary: Opens a supported Facebook dialog.
