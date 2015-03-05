@@ -134,6 +134,8 @@ The Facebook Graph API is the preferred method for getting information about a u
 For details on each of the Graph API objects and the supported operations, see the official Facebook Graph API documentation.
 Note: fql is no longer supported by Facebook beginning April 2015, so this module does not support fql. This module supports Facebook Graph API v2.2 and above.
 
+Example 1:
+
 ```javascript
     var fb = require('facebook');
     fb.requestWithGraphPath('me/groups', {}, 'GET',  function(r)
@@ -146,8 +148,24 @@ Note: fql is no longer supported by Facebook beginning April 2015, so this modul
             }
             return;
         }
-        var resultsNew = JSON.parse(r.result);
         var result = JSON.parse(r.result).data;
+    }
+```
+Example 2:
+
+```javascript
+    var fb = require('facebook');
+    fb.requestWithGraphPath('me/picture', {'redirect': 'false'}, 'GET',  function(r)
+    {
+        if (!r.success) {
+            if (r.error) {
+                alert(r.error);
+            } else {
+                alert("call was unsuccessful");
+            }
+            return;
+        }
+        var result = JSON.parse(r.result)
     }
 ```
 
