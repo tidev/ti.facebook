@@ -1,0 +1,57 @@
+---
+name: Modules.Facebook.LikeButton
+summary: A Facebook like button.
+description: |
+    The Like Button created by <Modules.Facebook.createLikeButton>.  This is a 
+    Facebook button that does not require a click event handler or any listeners.  
+    Click events on the button are automatically handled by the Facebook module.
+    
+    Facebook policies state "Please note that you will have to submit your integration
+    of the Like button for review via the Status and Review tab in the App Dashboard. 
+    You will also need to abide by our Platform Policy 4.14: if you use the Like button 
+    on iOS or Android, don’t collect or use any information from it."
+
+    Example:
+        var likeButton = fb.createLikeButton({
+                top: 230,
+                height: "50%", // Note: on iOS setting Ti.UI.SIZE dimensions prevented the button click
+                width: "50%",
+                objectId: "https://www.facebook.com/appcelerator", // URL or Facebook ID
+                foregroundColor: "white", // A color in Titanium format - see Facebook docs
+                likeViewStyle: 'box_count', // standard, button, box_count - see FB docs
+                auxiliaryViewPosition: 'inline', // bottom, inline, top - see FB docs
+                horizontalAlignment: 'left', // center, left, right - see FB docs,
+                objectType: 'page', // iOS only, 'page', 'openGraphObject', or 'unknown' - see FB docs
+                soundEnabled: true // boolean, iOS only
+        });
+        
+        if (Ti.Platform.osname == 'android') {
+            likeButton.height = Ti.UI.SIZE;
+            likeButton.width = Ti.UI.SIZE;
+        } 
+        win.add(likeButton);
+
+    See the [official Facebook Like Button documentation for Android](https://developers.facebook.com/docs/android/like-button)
+    or the [official Facebook Like Button documentation for iOS](https://developers.facebook.com/docs/ios/like-button)
+    for more information.
+since: "3.5.1"
+platforms: [android, iphone, ipad]
+properties:
+  - name: objectId
+    summary: |
+        Page or any Open Graph object to be referenced by URL or ID. 
+    type: String
+  - name: objectType
+    summary: |
+        Object Type.
+    description: |
+        iOS only. Set to `page`, `openGraphObject`, or `unknown`.
+    platforms: [iphone,ipad]
+    type: String
+  - name: soundEnabled
+    summary: |
+        Sound enabled. Only for iOS. Set to `true` for sound.
+    description: |
+        Sound enabled. Only for iOS. Set to `true` for sound.
+    platforms: [iphone,ipad]
+    type: Boolean
