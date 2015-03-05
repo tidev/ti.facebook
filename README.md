@@ -1,5 +1,4 @@
-Titanium Facebook Module
-================================
+# Titanium Facebook Module [![Build Status](https://travis-ci.org/appcelerator-modules/ti.facebook.svg?branch=master)](https://travis-ci.org/appcelerator-modules/ti.facebook)
 
 The Facebook module is used for connecting your application with Facebook. This module supports the following features:
 
