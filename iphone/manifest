@@ -12,7 +12,7 @@ copyright: Copyright (c) 2009-2015 by Appcelerator, Inc.
 # these should not be edited
 name: Facebook
 moduleid: facebook
-guid: 7ac4bcd0-eb97-4e43-89fc-03f7f4d0a2a0
+guid: da8acc57-8673-4692-9282-e3c1a21f5d83
 platform: iphone
 minsdk: 3.5.1.RC
 architectures: armv7 arm64 i386 x86_64

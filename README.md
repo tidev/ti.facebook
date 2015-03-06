@@ -52,7 +52,7 @@ Proxy required per Android activity
 
 Unlike iOS, where the entire app is active in memory, in Android only a single Activity is active at any time. In Titanium, an Activity corresponds to a standalone (i.e. not a Tab window) Ti.UI.Window or Ti.UI.TabGroup. The Facebook SDK contains tools to synchronize state between the various activities in the app, and this module implements that functionality, but for this to work we need to tell the module which is the currently active Activity. Thus the following is required:
 
-All Windows/TabGroup in your app must create a proxy, e.g. : win1.fbProxy = fb.createActivityWorker({lifecycleContainer: win1});, where fb is the requireed module.
+All Windows/TabGroup in your app must create a proxy, e.g. : win1.fbProxy = fb.createActivityWorker({lifecycleContainer: win1});, where fb is the required module.
 We must pass to the proxy the Ti.UI.Window or Ti.UI.TabGroup that will be using the proxy, so that the proxy can attach itself to the window's or tabgroup's activity.
 The proxy object must be created prior to calling open() on the window or tabgroup in order to make sure the Activity onCreate event is captured correctly.
 This proxy has no APIs (new since version 3.20.05), its sole function is to signal the Facebook SDK for the various Activity transitions. So just create it and attach it to the window/tabgroup.
@@ -133,6 +133,8 @@ The Facebook Graph API is the preferred method for getting information about a u
 For details on each of the Graph API objects and the supported operations, see the official Facebook Graph API documentation.
 Note: fql is no longer supported by Facebook beginning April 2015, so this module does not support fql. This module supports Facebook Graph API v2.2 and above.
 
+Example 1:
+
 ```javascript
     var fb = require('facebook');
     fb.requestWithGraphPath('me/groups', {}, 'GET',  function(r)
@@ -145,8 +147,24 @@ Note: fql is no longer supported by Facebook beginning April 2015, so this modul
             }
             return;
         }
-        var resultsNew = JSON.parse(r.result);
         var result = JSON.parse(r.result).data;
+    }
+```
+Example 2:
+
+```javascript
+    var fb = require('facebook');
+    fb.requestWithGraphPath('me/picture', {'redirect': 'false'}, 'GET',  function(r)
+    {
+        if (!r.success) {
+            if (r.error) {
+                alert(r.error);
+            } else {
+                alert("call was unsuccessful");
+            }
+            return;
+        }
+        var result = JSON.parse(r.result)
     }
 ```
 

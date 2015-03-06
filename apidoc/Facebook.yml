@@ -161,7 +161,7 @@ description: |
 
     We can create a Like button just like any other view, with specific parameters documented in Facebook docs. 
     Note there is no completion callback or event, and Facebook policies state "If you use the Like button on iOS 
-    or Android, don’t collect or use any information from it."
+    or Android, don't collect or use any information from it."
 
         var likeButton = fb.createLikeButton({
             objectId: "https://www.facebook.com/appcelerator", // URL or Facebook ID
@@ -227,13 +227,27 @@ description: |
     and [TIMODOPEN-391](https://jira.appcelerator.org/browse/TIMODOPEN-391).
 
 extends: Titanium.Module
-since: "3.1.0"
+since: "3.5.1"
 platforms: [android, iphone, ipad]
 methods:
 
+  - name: initialize
+    summary: |
+        If there is a cached Facebook session available, the login event will be fired immediately.
+    description: |
+        Be sure to set your [login](Modules.Facebook.login) and [logout](Modules.Facebook.logout) 
+        event listeners before calling `initialize`.
+
+        generated to indicate a successful attempt.
+    parameters:
+      - name: timeout
+        summary: Sets initialize timeout in milliseconds.
+        type: Number
+
   - name: authorize
     summary: |
-        Prompts the user to log in (if not already logged in) and authorize your application.  
+        Prompts the user to log in (if not already logged in) and authorize your application.
+        You can also use [LoginButton](Modules.Facebook.LoginButton) to log in.
     description: |
         Be sure to set your required [permissions](Modules.Facebook.permissions) before 
         calling `authorize`.
@@ -241,85 +255,115 @@ methods:
         A [login](Modules.Facebook.login) event is generated to indicate successful or
         unsuccessful login attempt.
 
-  - name: presentShareDialog
-    summary: Opens a supported Facebook Share dialog from the Facebook App.
-    description: |
-        For a list of parameters, and response formats, see the 
-        [official documentation for Facebook Dialogs](https://developers.facebook.com/docs/sharing/reference/share-dialog).  
-
-        The callback is invoked when the dialog is closed, either because the user
-        approved the action, or canceled the dialog.
-    parameters:
-      - name: action
-        summary: Specifies which dialog to show, such as "feed".
-        type: String
-
-      - name: params
-        summary: |
-            A dictionary object for pre-filling some of the dialog's fields.  
-        type: Object
-
-      - name: callback
-        summary: Callback to invoke  when the user completes or cancels the dialog.
-        type: Callback<FacebookDialogResponse>
-
-  - name: dialog
-    summary: Opens a supported Facebook dialog.
-    description: |
-        For a list of dialogs, parameters, and response formats, see the 
-        [official documentation for Facebook Dialogs](http://developers.facebook.com/docs/reference/dialogs/).  
-
-        The callback is invoked when the dialog is closed, either because the user
-        approved the action, or canceled the dialog.
-    parameters:
-      - name: action
-        summary: Specifies which dialog to show, such as "feed".
-        type: String
-
-      - name: params
-        summary: |
-            A dictionary object for pre-filling some of the dialog's fields.  
-        type: Object
-
-      - name: callback
-        summary: Callback to invoke  when the user completes or cancels the dialog.
-        type: Callback<FacebookDialogResponse>
-
   - name: logout
     summary: Clears the OAuth `accessToken` and logs out the user.
 
-  - name: request
-    summary: Makes a request to the legacy Facebook REST API.
+  - name: getCanPresentShareDialog
+    summary: Checks if the device can support the use of Facebook Share dialog from the Facebook App.
     description: |
-        For details on API calls and responses, see the 
-        [offical Facebook REST API documentation](http://developers.facebook.com/docs/reference/rest/).
+        This method checks if the device can support the use of Facebook Share dialog from the Facebook App.
+        For example:
+            if(fb.getCanPresentShareDialog()) {
+                fb.presentShareDialog({
+                    link: 'https://appcelerator.com/',
+                    name: 'great product',
+                    description: 'Titanium is a great product',
+                    caption: 'it rocks too',
+                    picture: 'http://www.appcelerator.com/wp-content/uploads/scale_triangle1.png'
+                });
+            } else {
+                fb.presentWebShareDialog({
+                    link: 'https://appcelerator.com/',
+                    name: 'great product',
+                    description: 'Titanium is a great product',
+                    caption: 'it rocks too',
+                    picture: 'http://www.appcelerator.com/wp-content/uploads/scale_triangle1.png'
+                });
+            }
+    returns:
+        type: Boolean
+
+  - name: presentShareDialog
+    summary: |
+        Opens a supported Facebook Share dialog from the Facebook App.
+
+        For a list of parameters, and response formats, see the 
+        [official documentation for Facebook Dialogs](https://developers.facebook.com/docs/sharing/reference/share-dialog).  
+
+        Be sure to check if the device can support this method by calling [getCanPresentShareDialog](Modules.Facebook.getCanPresentShareDialog)
+        before using this method. If true, you can use this method. If false, the Facebook application
+        is probably not installed in the device. In this case, please use [presentWebShareDialog](Modules.Facebook.presentWebShareDialog)
+        instead.
+
+        A `shareCompleted` event is generated to indicate successful or attempt.
     parameters:
-
-      - name: method
-        summary: The REST API method to call.
-        type: String
-
       - name: params
         summary: |
+            An object containing parameters required by the call, if any.  
             A dictionary object for setting parameters required by the call, if any.
+            For example
+            fb.presentShareDialog({
+                link: 'https://appcelerator.com/',
+                name: 'great product',
+                description: 'Titanium is a great product',
+                caption: 'it rocks too',
+                picture: 'http://www.appcelerator.com/wp-content/uploads/scale_triangle1.png'
+            });
         type: Object
 
-      - name: callback
-        summary: Callback to invoke  when the request completes.
-        type: Callback<FacebookRESTResponse>
+  - name: presentWebShareDialog
+    summary: |
+        Opens a web version of Share Dialog. Does not depend on the Facebook app.
+        For a list of parameters, and response formats, see the 
+        [official documentation for Facebook Dialogs](https://developers.facebook.com/docs/sharing/reference/share-dialog).  
+
+        This is a fallback for when [presentShareDialog](Modules.Facebook.presentShareDialog) is not
+        available.
+
+        A `shareCompleted` event is generated to indicate successful or unsuccessful attempt.
+    parameters:
+      - name: params
+        summary: |
+            A dictionary object containing parameters required by the call, if any.
+            For example
+            fb.presentWebShareDialog({
+                link: 'https://appcelerator.com/',
+                name: 'great product',
+                description: 'Titanium is a great product',
+                caption: 'it rocks too',
+                picture: 'http://www.appcelerator.com/wp-content/uploads/scale_triangle1.png'
+            });
+        type: Object
+
+  - name: presentSendRequestDialog
+    summary: |
+        Opens a supported Facebook dialog.
+
+        For a list of dialogs, parameters, and response formats, see the 
+        [official documentation for Facebook Dialogs](https://developers.facebook.com/docs/android/send-requests).  
+
+        A `requestDialogCompleted` event is generated to indicate successful or unsuccessful attempt.
+    parameters:
+      - name: params
+        summary: |
+            A dictionary object containing parameters required by the call, if any.
+            For example
+            fb.presentSendRequestDialog({message: 'Go to https://appcelerator.com/'});
+        type: Object
 
   - name: requestWithGraphPath
-    summary: Makes a Facebook Graph API request.
-    description: |
+    summary: |
+        Makes a Facebook Graph API request.
+
         If the request requires user authorization, the user must be logged in, and your app
         must be authorized to make the request. You can check the
         [loggedIn](Modules.Facebook.loggedIn) property to determine if the user is logged in.
 
-        Every Facebook object has an associated path. For example, "me" requests information about 
+        Every Facebook object has an associated path. For example, "me" requests information about
         the current user.
 
-        For a complete list of Graph API methods, parameters and return types, see the 
-        [official Facebook Graph API documentation](http://developers.facebook.com/docs/reference/api/).
+        For a complete list of Graph API methods, parameters and return types, see the
+        [official Facebook Graph API documentation](https://developers.facebook.com/docs/graph-api).
     parameters:
 
       - name: path
@@ -328,8 +372,12 @@ methods:
 
       - name: params
         summary: |
-            A dictionary object for setting parameters required by the call, if any.  
-        type: Dictionary
+            An object containing parameters required by the call if any.
+
+            The object must be serializable as JSON.
+            For example, to set 'redirect' in 'me/picture',
+            var params = {'redirect': 'false'};
+        type: Object
 
       - name: httpMethod
         summary: The HTTP method (GET/POST/DELETE) to use for the call.
@@ -339,38 +387,59 @@ methods:
         summary: Callback to invoke  when the request completes.
         type: Callback<FacebookGraphResponse>
 
-  - name: reauthorize
-    summary: Makes a request to Facebook for additional permissions.
+  - name: requestNewReadPermissions
+    summary: Makes a request to Facebook for additional read permissions.
     description: |
-        iOS 6's facebook login forbids minimum authorization to include write permissions.
-        In order to make any write actions, the app must reauthorize asking for the additional
-        permissions. If the application already has these permissions, there will be no user
-        interaction.
-    platforms: [iphone, ipad]
+        Note that it is not an error for the user to 'Skip' your requested permissions, 
+        so you should check the module's permissions property following the call using [getPermissions](Modules.Facebook.getPermissions).
     parameters:
 
       - name: permissions
         summary: |
             Array of additional permissions to request. For a complete list of permissions, see the 
-            [official Facebook Permissions Reference](http://developers.facebook.com/docs/reference/api/permissions/)
+            [official Facebook Permissions Reference](https://developers.facebook.com/docs/facebook-login/permissions/v2.2)
         type: Array<String>
 
       - name: audience
         summary: |
-            The extent of the visibility write permissions will have. The value of audience should be one of "me", "friends", or "everyone"
-        type: String
-        
+            The extent of the visibility read permissions will have. The value of audience should be one of [AUDIENCE_NONE](Modules.Facebook.AUDIENCE_NONE),
+            [AUDIENCE_ONLY_ME](Modules.Facebook.AUDIENCE_ONLY_ME), [AUDIENCE_FRIENDS](Modules.Facebook.AUDIENCE_FRIENDS), or [AUDIENCE_EVERYONE](Modules.Facebook.AUDIENCE_EVERYONE).
+        type: Number
       - name: callback
         summary: Callback to invoke when the request completes.
-        type: Callback<FacebookReauthResponse>
+        type: Callback<FacebookPermissionResponse>
 
-  - name: publishInstall
-    since: "3.4.1"
-    summary: |
-        Manually publish an attributed install to the facebook graph.  
+  - name: requestNewPublishPermissions
+    summary: Makes a request to Facebook for additional read permissions.
     description: |
-        Be sure to set your [appid](Modules.Facebook.appid) before calling `publishInstall`.
+        Note that it is not an error for the user to 'Skip' your requested permissions, 
+        so you should check the module's permissions property following the call using [getPermissions](Modules.Facebook.getPermissions).
+    parameters:
 
+      - name: permissions
+        summary: |
+            Array of additional permissions to request. For a complete list of permissions, see the 
+            [official Facebook Permissions Reference](https://developers.facebook.com/docs/facebook-login/permissions/v2.2)
+        type: Array<String>
+
+      - name: audience
+        summary: |
+            The extent of the visibility read permissions will have. The value of audience should be one of [AUDIENCE_NONE](Modules.Facebook.AUDIENCE_NONE),
+            [AUDIENCE_ONLY_ME](Modules.Facebook.AUDIENCE_ONLY_ME), [AUDIENCE_FRIENDS](Modules.Facebook.AUDIENCE_FRIENDS), or [AUDIENCE_EVERYONE](Modules.Facebook.AUDIENCE_EVERYONE).
+        type: Number
+
+      - name: callback
+        summary: Callback to invoke when the request completes.
+        type: Callback<FacebookPermissionResponse>
+
+  - name: refreshPermissionsFromServer
+    summary: Makes a request to Facebook to get the latest permissions granted.
+    description: |
+        Facebook now grants total control over granted permissions, and if the user modified the permissions
+        outside of your app your cached token may not be updated. To get the current permissions from 
+        Facebook's servers you can call fb.refreshPermissionsFromServer(). 
+
+         A `tokenUpdated` event is generated to notify of a successful completion.
 events:
 
   - name: login
@@ -382,19 +451,16 @@ events:
             Returns `true` if request succeeded, `false` otherwise.
         type: Boolean
 
+      - name: cancelled
+        summary: |
+            Indicates if the user canceled the login request by closing the dialog.
+        type: Number
+
       - name: error
         summary: |
             Error message, if any returned.
             Will be undefined if `success` is `true`.
         type: String
-    
-      - name: code
-        summary: |
-            Error code.
-            Error code will be 0 if `success` is `true`, nonzero otherwise. If the error
-            was generated by the operating system, that system's error value is used.
-            Otherwise, this value will be -1.
-        type: Number
 
       - name: uid
         summary: User ID returned by Facebook if the login was successful.
@@ -406,57 +472,85 @@ events:
             after a successful login. Data is in JSON format, and includes information 
             such as user name, locale and gender.
 
-      - name: cancelled
-        summary: Indicates if the user canceled the login request by closing the dialog.
-        type: Boolean
-
   - name: logout
     summary: Fired at session logout.
 
+  - name: tokenUpdated
+    summary: Fired when [refreshPermissionsFromServer](Modules.Facebook.refreshPermissionsFromServer) is completed.
+
+  - name: shareCompleted
+    summary: Fired when [presentShareDialog](Modules.Facebook.presentShareDialog) or [presentWebShareDialog](Modules.Facebook.presentWebShareDialog) is closed.
+    properties:
+      - name: success
+        summary: |
+            Indicates if the user was logged in successfully.
+            Returns `true` if request succeeded, `false` otherwise.
+        type: Boolean
+
+      - name: cancelled
+        summary: |
+            Indicates if the user canceled the login request by closing the dialog.
+        type: Number
+
+      - name: error
+        summary: |
+            Error message, if any returned.
+            Will be undefined if `success` is `true`.
+        type: String
+
+  - name: requestDialogCompleted
+    summary: Fired when [presentShareDialog](Modules.Facebook.presentShareDialog) or [presentWebShareDialog](Modules.Facebook.presentWebShareDialog) is closed.
+    properties:
+      - name: success
+        summary: |
+            Indicates if the user was logged in successfully.
+            Returns `true` if request succeeded, `false` otherwise.
+        type: Boolean
+
+      - name: cancelled
+        summary: |
+            Indicates if the user canceled the login request by closing the dialog.
+        type: Number
+
+      - name: error
+        summary: |
+            Error message, if any returned.
+            Will be undefined if `success` is `true`.
+        type: String
+
 properties:
-  - name: BUTTON_STYLE_NORMAL
+  - name: AUDIENCE_NONE
     summary: |
-        Use with [LoginButton.style](Modules.Facebook.LoginButton.style) to specify
-        the default login button reading "Connect" or "Login".
+        Use with [LoginButton.style](Modules.Facebook.requestWithGraphPath) to specify
+        the default audience.
     type: Number
     permission: read-only
 
-  - name: BUTTON_STYLE_WIDE
+  - name: AUDIENCE_ONLY_ME
     summary: |
-        Use with [LoginButton.style](Modules.Facebook.LoginButton.style) to specify
-        a wide login button reading "Connect with Facebook" or "Login with Facebook".
+        Use with [LoginButton.style](Modules.Facebook.requestWithGraphPath) to specify
+        the default audience.
     type: Number
     permission: read-only
 
-  - name: accessToken
-    summary: OAuth token set after a successful `authorize`.
-    type: String
+  - name: AUDIENCE_FRIENDS
+    summary: |
+        Use with [LoginButton.style](Modules.Facebook.requestWithGraphPath) to specify
+        the default audience.
+    type: Number
     permission: read-only
 
-  - name: appid
-    summary: Your Facebook application id. You need to set this for anything to work.
-    type: String
+  - name: AUDIENCE_EVERYONE
+    summary: |
+        Use with [LoginButton.style](Modules.Facebook.requestWithGraphPath) to specify
+        the default audience.
+    type: Number
+    permission: read-only
 
   - name: expirationDate
     summary: Time at which the `accessToken` expires.
     type: Date
     permission: read-only
-
-  - name: forceDialogAuth
-    summary:  |
-        Indicates whether the login should use the traditional dialog-based
-        authentication.
-    description: |
-        Set to `false` to enable Single-Sign-On (SSO) in cases where the official Facebook app is on the 
-        device.  Default is `true`, meaning the traditional, dialog-based
-        authentication is used rather than SSO. See  the
-        [Facebook Mobile Guide](http://developers.facebook.com/docs/guides/mobile) for 
-        details of their Single-Sign-On scheme.
-        
-        To use the built-in iOS 6 login, set this property to `false`.
-        This property is read-only on Mobile Web.
-    type: Boolean
-    default: true
 
   - name: loggedIn
     summary: Indicates if the user is logged in.
@@ -466,16 +560,8 @@ properties:
   - name: permissions
     summary: Array of permissions to request for your app. 
     description: |
-        Be sure the permissions you want are set before calling
-        [authorize](Modules.Facebook.authorize).
-
-        To use the build-in iOS 6 login, this property cannot contain any of the following:
-        offline_access, publish_actions, publish_stream, publish_checkins,
-        ads_management, create_event, rsvp_event, manage_friendlists, manage_notifications,
-        or manage_pages.
-
         For a complete list of permissions, see the 
-        [official Facebook Permissions Reference](http://developers.facebook.com/docs/reference/api/permissions/)
+        [official Facebook Permissions Reference](https://developers.facebook.com/docs/facebook-login/permissions/v2.2)
     type: Array<String>
 
   - name: uid
@@ -493,17 +579,18 @@ examples:
         determine whether the request succeeded.
         
             var fb = require('facebook');
-            fb.appid = FACEBOOK_APP_ID;
-            fb.permissions = ['publish_stream']; // Permissions your app needs
-            fb.forceDialogAuth = true;
             fb.addEventListener('login', function(e) {
-            	if (e.success) {
-            		alert('Logged In');
-            	} else if (e.error) {
-            		alert(e.error);
-            	} else if (e.cancelled) {
-            		alert("Canceled");
-            	}
+                if (e.success) {
+                    alert('login from uid: '+e.uid+', name: '+JSON.parse(e.data).name);
+                    label.text = 'Logged In = ' + fb.loggedIn;
+                }
+                else if (e.cancelled) {
+                    // user cancelled 
+                    alert('cancelled');
+                }
+                else {
+                    alert(e.error);         
+                }
             });
             fb.authorize();
         
@@ -522,7 +609,7 @@ examples:
   - title: Authorize/Logout Using the Facebook LoginButton
     example: |
         
-        You can use the the Facebook-themed [LoginButton](Modules.Facebook.LoginButton)
+        You can use the the native Facebook [LoginButton](Modules.Facebook.LoginButton)
         to allow the user to log in as required. The button updates its state automatically depending 
         on whether the user is logged in or not.  When the user is logged in, then the button 
         will show "Logout", and vice-versa.
@@ -536,8 +623,7 @@ examples:
             // won't be effective.
             var win = Ti.UI.createWindow({backgroundColor: 'white'});
             var fb = require('facebook');
-            fb.appid = FACEBOOK_APP_ID;
-            fb.permissions = ['publish_stream'];
+            
             fb.addEventListener('login', function(e) {
             	if (e.success) {
             		alert('Logged in');
@@ -549,46 +635,12 @@ examples:
                 
             // Add the button.  Note that it doesn't need a click event listener.
             win.add(fb.createLoginButton({
-                top : 50,
-                style : fb.BUTTON_STYLE_WIDE
+                    readPermissions: ['read_stream','email'],
+                    top: 50
             }));
+
             win.open()
 
-        The specified button style ('wide' or `BUTTON_STYLE_WIDE`) shows a wide version of the 
-        button that displays "Connect with Facebook" instead of just "Connect".
-
-  - title: Alloy XML Markup
-    example: |
-        Example of using the Facebook Login Button in Alloy.
-
-        This example loads the Facebook v3 module and assigns it to the `Alloy.Globals.Facebook` namespace
-        in the initializer file.  In the XML markup, add a LoginButton element with its `ns`
-        (namespace) attribute set to `Alloy.Globals.Facebook`.
-        In the controller, use the `Alloy.Globals.Facebook` namespace to reference the Facebook module.
-
-        `app.js`:
-
-            // Loads the Facebook module, which can be referenced by Alloy.Globals.Facebook
-            Alloy.Globals.Facebook = require('facebook');
-
-        `app/views/index.xml`:
-
-            <Alloy>
-                <Window>
-                     <!-- Use the Alloy.Globals.Facebook namespace to create a Facebook module login button -->
-                    <LoginButton id="fbButton" ns="Alloy.Globals.Facebook"/>
-                </Window>
-            </Alloy>
-
-        `app/controllers/index.js`:
-
-            // Use the Alloy.Globals.Facebook namespace to make Facebook module API calls
-            var facebook = Alloy.Globals.Facebook;
-            facebook.appid = FACEBOOK_APP_ID;
-            facebook.permissions = [FACEBOOK_APP_PERMISSIONS];
-            $.fbButton.style = facebook.BUTTON_STYLE_WIDE;
-            $.index.open();
-        
   - title: Simple Graph API Call
     example: |
         
@@ -605,246 +657,147 @@ examples:
             		alert('Unknown response');
             	}
             });
-        
-        
-  - title: Create an Event Using the Graph API
-    example: |
-        
-        This example uses the Graph API to create an event in the logged-on user's Facebook account.
-        This requires the "create_event" permission.
-        
-            // First make sure this permission exists
-            fb.permissions = ['create_event'];
-            fb.authorize();
-            
-            // ...
-            // ...
-            
-            // Now create the event after you've confirmed authorize() was successful.
-            var starttime = new Date(2012, 4, 31, 17, 0);
-            var endtime = new Date(2012, 4, 31, 19, 0);
-            var title = "Barry's Birthday Celebration";
-            var description = "Barry will have a great party";
-            var data = {
-            	start_time: JSON.stringify(starttime), // API expects a JSON stringified date
-            	end_time: JSON.stringify(endtime),
-            	summary: description,
-            	name: title
-            };
-            fb.requestWithGraphPath('me/events', data, 'POST', function(e) {
-            	if (e.success) {
-            		alert("Success! Returned from FB: " + e.result);
-            	} else {
-            		if (e.error) {
-            			alert(e.error);
-            		} else {
-            			alert("Unknown result");
-            		}
-            	}
-            });
-        
-        For more information on the Event object, see:
 
-        * [Event in the Facebook Graph API Reference](http://developers.facebook.com/docs/reference/api/event/).
-        
-  - title: Set a User's Facebook Status Using the Graph API
-    example: |
-        
-        This example uses the Graph API to set the user's Facebook status, which requires the 
-        "publish_stream" permission.
-        
-            // First make sure this permission exists
-            fb.permissions = ['publish_stream'];
-            fb.authorize();
-            
-            // ...
-            // ...
-            
-            // Now create the status message after you've confirmed that authorize() succeeded
-            fb.requestWithGraphPath('me/feed', {message: "Trying out FB Graph API and it's fun!"}, 
-                     "POST", function(e) {
-            	if (e.success) {
-            		alert("Success!  From FB: " + e.result);
-            	} else {
-            		if (e.error) {
-            			alert(e.error);
-            		} else {
-            			alert("Unkown result");
-            		}
-            	}
-            });
-        
-        For more information on the Staus object, see:
-        
-        * [Status in the Facebook Graph API Reference](http://developers.facebook.com/docs/reference/api/status/).  
-        
-  - title: Post a Photo Using the Graph API
+  - title: Post a Photo Using the Graph API from the Gallery.
     example: |
         
         This example posts a photo to the user's account using the Graph API.
-        Another example below shows how to do this with the REST API, if desired. 
-        This requires the "publish_stream" permission.
-        
-            // First make sure this permission exists
-            fb.permissions = ['publish_stream'];
-            fb.authorize();
-            
-            // ...
-            // ...
-            
-            // Now post the photo after you've confirmed that authorize() succeeded
-            var f = Ti.Filesystem.getFile('pumpkin.jpg');
-            var blob = f.read();
-            var data = {
-            	message: 'This is a pumpkin',
-            	picture: blob
-            };
-            fb.requestWithGraphPath('me/photos', data, 'POST', function(e){
-            	if (e.success) {
-            		alert("Success!  From FB: " + e.result);
-            	} else {
-            		if (e.error) {
-            			alert(e.error);
-            		} else {
-            			alert("Unkown result");
-            		}
-            	}
-            });
+        This requires the "publish_actions" permission.
+    
+        var B1_TITLE = 'Upload Photo from Gallery with Graph API';
+        var b1 = Ti.UI.createButton({
+            title:B1_TITLE,
+            left: 10, right: 10, top: 0, height: 80
+        }); 
 
-        For more information on posting photos, see:
-
-        * [Photo in the Facebook Graph API Reference](http://developers.facebook.com/docs/reference/api/photo/) 
-        
-        
-  - title: Post a photo using the REST API
-    example: |
-        
-        This example posts a photo to the user's account using the REST API. Another example above shows 
-        how to do this with the Graph API.  This requires the "publish_stream" permission.
-        
-            // First make sure this permission exists
-            fb.permissions = ['publish_stream'];
-            fb.authorize();
-            
-            // ...
-            // ...
-            
-            // Now post the photo after you've confirmed that authorize() succeeded
-            var f = Ti.Filesystem.getFile('pumpkin.jpg');
-            var blob = f.read();
-            var data = {
-            	caption: 'This is a pumpkin',
-            	picture: blob
-            };
-            fb.request('photos.upload', data, function(e){
-            	if (e.success) {
-            		alert("Success!  From FB: " + e.result);
-            	} else {
-            		if (e.error) {
-            			alert(e.error);
-            		} else {
-            			alert("Unkown result");
-            		}
-            	}
-            });
-        
-        For more information on posting photos using the REST API, see:
-
-        * [photos.upload in the Facebook REST API Reference](http://developers.facebook.com/docs/reference/rest/photos.upload/) 
-        
-  - title: Show the Facebook Feed Dialog
-    example: |
-        
-        This example shows how to display the offical Facebook Feed Dialog, for adding a
-        post to the user's wall. In this example, we'll prefill some of the feed fields by 
-        passing a data dictionary to the [dialog](Modules.Facebook.dialog) method; this is not required.
-        
-
-            var data = {
-                link : "http://www.appcelerator.com",
-                name : "Appcelerator Titanium Mobile",
-                message : "Checkout this cool open source project for creating mobile apps",
-                caption : "Appcelerator Titanium Mobile",
-                picture : "http://developer.appcelerator.com/assets/img/DEV_titmobile_image.png",
-                description : "You've got the ideas, now you've got the power. Titanium translates " +
-                              "your hard won web skills into native applications..."
-            };
-            fb.dialog("feed", data, function(e) {
-                if(e.success && e.result) {
-                    alert("Success! New Post ID: " + e.result);
-                } else {
-                    if(e.error) {
-                        alert(e.error);
-                    } else {
-                        alert("User canceled dialog.");
-                    }
-                }
-            });
-        
-        For more information on Facebook Dialogs, see:
-
-        * [Facebook Dialog Reference](http://developers.facebook.com/docs/reference/dialogs/) 
-
-  - title: Requesting additional permissions for iOS 6
-    example: |
-
-        To use the built-in iOS 6 Facebook login, the application cannot request offline or write permissions
-        upon intialization and must ask for write permission using the
-        [reauthroize](Modules.Facebook.reauthorize) method.
-        This example shows how to use the `reauthorize` method to request additional permissions
-        to publish a post to the user's wall.
-
-            var fb = require('facebook');
-            fb.appid = FACEBOOK_APP_ID;
-            // Initial permissions must exclude offline and write priviledges
-            fb.permissions = ['read_stream'];
-            // This property needs to be false to use the built-in iOS 6 login
-            fb.forceDialogAuth = false;
-            fb.addEventListener('login', function(e) {
-                if (e.success) {
-                    alert('Logged In');
-                } else if (e.error) {
-                    alert(e.error);
-                } else if (e.cancelled) {
-                    alert("Canceled");
-                }
-            });
-
-            var button = Ti.UI.createButton({title: 'Open Feed Dialog'});
-            button.addEventListener('click', function(e){
-                // Ask for write permission
-                fb.reauthorize(['publish_stream'], 'me', function(e){
-                    if (e.success) {
-                        // If successful, proceed with a publish call
-                        fb.dialog("feed", {}, function(e) {
-                            if(e.success && e.result) {
-                                alert("Success! New Post ID: " + e.result);
-                            } else {
-                                if(e.error) {
-                                    alert(e.error);
-                                } else {
-                                    alert("User canceled dialog.");
-                                }
+        b1.addEventListener('click', function() {
+            Titanium.Media.openPhotoGallery({
+                success:function(event)
+                {
+                    b1.title = 'Uploading Photo...';
+                    var data = {picture: event.media};
+                    //If publish_actions permission is not granted, request it
+                    if(fb.permissions.indexOf('publish_actions') < 0) {
+                        fb.requestNewPublishPermissions(['publish_actions'],fb.AUDIENCE_FRIENDS,function(e){
+                            if(e.success) {
+                                Ti.API.info('Permissions:'+fb.permissions);
+                                fb.requestWithGraphPath('me/photos', data, "POST", showRequestResult);
+                            }
+                            if(e.error) {
+                                Ti.API.info('Publish permission error');
+                            }
+                            if(e.cancelled) {
+                                Ti.API.info('Publish permission cancelled');
                             }
                         });
                     } else {
-                        if (e.error) {
-                            alert(e.error);
-                        } else {
-                            alert("Unknown result");
-                        }
+                        fb.requestWithGraphPath('me/photos', data, "POST", showRequestResult);
+                    }
+                },
+                cancel:function()
+                {
+                },
+                error:function(error)
+                {
+                },
+                allowEditing:true
+            });
+        });
+
+        For more information on posting photos, see:
+
+        * [Photo in the Facebook Graph API Reference](https://developers.facebook.com/docs/graph-api/reference/v2.2/photo) 
+        
+  - title: Post a Photo Using the Graph API with an image in resources directory
+    example: |
+        
+        This example posts a photo to the user's account using the Graph API.
+        This requires the "publish_actions" permission.
+
+        var B2_TITLE = 'Upload Photo from file with Graph API';
+        var b2 = Ti.UI.createButton({
+            title: B2_TITLE,
+            left: 10, right: 10, top: 90, height: 80
+        });  
+
+        b2.addEventListener('click', function() {
+            b2.title = 'Uploading Photo...';
+            var f = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, 'images', 'flower.jpg');
+            var blob = f.read();
+            var data = {
+                caption: 'behold, a flower',
+                picture: blob
+            };
+            //If publish_actions permission is not granted, request it
+            if(fb.permissions.indexOf('publish_actions') < 0) {
+                fb.requestNewPublishPermissions(['publish_actions'],fb.AUDIENCE_FRIENDS,function(e){
+                    if(e.success) {
+                        Ti.API.info('Permissions:'+fb.permissions);
+                        fb.requestWithGraphPath('me/photos', data, "POST", showRequestResult);
+                    }
+                    if(e.error) {
+                        Ti.API.info('Publish permission error');
+                    }
+                    if(e.cancelled) {
+                        Ti.API.info('Publish permission cancelled');
                     }
                 });
-            });
-
-            var win = Ti.UI.createWindow({backgroundColor: 'white'});
-            win.add(button);
-            win.open();
-
-            if (!fb.loggedIn) {
-                fb.authorize();
+            } else {
+                fb.requestWithGraphPath('me/photos', data, "POST", showRequestResult);
             }
+        });
 
+        For more information on posting photos, see:
+
+        * [Photo in the Facebook Graph API Reference](https://developers.facebook.com/docs/graph-api/reference/v2.2/photo) 
+
+  - title: Show the Share Dialog
+    example: |
+        
+        This example shows how to use the Share Dialog.
+        
+        var wallDialog = Ti.UI.createButton({
+            title: 'Share URL with Share Dialog',
+            top: 135, left: 10, right: 10, height: 40
+        });
+
+        wallDialog.addEventListener('click', function() {       
+            if(fb.getCanPresentShareDialog()) {
+                fb.presentShareDialog({
+                    link: 'https://appcelerator.com/',
+                    name: 'great product',
+                    description: 'Titanium is a great product',
+                    caption: 'it rocks too',
+                    picture: 'http://www.appcelerator.com/wp-content/uploads/scale_triangle1.png'
+                });
+            } else {
+                fb.presentWebShareDialog({
+                    link: 'https://appcelerator.com/',
+                    name: 'great product',
+                    description: 'Titanium is a great product',
+                    caption: 'it rocks too',
+                    picture: 'http://www.appcelerator.com/wp-content/uploads/scale_triangle1.png'
+                });
+            }
+        });
+
+        For more information on Facebook Dialogs, see:
+
+        * [Facebook Share Dialog Reference](https://developers.facebook.com/docs/sharing/reference/share-dialog) 
+
+  - title: Requesting additional permissions
+    example: |
+
+        This example shows how to use the `requestNewPublishPermissions` method to request additional permissions
+        to publish a post to the user's wall.
+
+            fb.requestNewPublishPermissions(['publish_actions'],fb.AUDIENCE_FRIENDS,function(e){
+                if(e.success){
+                    fb.requestWithGraphPath('me/feed', null, "POST", showRequestResult);
+                } else {
+                    Ti.API.debug('Failed authorization due to: ' + e.error);
+                }
+            });
 
 ---
 name: FacebookGraphResponse
@@ -853,10 +806,6 @@ summary: |
     Argument passed to the graph API callback, in response to a
     [requestWithGraphPath](Modules.Facebook.requestWithGraphPath) call.
 properties:
-  - name: path
-    summary: Graph API path of the original request.
-    type: String
-
   - name: result
     summary: |
         If successful, returns the JSON response returned by Facebook.
@@ -864,18 +813,7 @@ properties:
     type: String
 
 ---
-name: FacebookReauthResponse
-extends: ErrorResponse
-summary: Argument passed to the reauthorize callback when the request is completed or canceled.
-properties:
-
-  - name: cancelled
-    summary: Indicates if the user canceled the dialog. 
-    type: Boolean
-
-
----
-name: FacebookDialogResponse
+name: FacebookPermissionResponse
 extends: ErrorResponse
 summary: Argument passed to the dialog callback when a dialog is completed or canceled.
 description: |
@@ -887,28 +825,13 @@ properties:
     summary: Indicates if the user canceled the dialog. 
     type: Boolean
 
-  - name: result
+  - name: success
     summary: |
-        If successful, returns the JSON response containing the `post_id` of the new post.
-        If the user canceled the dialog, the results is undefined.
-    type: String
+        Indicates if successful
+    type: Boolean
 
-
----
-name: FacebookRESTResponse
-extends: ErrorResponse
-summary: |
-    Argument passed to the REST API callback when a request completes (successfully
-    or unsuccessfully).
-properties:
-
-  - name: method
-    summary: REST method call you specified.
-    type: String
-
-  - name: result
+  - name: error
     summary: |
-        If successful, returns the JSON response returned by Facebook.
-        If the request is not successfully completed, the result is undefined.
+        Error message, if any returned.
+        Will be undefined if `success` is `true`.
     type: String
-
