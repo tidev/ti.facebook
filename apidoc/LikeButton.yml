@@ -9,7 +9,7 @@ description: |
     Facebook policies state "Please note that you will have to submit your integration
     of the Like button for review via the Status and Review tab in the App Dashboard. 
     You will also need to abide by our Platform Policy 4.14: if you use the Like button 
-    on iOS or Android, don’t collect or use any information from it."
+    on iOS or Android, don't collect or use any information from it."
 
     Example:
         var likeButton = fb.createLikeButton({

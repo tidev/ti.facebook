@@ -161,7 +161,7 @@ description: |
 
     We can create a Like button just like any other view, with specific parameters documented in Facebook docs. 
     Note there is no completion callback or event, and Facebook policies state "If you use the Like button on iOS 
-    or Android, don’t collect or use any information from it."
+    or Android, don't collect or use any information from it."
 
         var likeButton = fb.createLikeButton({
             objectId: "https://www.facebook.com/appcelerator", // URL or Facebook ID
@@ -242,7 +242,7 @@ methods:
     parameters:
       - name: timeout
         summary: Sets initialize timeout in milliseconds.
-        type: int
+        type: Number
 
   - name: authorize
     summary: |
@@ -284,8 +284,9 @@ methods:
         type: Boolean
 
   - name: presentShareDialog
-    summary: Opens a supported Facebook Share dialog from the Facebook App.
-    description: |
+    summary: |
+        Opens a supported Facebook Share dialog from the Facebook App.
+
         For a list of parameters, and response formats, see the 
         [official documentation for Facebook Dialogs](https://developers.facebook.com/docs/sharing/reference/share-dialog).  
 
@@ -299,7 +300,6 @@ methods:
       - name: params
         summary: |
             An object containing parameters required by the call, if any.  
-        description: |
             A dictionary object for setting parameters required by the call, if any.
             For example
             fb.presentShareDialog({
@@ -312,8 +312,8 @@ methods:
         type: Object
 
   - name: presentWebShareDialog
-    summary: Opens a web version of Share Dialog. Does not depend on the Facebook app.
-    description: |
+    summary: |
+        Opens a web version of Share Dialog. Does not depend on the Facebook app.
         For a list of parameters, and response formats, see the 
         [official documentation for Facebook Dialogs](https://developers.facebook.com/docs/sharing/reference/share-dialog).  
 
@@ -324,8 +324,6 @@ methods:
     parameters:
       - name: params
         summary: |
-            A dictionary object containing parameters required by the call, if any.  
-        description: |
             A dictionary object containing parameters required by the call, if any.
             For example
             fb.presentWebShareDialog({
@@ -338,8 +336,9 @@ methods:
         type: Object
 
   - name: presentSendRequestDialog
-    summary: Opens a supported Facebook dialog.
-    description: |
+    summary: |
+        Opens a supported Facebook dialog.
+
         For a list of dialogs, parameters, and response formats, see the 
         [official documentation for Facebook Dialogs](https://developers.facebook.com/docs/android/send-requests).  
 
@@ -347,16 +346,15 @@ methods:
     parameters:
       - name: params
         summary: |
-            A dictionary object containing parameters required by the call, if any. 
-        description: |
             A dictionary object containing parameters required by the call, if any.
             For example
             fb.presentSendRequestDialog({message: 'Go to https://appcelerator.com/'});
         type: Object
 
   - name: requestWithGraphPath
-    summary: Makes a Facebook Graph API request.
-    description: |
+    summary: |
+        Makes a Facebook Graph API request.
+
         If the request requires user authorization, the user must be logged in, and your app
         must be authorized to make the request. You can check the
         [loggedIn](Modules.Facebook.loggedIn) property to determine if the user is logged in.
@@ -373,11 +371,12 @@ methods:
         type: String
 
       - name: params
-        summary: An object containing parameters required by the call if any.
-        description: |
+        summary: |
+            An object containing parameters required by the call if any.
+
             The object must be serializable as JSON.
             For example, to set 'redirect' in 'me/picture',
-                var params = {'redirect': 'false'};
+            var params = {'redirect': 'false'};
         type: Object
 
       - name: httpMethod
@@ -405,8 +404,7 @@ methods:
         summary: |
             The extent of the visibility read permissions will have. The value of audience should be one of [AUDIENCE_NONE](Modules.Facebook.AUDIENCE_NONE),
             [AUDIENCE_ONLY_ME](Modules.Facebook.AUDIENCE_ONLY_ME), [AUDIENCE_FRIENDS](Modules.Facebook.AUDIENCE_FRIENDS), or [AUDIENCE_EVERYONE](Modules.Facebook.AUDIENCE_EVERYONE).
-        type: int
-
+        type: Number
       - name: callback
         summary: Callback to invoke when the request completes.
         type: Callback<FacebookPermissionResponse>
@@ -428,7 +426,7 @@ methods:
         summary: |
             The extent of the visibility read permissions will have. The value of audience should be one of [AUDIENCE_NONE](Modules.Facebook.AUDIENCE_NONE),
             [AUDIENCE_ONLY_ME](Modules.Facebook.AUDIENCE_ONLY_ME), [AUDIENCE_FRIENDS](Modules.Facebook.AUDIENCE_FRIENDS), or [AUDIENCE_EVERYONE](Modules.Facebook.AUDIENCE_EVERYONE).
-        type: int
+        type: Number
 
       - name: callback
         summary: Callback to invoke when the request completes.
