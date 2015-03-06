@@ -1,6 +1,7 @@
 # Eclipse
 build
 .project
+.DS_Store
 .classpath
 .settings/
 bin/**
