@@ -14,6 +14,6 @@ respackage: com.facebook.android
 # these should not be edited
 name: Facebook
 moduleid: facebook
-guid: a0ddb4d2-2a9d-4e93-b3d7-761a5ec33536
+guid: e4f7ac61-1ee7-44c5-bc27-fa6876e2dce9
 platform: android
 minsdk: 3.5.1.RC
