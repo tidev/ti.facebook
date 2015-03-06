@@ -14,22 +14,25 @@ Getting Started
 ---------------
 Note that this module is only available for Release 4.0.0 and later, and is included with the Titanium SDK. You do not need to download or unpack it.
 Edit the modules section of your tiapp.xml file to include this module:
-
+```xml
 <modules>
     <module platform="android">facebook</module>
     <module platform="iphone">facebook</module>
 </modules>
-
+```
 Also you will need a Facebook App ID ready. To create a Facebook App ID, go to the Facebook Developer App: developers.facebook.com/apps
 
-On the iOS platform, add the following property to the <ios><plist><dict> section in tiapp.xml:
+On the iOS platform, add the following property to the \<ios\>\<plist\>\<dict\> section in tiapp.xml:
+```xml
 <key>FacebookAppID</key>
 <string>1234567891011</string>
 <key>FacebookDisplayName</key>
 <string>SomeName</string>
+```
 where SomeName is exactly as appears in the Facebook developer settings page
 
-Also make sure you have a URL Scheme in tiapp.xml that looks like fb1234567891010. See Facebook docs for details on this. Add an entry to <ios><plist><dict> that looks like this, modify it for your app:
+Also make sure you have a URL Scheme in tiapp.xml that looks like fb1234567891010. See Facebook docs for details on this. Add an entry to \<ios\>\<plist\>\<dict\> that looks like this, modify it for your app:
+```xml
 <key>CFBundleURLTypes</key>
 <array>
     <dict>
@@ -42,17 +45,31 @@ Also make sure you have a URL Scheme in tiapp.xml that looks like fb123456789101
         </array>
     </dict>
 </array>
-
-On the android platform, in tiapp.xml or AndroidManifest.xml you must declare the following inside the <application> node <activity android:name="com.facebook.LoginActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:label="YourAppName"/>
-You must also reference the string containing your Facebook app ID, inside the <application> node as well: <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
-The app id goes into the the file /platform/android/res/values/strings.xml, where you should define <resources><string name="app_id">1234567890123456</string></resources>, where the number is of course the app ID. The app ID is not set programmatically.
+```
+On the android platform, in tiapp.xml or AndroidManifest.xml you must declare the following inside the \<application\> node 
+```xml
+<activity android:name="com.facebook.LoginActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:label="YourAppName"/>
+```
+You must also reference the string containing your Facebook app ID, inside the \<application\> node as well: 
+```xml
+<meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
+```
+The app id goes into the the file /platform/android/res/values/strings.xml, where you should define 
+```xml
+<resources><string name="app_id">1234567890123456</string></resources>
+```
+where the number is of course the app ID. The app ID is not set programmatically.
 
 Proxy required per Android activity
 -----------------------------------
 
 Unlike iOS, where the entire app is active in memory, in Android only a single Activity is active at any time. In Titanium, an Activity corresponds to a standalone (i.e. not a Tab window) Ti.UI.Window or Ti.UI.TabGroup. The Facebook SDK contains tools to synchronize state between the various activities in the app, and this module implements that functionality, but for this to work we need to tell the module which is the currently active Activity. Thus the following is required:
 
-All Windows/TabGroup in your app must create a proxy, e.g. : win1.fbProxy = fb.createActivityWorker({lifecycleContainer: win1});, where fb is the required module.
+All Windows/TabGroup in your app must create a proxy, e.g. : 
+```xml
+win1.fbProxy = fb.createActivityWorker({lifecycleContainer: win1});
+```
+where fb is the required module.
 We must pass to the proxy the Ti.UI.Window or Ti.UI.TabGroup that will be using the proxy, so that the proxy can attach itself to the window's or tabgroup's activity.
 The proxy object must be created prior to calling open() on the window or tabgroup in order to make sure the Activity onCreate event is captured correctly.
 This proxy has no APIs (new since version 3.20.05), its sole function is to signal the Facebook SDK for the various Activity transitions. So just create it and attach it to the window/tabgroup.
