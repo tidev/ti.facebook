@@ -2,64 +2,115 @@
 name: Modules.Facebook.LoginButton
 summary: A Facebook login button.
 description: |
-    The Login Button created by <Modules.Facebook.createLoginButton>.  This is a 
-    Facebook button that does not require a click event handler or any listeners.  
+    Use the [createLoginButton()](Modules.Facebook.createLoginButton) method
+    to create a Login button. If you want to request user permissions when the
+    user logs in, set either the <Modules.Facebook.LoginButton.readPermissions> or
+    <Modules.Facebook.LoginButton.publishPermissions> property, but do not set both.  If both
+    properties are set, the application will throw an exception.  If neither property is set, by
+    default, only the `user_profile` permission is requested.
+
+    The Login button does not require a click event handler or any listeners.
     Click events on the button are automatically handled by the Facebook module.
 
-    The button changes its label to reflect the current state of the Facebook 
-    session.  For example, if the user is already logged in, this button will show "Logout".
+    The button changes its label to reflect the current state of the Facebook
+    session.  For example, if the user is already logged in, the button will show "Logout".
 
-    See the examples in the <Modules.Facebook> documentation.
+    #### Android Platform Notes
 
     In Android, the button's width will change depending on the current state it is in. When
     logged out, it will show "Log in with Facebook" and its width will match the length of
     the text. When logged in, it will show "Log out" and its width will match the length of
     the text.
 
-    In iOS, the width is fixed and hence should be specified. Eg.'loginButton.width = 200'
-    See the examples in the <Modules.Facebook> documentation.
+    #### iOS Platform Notes
+
+    In iOS, the width of the button can be changed using the `width` property.
+    
+    #### Prior to Release 4.0.0
+
+    Before using the Login button, set the [appid](Modules.Facebook.appid) property
+    and [permissions](Modules.Facebook.permissions) property.    
 
 extends: Titanium.UI.View
-since: "3.5.1"
+since: "3.1.0"
 platforms: [android, iphone, ipad]
 properties:
+  - name: audience
+    summary: Default audience to use for Facebook posts if publish permissions are requested.
+    type: Number
+    constants: Modules.Facebook.AUDIENCE_*
+    default: Modules.Facebook.AUDIENCE_ONLY_ME
+    since: 4.0.0
+
   - name: readPermissions
     summary: |
-        An array of permissions to request
+        Requested read permissions.
     description: |
-        Set the permissions to use when the session is opened. The permissions here can 
-        only be read permissions. If any publish permissions are included, the login 
-        attempt by the user will fail. The LoginButton can only be associated with either 
-        read permissions or publish permissions, but not both. Using both readPermissions 
-        and publishPermissions on the same instance of LoginButton will result in an 
+        For a complete list of permissions, see the
+        [official Facebook Permissions Reference](https://developers.facebook.com/docs/facebook-login/permissions/).
+
+        Sets the permissions to use when the session is opened. The permissions here can
+        only be read permissions. If any publish permissions are included, the login
+        attempt by the user will fail. The LoginButton can only be associated with either
+        read permissions or publish permissions, but not both. Using both the `readPermissions`
+        and `publishPermissions` property on the same instance of LoginButton will result in an
         exception being thrown.
 
-        This method is only meaningful if called before the session is open. If this is called
+        Set this property before the session is open. If this property is set
         after the session is opened, and the list of permissions passed in is not a subset
         of the permissions granted during the authorization, it will log an error.
 
-        Since the session can be automatically opened when the LoginButton is constructed, it's 
-        important to always pass in a consistent set of permissions to this method, or manage 
-        the setting of permissions outside of the LoginButton class altogether (by managing 
+        Since the session can be automatically opened when the LoginButton is constructed, it is
+        important to always pass in a consistent set of permissions to this property, or manage
+        the setting of permissions outside of the LoginButton class altogether (by managing
         the session explicitly).
     type: Array<String>
+    since: 4.0.0
+
   - name: publishPermissions
     summary: |
-        An array of permissions to request
+        Requested write permissions.
     description: |
-        Set the permissions to use when the session is opened. The permissions here should 
-        only be publish permissions. If any publish permissions are included, the login 
-        attempt by the user will fail. The LoginButton can only be associated with either 
-        read permissions or publish permissions, but not both. Using both readPermissions 
-        and publishPermissions on the same instance of LoginButton will result in an 
+        For a complete list of permissions, see the
+        [official Facebook Permissions Reference](https://developers.facebook.com/docs/facebook-login/permissions/).
+
+        Sets the permissions to use when the session is opened. The permissions here should
+        only be write permissions. If any read permissions are included, the login
+        attempt by the user will fail. The LoginButton can only be associated with either
+        read permissions or publish permissions, but not both. Using both the `readPermissions`
+        and `publishPermissions` property on the same instance of LoginButton will result in an
         exception being thrown.
 
-        This method is only meaningful if called before the session is open. If this is called
+        Set this property before the session is open. If this property is set
         after the session is opened, and the list of permissions passed in is not a subset
         of the permissions granted during the authorization, it will log an error.
 
-        Since the session can be automatically opened when the LoginButton is constructed, it's 
-        important to always pass in a consistent set of permissions to this method, or manage 
-        the setting of permissions outside of the LoginButton class altogether (by managing 
+        Since the session can be automatically opened when the LoginButton is constructed, it is
+        important to always pass in a consistent set of permissions to this property, or manage
+        the setting of permissions outside of the LoginButton class altogether (by managing
         the session explicitly).
     type: Array<String>
+    since: 4.0.0
+
+  - name: sessionLoginBehavior
+    summary: Login behavior for the session.
+    since: 4.0.0
+    platforms: [android]
+    type: Number
+    default: Modules.Facebook.SSO_WITH_FALLBACK
+    constants: [Modules.Facebook.SSO_*, Modules.Facebook.SUPPRESS_SSO]
+
+  - name: style
+    summary: Sets the login button style.
+    deprecated:
+        since: 4.0.0
+        removed: 4.0.0
+    description: |
+        All versions of the button include the Facebook logo.
+
+        Use [BUTTON_STYLE_WIDE](Modules.Facebook.BUTTON_STYLE_WIDE) to show a wider version of the button
+        that includes the text, "Login with Facebook" or "Connect with Facebook".
+
+        Use [BUTTON_STYLE_NORMAL](Modules.Facebook.BUTTON_STYLE_NORMAL) to show a
+        narrower button that simply says, "Login" or "Connect".
+    type: Number

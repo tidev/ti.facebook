@@ -1,57 +1,137 @@
 ---
 name: Modules.Facebook.LikeButton
-summary: A Facebook like button.
+summary: A Facebook Like button.
 description: |
-    The Like Button created by <Modules.Facebook.createLikeButton>.  This is a 
-    Facebook button that does not require a click event handler or any listeners.  
-    Click events on the button are automatically handled by the Facebook module.
-    
-    Facebook policies state "Please note that you will have to submit your integration
-    of the Like button for review via the Status and Review tab in the App Dashboard. 
-    You will also need to abide by our Platform Policy 4.14: if you use the Like button 
-    on iOS or Android, don't collect or use any information from it."
+    Use the [createLikeButton()](Modules.Facebook.createLikeButton) method to create a Like button.
+    You must set the <Modules.Facebook.LikeButton.objectId> before the button is rendered.
 
-    Example:
-        var likeButton = fb.createLikeButton({
-                top: 230,
-                height: "50%", // Note: on iOS setting Ti.UI.SIZE dimensions prevented the button click
-                width: "50%",
-                objectId: "https://www.facebook.com/appcelerator", // URL or Facebook ID
-                foregroundColor: "white", // A color in Titanium format - see Facebook docs
-                likeViewStyle: 'box_count', // standard, button, box_count - see FB docs
-                auxiliaryViewPosition: 'inline', // bottom, inline, top - see FB docs
-                horizontalAlignment: 'left', // center, left, right - see FB docs,
-                objectType: 'page', // iOS only, 'page', 'openGraphObject', or 'unknown' - see FB docs
-                soundEnabled: true // boolean, iOS only
-        });
-        
-        if (Ti.Platform.osname == 'android') {
-            likeButton.height = Ti.UI.SIZE;
-            likeButton.width = Ti.UI.SIZE;
-        } 
-        win.add(likeButton);
+    By default, the Like button displays a button with a social sentence ('x number of users like y')
+    next to it.  To change the Like button style, set the
+    <Modules.Facebook.LikeButton.likeViewButton> property.
+
+    The Like button does not require a click event handler or any listeners.
+    Click events on the button are automatically handled by the Facebook module.
+
+    Facebook policies state:
+
+    <blockquote>
+    Please note that you will have to submit your integration
+    of the Like button for review via the Status and Review tab in the App Dashboard.
+    You will also need to abide by our Platform Policy 4.14: if you use the Like button
+    on iOS or Android, don't collect or use any information from it.
+    </blockquote>
 
     See the [official Facebook Like Button documentation for Android](https://developers.facebook.com/docs/android/like-button)
     or the [official Facebook Like Button documentation for iOS](https://developers.facebook.com/docs/ios/like-button)
     for more information.
-since: "3.5.1"
+
+    #### Android Platform Notes
+
+    If the `objectId` property is not set before the button is rendered,
+    the Like button will not be displayed.
+
+    #### iOS Platform Notes
+
+    Do not set the `width` or `height` properties of the button to the `Ti.UI.SIZE` dimension.
+    This prevents the button from being clicked.
+
+    If the `objectId` property is not set before the button is rendered,
+    the application will throw an error.
+
+
+examples:
+
+  - title: Like button to share Appcelerator's Facebook page
+    example: |
+
+        var likeButton = fb.createLikeButton({
+                top: 230,
+                height: "50%", // Note: on iOS setting Ti.UI.SIZE dimensions prevents the button from being clicked
+                width: "50%",
+                objectId: "https://www.facebook.com/appcelerator",
+                objectType: 'page', // iOS only
+                foregroundColor: "white",
+                likeViewStyle: 'box_count',
+                auxiliaryViewPosition: 'inline',
+                horizontalAlignment: 'left',
+                soundEnabled: true // iOS only
+        });
+
+        if (Ti.Platform.osname == 'android') {
+            likeButton.height = Ti.UI.SIZE;
+            likeButton.width = Ti.UI.SIZE;
+        }
+        win.add(likeButton);
+
+since: "4.0.0"
 platforms: [android, iphone, ipad]
+extends: Titanium.UI.View
 properties:
+  - name: auxiliaryViewPosition
+    summary: |
+        Position of the auxiliary view (social sentence or count box)
+        in relation to the button.
+    description: |
+        Set to one of the following values:
+
+          * `top`: Position the auxiliary view above the button
+          * `inline`: Position the auxiliary view next to the button
+          * `bottom`: Position the auxiliary view below the button
+    type: String
+    default: inline
+
+  - name: foregroundColor
+    summary: Text color of the social sentence as a color name or hex triplet.
+    description: |
+        For information about color values, see the "Colors" section of <Titanium.UI>.
+    type: [String, Number]
+    default: black
+
+  - name: horizontalAlign
+    summary: Horizontal alignment of the button.
+    description: |
+        Set to one of the following values:
+
+          * `left`: Left align the button in the parent view.
+          * `center`: Center the button in the parent view.
+          * `right`: Right align the button in the parent view.
+    type: String
+    default: left
+
+  - name: likeViewButton
+    summary: Style of the button.
+    description: |
+        Set to one of the following values:
+
+          * `box_count`: Button with a total like count box.
+          * `button`: Button without social sentence or count box.
+          * `standard`: Button with the social sentence ('x number of users like y').
+    type: String
+    default: standard
+
   - name: objectId
     summary: |
-        Page or any Open Graph object to be referenced by URL or ID. 
+        Page URL or Open Graph object ID to like.
+    description: |
+        This property must be set before rendering the button.
     type: String
+
   - name: objectType
     summary: |
-        Object Type.
+        Object type.
     description: |
-        iOS only. Set to `page`, `openGraphObject`, or `unknown`.
+        Set to one of the following:
+
+          * `page`: Page object.
+          * `openGraphObject`: Open Graph object.
+          * `unknown`: Unknown object. The Facebook server will try to query for the object.
     platforms: [iphone,ipad]
     type: String
+
   - name: soundEnabled
     summary: |
-        Sound enabled. Only for iOS. Set to `true` for sound.
+        Determines if a sound should be played when the button is clicked.
     description: |
-        Sound enabled. Only for iOS. Set to `true` for sound.
+        Set to `true` for sound.
     platforms: [iphone,ipad]
     type: Boolean
