@@ -400,11 +400,6 @@ methods:
             [official Facebook Permissions Reference](https://developers.facebook.com/docs/facebook-login/permissions/v2.2)
         type: Array<String>
 
-      - name: audience
-        summary: |
-            The extent of the visibility read permissions will have. The value of audience should be one of [AUDIENCE_NONE](Modules.Facebook.AUDIENCE_NONE),
-            [AUDIENCE_ONLY_ME](Modules.Facebook.AUDIENCE_ONLY_ME), [AUDIENCE_FRIENDS](Modules.Facebook.AUDIENCE_FRIENDS), or [AUDIENCE_EVERYONE](Modules.Facebook.AUDIENCE_EVERYONE).
-        type: Number
       - name: callback
         summary: Callback to invoke when the request completes.
         type: Callback<FacebookPermissionResponse>
