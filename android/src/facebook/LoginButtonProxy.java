@@ -15,9 +15,9 @@ import org.appcelerator.titanium.view.TiUIView;
 import android.app.Activity;
 
 @Kroll.proxy(creatableInModule = TiFacebookModule.class, propertyAccessors={
+	"audience",
 	"publishPermissions",
 	"readPermissions",
-	"sessionDefaultAudience",
 	"sessionLoginBehavior"
  })
 public class LoginButtonProxy extends TiViewProxy {
