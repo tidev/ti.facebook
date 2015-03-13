@@ -64,8 +64,8 @@ public class LoginButtonView extends TiUIView {
 				loginButton.setReadPermissions(Arrays.asList(readPermissions));
 			}
 		}
-		if (props.containsKey("sessionDefaultAudience")) {
-			Object value = props.get("sessionDefaultAudience");
+		if (props.containsKey("audience")) {
+			Object value = props.get("audience");
 			int audience = TiConvert.toInt(value, TiFacebookModule.AUDIENCE_NONE);
 			switch(audience){
 				case TiFacebookModule.AUDIENCE_NONE:
@@ -115,7 +115,7 @@ public class LoginButtonView extends TiUIView {
 				String[] readPermissions = TiConvert.toStringArray((Object[]) newValue);				
 				loginButton.setReadPermissions(Arrays.asList(readPermissions));
 			}
-		} else if (key.equals("sessionDefaultAudience")) {
+		} else if (key.equals("audience")) {
 			int audience = TiConvert.toInt(newValue, TiFacebookModule.AUDIENCE_NONE);
 			switch(audience){
 				case TiFacebookModule.AUDIENCE_NONE:
