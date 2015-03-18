@@ -171,7 +171,7 @@ exports.window = function(value){
 
 	fb.addEventListener('requestDialogCompleted', function(e) {
 		if (e.success) {
-			alert('Request dialog completed. Returned data is ' + JSON.parse(e.data));
+			alert('Request dialog completed. Returned data is ' + e.data);
 		}
 		else if (e.cancelled) {
 			alert('Request dialog cancelled');

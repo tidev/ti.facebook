@@ -326,7 +326,7 @@ description: |
 
             fb.addEventListener('requestDialogCompleted', function (e) {
                 if (e.success) {
-                    Ti.API.info('Share request succeeded.');
+                    Ti.API.info('request succeeded.');
                 } else {
                     Ti.API.warn('Failed to share.');
                 }
@@ -756,9 +756,10 @@ events:
             Will be undefined if `success` is `true`.
         type: String
 
-      - name: resultURL
+      - name: data
         summary: |
-            resultURL returned by Facebook. See Facebook reference for details.
+            data returned by Facebook. See Facebook reference for details.
+        type: Dictionary
     since: 4.0.1
 
   - name: shareCompleted

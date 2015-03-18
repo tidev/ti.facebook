@@ -1,7 +1,7 @@
 # Change Log
 <pre>
 ios-v.4.0.1 Updated Facebook SDK from 3.21.1 to 3.23.1
-            Exposed resultURL returned on presentSendRequestDialog
+            Exposed data returned on presentSendRequestDialog
 
 v4.0.0 Combined and updated the Facebook module from https://github.com/mokesmokes/titanium-android-facebook/ and https://github.com/mokesmokes/titanium-ios-facebook
 
