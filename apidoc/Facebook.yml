@@ -760,7 +760,7 @@ events:
         summary: |
             data returned by Facebook. See Facebook reference for details.
         type: Dictionary
-    since: 4.0.1
+    since: 4.0.2
 
   - name: shareCompleted
     summary: Fired when the Share dialog or Web Share dialog is closed.
