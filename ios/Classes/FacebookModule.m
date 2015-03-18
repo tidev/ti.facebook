@@ -536,7 +536,7 @@ NSTimeInterval meRequestTimeout = 180.0;
                                                       BOOL cancelled = NO;
                                                       BOOL success = NO;
                                                       NSString *errorDescription = @"";
-													  NSString *resultURLString = @"";
+                                                      NSString *resultURLString = @"";
                                                       if (error) {
                                                           errorDescription = [FBErrorUtility userMessageForError:error];
                                                       } else {
@@ -553,7 +553,7 @@ NSTimeInterval meRequestTimeout = 180.0;
                                                               } else {
                                                                   cancelled = NO;
                                                                   success = YES;
-																  resultURLString = [resultURL absoluteString];
+                                                                  resultURLString = [resultURL absoluteString];
                                                               }
                                                           }
                                                       }
@@ -561,7 +561,7 @@ NSTimeInterval meRequestTimeout = 180.0;
                                                                                     NUMBOOL(cancelled),@"cancelled",
                                                                                     NUMBOOL(success),@"success",
                                                                                     errorDescription,@"error",
-																					resultURLString,@"resultURL",nil];
+                                                                                    resultURLString,@"resultURL",nil];
                                                       [self fireEvent:@"requestDialogCompleted" withObject:event];
                                                   }];
     }, NO);
