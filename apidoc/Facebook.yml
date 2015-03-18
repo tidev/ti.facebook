@@ -546,7 +546,8 @@ methods:
     summary: |
         Opens an App Request dialog.
     description: |
-        A `requestDialogCompleted` event is generated to indicate if the request attempt was successful or unsuccessful.
+        A `requestDialogCompleted` event is generated to indicate if the request attempt was successful or unsuccessful,
+        and the resultURL.
     parameters:
       - name: params
         summary: |
@@ -754,7 +755,11 @@ events:
             Error message, if any returned.
             Will be undefined if `success` is `true`.
         type: String
-    since: 4.0.0
+
+      - name: resultURL
+        summary: |
+            resultURL returned by Facebook. See Facebook reference for details.
+    since: 4.0.1
 
   - name: shareCompleted
     summary: Fired when the Share dialog or Web Share dialog is closed.
