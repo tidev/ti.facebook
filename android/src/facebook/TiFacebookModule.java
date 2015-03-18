@@ -687,12 +687,18 @@ public class TiFacebookModule extends KrollModule
 										data.put(PROPERTY_SUCCESS, true);
 										data.put(PROPERTY_CANCELLED, false);
 										data.put(PROPERTY_RESULT, requestId);
-										fireEvent(EVENT_REQUEST_DIALOG_COMPLETE, data);
 									} else {
 							            data.put(PROPERTY_SUCCESS, false);
 							            data.put(PROPERTY_CANCELLED, true);
-										fireEvent(EVENT_REQUEST_DIALOG_COMPLETE, data);
 									}
+									KrollDict valuesDict = new KrollDict();
+									for (String key : values.keySet()) {
+										String tempKey = key;
+										tempKey = tempKey.replace("[", "").replace("]", "");
+										valuesDict.put(tempKey, values.get(key).toString());
+									}
+									data.put(PROPERTY_DATA, valuesDict);
+									fireEvent(EVENT_REQUEST_DIALOG_COMPLETE, data);
 								}
 							}
 						})
@@ -729,12 +735,18 @@ public class TiFacebookModule extends KrollModule
 													data.put(PROPERTY_SUCCESS, true);
 													data.put(PROPERTY_CANCELLED, false);
 													data.put(PROPERTY_RESULT, requestId);
-													fireEvent(EVENT_REQUEST_DIALOG_COMPLETE, data);
 												} else {
 										            data.put(PROPERTY_SUCCESS, false);
 										            data.put(PROPERTY_CANCELLED, true);
-													fireEvent(EVENT_REQUEST_DIALOG_COMPLETE, data);
 												}
+												KrollDict valuesDict = new KrollDict();
+												for (String key : values.keySet()) {
+													String tempKey = key;
+													tempKey = tempKey.replace("[", "").replace("]", "");
+													valuesDict.put(tempKey, values.get(key).toString());
+												}
+												data.put(PROPERTY_DATA, valuesDict);
+												fireEvent(EVENT_REQUEST_DIALOG_COMPLETE, data);
 											}
 										}
 									})
