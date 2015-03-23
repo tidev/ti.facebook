@@ -746,40 +746,14 @@ public class TiFacebookModule extends KrollModule
 			}
 		});
 	}
-	
-	@Kroll.method
-	public void requestNewReadPermissions(String[] permissions, final KrollFunction callback) {
-		requestNewReadPermissions(permissions, AUDIENCE_EVERYONE, callback);
-	}
 
 	@Kroll.method
-	public void requestNewReadPermissions(String[] permissions, int audienceChoice, final KrollFunction callback) {
-		SessionDefaultAudience audience;
-		switch(audienceChoice){
-			case TiFacebookModule.AUDIENCE_NONE:
-				audience = SessionDefaultAudience.NONE;
-				break;
-			case TiFacebookModule.AUDIENCE_ONLY_ME:
-				audience = SessionDefaultAudience.ONLY_ME;
-				break;
-			case TiFacebookModule.AUDIENCE_FRIENDS:
-				audience = SessionDefaultAudience.FRIENDS;
-				break;
-			default:
-			case TiFacebookModule.AUDIENCE_EVERYONE:
-				audience = SessionDefaultAudience.EVERYONE;
-				break;
-		}
+	public void requestNewReadPermissions(String[] permissions, final KrollFunction callback) {
 		permissionCallback = callback;
 		Session.getActiveSession().requestNewReadPermissions(
-				new NewPermissionsRequest(TiApplication.getInstance().getCurrentActivity(), Arrays.asList(permissions)).setDefaultAudience(audience));
+				new NewPermissionsRequest(TiApplication.getInstance().getCurrentActivity(), Arrays.asList(permissions)));
 	}
-	
-	@Kroll.method
-	public void requestNewPublishPermissions(String[] permissions, final KrollFunction callback) {
-		requestNewPublishPermissions(permissions, AUDIENCE_EVERYONE, callback);
-	}
-	
+		
 	@Kroll.method
 	public void requestNewPublishPermissions(String[] permissions, int audienceChoice, final KrollFunction callback) {
 		SessionDefaultAudience audience;
