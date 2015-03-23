@@ -1,5 +1,7 @@
 # Change Log
 <pre>
+v4.0.2 Fixed `requestNewReadPermissions` and the `LikeButton` in Android [MOD-2105]
+
 v4.0.1 Changing sessionDefaultAudence to audience in Android [MOD-2107]
 
 v4.0.0 Combined and updated the Facebook module from https://github.com/mokesmokes/titanium-android-facebook/ and https://github.com/mokesmokes/titanium-ios-facebook
