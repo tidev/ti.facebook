@@ -408,7 +408,7 @@ methods:
   - name: createActivityWorker
     summary: |
         Creates a Facebook proxy to hook into the activity of either a standalone <Titanium.UI.Window>
-        (not inside a TabGroup) or <Titaniuim.UI.TabGroup>.
+        (not inside a TabGroup) or <Titanium.UI.TabGroup>.
     description: |
         Set the `lifecycleContainer` property in the dictionary passed to the method to either
         the current active  instance of a <Titanium.UI.Window> or <Titanium.UI.TabGroup> in order to monitor the activity's
