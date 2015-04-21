@@ -14,5 +14,5 @@ name: Facebook
 moduleid: facebook
 guid: da8acc57-8673-4692-9282-e3c1a21f5d83
 platform: iphone
-minsdk: 3.5.1
+minsdk: 4.0.0
 architectures: armv7 arm64 i386 x86_64
