@@ -536,6 +536,7 @@ NSTimeInterval meRequestTimeout = 180.0;
                                                       BOOL cancelled = NO;
                                                       BOOL success = NO;
                                                       NSString *errorDescription = @"";
+                                                      NSDictionary *urlParams;
                                                       if (error) {
                                                           errorDescription = [FBErrorUtility userMessageForError:error];
                                                       } else {
@@ -544,7 +545,7 @@ NSTimeInterval meRequestTimeout = 180.0;
                                                               success = NO;
                                                           } else {
                                                               // Handle the publish feed callback
-                                                              NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
+                                                              urlParams = [self parseURLParams:[resultURL query]];
                                                               if (![urlParams valueForKey:@"request"]) {
                                                                   // User cancelled.
                                                                   cancelled = YES;
@@ -558,7 +559,8 @@ NSTimeInterval meRequestTimeout = 180.0;
                                                       NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                                                                     NUMBOOL(cancelled),@"cancelled",
                                                                                     NUMBOOL(success),@"success",
-                                                                                    errorDescription,@"error",nil];
+                                                                                    errorDescription,@"error",
+                                                                                    urlParams,@"data",nil];
                                                       [self fireEvent:@"requestDialogCompleted" withObject:event];
                                                   }];
     }, NO);
@@ -859,10 +861,11 @@ NSTimeInterval meRequestTimeout = 180.0;
 - (NSDictionary*)parseURLParams:(NSString *)query {
     NSArray *pairs = [query componentsSeparatedByString:@"&"];
     NSMutableDictionary *params = [[[NSMutableDictionary alloc] init] autorelease];
+    NSCharacterSet *charSet = [NSCharacterSet characterSetWithCharactersInString:@"[]"];
     for (NSString *pair in pairs) {
         NSArray *kv = [pair componentsSeparatedByString:@"="];
         NSString *val = [kv[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        params[kv[0]] = val;
+        params[[[[kv[0] stringByRemovingPercentEncoding] componentsSeparatedByCharactersInSet:charSet] componentsJoinedByString:@""]] = val;
     }
     return params;
 }
