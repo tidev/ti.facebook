@@ -23,6 +23,7 @@
 
 /* Begin PBXBuildFile section */
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
+		BB4741E51AB931D600A6B233 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB4741E41AB931D600A6B233 /* FacebookSDK.framework */; };
 		BBA44FD71A93096C00D4C043 /* Facebook_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = BBA44FD61A93096C00D4C043 /* Facebook_Prefix.pch */; };
 		BBA44FE41A93097B00D4C043 /* FacebookLoginButtonProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA44FD81A93097B00D4C043 /* FacebookLoginButtonProxy.m */; };
 		BBA44FE51A93097B00D4C043 /* FacebookLoginButtonProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = BBA44FD91A93097B00D4C043 /* FacebookLoginButtonProxy.h */; };
@@ -36,7 +37,6 @@
 		BBA44FED1A93097B00D4C043 /* FacebookLikeButtonProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = BBA44FE11A93097B00D4C043 /* FacebookLikeButtonProxy.h */; };
 		BBA44FEE1A93097B00D4C043 /* FacebookLikeButton.h in Headers */ = {isa = PBXBuildFile; fileRef = BBA44FE21A93097B00D4C043 /* FacebookLikeButton.h */; };
 		BBA44FEF1A93097B00D4C043 /* FacebookLikeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA44FE31A93097B00D4C043 /* FacebookLikeButton.m */; };
-		EA7E24F619EC4A3A001B4B0C /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA7E24F519EC4A3A001B4B0C /* FacebookSDK.framework */; };
 		EAC238AA19F1280B00E8103C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC238A919F1280B00E8103C /* Social.framework */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +53,7 @@
 /* Begin PBXFileReference section */
 		24DD6D1B1134B66800162E58 /* titanium.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = titanium.xcconfig; sourceTree = "<group>"; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		BB4741E41AB931D600A6B233 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = platform/FacebookSDK.framework; sourceTree = "<group>"; };
 		BBA44FD61A93096C00D4C043 /* Facebook_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook_Prefix.pch; sourceTree = "<group>"; };
 		BBA44FD81A93097B00D4C043 /* FacebookLoginButtonProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FacebookLoginButtonProxy.m; path = Classes/FacebookLoginButtonProxy.m; sourceTree = "<group>"; };
 		BBA44FD91A93097B00D4C043 /* FacebookLoginButtonProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookLoginButtonProxy.h; path = Classes/FacebookLoginButtonProxy.h; sourceTree = "<group>"; };
@@ -67,7 +68,6 @@
 		BBA44FE21A93097B00D4C043 /* FacebookLikeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookLikeButton.h; path = Classes/FacebookLikeButton.h; sourceTree = "<group>"; };
 		BBA44FE31A93097B00D4C043 /* FacebookLikeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FacebookLikeButton.m; path = Classes/FacebookLikeButton.m; sourceTree = "<group>"; };
 		D2AAC07E0554694100DB518D /* libFacebook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFacebook.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		EA7E24F519EC4A3A001B4B0C /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = platform/FacebookSDK.framework; sourceTree = "<group>"; };
 		EAC238A919F1280B00E8103C /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -78,7 +78,7 @@
 			files = (
 				EAC238AA19F1280B00E8103C /* Social.framework in Frameworks */,
 				AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */,
-				EA7E24F619EC4A3A001B4B0C /* FacebookSDK.framework in Frameworks */,
+				BB4741E51AB931D600A6B233 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,8 +107,8 @@
 		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BB4741E41AB931D600A6B233 /* FacebookSDK.framework */,
 				EAC238A919F1280B00E8103C /* Social.framework */,
-				EA7E24F519EC4A3A001B4B0C /* FacebookSDK.framework */,
 				AACBBE490F95108600F1A2B1 /* Foundation.framework */,
 			);
 			name = Frameworks;
