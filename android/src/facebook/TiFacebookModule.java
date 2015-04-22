@@ -592,15 +592,17 @@ public class TiFacebookModule extends KrollModule
 					})
 					.build();
 				} else {
-					String url = (String) args.get("url");
-					String imageUrl = (String) args.get("imageUrl");
-					String title = (String) args.get("title");
+					String link = (String) args.get("link");
+					String picture = (String) args.get("picture");
+					String name = (String) args.get("name");
 					String description = (String) args.get("description");
+					String caption = (String) args.get("caption");
 					Bundle params = new Bundle();
-					params.putString("name", title);
+					params.putString("name", name);
 					params.putString("description", description);
-					params.putString("link", url);
-					params.putString("picture", imageUrl);
+					params.putString("link", link);
+					params.putString("picture", picture);
+					params.putString("caption", caption);
 					feedDialog = (new WebDialog.FeedDialogBuilder(TiApplication.getInstance().getCurrentActivity(),
 									Session.getActiveSession(), params))
 									.setOnCompleteListener(new OnCompleteListener() {
