@@ -402,7 +402,7 @@ public class TiFacebookModule extends KrollModule
 		return uid;
 	}
 
-	@Kroll.getProperty @Kroll.method
+	@Kroll.getProperty
 	public String getAccessToken() {
 		Log.d(TAG, "get accessToken");
 		return Session.getActiveSession().getAccessToken();
