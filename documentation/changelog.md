@@ -1,5 +1,7 @@
 # Change Log
 <pre>
+v4.0.4 fixed photo posting for requestWithGraphPath [TIMOB-18916]
+
 v4.0.3 changed minsdk to 4.0.0 [mod-2119]
 
 v4.0.2 Updated Facebook SDK from 3.21.1 to 3.23.1

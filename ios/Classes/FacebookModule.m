@@ -726,7 +726,13 @@ NSTimeInterval meRequestTimeout = 180.0;
     id args3 = [args objectAtIndex:3];
     ENSURE_SINGLE_ARG(args3, KrollCallback);
     KrollCallback *callback = args3;
-    
+    for(NSString *key in params) {
+        id value = [params objectForKey:key];
+        if ([value isKindOfClass:[TiBlob class]]) {
+            TiBlob *blob = (TiBlob*)value;
+            [params setObject:[blob data] forKey:key];
+        }
+    }
     TiThreadPerformOnMainThread(^{
         FBRequestConnection *connection = [[[FBRequestConnection alloc] init] autorelease];
         connection.errorBehavior = FBRequestConnectionErrorBehaviorReconnectSession
