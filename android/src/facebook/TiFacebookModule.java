@@ -492,31 +492,24 @@ public class TiFacebookModule extends KrollModule
 			shareDialog = new FacebookDialog.ShareDialogBuilder(TiApplication.getInstance().getCurrentActivity())
 				.build();
 		} else {
-			
-			String url = (String) args.get("url");
-			if  (url == null) {
-				url = (String) args.get("link");
-			}
+			String link = (String) args.get("link");
 			String name = (String) args.get("name");
 			String caption = (String) args.get("caption");
 			String picture = (String) args.get("picture");
-			
 			String namespaceObject = (String) args.get("namespaceObject");
 			String namespaceAction = (String) args.get("namespaceAction");
 			String objectName = (String) args.get("objectName");
-			String imageUrl = (String) args.get("imageUrl");
-			String title = (String) args.get("title");
 			String description = (String) args.get("description");
 			String placeId = (String) args.get("placeId");
-			if (url != null && namespaceObject == null) {
+			if (link != null && namespaceObject == null) {
 				shareDialog = new FacebookDialog.ShareDialogBuilder(TiApplication.getInstance().getCurrentActivity())
-		        .setLink(url).setName(name).setCaption(caption).setPicture(picture).setDescription(description)
+		        .setLink(link).setName(name).setCaption(caption).setPicture(picture).setDescription(description)
 		        .build();
 			} else {
 				OpenGraphObject ogObject = OpenGraphObject.Factory.createForPost(namespaceObject);
 				ogObject.setProperty("title", title);
-				ogObject.setProperty("image", imageUrl);
-				ogObject.setProperty("url", url);
+				ogObject.setProperty("image", picture);
+				ogObject.setProperty("url", link);
 				ogObject.setProperty("description", description);
 
 				OpenGraphAction action = OpenGraphAction.Factory.createForPost(namespaceAction);
