@@ -1,3 +1,7 @@
+#### 4.0.4
+- fixed photo posting for requestWithGraphPath [TIMOB-18916]
+- bumped android version for parity with iOS
+
 #### 4.0.3
 - change minsdk to 4.0.0 [MOD-2119]
 
