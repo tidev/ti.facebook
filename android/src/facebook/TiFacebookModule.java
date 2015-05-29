@@ -507,7 +507,7 @@ public class TiFacebookModule extends KrollModule
 		        .build();
 			} else {
 				OpenGraphObject ogObject = OpenGraphObject.Factory.createForPost(namespaceObject);
-				ogObject.setProperty("title", title);
+				ogObject.setProperty("title", name);
 				ogObject.setProperty("image", picture);
 				ogObject.setProperty("url", link);
 				ogObject.setProperty("description", description);
