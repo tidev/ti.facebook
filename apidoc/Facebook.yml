@@ -437,7 +437,7 @@ methods:
         removed: 4.0.0
     description: |
         For a list of dialogs, parameters, and response formats, see the
-        [official documentation for Facebook Dialogs](http://developers.facebook.com/docs/reference/dialogs/).
+        [official documentation for Facebook Dialogs](https://developers.facebook.com/docs/javascript/reference/FB.ui).
 
         The callback is invoked when the dialog is closed, either because the user
         approved the action, or canceled the dialog.
@@ -507,9 +507,6 @@ methods:
     summary: |
         Opens a supported Facebook Share dialog from the Facebook App.
     description: |
-        For a list of parameters, and response formats, see the
-        [official documentation for Facebook Dialogs](https://developers.facebook.com/docs/sharing/reference/share-dialog).
-
         Be sure to check if the device can support this method by calling [getCanPresentShareDialog](Modules.Facebook.getCanPresentShareDialog)
         before using this method. If true, you can use this method. If false, the Facebook application
         is probably not installed in the device. In this case, use [presentWebShareDialog](Modules.Facebook.presentWebShareDialog)
@@ -528,9 +525,6 @@ methods:
     summary: |
         Opens a web version of the Share dialog (Feed dialog). Does not depend on the Facebook app.
     description: |
-        For a list of parameters, and response formats, see the
-        [official documentation for Facebook Dialogs](https://developers.facebook.com/docs/sharing/reference/share-dialog).
-
         This is a fallback for when Share dialog is not available.
 
         Listen for the <Modules.Facebook.shareCompleted> to be notified if the attempt was
