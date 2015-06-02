@@ -46,6 +46,7 @@ Also make sure you have a URL Scheme in tiapp.xml that looks like fb123456789101
     </dict>
 </array>
 ```
+To define a url scheme suffix for multiple apps sharing the same facebook app ID, simply add the suffix (in lower case and must start with a letter) to the relevant string under the CFBundleURLSchemes key. In this example, it will look like fb134793934930foo if you are adding the suffix foo. This will also require additional configurations in the facebook dashboard, see https://developers.facebook.com/docs/ios/troubleshooting#sharedappid for details.
 On the android platform, in tiapp.xml or AndroidManifest.xml you must declare the following inside the \<application\> node 
 ```xml
 <activity android:name="com.facebook.LoginActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:label="YourAppName"/>
