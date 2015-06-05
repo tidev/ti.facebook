@@ -12,11 +12,13 @@
 package facebook;
 
 import java.util.Arrays;
+import java.util.Currency;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.math.BigDecimal;
 
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollFunction;
@@ -257,6 +259,15 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		AppEventsLogger logger = AppEventsLogger.newLogger(activity);
 		if (logger != null) {
 			logger.logEvent(event);
+		}
+	}
+	
+	@Kroll.method
+	public void logPurchase(double amount, String currency) {
+		Activity activity = TiApplication.getInstance().getCurrentActivity();
+		AppEventsLogger logger = AppEventsLogger.newLogger(activity);
+		if (logger != null) {
+			logger.logPurchase(BigDecimal.valueOf(amount), Currency.getInstance(currency));
 		}
 	}
 	
