@@ -320,6 +320,9 @@ description: |
     To send a request to a user, call the
     [presentSendRequestDialog()](Modules.Facebook.presentSendRequestDialog) method and pass the
     method a dictionary with the `message` property set the message you want to send the invited user.
+    Optional: You can set the `title` property with a title string. You can also set the `data` property
+    with a dictionary with custom parameters. If you want to preselect users to send invite to, you can include
+    a `to` key with values that are facebook ids seperated by comma, in this `data` dictionary.
 
     To monitor if the request succeeded or not, listen to the <Modules.Facebook.requestDialogCompleted> event.
 
@@ -332,7 +335,13 @@ description: |
                 }
             });
 
-            fb.presentSendRequestDialog({message: 'Go to https://appcelerator.com/'});
+            fb.presentSendRequestDialog({
+                message: 'Go to https://appcelerator.com/',
+                title: 'Invitation to Appcelerator',
+                data: {
+                    to: '123456789, 123456788'
+                    }
+            });
 
     For details on dialog see the
     [official Facebook Request Dialogs documentation](https://developers.facebook.com/docs/games/requests/v2.2).
@@ -548,7 +557,9 @@ methods:
             A dictionary object containing following properties:
 
               * `message` (String): Required. Message to send with the request.
-              * `data` (String): Optional. Additional data to send with the request object.
+              * `title` (String): Optional. Title of request.
+              * `data` (Dictionary): Optional. Additional data to send with the request object. To send to pre-selected
+              users, include `to` with value string containing facebook ids seperated by commas
         type: Dictionary
     since: 4.0.0
 
