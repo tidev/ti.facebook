@@ -699,11 +699,15 @@ public class TiFacebookModule extends KrollModule
 						})
 						.build();
 			    } else {
+					String title = (String) args.get("title");
 					String message = (String) args.get("message");
 					String data = (String) args.get("data");
+					String to = (String) args.get("to");
 					Bundle params = new Bundle();
+				    params.putString("title", title);
 				    params.putString("message", message);
 				    params.putString("data", data);
+				    params.putString("to", to);
 			    	requestsDialog = (
 							new WebDialog.RequestsDialogBuilder(TiApplication.getAppCurrentActivity(),
 									Session.getActiveSession(),
