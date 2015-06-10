@@ -1,10 +1,7 @@
 # Change Log
 <pre>
-<<<<<<< HEAD
-=======
 v4.0.5 fixed presentSendRequestDialog with to and title params [MOD-2126]
 
->>>>>>> iOS fixed presendSendRequestDialog
 v4.0.4 fixed photo posting for requestWithGraphPath [TIMOB-18916]
 
 v4.0.3 changed minsdk to 4.0.0 [mod-2119]
