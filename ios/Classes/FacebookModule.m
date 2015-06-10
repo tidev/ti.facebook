@@ -527,8 +527,22 @@ NSTimeInterval meRequestTimeout = 180.0;
     ENSURE_SINGLE_ARG(params, NSDictionary);
     NSString *message = [params objectForKey:@"message"];
     NSString *title = [params objectForKey:@"title"];
-    id additionalParams = [params objectForKey:@"data"];
-    ENSURE_SINGLE_ARG_OR_NIL(additionalParams, NSDictionary);
+    NSString *to = [params objectForKey:@"to"];
+    id data = [params objectForKey:@"data"];
+    ENSURE_SINGLE_ARG_OR_NIL(data, NSDictionary);
+    NSMutableDictionary *additionalParams = nil;
+    if (data != nil) {
+        additionalParams = [NSMutableDictionary dictionaryWithDictionary:data];
+        if (to != nil) {
+            [additionalParams setObject:to forKey:@"to"];
+        }
+    }
+    else {
+        if (to != nil) {
+            additionalParams = [NSMutableDictionary dictionaryWithObject:to forKey:@"to"];
+        }
+    }
+
 
     TiThreadPerformOnMainThread(^{
         [FBWebDialogs presentRequestsDialogModallyWithSession:FBSession.activeSession
