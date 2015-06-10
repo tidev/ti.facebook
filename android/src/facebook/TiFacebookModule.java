@@ -15,7 +15,9 @@ package facebook;
 import java.net.HttpURLConnection;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollFunction;
@@ -654,6 +656,7 @@ public class TiFacebookModule extends KrollModule
 		//For example, if your app uses multiple threads, you can use the runOnUiThread() method to ensure your code 
 		//executes on the UI thread
 		TiApplication.getInstance().getCurrentActivity().runOnUiThread(new Runnable() {
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				WebDialog requestsDialog = null;
@@ -699,11 +702,17 @@ public class TiFacebookModule extends KrollModule
 						})
 						.build();
 			    } else {
+					String title = (String) args.get("title");
 					String message = (String) args.get("message");
-					String data = (String) args.get("data");
+					Map<String, String> data = (HashMap<String, String>) args.get("data");
+					String to = (String) args.get("to");
 					Bundle params = new Bundle();
+				    params.putString("title", title);
 				    params.putString("message", message);
-				    params.putString("data", data);
+				    if (data != null) {
+				    	params.putString("data", data.toString());
+				    }
+				    params.putString("to", to);
 			    	requestsDialog = (
 							new WebDialog.RequestsDialogBuilder(TiApplication.getAppCurrentActivity(),
 									Session.getActiveSession(),

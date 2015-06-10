@@ -1,3 +1,6 @@
+#### 4.0.5
+- fixed presentSendRequestDialog with to and title params [MOD-2126]
+
 #### 4.0.4
 - fixed photo posting for requestWithGraphPath [TIMOB-18916]
 - bumped android version for parity with iOS
