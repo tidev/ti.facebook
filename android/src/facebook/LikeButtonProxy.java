@@ -31,9 +31,9 @@ public class LikeButtonProxy extends TiViewProxy
 
 	public LikeButtonProxy() {
 		super();
-		defaultValues.put("likeViewStyle", Style.STANDARD);
-		defaultValues.put("auxiliaryViewPosition", AuxiliaryViewPosition.BOTTOM);
-		defaultValues.put("horizontalAlignment", HorizontalAlignment.CENTER);
+		defaultValues.put("likeViewStyle", "standard");
+		defaultValues.put("auxiliaryViewPosition", "bottom");
+		defaultValues.put("horizontalAlignment", "center");
 		Log.d(TAG, "[VIEWPROXY LIFECYCLE EVENT] init");
 	}
 	

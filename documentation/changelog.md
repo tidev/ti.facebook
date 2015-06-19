@@ -1,5 +1,18 @@
 # Change Log
 <pre>
+v4.0.5 fixed presentSendRequestDialog with to and title params [MOD-2126]
+
+v4.0.4 fixed photo posting for requestWithGraphPath [TIMOB-18916]
+
+v4.0.3 changed minsdk to 4.0.0 [mod-2119]
+
+v4.0.2 Updated Facebook SDK from 3.21.1 to 3.23.1
+       Exposed data returned on presentSendRequestDialog
+       Bumped iOS module version to be same as android
+	   Fixed `requestNewReadPermissions` and the `LikeButton` in Android [MOD-2105]
+
+v4.0.1 Changing sessionDefaultAudence to audience in Android [MOD-2107]        
+
 v4.0.0 Combined and updated the Facebook module from https://github.com/mokesmokes/titanium-android-facebook/ and https://github.com/mokesmokes/titanium-ios-facebook
 
 v3.0.3 Adding publishInstall method. [TIMODOPEN-246]

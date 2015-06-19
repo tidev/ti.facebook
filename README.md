@@ -219,11 +219,20 @@ To share more information, example:
 Send Requests Dialog
 --------------------
 
-Sends an application request. Fires a `sendRequestCompleted` event. See official Facebook Dialogs documentation for more details.
+Sends an application request. Fires a `sendRequestCompleted` event. You can optionally include a `title` key with the title string, or customized parameters in the `data` dictionary. To preselect users to send the invite to, you can optionally add a `to` key with a string of values containing the facebook ids, seperated by commas. See below for example.
+See official Facebook Dialogs documentation for more details.
 
 ```javascript
     var fb = require('facebook');
-    fb.presentSendRequestDialog({message: 'Go to https://appcelerator.com/'});
+    fb.presentSendRequestDialog({
+        message: 'Go to https://appcelerator.com/',
+        title: 'Invitation to Appcelerator',
+        to: '123456789, 123456788',
+        data: {
+            badge_of_awesomeness: '1',
+            social_karma: '5'
+        }
+    });
 ```
 
 Like Button

@@ -2,7 +2,7 @@
 # this is your module manifest and used by Titanium
 # during compilation, packaging, distribution, etc.
 #
-version: 4.0.1
+version: 4.0.5
 apiversion: 2
 architectures: armeabi armeabi-v7a x86
 description: facebook
@@ -16,4 +16,4 @@ name: Facebook
 moduleid: facebook
 guid: e4f7ac61-1ee7-44c5-bc27-fa6876e2dce9
 platform: android
-minsdk: 3.5.1.RC
+minsdk: 4.0.0

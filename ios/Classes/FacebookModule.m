@@ -526,16 +526,32 @@ NSTimeInterval meRequestTimeout = 180.0;
     id params = [args objectAtIndex:0];
     ENSURE_SINGLE_ARG(params, NSDictionary);
     NSString *message = [params objectForKey:@"message"];
-    NSString *data = [params objectForKey:@"data"];
-    NSDictionary *additionalParams = [NSDictionary dictionaryWithObjectsAndKeys:data,@"data", nil];
-    
+    NSString *title = [params objectForKey:@"title"];
+    NSString *to = [params objectForKey:@"to"];
+    id data = [params objectForKey:@"data"];
+    ENSURE_SINGLE_ARG_OR_NIL(data, NSDictionary);
+    NSMutableDictionary *additionalParams = nil;
+    if (data != nil) {
+        additionalParams = [NSMutableDictionary dictionaryWithDictionary:data];
+        if (to != nil) {
+            [additionalParams setObject:to forKey:@"to"];
+        }
+    }
+    else {
+        if (to != nil) {
+            additionalParams = [NSMutableDictionary dictionaryWithObject:to forKey:@"to"];
+        }
+    }
+
+
     TiThreadPerformOnMainThread(^{
         [FBWebDialogs presentRequestsDialogModallyWithSession:FBSession.activeSession
-                                                      message:message title:nil parameters:additionalParams
+                                                      message:message title:title parameters:additionalParams
                                                   handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
                                                       BOOL cancelled = NO;
                                                       BOOL success = NO;
                                                       NSString *errorDescription = @"";
+                                                      NSDictionary *urlParams = nil;
                                                       if (error) {
                                                           errorDescription = [FBErrorUtility userMessageForError:error];
                                                       } else {
@@ -544,7 +560,7 @@ NSTimeInterval meRequestTimeout = 180.0;
                                                               success = NO;
                                                           } else {
                                                               // Handle the publish feed callback
-                                                              NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
+                                                              urlParams = [self parseURLParams:[resultURL query]];
                                                               if (![urlParams valueForKey:@"request"]) {
                                                                   // User cancelled.
                                                                   cancelled = YES;
@@ -558,7 +574,8 @@ NSTimeInterval meRequestTimeout = 180.0;
                                                       NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                                                                     NUMBOOL(cancelled),@"cancelled",
                                                                                     NUMBOOL(success),@"success",
-                                                                                    errorDescription,@"error",nil];
+                                                                                    errorDescription,@"error",
+                                                                                    urlParams,@"data",nil];
                                                       [self fireEvent:@"requestDialogCompleted" withObject:event];
                                                   }];
     }, NO);
@@ -724,7 +741,13 @@ NSTimeInterval meRequestTimeout = 180.0;
     id args3 = [args objectAtIndex:3];
     ENSURE_SINGLE_ARG(args3, KrollCallback);
     KrollCallback *callback = args3;
-    
+    for(NSString *key in params) {
+        id value = [params objectForKey:key];
+        if ([value isKindOfClass:[TiBlob class]]) {
+            TiBlob *blob = (TiBlob*)value;
+            [params setObject:[blob data] forKey:key];
+        }
+    }
     TiThreadPerformOnMainThread(^{
         FBRequestConnection *connection = [[[FBRequestConnection alloc] init] autorelease];
         connection.errorBehavior = FBRequestConnectionErrorBehaviorReconnectSession
@@ -859,10 +882,11 @@ NSTimeInterval meRequestTimeout = 180.0;
 - (NSDictionary*)parseURLParams:(NSString *)query {
     NSArray *pairs = [query componentsSeparatedByString:@"&"];
     NSMutableDictionary *params = [[[NSMutableDictionary alloc] init] autorelease];
+    NSCharacterSet *charSet = [NSCharacterSet characterSetWithCharactersInString:@"[]"];
     for (NSString *pair in pairs) {
         NSArray *kv = [pair componentsSeparatedByString:@"="];
         NSString *val = [kv[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        params[kv[0]] = val;
+        params[[[[kv[0] stringByRemovingPercentEncoding] componentsSeparatedByCharactersInSet:charSet] componentsJoinedByString:@""]] = val;
     }
     return params;
 }

@@ -43,7 +43,7 @@ public class LikeButtonView extends TiUIView
 	
 	private void setLikeViewStyle(String name) {
 		for(Style style : Style.values()) { 
-			if (style.toString().equals(name)) {
+			if (style.toString().equalsIgnoreCase(name)) {
 				likeView.setLikeViewStyle(style);
 				break;
 			}
@@ -52,7 +52,7 @@ public class LikeButtonView extends TiUIView
 
 	private void setAuxiliaryViewPosition(String name) {
 		for(AuxiliaryViewPosition avp : AuxiliaryViewPosition.values()) { 
-			if (avp.toString().equals(name)) {
+			if (avp.toString().equalsIgnoreCase(name)) {
 				likeView.setAuxiliaryViewPosition(avp);
 				break;
 			}
@@ -61,7 +61,7 @@ public class LikeButtonView extends TiUIView
 	
 	private void setHorizontalAlignment(String name) {
 		for(HorizontalAlignment ha : HorizontalAlignment.values()) { 
-			if (ha.toString().equals(name)) {
+			if (ha.toString().equalsIgnoreCase(name)) {
 				likeView.setHorizontalAlignment(ha);
 				break;
 			}

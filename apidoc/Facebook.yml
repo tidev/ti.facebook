@@ -320,19 +320,30 @@ description: |
     To send a request to a user, call the
     [presentSendRequestDialog()](Modules.Facebook.presentSendRequestDialog) method and pass the
     method a dictionary with the `message` property set the message you want to send the invited user.
+    Optional: You can set the `title` property with a title string. You can also set the `data` property
+    with a dictionary of custom parameters. If you want to preselect users to send invite to, you can set
+    the `to` property with string of values that are facebook ids seperated by comma.
 
     To monitor if the request succeeded or not, listen to the <Modules.Facebook.requestDialogCompleted> event.
 
 
             fb.addEventListener('requestDialogCompleted', function (e) {
                 if (e.success) {
-                    Ti.API.info('Share request succeeded.');
+                    Ti.API.info('request succeeded.');
                 } else {
                     Ti.API.warn('Failed to share.');
                 }
             });
 
-            fb.presentSendRequestDialog({message: 'Go to https://appcelerator.com/'});
+            fb.presentSendRequestDialog({
+                message: 'Go to https://appcelerator.com/',
+                title: 'Invitation to Appcelerator',
+                to: '123456789, 123456788',
+                data: {
+                    badge_of_awesomeness: '1',
+                    social_karma: '5'
+                }
+            });
 
     For details on dialog see the
     [official Facebook Request Dialogs documentation](https://developers.facebook.com/docs/games/requests/v2.2).
@@ -408,7 +419,7 @@ methods:
   - name: createActivityWorker
     summary: |
         Creates a Facebook proxy to hook into the activity of either a standalone <Titanium.UI.Window>
-        (not inside a TabGroup) or <Titaniuim.UI.TabGroup>.
+        (not inside a TabGroup) or <Titanium.UI.TabGroup>.
     description: |
         Set the `lifecycleContainer` property in the dictionary passed to the method to either
         the current active  instance of a <Titanium.UI.Window> or <Titanium.UI.TabGroup> in order to monitor the activity's
@@ -437,7 +448,7 @@ methods:
         removed: 4.0.0
     description: |
         For a list of dialogs, parameters, and response formats, see the
-        [official documentation for Facebook Dialogs](http://developers.facebook.com/docs/reference/dialogs/).
+        [official documentation for Facebook Dialogs](https://developers.facebook.com/docs/javascript/reference/FB.ui).
 
         The callback is invoked when the dialog is closed, either because the user
         approved the action, or canceled the dialog.
@@ -507,9 +518,6 @@ methods:
     summary: |
         Opens a supported Facebook Share dialog from the Facebook App.
     description: |
-        For a list of parameters, and response formats, see the
-        [official documentation for Facebook Dialogs](https://developers.facebook.com/docs/sharing/reference/share-dialog).
-
         Be sure to check if the device can support this method by calling [getCanPresentShareDialog](Modules.Facebook.getCanPresentShareDialog)
         before using this method. If true, you can use this method. If false, the Facebook application
         is probably not installed in the device. In this case, use [presentWebShareDialog](Modules.Facebook.presentWebShareDialog)
@@ -528,9 +536,6 @@ methods:
     summary: |
         Opens a web version of the Share dialog (Feed dialog). Does not depend on the Facebook app.
     description: |
-        For a list of parameters, and response formats, see the
-        [official documentation for Facebook Dialogs](https://developers.facebook.com/docs/sharing/reference/share-dialog).
-
         This is a fallback for when Share dialog is not available.
 
         Listen for the <Modules.Facebook.shareCompleted> to be notified if the attempt was
@@ -546,14 +551,17 @@ methods:
     summary: |
         Opens an App Request dialog.
     description: |
-        A `requestDialogCompleted` event is generated to indicate if the request attempt was successful or unsuccessful.
+        A `requestDialogCompleted` event is generated to indicate if the request attempt was successful or unsuccessful,
+        and the resultURL.
     parameters:
       - name: params
         summary: |
             A dictionary object containing following properties:
 
               * `message` (String): Required. Message to send with the request.
-              * `data` (String): Optional. Additional data to send with the request object.
+              * `title` (String): Optional. Title of request.
+              * `to` (String): Optional. String of pre-selected facebook ids, seperated by commas.
+              * `data` (Dictionary): Optional. Additional data to send with the request object.
         type: Dictionary
     since: 4.0.0
 
@@ -754,7 +762,12 @@ events:
             Error message, if any returned.
             Will be undefined if `success` is `true`.
         type: String
-    since: 4.0.0
+
+      - name: data
+        summary: |
+            data returned by Facebook. See Facebook reference for details.
+        type: Dictionary
+    since: 4.0.2
 
   - name: shareCompleted
     summary: Fired when the Share dialog or Web Share dialog is closed.

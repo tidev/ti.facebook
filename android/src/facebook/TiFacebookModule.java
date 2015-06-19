@@ -15,7 +15,9 @@ package facebook;
 import java.net.HttpURLConnection;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollFunction;
@@ -402,7 +404,7 @@ public class TiFacebookModule extends KrollModule
 		return uid;
 	}
 
-	@Kroll.getProperty
+	@Kroll.getProperty @Kroll.method
 	public String getAccessToken() {
 		Log.d(TAG, "get accessToken");
 		return Session.getActiveSession().getAccessToken();
@@ -492,31 +494,24 @@ public class TiFacebookModule extends KrollModule
 			shareDialog = new FacebookDialog.ShareDialogBuilder(TiApplication.getInstance().getCurrentActivity())
 				.build();
 		} else {
-			
-			String url = (String) args.get("url");
-			if  (url == null) {
-				url = (String) args.get("link");
-			}
+			String link = (String) args.get("link");
 			String name = (String) args.get("name");
 			String caption = (String) args.get("caption");
 			String picture = (String) args.get("picture");
-			
 			String namespaceObject = (String) args.get("namespaceObject");
 			String namespaceAction = (String) args.get("namespaceAction");
 			String objectName = (String) args.get("objectName");
-			String imageUrl = (String) args.get("imageUrl");
-			String title = (String) args.get("title");
 			String description = (String) args.get("description");
 			String placeId = (String) args.get("placeId");
-			if (url != null && namespaceObject == null) {
+			if (link != null && namespaceObject == null) {
 				shareDialog = new FacebookDialog.ShareDialogBuilder(TiApplication.getInstance().getCurrentActivity())
-		        .setLink(url).setName(name).setCaption(caption).setPicture(picture).setDescription(description)
+		        .setLink(link).setName(name).setCaption(caption).setPicture(picture).setDescription(description)
 		        .build();
 			} else {
 				OpenGraphObject ogObject = OpenGraphObject.Factory.createForPost(namespaceObject);
-				ogObject.setProperty("title", title);
-				ogObject.setProperty("image", imageUrl);
-				ogObject.setProperty("url", url);
+				ogObject.setProperty("title", name);
+				ogObject.setProperty("image", picture);
+				ogObject.setProperty("url", link);
 				ogObject.setProperty("description", description);
 
 				OpenGraphAction action = OpenGraphAction.Factory.createForPost(namespaceAction);
@@ -592,15 +587,17 @@ public class TiFacebookModule extends KrollModule
 					})
 					.build();
 				} else {
-					String url = (String) args.get("url");
-					String imageUrl = (String) args.get("imageUrl");
-					String title = (String) args.get("title");
+					String link = (String) args.get("link");
+					String picture = (String) args.get("picture");
+					String name = (String) args.get("name");
 					String description = (String) args.get("description");
+					String caption = (String) args.get("caption");
 					Bundle params = new Bundle();
-					params.putString("name", title);
+					params.putString("name", name);
 					params.putString("description", description);
-					params.putString("link", url);
-					params.putString("picture", imageUrl);
+					params.putString("link", link);
+					params.putString("picture", picture);
+					params.putString("caption", caption);
 					feedDialog = (new WebDialog.FeedDialogBuilder(TiApplication.getInstance().getCurrentActivity(),
 									Session.getActiveSession(), params))
 									.setOnCompleteListener(new OnCompleteListener() {
@@ -659,6 +656,7 @@ public class TiFacebookModule extends KrollModule
 		//For example, if your app uses multiple threads, you can use the runOnUiThread() method to ensure your code 
 		//executes on the UI thread
 		TiApplication.getInstance().getCurrentActivity().runOnUiThread(new Runnable() {
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
 				WebDialog requestsDialog = null;
@@ -687,22 +685,34 @@ public class TiFacebookModule extends KrollModule
 										data.put(PROPERTY_SUCCESS, true);
 										data.put(PROPERTY_CANCELLED, false);
 										data.put(PROPERTY_RESULT, requestId);
-										fireEvent(EVENT_REQUEST_DIALOG_COMPLETE, data);
 									} else {
 							            data.put(PROPERTY_SUCCESS, false);
 							            data.put(PROPERTY_CANCELLED, true);
-										fireEvent(EVENT_REQUEST_DIALOG_COMPLETE, data);
 									}
+									KrollDict valuesDict = new KrollDict();
+									for (String key : values.keySet()) {
+										String tempKey = key;
+										tempKey = tempKey.replace("[", "").replace("]", "");
+										valuesDict.put(tempKey, values.get(key).toString());
+									}
+									data.put(PROPERTY_DATA, valuesDict);
+									fireEvent(EVENT_REQUEST_DIALOG_COMPLETE, data);
 								}
 							}
 						})
 						.build();
 			    } else {
+					String title = (String) args.get("title");
 					String message = (String) args.get("message");
-					String data = (String) args.get("data");
+					Map<String, String> data = (HashMap<String, String>) args.get("data");
+					String to = (String) args.get("to");
 					Bundle params = new Bundle();
+				    params.putString("title", title);
 				    params.putString("message", message);
-				    params.putString("data", data);
+				    if (data != null) {
+				    	params.putString("data", data.toString());
+				    }
+				    params.putString("to", to);
 			    	requestsDialog = (
 							new WebDialog.RequestsDialogBuilder(TiApplication.getAppCurrentActivity(),
 									Session.getActiveSession(),
@@ -729,12 +739,18 @@ public class TiFacebookModule extends KrollModule
 													data.put(PROPERTY_SUCCESS, true);
 													data.put(PROPERTY_CANCELLED, false);
 													data.put(PROPERTY_RESULT, requestId);
-													fireEvent(EVENT_REQUEST_DIALOG_COMPLETE, data);
 												} else {
 										            data.put(PROPERTY_SUCCESS, false);
 										            data.put(PROPERTY_CANCELLED, true);
-													fireEvent(EVENT_REQUEST_DIALOG_COMPLETE, data);
 												}
+												KrollDict valuesDict = new KrollDict();
+												for (String key : values.keySet()) {
+													String tempKey = key;
+													tempKey = tempKey.replace("[", "").replace("]", "");
+													valuesDict.put(tempKey, values.get(key).toString());
+												}
+												data.put(PROPERTY_DATA, valuesDict);
+												fireEvent(EVENT_REQUEST_DIALOG_COMPLETE, data);
 											}
 										}
 									})
@@ -746,40 +762,14 @@ public class TiFacebookModule extends KrollModule
 			}
 		});
 	}
-	
-	@Kroll.method
-	public void requestNewReadPermissions(String[] permissions, final KrollFunction callback) {
-		requestNewReadPermissions(permissions, AUDIENCE_EVERYONE, callback);
-	}
 
 	@Kroll.method
-	public void requestNewReadPermissions(String[] permissions, int audienceChoice, final KrollFunction callback) {
-		SessionDefaultAudience audience;
-		switch(audienceChoice){
-			case TiFacebookModule.AUDIENCE_NONE:
-				audience = SessionDefaultAudience.NONE;
-				break;
-			case TiFacebookModule.AUDIENCE_ONLY_ME:
-				audience = SessionDefaultAudience.ONLY_ME;
-				break;
-			case TiFacebookModule.AUDIENCE_FRIENDS:
-				audience = SessionDefaultAudience.FRIENDS;
-				break;
-			default:
-			case TiFacebookModule.AUDIENCE_EVERYONE:
-				audience = SessionDefaultAudience.EVERYONE;
-				break;
-		}
+	public void requestNewReadPermissions(String[] permissions, final KrollFunction callback) {
 		permissionCallback = callback;
 		Session.getActiveSession().requestNewReadPermissions(
-				new NewPermissionsRequest(TiApplication.getInstance().getCurrentActivity(), Arrays.asList(permissions)).setDefaultAudience(audience));
+				new NewPermissionsRequest(TiApplication.getInstance().getCurrentActivity(), Arrays.asList(permissions)));
 	}
-	
-	@Kroll.method
-	public void requestNewPublishPermissions(String[] permissions, final KrollFunction callback) {
-		requestNewPublishPermissions(permissions, AUDIENCE_EVERYONE, callback);
-	}
-	
+		
 	@Kroll.method
 	public void requestNewPublishPermissions(String[] permissions, int audienceChoice, final KrollFunction callback) {
 		SessionDefaultAudience audience;
