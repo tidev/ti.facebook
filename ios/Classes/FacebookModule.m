@@ -353,7 +353,7 @@ NSTimeInterval meRequestTimeout = 180.0;
  */
 -(void)logCustomEvent:(id)args
 {
-    ENSURE_SINGLE_ARG(args, NSString);
+    // ENSURE_SINGLE_ARG(args, NSString);
     NSString* event = [args objectAtIndex:0];
     [FBAppEvents logEvent:event];
 }
