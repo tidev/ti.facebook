@@ -190,7 +190,7 @@ Example 2:
 Share Dialog
 ------------
 
-You don't need permissions, or even log in to use this. You can either use presentShareDialog which requires facebook app to be preinstalled, or presentWebStareDialog that uses the web browser instead. Both approaches fire a `shareCompleted` event.
+You don't need permissions. You can either use presentShareDialog which requires facebook app to be preinstalled, or presentWebStareDialog that uses the web browser instead. Both approaches fire a `shareCompleted` event.
 To share a user's status just call fb.share({});
 To share a link call fb.share({url: 'http://example.com' });
 To share more information, example:
