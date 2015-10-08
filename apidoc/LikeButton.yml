@@ -7,7 +7,7 @@ description: |
 
     By default, the Like button displays a button with a social sentence ('x number of users like y')
     next to it.  To change the Like button style, set the
-    <Modules.Facebook.LikeButton.likeViewButton> property.
+    <Modules.Facebook.LikeButton.likeViewStyle> property.
 
     The Like button does not require a click event handler or any listeners.
     Click events on the button are automatically handled by the Facebook module.
@@ -98,7 +98,7 @@ properties:
     type: String
     default: left
 
-  - name: likeViewButton
+  - name: likeViewStyle
     summary: Style of the button.
     description: |
         Set to one of the following values:
