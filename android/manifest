@@ -2,18 +2,18 @@
 # this is your module manifest and used by Titanium
 # during compilation, packaging, distribution, etc.
 #
-version: 4.0.5
+version: 4.1.0
 apiversion: 2
 architectures: armeabi armeabi-v7a x86
 description: facebook
 author: Mark Mokryn and Ashraf A. S. (Appcelerator)
 license: Apache License Version 2.0
 copyright: Copyright (c) 2014 by Mark Mokryn, Copyright (c) 2009-2015 by Appcelerator
-respackage: com.facebook.android
+respackage: com.facebook
 
 # these should not be edited
 name: Facebook
 moduleid: facebook
 guid: e4f7ac61-1ee7-44c5-bc27-fa6876e2dce9
 platform: android
-minsdk: 4.0.0
+minsdk: 5.0.0.GA
