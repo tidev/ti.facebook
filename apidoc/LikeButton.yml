@@ -48,7 +48,7 @@ examples:
                 top: 230,
                 height: "50%", // Note: on iOS setting Ti.UI.SIZE dimensions prevents the button from being clicked
                 width: "50%",
-                objectId: "https://www.facebook.com/appcelerator",
+                objectID: "https://www.facebook.com/appcelerator",
                 foregroundColor: "white",
                 likeViewStyle: 'box_count',
                 auxiliaryViewPosition: 'inline',
@@ -114,6 +114,16 @@ properties:
     description: |
         This property must be set before rendering the button.
     type: String
+    deprecated:
+        since: 5.0.0
+
+  - name: objectID
+    summary: |
+        Page URL or Open Graph object ID to like.
+    description: |
+        This property must be set before rendering the button.
+    type: String
+    since: 5.0.0
 
   - name: objectType
     summary: |

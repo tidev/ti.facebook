@@ -32,6 +32,12 @@
 
 -(void)setObjectId_:(id)idString
 {
+    DEPRECATED_REPLACED(@"facebook.likeButton.objectId", @"5.0.0", @"facebook.likeButton.objectId")
+    [self setObjectID_:idString];
+}
+
+-(void)setObjectID_:(id)idString
+{
     ENSURE_SINGLE_ARG(idString, NSString);
     FBSDKLikeControl *btn = [self like];
     NSString* objectID = [TiUtils stringValue:idString];

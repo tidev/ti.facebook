@@ -407,11 +407,11 @@ description: |
     will share the content on the user's Facebook page.
 
     To create a Like button, call the [createLikeButton()](Modules.Facebook.createLikeButton) method
-    and pass it a dictionary with the `objectId` assigned to either a URL or Open Graph object ID
+    and pass it a dictionary with the `objectID` assigned to either a URL or Open Graph object ID
     you want to share. Add the button instance to a view to display it.
 
         var likeButton = fb.createLikeButton({
-            objectId: "https://www.facebook.com/appcelerator"
+            objectID: "https://www.facebook.com/appcelerator"
         });
         win.add(likeButton);
 
@@ -1097,7 +1097,7 @@ examples:
 
         `app/controllers/index.js`:
 
-            $.fbLike.objectId = "http://www.facebook.com/appcelerator";
+            $.fbLike.objectID = "http://www.facebook.com/appcelerator";
             if (OS_ANDROID) {
                 $.index.fbProxy = Alloy.Globals.Facebook.createActivityWorker({lifecycleContainer: $.index});
             }
