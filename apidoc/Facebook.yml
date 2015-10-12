@@ -16,7 +16,27 @@ description: |
 
     **Note:** As of April 30th, 2015, Facebook no longer supports version 1.0 of their API, which
     includes the FQL and REST APIs.  Only the Graph APIs will be supported.
+ 
+    **Migration from the Facebook module v4.x to v5.x**
+   
+    * **dialog() method** -- [presentWebShareDialog()](Modules.Facebook.presentWebShareDialog) is
+      deprecated and removed. The module will auto determine if you have a native Facebook App installed.
+      [canPresentShareDialog()](Modules.Facebook.canPresentShareDialog) is also deprecated and removed.
+      For more details, see 'Share Dialogs' and 'Request Dialogs' below.
+
+    * **presentShareDialog() method** -- 'name' parameter is deprecated and replaced with 'title'.
+      'caption' parameter is deprecated and removed.
+
+    * **presentSendRequestDialog() method** -- 'to' parameter is deprecated and replaced with 'recipients'.
+      There are a few new parameters as well, for more details,
+      see [presentSendRequestDialog()](Modules.Facebook.presentSendRequestDialog)
+
+    The following APIs were removed due to changes in the native Facebook SDKs and
+    removal of the Facebook v1.0 REST APIs:
     
+    * **appid property** -- The Facebook application ID can no longer be set programmatically
+      in the application.  Set the Facebook application ID in the `tiapp.xml` file.
+      For more details, see 'Getting Started' below for more details.   
     **Migration from the Facebook module v3.x to v4.x**
 
     The following APIs were removed due to changes in the native Facebook SDKs and
@@ -111,6 +131,49 @@ description: |
                             <key>FacebookDisplayName</key>
                             <!-- Facebook App Name from developer.facebook.com -->
                             <string>FACEBOOK_APP_NAME</string>
+                        </dict>
+                    </plist>
+                </ios>
+            </ti:app>
+
+    To enable the use of Facebook dialogs (e.g., Login, Share), you also need to include the following key and values in `tiapp.xml`
+    to handle the switching in and out of your app:
+
+    <key>LSApplicationQueriesSchemes</key>
+        <array>
+            <string>fbapi</string>
+            <string>fb-messenger-api</string>
+            <string>fbauth2</string>
+            <string>fbshareextension</string>
+        </array>
+
+    For iOS9 and titanium 5.0.0.GA and above, App Transport Security is disabled by default.
+    If you choose to enable it, you have to set the following keys and values in `tiapp.xml` <ios> section for facebook module:
+            <ti:app>
+                <ios>
+                    <plist>
+                        <dict>
+                            <key>NSAppTransportSecurity</key>
+                                <dict>
+                                    <key>NSExceptionDomains</key>
+                                        <dict>
+                                            <key>facebook.com</key>
+                                                <dict>
+                                                    <key>NSIncludesSubdomains</key> <true/>        
+                                                    <key>NSExceptionRequiresForwardSecrecy</key> <false/>
+                                                </dict>
+                                            <key>fbcdn.net</key>
+                                                <dict>
+                                                    <key>NSIncludesSubdomains</key> <true/>
+                                                    <key>NSExceptionRequiresForwardSecrecy</key>  <false/>
+                                                </dict>
+                                            <key>akamaihd.net</key>
+                                                <dict>
+                                                    <key>NSIncludesSubdomains</key> <true/>
+                                                    <key>NSExceptionRequiresForwardSecrecy</key> <false/>
+                                                </dict>
+                                        </dict>
+                                </dict>
                         </dict>
                     </plist>
                 </ios>
@@ -290,23 +353,13 @@ description: |
                 }
             });
 
-            if(fb.getCanPresentShareDialog()) {
-                fb.presentShareDialog({
-                    link: 'https://appcelerator.com/',
-                    name: 'great product',
-                    description: 'Titanium is a great product',
-                    caption: 'it rocks too',
-                    picture: 'http://www.appcelerator.com/wp-content/uploads/scale_triangle1.png'
-                });
-            } else {
-                fb.presentWebShareDialog({
-                    link: 'https://appcelerator.com/',
-                    name: 'great product',
-                    description: 'Titanium is a great product',
-                    caption: 'it rocks too',
-                    picture: 'http://www.appcelerator.com/wp-content/uploads/scale_triangle1.png'
-                });
-            }
+            fb.presentShareDialog({
+                link: 'https://appcelerator.com/',
+                title: 'great product',
+                description: 'Titanium is a great product',                    
+                picture: 'http://www.appcelerator.com/wp-content/uploads/scale_triangle1.png'
+            });
+
 
     For details on the Share dialog, see the
     [official Facebook Share Dialogs documentation](https://developers.facebook.com/docs/sharing/reference/share-dialog).
@@ -338,7 +391,7 @@ description: |
             fb.presentSendRequestDialog({
                 message: 'Go to https://appcelerator.com/',
                 title: 'Invitation to Appcelerator',
-                to: '123456789, 123456788',
+                recipients: ['123456789', '123456788'],
                 data: {
                     badge_of_awesomeness: '1',
                     social_karma: '5'
@@ -546,6 +599,9 @@ methods:
             A dictionary object containing optional parameters.
         type: ShareDialogParams
     since: 4.0.0
+    deprecated:
+        since: 5.0.0
+        removed: 5.0.0
 
   - name: presentSendRequestDialog
     summary: |
@@ -556,13 +612,8 @@ methods:
     parameters:
       - name: params
         summary: |
-            A dictionary object containing following properties:
-
-              * `message` (String): Required. Message to send with the request.
-              * `title` (String): Optional. Title of request.
-              * `to` (String): Optional. String of pre-selected facebook ids, seperated by commas.
-              * `data` (Dictionary): Optional. Additional data to send with the request object.
-        type: Dictionary
+            A dictionary object containing parameters.
+        type: RequestDialogParams
     since: 4.0.0
 
   - name: reauthorize
@@ -803,6 +854,9 @@ properties:
     type: Number
     permission: read-only
     since: 4.0.0
+    deprecated:
+        since: "5.0.0"
+        removed: "5.0.0"
 
   - name: AUDIENCE_ONLY_ME
     summary: Published content is only visible to the user.
@@ -830,6 +884,62 @@ properties:
     type: Number
     permission: read-only
     since: 4.0.0
+
+  - name: ACTION_TYPE_NONE
+    summary: No action type.
+    description: |
+        Use to set the actionType with [presentSendRequestDialog()](Modules.Facebook.presentSendRequestDialog)
+    type: Number
+    permission: read-only
+    since: 5.0.0
+
+  - name: ACTION_TYPE_SEND
+    summary: The user is sending an object to the friends.
+    description: |
+        Use to set the actionType with [presentSendRequestDialog()](Modules.Facebook.presentSendRequestDialog)
+    type: Number
+    permission: read-only
+    since: 5.0.0
+
+  - name: ACTION_TYPE_ASK_FOR
+    summary: The user is asking for an object from friends.
+    description: |
+        Use to set the actionType with [presentSendRequestDialog()](Modules.Facebook.presentSendRequestDialog)
+    type: Number
+    permission: read-only
+    since: 5.0.0
+
+  - name: ACTION_TYPE_TURN
+    summary: It is the turn of the friends to play against the user in a match.
+    description: |
+        Use to set the actionType with [presentSendRequestDialog()](Modules.Facebook.presentSendRequestDialog)
+    type: Number
+    permission: read-only
+    since: 5.0.0
+
+  - name: FILTER_NONE
+    summary: No filter all friends can be displayed.
+    description: |
+        Use to set the filter with [presentSendRequestDialog()](Modules.Facebook.presentSendRequestDialog)
+    type: Number
+    permission: read-only
+    since: 5.0.0
+
+  - name: FILTER_APP_USERS
+    summary: Friends using the app can be displayed.
+    description: |
+        Use to set the filter with [presentSendRequestDialog()](Modules.Facebook.presentSendRequestDialog)
+    type: Number
+    permission: read-only
+    since: 5.0.0
+
+  - name: FILTER_APP_NON_USERS
+    summary: Friends not using the app can be displayed.
+    description: |
+        Use to set the filter with [presentSendRequestDialog()](Modules.Facebook.presentSendRequestDialog)
+    type: Number
+    permission: read-only
+    since: 5.0.0
 
   - name: BUTTON_STYLE_NORMAL
     summary: |
@@ -904,6 +1014,9 @@ properties:
     type: Boolean
     since: 4.0.0
     permission: read-only
+    deprecated:
+        since: 5.0.0
+        removed: 5.0.0
 
   - name: expirationDate
     summary: Time at which the `accessToken` expires.
@@ -1340,6 +1453,9 @@ properties:
   - name: caption
     summary: Caption for the link.
     type: String
+    deprecated:
+        since: "5.0.0"
+        removed: "5.0.0"
 
   - name: description
     summary: Description associated with the link.
@@ -1352,8 +1468,76 @@ properties:
   - name: name
     summary: Name or title associated with the link.
     type: String
+    deprecated:
+        since: "5.0.0"
+        removed: "5.0.0"
+
+  - name: title
+    summary: Title associated with the link.
+    type: String
+    since: "5.0.0"
 
   - name: picture
     summary: Link to a thumbnail to associate with the link.
     type: String
 
+---
+name: RequestDialogParams
+summary: |
+    Parameters to pass to [presentSendRequestDialog()](Modules.Facebook.presentSendRequestDialog) method.
+since: 4.0.0
+platforms: [android, iphone, ipad]
+properties:
+  - name: message
+    summary: Message to send with the request.
+    type: String
+    optional: false    
+
+  - name: title
+    summary: Title of request.
+    type: String
+    optional: true    
+
+  - name: to
+    summary: Array of pre-selected facebook ids.
+    type: Array
+    optional: true
+    deprecated:
+        since: "5.0.0"
+        removed: "5.0.0"
+
+  - name: recipients
+    summary: Array of pre-selected facebook ids.
+    type: Array
+    optional: true
+    since: "5.0.0"
+
+  - name: recipientSuggestions
+    summary: An array of user IDs that will be included in the dialog as the first suggested friends. Cannot be used together with filters.
+    type: Array
+    optional: true    
+    since: "5.0.0"
+
+  - name: data
+    summary: Additional data to send with the request object.
+    type: Dictionary
+    optional: true    
+
+  - name: actionType
+    summary: The nature of the request. Required if objectID is set.
+    type: Number
+    optional: true    
+    constants: Modules.Facebook.ACTION_TYPE_*
+    since: "5.0.0"
+
+  - name: filters
+    summary: The set of friends someone sees if a multi-friend selector is shown.
+    type: Number
+    constants: Modules.Facebook.FILTER_*
+    since: "5.0.0"
+
+  - name: objectID
+    summary: The Open Graph object ID of the object being sent. Required if actionType is set.
+    type: String
+    optional: true    
+    since: "5.0.0"

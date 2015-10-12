@@ -16,13 +16,11 @@
 #import "TiUtils.h"
 #import "TiApp.h"
 
-BOOL temporarilySuspended = NO;
+NSDictionary *launchOptions = nil;
 
 @implementation FacebookModule
 
 #pragma mark Internal
-
-NSTimeInterval meRequestTimeout = 180.0;
 
 // this is generated for your module, please do not change it
 -(id)moduleGUID
@@ -40,43 +38,39 @@ NSTimeInterval meRequestTimeout = 180.0;
 
 -(void)dealloc
 {
-    RELEASE_TO_NIL(stateListeners);
     RELEASE_TO_NIL(permissions);
-    RELEASE_TO_NIL(uid);
     [super dealloc];
 }
 
 -(BOOL)handleRelaunch
 {
-    NSDictionary *launchOptions = [[TiApp app] launchOptions];
-    if (launchOptions!=nil) {
-        NSString *urlString = [launchOptions objectForKey:@"url"];
-        NSString *sourceApplication = [launchOptions objectForKey:@"source"];
-        if (urlString != nil) {
-            [FBSession.activeSession setStateChangeHandler:
-             ^(FBSession *session, FBSessionState state, NSError *error) {
-                 [self sessionStateChanged:session state:state error:error];
-             }];
-            return [FBAppCall handleOpenURL:[NSURL URLWithString:urlString] sourceApplication:sourceApplication];
-        } else {
-            return NO;
-        }
+    TiApp * appDelegate = [TiApp app];
+    launchOptions = [appDelegate launchOptions];
+    NSString *urlString = [launchOptions objectForKey:@"url"];
+    NSString *sourceApplication = [launchOptions objectForKey:@"source"];
+    NSString *annotation = [launchOptions objectForKey:UIApplicationOpenURLOptionsAnnotationKey];
+    if (urlString != nil) {
+        FBSDKAccessToken *token = [FBSDKAccessToken currentAccessToken];
+        NSSet* failed = token.declinedPermissions;
+        return [[FBSDKApplicationDelegate sharedInstance] application:[UIApplication sharedApplication] openURL: [NSURL URLWithString:urlString] sourceApplication:sourceApplication annotation:annotation];
+    } else {
+        return NO;
     }
     return NO;
 }
 
 -(void)resumed:(id)note
 {
-    NSLog(@"[DEBUG] facebook resumed");
-    if (!temporarilySuspended) {
-        [self handleRelaunch];
-    }
-    [FBAppEvents activateApp];
+//    NSLog(@"[DEBUG] facebook resumed");
+    [self handleRelaunch];
+    [FBSDKAppEvents activateApp];
 }
 
--(void)activateApp:(NSNotification *)notification
+-(void)activateApp
 {
-    [FBAppCall handleDidBecomeActive];
+    TiApp * appDelegate = [TiApp app];
+	launchOptions = [appDelegate launchOptions];
+	[[FBSDKApplicationDelegate sharedInstance] application:[UIApplication sharedApplication] didFinishLaunchingWithOptions:launchOptions];
 }
 
 -(void)startup
@@ -94,11 +88,6 @@ NSTimeInterval meRequestTimeout = 180.0;
 -(void)shutdown:(id)sender
 {
 //    NSLog(@"[DEBUG] facebook shutdown");
-    
-    TiThreadPerformOnMainThread(^{
-        [FBSession.activeSession close];
-    }, NO);
-    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super shutdown:sender];
 }
@@ -106,121 +95,27 @@ NSTimeInterval meRequestTimeout = 180.0;
 -(void)suspend:(id)sender
 {
 //    NSLog(@"[DEBUG] facebook suspend");
-    temporarilySuspended = YES; // to avoid crazy logic if user rejects a call or SMS
 }
 
 -(void)paused:(id)sender
 {
 //    NSLog(@"[DEBUG] facebook paused");
-    temporarilySuspended = NO; // Since we are guaranteed full resume logic following this
 }
 
 #pragma mark Auth Internals
 
 - (void)populateUserDetails {
     TiThreadPerformOnMainThread(^{
-        if (FBSession.activeSession.isOpen) {
-            FBRequestConnection *connection = [[[FBRequestConnection alloc] initWithTimeout:meRequestTimeout] autorelease];
-            connection.errorBehavior = FBRequestConnectionErrorBehaviorReconnectSession
-            | FBRequestConnectionErrorBehaviorRetry;
-            
-            [connection addRequest:[FBRequest requestForMe]
-                 completionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
-                     RELEASE_TO_NIL(uid);
-                     if (!error) {
-                         uid = [[user objectForKey:@"id"] copy];
-                         [self fireLogin:user cancelled:NO withError:nil];
-                     } else {
-                         // Error on /me call
-                         // In a future rev perhaps use stored user info
-                         // But for now bail out
-                         switch(error.fberrorCategory) {
-                             case FBErrorCategoryAuthenticationReopenSession:
-                                 // will be handled by authentication error handling
-                                 DebugLog(@"[ERROR] /me FBErrorCategoryAuthenticationReopenSession");
-                                 return;
-                                 break;
-                             case FBErrorCategoryInvalid:
-                             case FBErrorCategoryServer:
-                             case FBErrorCategoryThrottling:
-                             case FBErrorCategoryFacebookOther:
-                             case FBErrorCategoryBadRequest:
-                             case FBErrorCategoryPermissions:
-                             case FBErrorCategoryRetry:
-                             case FBErrorCategoryUserCancelled:
-                             default:
-                                 DebugLog(@"[ERROR] /me error.description: ", error.description);
-                                 TiThreadPerformOnMainThread(^{
-                                     [FBSession.activeSession closeAndClearTokenInformation];
-                                 }, YES);
-                                 // We set error to nil since any useful message was already surfaced
-                                 [self fireLogin:nil cancelled:NO withError:error];
-                                 break;
-                         }
-                     }
-                 }];
-            [connection start];
+        if ([FBSDKAccessToken currentAccessToken] != nil) {
+            FBSDKProfile *user = [FBSDKProfile currentProfile];
+            uid = [user userID];
+            [self fireLogin:user cancelled:NO withError:nil];
+        }
+        else {
+//            DebugLog(@"[ERROR] Not logged in");
+            [self fireLogin:nil cancelled:NO withError:nil];
         }
     }, NO);
-}
-
-
-- (void)handleAuthError:(NSError *)error
-{
-    BOOL cancelled = NO;
-    NSString *errorMessage;
-    long code = [error code];
-    if (code == 0) {
-        code = -1;
-    }
-    if ([FBErrorUtility shouldNotifyUserForError:error] == YES){
-        // Error requires people using you app to make an action outside your app to recover
-        errorMessage = [FBErrorUtility userMessageForError:error];
-    } else {
-        // You need to find more information to handle the error within your app
-        if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled) {
-            //The user refused to log in into your app, either ignore or...
-            cancelled = YES;
-            errorMessage = @"User cancelled the login process.";
-        } else {
-            // All other errors that can happen need retries
-            // Show the user a generic error message
-            errorMessage = @"Please login again";
-        }
-    }
-    NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                  NUMBOOL(cancelled),@"cancelled",
-                                  NUMBOOL(NO),@"success",
-                                  NUMLONG(code),@"code",nil];
-    
-    [event setObject:errorMessage forKey:@"error"];
-    [self fireEvent:@"login" withObject:event];
-}
-
-- (void)sessionStateChanged:(FBSession *)session
-                      state:(FBSessionState) state
-                      error:(NSError *)error
-{
-    RELEASE_TO_NIL(uid);
-    if (error) {
-        //DebugLog(@"[ERROR] sessionStateChanged error");
-        [self handleAuthError:error];
-    } else {
-        switch (state) {
-            case FBSessionStateOpen:
-                //NSLog(@"[DEBUG] FBSessionStateOpen");
-                [self populateUserDetails];
-                break;
-            case FBSessionStateClosed:
-            case FBSessionStateClosedLoginFailed:
-                //NSLog(@"[DEBUG] facebook session closed");
-                [self fireEvent:@"logout"];
-                break;
-            default:
-                //NSLog(@"[DEBUG] sessionStateChanged default case reached, state %d", state);
-                break;
-        }
-    }
 }
 
 #pragma mark Public APIs
@@ -247,14 +142,15 @@ NSTimeInterval meRequestTimeout = 180.0;
  */
 -(id)loggedIn
 {
-    return NUMBOOL(FBSession.activeSession.state == FBSessionStateOpenTokenExtended || FBSession.activeSession.state == FBSessionStateOpen || FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded);
+    return NUMBOOL([FBSDKAccessToken currentAccessToken] != nil);
 }
 
+//TODO
 -(id)canPresentShareDialog
 {
-    return NUMBOOL([FBDialogs canPresentShareDialog]);
+    DEPRECATED_REMOVED(@"facebook.canPresentShareDialog", @"5.0.0", @"5.0.0");
+    return NUMBOOL(YES);
 }
-
 
 /**
  * JS example:
@@ -268,9 +164,8 @@ NSTimeInterval meRequestTimeout = 180.0;
 {
     __block NSArray *perms;
     TiThreadPerformOnMainThread(^{
-        perms = FBSession.activeSession.permissions;
+        perms = [[[FBSDKAccessToken currentAccessToken] permissions] allObjects];
     }, YES);
-    
     return perms;
 }
 
@@ -286,32 +181,66 @@ NSTimeInterval meRequestTimeout = 180.0;
 {
     __block NSString * token;
     TiThreadPerformOnMainThread(^{
-        token = FBSession.activeSession.accessTokenData.accessToken;
+		token = [[FBSDKAccessToken currentAccessToken] tokenString];
     }, YES);
-    
     return token;
 }
-
+//deprecated and removed
 -(id)AUDIENCE_NONE
 {
-    return [NSNumber numberWithInt:FBSessionDefaultAudienceNone];
+    DEPRECATED_REMOVED(@"facebook.AUDIENCE_NONE",@"5.0.0",@"5.0.0")
+    return NULL;
 }
 
 -(id)AUDIENCE_ONLY_ME
 {
-    return [NSNumber numberWithInt:FBSessionDefaultAudienceOnlyMe];
+    return [NSNumber numberWithInt:FBSDKDefaultAudienceOnlyMe];
 }
 
 -(id)AUDIENCE_FRIENDS
 {
-    return [NSNumber numberWithInt:FBSessionDefaultAudienceFriends];
+    return [NSNumber numberWithInt:FBSDKDefaultAudienceFriends];
 }
 
 -(id)AUDIENCE_EVERYONE
 {
-    return [NSNumber numberWithInt:FBSessionDefaultAudienceEveryone];
+    return [NSNumber numberWithInt:FBSDKDefaultAudienceEveryone];
 }
 
+-(id)ACTION_TYPE_NONE
+{
+    return [NSNumber numberWithInt:FBSDKGameRequestActionTypeNone];
+}
+
+-(id)ACTION_TYPE_SEND
+{
+    return [NSNumber numberWithInt:FBSDKGameRequestActionTypeSend];
+}
+
+-(id)ACTION_TYPE_ASK_FOR
+{
+    return [NSNumber numberWithInt:FBSDKGameRequestActionTypeAskFor];
+}
+
+-(id)ACTION_TYPE_TURN
+{
+    return [NSNumber numberWithInt:FBSDKGameRequestActionTypeTurn];
+}
+
+-(id)FILTER_NONE
+{
+    return [NSNumber numberWithInt:FBSDKGameRequestFilterNone];
+}
+
+-(id)FILTER_APP_USERS
+{
+    return [NSNumber numberWithInt:FBSDKGameRequestFilterAppUsers];
+}
+
+-(id)FILTER_APP_NON_USERS
+{
+    return [NSNumber numberWithInt:FBSDKGameRequestFilterAppNonUsers];
+}
 /**
  * JS example:
  *
@@ -324,9 +253,8 @@ NSTimeInterval meRequestTimeout = 180.0;
 {
     __block NSDate *expirationDate;
     TiThreadPerformOnMainThread(^{
-        expirationDate = FBSession.activeSession.accessTokenData.expirationDate;
+        expirationDate = [[FBSDKAccessToken currentAccessToken] expirationDate];
     }, YES);
-    
     return expirationDate;
 }
 
@@ -355,7 +283,7 @@ NSTimeInterval meRequestTimeout = 180.0;
 {
     ENSURE_SINGLE_ARG(args, NSString);
     NSString* event = [args objectAtIndex:0];
-    [FBAppEvents logEvent:event];
+    [FBSDKAppEvents logEvent:event];
 }
 
 /**
@@ -394,17 +322,19 @@ NSTimeInterval meRequestTimeout = 180.0;
 {
     ENSURE_SINGLE_ARG_OR_NIL(args, NSNumber);
     BOOL allowUI = args == nil ? YES : NO;
-
+    NSArray *permissions_ = permissions == nil ? [NSArray array] : permissions;
+    FBSDKLoginManager *loginManager = [[[FBSDKLoginManager alloc] init] autorelease];
     TiThreadPerformOnMainThread(^{
-        NSArray *permissions_ = permissions == nil ? [NSArray array] : permissions;
-        BOOL sessionOpened = [FBSession openActiveSessionWithReadPermissions: allowUI ? permissions_ : FBSession.activeSession.permissions allowLoginUI:allowUI completionHandler:
-                                  ^(FBSession *session,
-                                    FBSessionState state, NSError *error) {
-                                      [self sessionStateChanged:session state:state error:error];
-            }];
-            NSLog(@"[DEBUG] openActiveSessionWithReadPermissions returned: %d", sessionOpened);
-        
-    }, NO);
+        [loginManager logInWithReadPermissions: permissions_ fromViewController:nil handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+            if (error) {
+                DebugLog(@"[ERROR] Process error.");
+            } else if (result.isCancelled) {
+                DebugLog(@"[ERROR] User Cancelled");
+            } else {
+                DebugLog(@"[INFO] Logged in");
+            }
+        }];
+    }, YES);
 }
 
 // We have this function so that you can set up your listeners and permissions whenever you want
@@ -413,21 +343,18 @@ NSTimeInterval meRequestTimeout = 180.0;
 -(void)initialize:(id)args
 {
     ENSURE_SINGLE_ARG_OR_NIL(args, NSNumber);
-    double timeoutInMs = [TiUtils intValue:args def:0];
-    if (timeoutInMs == 0) {
-        meRequestTimeout = 180.0;
-    } else {
-        meRequestTimeout = (double)timeoutInMs / 1000.0;
+    if (args != nil) {
+        DEPRECATED_REMOVED(@"timeout param", @"5.0.0", @"5.0.0");
     }
-    
     TiThreadPerformOnMainThread(^{
+        [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
         NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
-        [nc addObserver:self selector:@selector(activateApp:) name:UIApplicationDidBecomeActiveNotification object:nil];
-        
-        if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
-            // Start with logged-in state, guaranteed no login UX is fired since logged-in
-            //skipMeCall = [FBSession.activeSession.accessTokenData.accessToken isEqualToString:savedToken];
-            [self authorize:NUMBOOL(YES)];
+        [nc addObserver:self selector:@selector(logEvents:) name:UIApplicationDidBecomeActiveNotification object:nil];
+        [nc addObserver:self selector:@selector(accessTokenChanged:) name:FBSDKAccessTokenDidChangeNotification object:nil];
+		[nc addObserver:self selector:@selector(activateApp:) name:UIApplicationDidFinishLaunchingNotification object:nil];
+        [nc addObserver:self selector:@selector(currentProfileChanged:) name:FBSDKProfileDidChangeNotification object:nil];
+		if ([FBSDKAccessToken currentAccessToken] == nil) {
+            [self activateApp];
         } else {
             [self handleRelaunch];
         }
@@ -443,9 +370,10 @@ NSTimeInterval meRequestTimeout = 180.0;
  */
 -(void)logout:(id)args
 {
-    RELEASE_TO_NIL(uid);
     TiThreadPerformOnMainThread(^{
-        [FBSession.activeSession closeAndClearTokenInformation];
+        FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
+        [loginManager logOut];
+        RELEASE_TO_NIL(loginManager)
     }, NO);
 }
 
@@ -456,68 +384,30 @@ NSTimeInterval meRequestTimeout = 180.0;
     ENSURE_SINGLE_ARG(params, NSDictionary);
         
     TiThreadPerformOnMainThread(^{
-        [FBDialogs presentShareDialogWithLink:[NSURL URLWithString:[params objectForKey:@"link"]] name:[params objectForKey:@"name"] caption:[params objectForKey:@"caption"] description:[params objectForKey:@"description"] picture:[NSURL URLWithString:[params objectForKey:@"picture"]] clientState:nil
-                                      handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
-                                          BOOL success = NO;
-                                          BOOL cancelled = NO;
-                                          NSString *errorDescription = @"";
-                                          if (error) {
-                                              errorDescription = [FBErrorUtility userMessageForError:error];
-                                          } else {
-                                              success = YES;
-                                              cancelled = NO;
-                                              if ([results objectForKey:@"didComplete"] && [[results objectForKey:@"completionGesture"] isEqualToString:@"cancel"]) {
-                                                  cancelled = YES;
-                                                  success = NO;
-                                              }
-
-                                          }
-                                          NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                                                        NUMBOOL(cancelled),@"cancelled",
-                                                                        NUMBOOL(success),@"success",
-                                                                        [error description], @"error", nil];
-                                          [self fireEvent:@"shareCompleted" withObject:event];
-                                      }];
+        FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
+        content.contentURL = [NSURL URLWithString:[params objectForKey:@"link"]];
+        content.contentDescription = [params objectForKey:@"description"];
+        if ([params objectForKey:@"name"] != nil) {
+            DEPRECATED_REPLACED(@"facebook.presentShareDialog.name", @"5.0.0", @"facebook.presentShareDialog.title");
+            content.contentTitle = [params objectForKey:@"name"];
+        }
+        else if ([params objectForKey:@"title"] != nil){
+            content.contentTitle = [params objectForKey:@"title"];
+        }
+        if ([params objectForKey:@"caption"] != nil) {
+            DEPRECATED_REMOVED(@"facebook.presentShareDialog.caption", @"5.0.0", @"5.0.0");
+        }
+        content.imageURL = [NSURL URLWithString:[params objectForKey:@"picture"]];
+        [FBSDKShareDialog showFromViewController:nil
+                                     withContent:content
+                                        delegate:self];
     }, NO);
 }
 //presents share dialog using web dialog. Useful for devices with no facebook app installed.
 -(void)presentWebShareDialog:(id)args
 {
-    id params = [args objectAtIndex:0];
-    ENSURE_SINGLE_ARG(params, NSDictionary);
-    TiThreadPerformOnMainThread(^{
-        [FBWebDialogs presentFeedDialogModallyWithSession:FBSession.activeSession
-                                               parameters:params
-                                                  handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
-                                                      BOOL cancelled = NO;
-                                                      BOOL success = NO;
-                                                      NSString *errorDescription = @"";
-                                                      if (error) {
-                                                          errorDescription = [FBErrorUtility userMessageForError:error];
-                                                      } else {
-                                                          if (result == FBWebDialogResultDialogNotCompleted) {
-                                                              cancelled = YES;
-                                                              success = NO;
-                                                          } else {
-                                                              // Handle the publish feed callback
-                                                              NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
-                                                              if (![urlParams valueForKey:@"post_id"]) {
-                                                                  // User cancelled.
-                                                                  cancelled = YES;
-                                                                  success = NO;
-                                                              } else {
-                                                                  cancelled = NO;
-                                                                  success = YES;
-                                                              }
-                                                          }
-                                                      }
-                                                      NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                                                                    NUMBOOL(cancelled),@"cancelled",
-                                                                                    NUMBOOL(success),@"success",
-                                                                                    errorDescription,@"error",nil];
-                                                      [self fireEvent:@"shareCompleted" withObject:event];
-                                                  }];
-    }, NO);
+    DEPRECATED_REPLACED(@"facebook.presentWebShareDialog", @"5.0.0", @"facebook.presentShareDialog");
+    [self presentShareDialog:args];
 }
 
 //presents game request dialog.
@@ -527,67 +417,37 @@ NSTimeInterval meRequestTimeout = 180.0;
     ENSURE_SINGLE_ARG(params, NSDictionary);
     NSString *message = [params objectForKey:@"message"];
     NSString *title = [params objectForKey:@"title"];
-    NSString *to = [params objectForKey:@"to"];
-    id data = [params objectForKey:@"data"];
-    ENSURE_SINGLE_ARG_OR_NIL(data, NSDictionary);
-    NSMutableDictionary *additionalParams = nil;
-    if (data != nil) {
-        additionalParams = [NSMutableDictionary dictionaryWithDictionary:data];
-        if (to != nil) {
-            [additionalParams setObject:to forKey:@"to"];
-        }
+    NSArray *to = [params objectForKey:@"to"];
+    NSArray *recipients = [params objectForKey:@"recipients"];
+    if (to != nil) {
+        DEPRECATED_REPLACED(@"facebook.sendRequestDialog.to", @"5.0.0", @"facebook.sendRequestDialog.recipients");
+        recipients = to;
     }
-    else {
-        if (to != nil) {
-            additionalParams = [NSMutableDictionary dictionaryWithObject:to forKey:@"to"];
-        }
-    }
-
+    NSArray *recipientSuggestions = [params objectForKey:@"recipientSuggestions"];
+    FBSDKGameRequestFilter filters = [TiUtils intValue:[params objectForKey:@"filters"]];
+    NSString *objectID = [params objectForKey:@"objectID"];
+    NSString *data = [params objectForKey:@"data"];
+    FBSDKGameRequestActionType actionType = [TiUtils intValue:[params objectForKey:@"actionType"]];
 
     TiThreadPerformOnMainThread(^{
-        [FBWebDialogs presentRequestsDialogModallyWithSession:FBSession.activeSession
-                                                      message:message title:title parameters:additionalParams
-                                                  handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
-                                                      BOOL cancelled = NO;
-                                                      BOOL success = NO;
-                                                      NSString *errorDescription = @"";
-                                                      NSDictionary *urlParams = nil;
-                                                      if (error) {
-                                                          errorDescription = [FBErrorUtility userMessageForError:error];
-                                                      } else {
-                                                          if (result == FBWebDialogResultDialogNotCompleted) {
-                                                              cancelled = YES;
-                                                              success = NO;
-                                                          } else {
-                                                              // Handle the publish feed callback
-                                                              urlParams = [self parseURLParams:[resultURL query]];
-                                                              if (![urlParams valueForKey:@"request"]) {
-                                                                  // User cancelled.
-                                                                  cancelled = YES;
-                                                                  success = NO;
-                                                              } else {
-                                                                  cancelled = NO;
-                                                                  success = YES;
-                                                              }
-                                                          }
-                                                      }
-                                                      NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                                                                    NUMBOOL(cancelled),@"cancelled",
-                                                                                    NUMBOOL(success),@"success",
-                                                                                    errorDescription,@"error",
-                                                                                    urlParams,@"data",nil];
-                                                      [self fireEvent:@"requestDialogCompleted" withObject:event];
-                                                  }];
+        FBSDKGameRequestContent *gameRequestContent = [[[FBSDKGameRequestContent alloc] init] autorelease];
+        gameRequestContent.message = message;
+        gameRequestContent.recipients = recipients;
+        gameRequestContent.objectID = objectID;
+        gameRequestContent.data = data;
+        gameRequestContent.recipientSuggestions = recipientSuggestions;
+        gameRequestContent.filters = filters;
+        gameRequestContent.actionType = actionType;
+        [FBSDKGameRequestDialog showWithContent:gameRequestContent delegate:self];
     }, NO);
 }
 
 -(void)refreshPermissionsFromServer:(id)args
 {
     TiThreadPerformOnMainThread(^{
-        [FBSession.activeSession refreshPermissionsWithCompletionHandler:
-         ^(FBSession *session, NSError *error) {
+        [FBSDKAccessToken refreshCurrentAccessToken:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
              [self fireEvent:@"tokenUpdated" withObject:nil];
-         }];
+        }];
     }, NO);
 }
 
@@ -613,39 +473,36 @@ NSTimeInterval meRequestTimeout = 180.0;
     id arg1 = [args objectAtIndex:1];
     ENSURE_SINGLE_ARG(arg1, KrollCallback);
     KrollCallback *callback = arg1;
-    
+    FBSDKLoginManager *loginManager = [[[FBSDKLoginManager alloc] init] autorelease];
     TiThreadPerformOnMainThread(^{
-        [FBSession.activeSession requestNewReadPermissions:readPermissions
-                                         completionHandler:^(FBSession *session, NSError *error) {
-                                             bool success = (error == nil);
-                                             bool cancelled = NO;
-                                             NSString * errorString = nil;
-                                             long code = 0;
-                                             if(!success) {
-                                                 code = [error code];
-                                                 if (code == 0) {
-                                                     code = -1;
-                                                 }
-                                                 if (error.fberrorCategory == FBErrorCategoryUserCancelled) {
-                                                     cancelled = YES;
-                                                 } else if (error.fberrorShouldNotifyUser) {
-                                                     errorString = error.fberrorUserMessage;
-                                                 } else {
-                                                     errorString = @"An unexpected error";
-                                                 }
-                                             }
-                                             
-                                             NSNumber * errorCode = [NSNumber numberWithInteger:code];
-                                             NSDictionary * propertiesDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                                                              [NSNumber numberWithBool:success],@"success",
-                                                                              [NSNumber numberWithBool:cancelled],@"cancelled",
-                                                                              errorCode,@"code", errorString,@"error", nil];
-                                             
-                                             KrollEvent * invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:propertiesDict thisObject:self];
-                                             [[callback context] enqueue:invocationEvent];
-                                             [invocationEvent release];
-                                             [propertiesDict release];
-                                         }];
+        [loginManager logInWithReadPermissions: readPermissions fromViewController:nil handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+            bool success = NO;
+            bool cancelled = NO;
+            NSString * errorString = nil;
+            long code = 0;
+            if (error) {
+                code = [error code];
+                errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
+                if (errorString == nil) {
+                    errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+                }
+            }
+            else if (result.isCancelled) {
+                cancelled = YES;
+            } else {
+                success = YES;
+            }
+            NSNumber * errorCode = [NSNumber numberWithInteger:code];
+            NSDictionary * propertiesDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                             [NSNumber numberWithBool:success],@"success",
+                                             [NSNumber numberWithBool:cancelled],@"cancelled",
+                                             errorCode,@"code", errorString,@"error", nil];
+            
+            KrollEvent * invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:propertiesDict thisObject:self];
+            [[callback context] enqueue:invocationEvent];
+            [invocationEvent release];
+            [propertiesDict release];
+        }];
     }, NO);
 }
 
@@ -670,45 +527,42 @@ NSTimeInterval meRequestTimeout = 180.0;
     ENSURE_ARRAY(writePermissions);
     id arg1 = [args objectAtIndex:1];
     ENSURE_SINGLE_ARG(arg1, NSNumber);
-    FBSessionDefaultAudience defaultAudience = [TiUtils intValue:arg1];
+    FBSDKDefaultAudience defaultAudience = [TiUtils intValue:arg1];
     id arg2 = [args objectAtIndex:2];
     ENSURE_SINGLE_ARG(arg2, KrollCallback);
     KrollCallback *callback = arg2;
-    
+    FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
+    loginManager.defaultAudience = defaultAudience;
     TiThreadPerformOnMainThread(^{
-        [FBSession.activeSession requestNewPublishPermissions:writePermissions
-                                              defaultAudience:defaultAudience
-                                            completionHandler:^(FBSession *session, NSError *error) {
-                                                bool success = (error == nil);
-                                                bool cancelled = NO;
-                                                NSString * errorString = nil;
-                                                long code = 0;
-                                                if(!success) {
-                                                    code = [error code];
-                                                    if (code == 0) {
-                                                        code = -1;
-                                                    }
-                                                    if (error.fberrorCategory == FBErrorCategoryUserCancelled) {
-                                                        cancelled = YES;
-                                                    } else if (error.fberrorShouldNotifyUser) {
-                                                        errorString = error.fberrorUserMessage;
-                                                    } else {
-                                                        errorString = @"An unexpected error";
-                                                    }
-                                                }
-                                                
-                                                NSNumber * errorCode = [NSNumber numberWithInteger:code];
-                                                NSDictionary * propertiesDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                                                                 [NSNumber numberWithBool:success],@"success",
-                                                                                 [NSNumber numberWithBool:cancelled],@"cancelled",
-                                                                                 errorCode,@"code", errorString,@"error", nil];
-                                                
-                                                KrollEvent * invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:propertiesDict thisObject:self];
-                                                [[callback context] enqueue:invocationEvent];
-                                                [invocationEvent release];
-                                                [propertiesDict release];
-                                            }];
-    }, NO);
+        [loginManager logInWithPublishPermissions:writePermissions fromViewController:nil handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+            bool success = NO;
+            bool cancelled = NO;
+            NSString * errorString = nil;
+            long code = 0;
+            if (error) {
+                code = [error code];
+                errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
+                if (errorString == nil) {
+                    errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+                }
+            }
+            else if (result.isCancelled) {
+                cancelled = YES;
+            } else {
+                success = YES;
+            }
+            NSNumber * errorCode = [NSNumber numberWithInteger:code];
+            NSDictionary * propertiesDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                             [NSNumber numberWithBool:success],@"success",
+                                             [NSNumber numberWithBool:cancelled],@"cancelled",
+                                             errorCode,@"code", errorString,@"error", nil];
+            
+            KrollEvent * invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:propertiesDict thisObject:self];
+            [[callback context] enqueue:invocationEvent];
+            [invocationEvent release];
+            [propertiesDict release];
+        }];
+    }, YES);
 }
 
 /**
@@ -749,17 +603,9 @@ NSTimeInterval meRequestTimeout = 180.0;
         }
     }
     TiThreadPerformOnMainThread(^{
-        FBRequestConnection *connection = [[[FBRequestConnection alloc] init] autorelease];
-        connection.errorBehavior = FBRequestConnectionErrorBehaviorReconnectSession
-        | FBRequestConnectionErrorBehaviorAlertUser
-        | FBRequestConnectionErrorBehaviorRetry;
-        
-        FBRequest *request = [FBRequest requestWithGraphPath:path
-                                                  parameters:params
-                                                  HTTPMethod:httpMethod];
-        
-        [connection addRequest:request
-             completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        if ([FBSDKAccessToken currentAccessToken]) {
+            [[[FBSDKGraphRequest alloc] initWithGraphPath:path parameters:params HTTPMethod:httpMethod]
+             startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
                  NSDictionary * returnedObject;
                  BOOL success;
                  if (!error) {
@@ -772,35 +618,9 @@ NSTimeInterval meRequestTimeout = 180.0;
                  } else {
                      DebugLog(@"requestWithGraphPath error for path, %@", path);
                      success = NO;
-                     NSString * errorString;
-                     if (error.fberrorShouldNotifyUser) {
-                         errorString = error.fberrorUserMessage;
-                     } else {
-                         switch(error.fberrorCategory) {
-                             case FBErrorCategoryAuthenticationReopenSession:
-                                 // will be handled by authentication error handling
-                                 DebugLog(@"[ERROR] requestWithGraphPath FBErrorCategoryAuthenticationReopenSession");
-                                 errorString = @"authentication error";
-                                 break;
-                             case FBErrorCategoryInvalid:
-                             case FBErrorCategoryServer:
-                             case FBErrorCategoryThrottling:
-                             case FBErrorCategoryFacebookOther:
-                             case FBErrorCategoryRetry:
-                             case FBErrorCategoryUserCancelled:
-                                 errorString = @"Retry";
-                                 break;
-                             case FBErrorCategoryBadRequest:
-                                 errorString = @"Bad request";
-                                 break;
-                             case FBErrorCategoryPermissions:
-                                 errorString = @"Permission error";
-                                 break;
-                             default:
-                                 DebugLog(@"[ERROR] requestWithGraphPath error.description: ", error.description);
-                                 errorString = @"An unexpected error";
-                                 break;
-                         }
+                     NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
+                     if (errorString == nil) {
+                         errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
                      }
                      returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys:
                                        NUMBOOL(success), @"success",
@@ -813,7 +633,7 @@ NSTimeInterval meRequestTimeout = 180.0;
                  [returnedObject release];
                  
              }];
-        [connection start];
+        }
     }, NO);
 }
 
@@ -831,25 +651,26 @@ NSTimeInterval meRequestTimeout = 180.0;
                                   NUMBOOL(success),@"success",
                                   NUMLONG(code),@"code",nil];
     if(error != nil){
-        NSString * errorMessage = @"OTHER:";
-        if (error.fberrorShouldNotifyUser) {
-            if ([[error userInfo][FBErrorLoginFailedReason] isEqualToString:FBErrorLoginFailedReasonSystemDisallowedWithoutErrorValue]) {
-                // Show a different error message
-                errorMessage = @"Go to Settings > Facebook and turn ON ";
-            } else {
-                // If the SDK has a message for the user, surface it.
-                errorMessage = error.fberrorUserMessage;
-            }
-        } else {
-            // For simplicity, this sample treats other errors blindly, but you should
-            // refer to https://developers.facebook.com/docs/technical-guides/iossdk/errors/ for more information.
-            errorMessage = [errorMessage stringByAppendingFormat:@" %@", (NSString *) error];
+        NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
+        if (errorString == nil) {
+            errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
         }
-        [event setObject:errorMessage forKey:@"error"];
+        [event setObject:errorString forKey:@"error"];
     }
     
     if(result != nil){
-        NSString *resultString = [TiUtils jsonStringify:result];
+        FBSDKProfile *profile = (FBSDKProfile*)result;
+        NSDictionary *jsonDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        profile.userID, @"userID",
+                                        profile.firstName, @"firstName",
+                                        profile.middleName == nil ? @"":profile.middleName, @"middleName",
+                                        profile.lastName, @"lastName",
+                                        profile.name, @"name",
+                                        [profile.linkURL absoluteString], @"linkURL",
+                                        nil];
+        
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDictionary options:0 error:&error];
+        NSString *resultString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         [event setObject:resultString forKey:@"data"];
         if (uid != nil){
             [event setObject:uid forKey:@"uid"];
@@ -860,22 +681,106 @@ NSTimeInterval meRequestTimeout = 180.0;
 
 #pragma mark Listeners
 
--(void)addListener:(id<TiFacebookStateListener>)listener
+-(void)logEvents:(NSNotification *)notification
 {
-    if (stateListeners==nil){
-        stateListeners = [[NSMutableArray alloc]init];
-    }
-    [stateListeners addObject:listener];
+    [FBSDKAppEvents activateApp];
 }
 
--(void)removeListener:(id<TiFacebookStateListener>)listener
+-(void)accessTokenChanged:(NSNotification *)notification
 {
-    if (stateListeners!=nil){
-        [stateListeners removeObject:listener];
-        if ([stateListeners count]==0){
-            RELEASE_TO_NIL(stateListeners);
-        }
+    FBSDKAccessToken *token = notification.userInfo[FBSDKAccessTokenChangeNewKey];
+    if (token == nil) {
+        [self fireEvent:@"logout"];
     }
+}
+
+- (void)currentProfileChanged:(NSNotification *)notification
+{
+    FBSDKProfile *profile = notification.userInfo[FBSDKProfileChangeNewKey];
+    if (profile != nil) {
+        uid = [profile userID];
+        [self fireLogin:profile cancelled:NO withError:nil];
+    }
+    else {
+        DebugLog(@"[ERROR] Not logged in");
+        [self fireLogin:nil cancelled:NO withError:nil];
+    }
+}
+
+
+#pragma mark share delegates
+-(void)sharer: (id<FBSDKSharing>)sharer didCompleteWithResults: (NSDictionary *)results
+{
+    BOOL success = YES;
+    BOOL cancelled = NO;
+    NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                  NUMBOOL(cancelled),@"cancelled",
+                                  NUMBOOL(success),@"success",
+                                  @"", @"error", nil];
+    [self fireEvent:@"shareCompleted" withObject:event];
+}
+
+-(void)sharer:(id<FBSDKSharing>)sharer didFailWithError:(NSError *)error
+{
+    BOOL success = NO;
+    BOOL cancelled = NO;
+    NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
+    if (errorString == nil) {
+        errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+    }
+    NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                  NUMBOOL(cancelled),@"cancelled",
+                                  NUMBOOL(success),@"success",
+                                  errorString, @"error", nil];
+    [self fireEvent:@"shareCompleted" withObject:event];
+}
+
+-(void)sharerDidCancel:(id<FBSDKSharing>)sharer
+{
+    BOOL success = NO;
+    BOOL cancelled = YES;
+    NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                  NUMBOOL(cancelled),@"cancelled",
+                                  NUMBOOL(success),@"success",
+                                  @"", @"error", nil];
+    [self fireEvent:@"shareCompleted" withObject:event];
+}
+#pragma game request delegates
+-(void)gameRequestDialog:(FBSDKGameRequestDialog *)gameRequestDialog didCompleteWithResults:(NSDictionary *)results
+{
+    BOOL success = YES;
+    BOOL cancelled = NO;
+    NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                  NUMBOOL(cancelled),@"cancelled",
+                                  NUMBOOL(success),@"success",
+                                  @"", @"error", nil];
+    [self fireEvent:@"requestDialogCompleted" withObject:event];
+}
+
+-(void)gameRequestDialog:(FBSDKGameRequestDialog *)gameRequestDialog didFailWithError:(NSError *)error
+{
+    BOOL success = NO;
+    BOOL cancelled = NO;
+    NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
+    if (errorString == nil) {
+        errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+    }
+    NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                  NUMBOOL(cancelled),@"cancelled",
+                                  NUMBOOL(success),@"success",
+                                  errorString, @"error", nil];
+    [self fireEvent:@"requestDialogCompleted" withObject:event];
+}
+
+-(void)gameRequestDialogDidCancel:(FBSDKGameRequestDialog *)gameRequestDialog
+{
+    BOOL success = NO;
+    BOOL cancelled = YES;
+    NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                  NUMBOOL(cancelled),@"cancelled",
+                                  NUMBOOL(success),@"success",
+                                  @"", @"error", nil];
+    [self fireEvent:@"requestDialogCompleted" withObject:event];
 }
 
 // A function for parsing URL parameters returned by the Feed Dialog.

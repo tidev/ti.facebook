@@ -16,11 +16,10 @@
     [super dealloc];
 }
 
--(FBLikeControl*)like
+-(FBSDKLikeControl*)like
 {
-    if (like == nil)
-    {
-        like = [[FBLikeControl alloc] init];
+    if (like == nil) {
+        like = [[FBSDKLikeControl alloc] init];
         [self addSubview:like];
     }
     return like;
@@ -34,7 +33,7 @@
 -(void)setObjectId_:(id)idString
 {
     ENSURE_SINGLE_ARG(idString, NSString);
-    FBLikeControl *btn = [self like];
+    FBSDKLikeControl *btn = [self like];
     NSString* objectID = [TiUtils stringValue:idString];
     btn.objectID = objectID;
 }
@@ -42,7 +41,7 @@
 -(void)setForegroundColor_:(id)colorVal
 {
     ENSURE_SINGLE_ARG(colorVal, NSObject);
-    FBLikeControl *btn = [self like];
+    FBSDKLikeControl *btn = [self like];
     UIColor *c = [[TiUtils colorValue:colorVal] color];
     btn.foregroundColor = c;
 }
@@ -50,63 +49,56 @@
 -(void)setLikeViewStyle_:(id)styleStr
 {
     ENSURE_SINGLE_ARG(styleStr, NSString);
-    FBLikeControl *btn = [self like];
+    FBSDKLikeControl *btn = [self like];
     NSString* style = [TiUtils stringValue:styleStr];
     if ([style isEqualToString:@"box_count"]) {
-        btn.likeControlStyle = FBLikeControlStyleBoxCount;
+        btn.likeControlStyle = FBSDKLikeControlStyleBoxCount;
     } else if ([style isEqualToString:@"button"]) {
-        btn.likeControlStyle = FBLikeControlStyleButton;
+        DEPRECATED_REMOVED(@"facebook.likeButton.likeViewStyle.button", @"5.0.0", @"5.0.0");
+        btn.likeControlStyle = FBSDKLikeControlStyleStandard;
     } else {
-        btn.likeControlStyle = FBLikeControlStyleStandard;
+        btn.likeControlStyle = FBSDKLikeControlStyleStandard;
     }
 }
 
 -(void)setAuxiliaryViewPosition_:(id)positionStr
 {
     ENSURE_SINGLE_ARG(positionStr, NSString);
-    FBLikeControl *btn = [self like];
+    FBSDKLikeControl *btn = [self like];
     NSString* position = [TiUtils stringValue:positionStr];
     if ([position isEqualToString:@"bottom"]) {
-        btn.likeControlAuxiliaryPosition = FBLikeControlAuxiliaryPositionBottom;
+        btn.likeControlAuxiliaryPosition = FBSDKLikeControlAuxiliaryPositionBottom;
     } else if ([position isEqualToString:@"inline"]) {
-        btn.likeControlAuxiliaryPosition = FBLikeControlAuxiliaryPositionInline;
+        btn.likeControlAuxiliaryPosition = FBSDKLikeControlAuxiliaryPositionInline;
     } else if ([position isEqualToString:@"top"]) {
-        btn.likeControlAuxiliaryPosition = FBLikeControlAuxiliaryPositionTop;
+        btn.likeControlAuxiliaryPosition = FBSDKLikeControlAuxiliaryPositionTop;
     }
 }
 
 -(void)setHorizontalAlignment_:(id)alignStr
 {
     ENSURE_SINGLE_ARG(alignStr, NSString);
-    FBLikeControl *btn = [self like];
+    FBSDKLikeControl *btn = [self like];
     NSString* align = [TiUtils stringValue:alignStr];
     if ([align isEqualToString:@"center"]) {
-        btn.likeControlHorizontalAlignment = FBLikeControlHorizontalAlignmentCenter;
+        btn.likeControlHorizontalAlignment = FBSDKLikeControlHorizontalAlignmentCenter;
     } else if ([align isEqualToString:@"left"]) {
-        btn.likeControlHorizontalAlignment = FBLikeControlHorizontalAlignmentLeft;
+        btn.likeControlHorizontalAlignment = FBSDKLikeControlHorizontalAlignmentLeft;
     } else if ([align isEqualToString:@"right"]) {
-        btn.likeControlHorizontalAlignment = FBLikeControlHorizontalAlignmentRight;
+        btn.likeControlHorizontalAlignment = FBSDKLikeControlHorizontalAlignmentRight;
     }
 }
 
 -(void)setObjectType_:(id)typeStr
 {
     ENSURE_SINGLE_ARG(typeStr, NSString);
-    FBLikeControl *btn = [self like];
-    NSString* oType = [TiUtils stringValue:typeStr];
-    if ([oType isEqualToString:@"page"]) {
-        btn.objectType = FBLikeControlObjectTypePage;
-    } else if ([oType isEqualToString:@"openGraphObject"]) {
-        btn.objectType = FBLikeControlObjectTypeOpenGraphObject;
-    } else {
-        btn.objectType = FBLikeControlObjectTypeUnknown;
-    }
+    DEPRECATED_REMOVED(@"facebook.likeButton.objectType", @"5.0.0", @"5.0.0");
 }
 
 -(void)setSoundEnabled_:(id)sound
 {
     ENSURE_SINGLE_ARG(sound, NSNumber);
-    FBLikeControl *btn = [self like];
+    FBSDKLikeControl *btn = [self like];
     btn.soundEnabled = [TiUtils boolValue:sound];
 }
 
