@@ -11,24 +11,17 @@
  */
 
 #import "TiModule.h"
-#import <FacebookSDK/FacebookSDK.h>
 #import <Social/Social.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
 
-@protocol TiFacebookStateListener
-@required
--(void)login;
--(void)logout;
-@end
-
-@interface FacebookModule : TiModule
+@interface FacebookModule : TiModule <FBSDKSharingDelegate, FBSDKGameRequestDialogDelegate>
 {
     NSString *uid;
     NSArray *permissions;
-    NSMutableArray *stateListeners;
+//    FBSDKLoginManager *loginManager;
 }
-
--(void)addListener:(id<TiFacebookStateListener>)listener;
--(void)removeListener:(id<TiFacebookStateListener>)listener;
 
 -(void)authorize:(id)args;
 -(void)logout:(id)args;
