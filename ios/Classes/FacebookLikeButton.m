@@ -32,8 +32,7 @@
 
 -(void)setObjectId_:(id)idString
 {
-    DEPRECATED_REPLACED(@"facebook.likeButton.objectId", @"5.0.0", @"facebook.likeButton.objectId")
-    [self setObjectID_:idString];
+    DEPRECATED_REPLACED_REMOVED(@"Facebook.likeButton.objectId", @"5.0.0", @"5.0.0", @"Titanium.Facebook.likeButton.objectID");
 }
 
 -(void)setObjectID_:(id)idString
@@ -60,7 +59,7 @@
     if ([style isEqualToString:@"box_count"]) {
         btn.likeControlStyle = FBSDKLikeControlStyleBoxCount;
     } else if ([style isEqualToString:@"button"]) {
-        DEPRECATED_REMOVED(@"facebook.likeButton.likeViewStyle.button", @"5.0.0", @"5.0.0");
+        DEPRECATED_REMOVED(@"Facebook.likeButton.likeViewStyle.button", @"5.0.0", @"5.0.0");
         btn.likeControlStyle = FBSDKLikeControlStyleStandard;
     } else {
         btn.likeControlStyle = FBSDKLikeControlStyleStandard;
@@ -98,7 +97,7 @@
 -(void)setObjectType_:(id)typeStr
 {
     ENSURE_SINGLE_ARG(typeStr, NSString);
-    DEPRECATED_REMOVED(@"facebook.likeButton.objectType", @"5.0.0", @"5.0.0");
+    DEPRECATED_REMOVED(@"Facebook.likeButton.objectType", @"5.0.0", @"5.0.0");
 }
 
 -(void)setSoundEnabled_:(id)sound

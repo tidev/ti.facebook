@@ -148,8 +148,8 @@ NSDictionary *launchOptions = nil;
 //TODO
 -(id)canPresentShareDialog
 {
-    DEPRECATED_REMOVED(@"facebook.canPresentShareDialog", @"5.0.0", @"5.0.0");
-    return NUMBOOL(YES);
+    DEPRECATED_REMOVED(@"Facebook.canPresentShareDialog", @"5.0.0", @"5.0.0");
+    return NULL;
 }
 
 /**
@@ -188,7 +188,7 @@ NSDictionary *launchOptions = nil;
 //deprecated and removed
 -(id)AUDIENCE_NONE
 {
-    DEPRECATED_REMOVED(@"facebook.AUDIENCE_NONE",@"5.0.0",@"5.0.0")
+    DEPRECATED_REMOVED(@"Facebook.AUDIENCE_NONE",@"5.0.0",@"5.0.0")
     return NULL;
 }
 
@@ -327,11 +327,13 @@ NSDictionary *launchOptions = nil;
     TiThreadPerformOnMainThread(^{
         [loginManager logInWithReadPermissions: permissions_ fromViewController:nil handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
             if (error) {
-                DebugLog(@"[ERROR] Process error.");
+                //DebugLog(@"[ERROR] Process error.");
+                [self fireLogin:nil cancelled:NO withError:error];
             } else if (result.isCancelled) {
-                DebugLog(@"[ERROR] User Cancelled");
+                //DebugLog(@"[ERROR] User cancelled");
+                [self fireLogin:nil cancelled:YES withError:nil];
             } else {
-                DebugLog(@"[INFO] Logged in");
+                //DebugLog(@"[INFO] Logged in");
             }
         }];
     }, YES);
@@ -344,7 +346,7 @@ NSDictionary *launchOptions = nil;
 {
     ENSURE_SINGLE_ARG_OR_NIL(args, NSNumber);
     if (args != nil) {
-        DEPRECATED_REMOVED(@"timeout param", @"5.0.0", @"5.0.0");
+        DEPRECATED_REMOVED(@"Facebook.initialize.timeout", @"5.0.0", @"5.0.0");
     }
     TiThreadPerformOnMainThread(^{
         [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
@@ -388,14 +390,13 @@ NSDictionary *launchOptions = nil;
         content.contentURL = [NSURL URLWithString:[params objectForKey:@"link"]];
         content.contentDescription = [params objectForKey:@"description"];
         if ([params objectForKey:@"name"] != nil) {
-            DEPRECATED_REPLACED(@"facebook.presentShareDialog.name", @"5.0.0", @"facebook.presentShareDialog.title");
-            content.contentTitle = [params objectForKey:@"name"];
+            DEPRECATED_REPLACED_REMOVED(@"Facebook.presentShareDialog.name", @"5.0.0", @"5.0.0", @"Titanium.Facebook.presentShareDialog.title");
         }
-        else if ([params objectForKey:@"title"] != nil){
+        if ([params objectForKey:@"title"] != nil){
             content.contentTitle = [params objectForKey:@"title"];
         }
         if ([params objectForKey:@"caption"] != nil) {
-            DEPRECATED_REMOVED(@"facebook.presentShareDialog.caption", @"5.0.0", @"5.0.0");
+            DEPRECATED_REMOVED(@"Facebook.presentShareDialog.caption", @"5.0.0", @"5.0.0");
         }
         content.imageURL = [NSURL URLWithString:[params objectForKey:@"picture"]];
         [FBSDKShareDialog showFromViewController:nil
@@ -406,8 +407,7 @@ NSDictionary *launchOptions = nil;
 //presents share dialog using web dialog. Useful for devices with no facebook app installed.
 -(void)presentWebShareDialog:(id)args
 {
-    DEPRECATED_REPLACED(@"facebook.presentWebShareDialog", @"5.0.0", @"facebook.presentShareDialog");
-    [self presentShareDialog:args];
+    DEPRECATED_REPLACED_REMOVED(@"Facebook.presentWebShareDialog", @"5.0.0", @"5.0.0", @"Titanium.Facebook.presentShareDialog");
 }
 
 //presents game request dialog.
@@ -420,8 +420,7 @@ NSDictionary *launchOptions = nil;
     NSArray *to = [params objectForKey:@"to"];
     NSArray *recipients = [params objectForKey:@"recipients"];
     if (to != nil) {
-        DEPRECATED_REPLACED(@"facebook.sendRequestDialog.to", @"5.0.0", @"facebook.sendRequestDialog.recipients");
-        recipients = to;
+        DEPRECATED_REPLACED_REMOVED(@"Facebook.sendRequestDialog.to", @"5.0.0", @"5.0.0", @"Titanium.Facebook.sendRequestDialog.recipients");
     }
     NSArray *recipientSuggestions = [params objectForKey:@"recipientSuggestions"];
     FBSDKGameRequestFilter filters = [TiUtils intValue:[params objectForKey:@"filters"]];
@@ -616,7 +615,7 @@ NSDictionary *launchOptions = nil;
                                        resultString,@"result", NUMBOOL(success), @"success",
                                        path, @"path",nil];
                  } else {
-                     DebugLog(@"requestWithGraphPath error for path, %@", path);
+                     //DebugLog(@"requestWithGraphPath error for path, %@", path);
                      success = NO;
                      NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
                      if (errorString == nil) {
@@ -700,10 +699,6 @@ NSDictionary *launchOptions = nil;
     if (profile != nil) {
         uid = [profile userID];
         [self fireLogin:profile cancelled:NO withError:nil];
-    }
-    else {
-        DebugLog(@"[ERROR] Not logged in");
-        [self fireLogin:nil cancelled:NO withError:nil];
     }
 }
 
