@@ -93,7 +93,7 @@ description: |
 
              var fb = require('facebook');
              fb.permissions = [FACEBOOK_APP_PERMISSIONS];
-             fb.initialize(1000);
+             fb.initialize();
              fb.authorize();
 
     ### Additional iOS Setup Steps
@@ -525,6 +525,8 @@ methods:
     description: |
         Be sure to set your [login](Modules.Facebook.login) and [logout](Modules.Facebook.logout)
         event listeners before calling `initialize`.
+    deprecated:
+        since: 5.0.0
     parameters:
       - name: timeout
         summary: Sets initialize timeout in milliseconds.
