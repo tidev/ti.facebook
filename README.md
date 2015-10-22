@@ -46,6 +46,46 @@ Also make sure you have a URL Scheme in tiapp.xml that looks like fb123456789101
     </dict>
 </array>
 ```
+
+To define a url scheme suffix for multiple apps sharing the same facebook app ID, simply add the suffix (in lower case and must start with a letter) to the relevant string under the CFBundleURLSchemes key. In this example, it will look like fb134793934930foo if you are adding the suffix foo. This will also require additional configurations in the facebook dashboard, see https://developers.facebook.com/docs/ios/troubleshooting#sharedappid for details.
+
+To enable the use of Facebook dialogs (e.g., Login, Share), you also need to include the following key and values in tiapp.xml to handle the switching in and out of your app:
+```xml
+<key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>fbapi</string>
+        <string>fb-messenger-api</string>
+        <string>fbauth2</string>
+        <string>fbshareextension</string>
+    </array>
+```
+
+For iOS9 and titanium 5.0.0.GA and above, App Transport Security is disabled by default.
+If you choose to enable it, you have to set the following keys and values in tiapp.xml:
+```xml
+<key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSExceptionDomains</key>
+            <dict>
+                <key>facebook.com</key>
+                    <dict>
+                        <key>NSIncludesSubdomains</key> <true/>        
+                        <key>NSExceptionRequiresForwardSecrecy</key> <false/>
+                    </dict>
+                <key>fbcdn.net</key>
+                    <dict>
+                        <key>NSIncludesSubdomains</key> <true/>
+                        <key>NSExceptionRequiresForwardSecrecy</key>  <false/>
+                    </dict>
+                <key>akamaihd.net</key>
+                    <dict>
+                        <key>NSIncludesSubdomains</key> <true/>
+                        <key>NSExceptionRequiresForwardSecrecy</key> <false/>
+                    </dict>
+            </dict>
+    </dict>
+```
+
 On the android platform, in tiapp.xml or AndroidManifest.xml you must declare the following inside the \<application\> node 
 ```xml
 <activity android:name="com.facebook.LoginActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:label="YourAppName"/>
@@ -195,23 +235,12 @@ To share more information, example:
 
 ```javascript
     var fb = require('facebook');
-    if(fb.getCanPresentShareDialog()) { //checks to see if facebook app installed
-        fb.presentShareDialog({
-            link: 'https://appcelerator.com/',
-            name: 'great product',
-            description: 'Titanium is a great product',
-            caption: 'it rocks too',
-            picture: 'http://www.appcelerator.com/wp-content/uploads/scale_triangle1.png'
-        });
-    } else {
-        fb.presentWebShareDialog({ //
-            link: 'https://appcelerator.com/',
-            name: 'great product',
-            description: 'Titanium is a great product',
-            caption: 'it rocks too',
-            picture: 'http://www.appcelerator.com/wp-content/uploads/scale_triangle1.png'
-        });
-    }
+    fb.presentShareDialog({
+        link: 'https://appcelerator.com/',
+        title: 'great product',
+        description: 'Titanium is a great product',
+        picture: 'http://www.appcelerator.com/wp-content/uploads/scale_triangle1.png'
+    });
 ```
 
 Send Requests Dialog
@@ -225,7 +254,7 @@ See official Facebook Dialogs documentation for more details.
     fb.presentSendRequestDialog({
         message: 'Go to https://appcelerator.com/',
         title: 'Invitation to Appcelerator',
-        to: '123456789, 123456788',
+        recipients: ['123456789', '123456788'],
         data: {
             badge_of_awesomeness: '1',
             social_karma: '5'
@@ -245,7 +274,6 @@ var likeButton = fb.createLikeButton({
     likeViewStyle: 'box_count', // standard, button, box_count - see FB docs
     auxiliaryViewPosition: 'inline', // bottom, inline, top - see FB docs
     horizontalAlignment: 'left', // center, left, right - see FB docs,
-    objectType: 'page', // iOS only, 'page', 'openGraphObject', or 'unknown' - see FB docs
     soundEnabled: true // boolean, iOS only
 });
 win.add(likeButton);
@@ -253,7 +281,7 @@ win.add(likeButton);
 
 Notes
 ------------
-* Note that the FacebookSDK.framework directory is the prebuilt Facebook SDK directly downloaded from Facebook, zero modifications. 
+* Note that the FBSDKCoreKit.framework, FBSDKLoginKit.framework, FBSDKShareKit.framework directory is the prebuilt Facebook SDK directly downloaded from Facebook, zero modifications. 
 * Facebook is moving away from the native iOS login, and towards login through the Facebook app. The default behavior of this module is the same as in the Facebook SDK: app login with a fallback to webview. The advantages of the app login are: user control over individual permissions, and a uniform login experience over iOS, Android, and web.
 * AppEvents are automatically logged. Check out the app Insights on Facebook. We can also log custom events for Insights.
 * Choose to use LogInButton, rather than a customized UI, since it's directly from facebook and it's easier in maintaining facebook sessions.

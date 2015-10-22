@@ -7,7 +7,7 @@ description: |
 
     By default, the Like button displays a button with a social sentence ('x number of users like y')
     next to it.  To change the Like button style, set the
-    <Modules.Facebook.LikeButton.likeViewButton> property.
+    <Modules.Facebook.LikeButton.likeViewStyle> property.
 
     The Like button does not require a click event handler or any listeners.
     Click events on the button are automatically handled by the Facebook module.
@@ -48,8 +48,7 @@ examples:
                 top: 230,
                 height: "50%", // Note: on iOS setting Ti.UI.SIZE dimensions prevents the button from being clicked
                 width: "50%",
-                objectId: "https://www.facebook.com/appcelerator",
-                objectType: 'page', // iOS only
+                objectID: "https://www.facebook.com/appcelerator",
                 foregroundColor: "white",
                 likeViewStyle: 'box_count',
                 auxiliaryViewPosition: 'inline',
@@ -98,13 +97,13 @@ properties:
     type: String
     default: left
 
-  - name: likeViewButton
+  - name: likeViewStyle
     summary: Style of the button.
     description: |
         Set to one of the following values:
 
           * `box_count`: Button with a total like count box.
-          * `button`: Button without social sentence or count box.
+          * `button`: Button without social sentence or count box (Deprecated and removed in 5.0.0).
           * `standard`: Button with the social sentence ('x number of users like y').
     type: String
     default: standard
@@ -115,6 +114,17 @@ properties:
     description: |
         This property must be set before rendering the button.
     type: String
+    deprecated:
+        since: 5.0.0
+        removed: 5.0.0
+
+  - name: objectID
+    summary: |
+        Page URL or Open Graph object ID to like.
+    description: |
+        This property must be set before rendering the button.
+    type: String
+    since: 5.0.0
 
   - name: objectType
     summary: |
@@ -127,6 +137,9 @@ properties:
           * `unknown`: Unknown object. The Facebook server will try to query for the object.
     platforms: [iphone,ipad]
     type: String
+    deprecated:
+        since: "5.0.0"
+        removed: "5.0.0"
 
   - name: soundEnabled
     summary: |
