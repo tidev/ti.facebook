@@ -1,5 +1,7 @@
 # Change Log
 <pre>
+v5.0.0 Updated to support Facebook 4.7.0 SDK [TIMOB-19577]
+
 v4.0.5 fixed presentSendRequestDialog with to and title params [MOD-2126]
 
 v4.0.4 fixed photo posting for requestWithGraphPath [TIMOB-18916]

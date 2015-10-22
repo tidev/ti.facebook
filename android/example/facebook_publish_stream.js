@@ -188,7 +188,7 @@ exports.window = function(value){
 		    top: 230,
 		    height: "50%", // Note: on iOS setting Ti.UI.SIZE dimensions prevented the button click
 		    width: "50%",
-		    objectId: "https://www.facebook.com/appcelerator", // URL or Facebook ID
+		    objectID: "https://www.facebook.com/appcelerator", // URL or Facebook ID
 		    foregroundColor: "white", // A color in Titanium format - see Facebook docs
 		    likeViewStyle: 'box_count', // standard, button, box_count - see FB docs
 		    auxiliaryViewPosition: 'inline', // bottom, inline, top - see FB docs
