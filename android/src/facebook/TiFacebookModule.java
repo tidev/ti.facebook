@@ -61,7 +61,6 @@ import android.os.Looper;
 public class TiFacebookModule extends KrollModule implements OnActivityResultEvent 
 {
 
-	// Standard Debugging variables
 	private static final String TAG = "TiFacebookModule";
 	public static final String EVENT_LOGIN = "login";
 	public static final String EVENT_LOGOUT = "logout";
@@ -221,8 +220,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 						KrollDict data = new KrollDict();
 						if (err != null) {
 							String errorString = handleError(err);
-							Log.e(TAG, "requestWithGraphPath callback error");
-							Log.e(TAG, "error message: " + err.getErrorMessage());
+							Log.e(TAG, "requestWithGraphPath callback error: " + err.getErrorMessage());
 							data.put(PROPERTY_ERROR, errorString);
 							callback.callAsync(getKrollObject(), data);
 							return;
@@ -338,13 +336,13 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	        @Override
 	        public void onSuccess(LoginResult loginResult) {
 				if (permissionCallback != null) {
-					data.put("success", true);
+					data.put(PROPERTY_SUCCESS, true);
 					permissionCallback.callAsync(getKrollObject(), data);
 					permissionCallback = null;
 					return;
 				}
-				data.put("success", true);
-				data.put("cancelled", false);
+				data.put(PROPERTY_SUCCESS, true);
+				data.put(PROPERTY_CANCELLED, false);
 				AccessToken accessToken = AccessToken.getCurrentAccessToken();
 				makeMeRequest(accessToken);
 	        }
@@ -352,8 +350,8 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	        @Override
 	        public void onCancel() {
 				Log.d(TAG, "FacebookCallback cancelled");
-				data.put("cancelled", true);
-				data.put("success", false);
+				data.put(PROPERTY_CANCELLED, true);
+				data.put(PROPERTY_SUCCESS, false);
 				fireEvent(TiFacebookModule.EVENT_LOGIN, data);
 				if (permissionCallback != null) {
 					permissionCallback.callAsync(getKrollObject(), data);
@@ -364,9 +362,9 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	        @Override
 	        public void onError(FacebookException exception) {
 				Log.e(TAG, "FacebookCallback error: " + exception.getMessage());
-				data.put("error", exception.getMessage());
-				data.put("success", false);
-				data.put("cancelled", false);
+				data.put(PROPERTY_ERROR, exception.getMessage());
+				data.put(PROPERTY_SUCCESS, false);
+				data.put(PROPERTY_CANCELLED, false);
 				fireEvent(TiFacebookModule.EVENT_LOGIN, data);
 				if (permissionCallback != null) {
 					permissionCallback.callAsync(getKrollObject(), data);

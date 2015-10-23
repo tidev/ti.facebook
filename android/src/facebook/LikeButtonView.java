@@ -78,7 +78,7 @@ public class LikeButtonView extends TiUIView
 		super.processProperties(props);
 		Log.d(TAG,"[VIEW LIFECYCLE EVENT] processProperties " + props);
 		if (props.containsKey("objectId")) {
-			likeView.setObjectIdAndType(props.getString("objectId"),LikeView.ObjectType.PAGE);
+			likeView.setObjectIdAndType(props.getString("objectID"),LikeView.ObjectType.PAGE);
 		}
 		if (props.containsKey("likeViewStyle")) {
 			String styleName = props.getString("likeViewStyle");
