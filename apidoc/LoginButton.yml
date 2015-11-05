@@ -95,6 +95,7 @@ properties:
   - name: sessionLoginBehavior
     summary: Login behavior for the session.
     since: 4.0.0
+    removed: 5.0.0
     platforms: [android]
     type: Number
     default: Modules.Facebook.SSO_WITH_FALLBACK

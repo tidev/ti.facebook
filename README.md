@@ -12,7 +12,7 @@ The Facebook module is used for connecting your application with Facebook. This 
 
 Getting Started
 ---------------
-Note that this module is only available for Release 4.0.0 and later, and is included with the Titanium SDK. You do not need to download or unpack it.
+Note that the min SDK for this module is 5.0.0.GA and later. You do not need to download or unpack it.
 Edit the modules section of your tiapp.xml file to include this module:
 ```xml
 <modules>
@@ -89,6 +89,7 @@ If you choose to enable it, you have to set the following keys and values in tia
 On the android platform, in tiapp.xml or AndroidManifest.xml you must declare the following inside the \<application\> node 
 ```xml
 <activity android:name="com.facebook.LoginActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:label="YourAppName"/>
+<activity android:name="com.facebook.FacebookActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:label="YourAppName" android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" />
 ```
 You must also reference the string containing your Facebook app ID, inside the \<application\> node as well: 
 ```xml
@@ -99,6 +100,21 @@ The app id goes into the the file /platform/android/res/values/strings.xml, wher
 <resources><string name="app_id">1234567890123456</string></resources>
 ```
 where the number is of course the app ID. The app ID is not set programmatically.
+
+Android Key Hash for Facebook developer profile
+-----------------------------------------------
+
+Facebook requires you to add the Key Hash of the Android app in order for you to use the module. Steps to get the Key Hash as follows. Alternatively, if you do not have the correct Key Hash on the Android App, the App will give an error message when you login with the Key Hash of the App which you can then copy.
+
+If you are using Titanium SDK 5.0.2.GA, use the path as follows.
+On OS X, run:
+```
+keytool -exportcert -alias androiddebugkey -keystore ~/Library/Application\ Support/Titanium/mobilesdk/osx/5.0.2.GA/dev_keystore | openssl sha1 -binary | openssl base64
+```
+
+You would also require, to fill up the `Google Play Package Name` which is the Application ID and the `Class Name` which is the Application ID followed by the Application Name concatenated with the word `Activity`. Example, an App called `Kitchensink` with Application ID of `com.appcelerator.kitchensink` will have the Class Name as `com.appcelerator.kitchensink.KitchensinkActivity`. Alternatively, you can check the Class Name in `/build/android/AndroidManifest.xml` which is generated when you build the project. The launcher activity is the Class Name of the Application.
+
+For more info, please see https://developers.facebook.com/docs/android/getting-started
 
 Proxy required per Android activity
 -----------------------------------

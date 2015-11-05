@@ -1,14 +1,18 @@
 # Change Log
 <pre>
+v5.0.0 Updated Facebook API to 4.7 in iOS, that supports iOS9 [TIMOB-19383]
+	   Updated Facebook API to 4.7.0 in Android [TIMOB-19577]
+
 v4.0.5 fixed presentSendRequestDialog with to and title params [MOD-2126]
 
 v4.0.4 fixed photo posting for requestWithGraphPath [TIMOB-18916]
-       presentWebShareDialog arguments do not work as documented [MOD-2122]
-       bumped android version for parity with iOS [TIMOB-18916]
 
 v4.0.3 changed minsdk to 4.0.0 [mod-2119]
 
-v4.0.2 Fixed `requestNewReadPermissions` and the `LikeButton` in Android [MOD-2105], Exposed data returned on presentSendRequestDialog [TIMOB-18712]
+v4.0.2 Updated Facebook SDK from 3.21.1 to 3.23.1
+       Exposed data returned on presentSendRequestDialog
+       Bumped iOS module version to be same as android
+	   Fixed `requestNewReadPermissions` and the `LikeButton` in Android [MOD-2105]
 
 v4.0.1 Changing sessionDefaultAudence to audience in Android [MOD-2107]
 

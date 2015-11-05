@@ -17,8 +17,7 @@ import android.app.Activity;
 @Kroll.proxy(creatableInModule = TiFacebookModule.class, propertyAccessors={
 	"audience",
 	"publishPermissions",
-	"readPermissions",
-	"sessionLoginBehavior"
+	"readPermissions"
  })
 public class LoginButtonProxy extends TiViewProxy {
 	// Standard Debugging variables
