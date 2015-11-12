@@ -171,10 +171,10 @@ def build_module(manifest,config):
 	from tools import ensure_dev_path
 	ensure_dev_path()
 
-	rc = os.system("xcodebuild -sdk iphoneos -configuration Release")
+	rc = os.system("xcodebuild -sdk iphoneos -configuration Release OTHER_CFLAGS=\"-fembed-bitcode\" CLANG_ENABLE_MODULE_DEBUGGING=NO GCC_PRECOMPILE_PREFIX_HEADER=NO DEBUG_INFORMATION_FORMAT=\"DWARF with dSYM\"")
 	if rc != 0:
 		die("xcodebuild failed")
-	rc = os.system("xcodebuild -sdk iphonesimulator -configuration Release")
+	rc = os.system("xcodebuild -sdk iphonesimulator -configuration Release OTHER_CFLAGS=\"-fembed-bitcode\" CLANG_ENABLE_MODULE_DEBUGGING=NO GCC_PRECOMPILE_PREFIX_HEADER=NO DEBUG_INFORMATION_FORMAT=\"DWARF with dSYM\"")
 	if rc != 0:
 		die("xcodebuild failed")
     # build the merged library using lipo

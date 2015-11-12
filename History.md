@@ -1,3 +1,7 @@
+#### 5.0.0
+- Updated Facebook API to 4.7 in iOS, that supports iOS9 [TIMOB-19383]
+- Updated Facebook API to 4.7.0 in Android [TIMOB-19577]
+
 #### 4.0.5
 - fixed presentSendRequestDialog with to and title params [MOD-2126]
 

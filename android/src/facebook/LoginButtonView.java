@@ -13,37 +13,34 @@ import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.titanium.proxy.TiViewProxy;
 import org.appcelerator.titanium.util.TiConvert;
-import org.appcelerator.titanium.util.TiRHelper;
-import org.appcelerator.titanium.util.TiRHelper.ResourceNotFoundException;
 import org.appcelerator.titanium.view.TiUIView;
 
-import com.facebook.SessionDefaultAudience;
-import com.facebook.SessionLoginBehavior;
-import com.facebook.widget.LoginButton;
+import android.app.Activity;
+
+import com.facebook.CallbackManager;
+import com.facebook.login.DefaultAudience;
+import com.facebook.login.widget.LoginButton;
+
 
 public class LoginButtonView extends TiUIView {
 
 	private static final String TAG = "LoginButtonView";
 	private LoginButton loginButton;
-	
+	CallbackManager callbackManager;
+	private TiFacebookModule module;
+
 	public LoginButtonView(TiViewProxy proxy) {
 		super(proxy);
-
+		module = TiFacebookModule.getFacebookModule();
+		final Activity mActivity = proxy.getActivity();
 		Log.d(TAG, "[VIEW LIFECYCLE EVENT] view");
-		
-		int fbLoginButtonId;
-		try {
-			fbLoginButtonId = TiRHelper.getResource("layout.ti_fb_login_button");
-		} catch (ResourceNotFoundException e) {
-			Log.e(TAG, "XML resources could not be found!!!");
-			return;
-		}
-		loginButton = (LoginButton) proxy.getActivity().getLayoutInflater().inflate(fbLoginButtonId, null);
-
-		// Set the view as the native view. You must set the native view
-		// for your view to be rendered correctly.
+		loginButton = new LoginButton(mActivity);
+		// Callback registration
+		callbackManager = module.getCallbackManager();
+	    loginButton.registerCallback(callbackManager, module.getFacebookCallback());  
 		setNativeView(loginButton);
 	}
+
 		
 	@Override
 	public void processProperties(KrollDict props) 
@@ -63,41 +60,25 @@ public class LoginButtonView extends TiUIView {
 				String[] readPermissions = TiConvert.toStringArray((Object[]) value);
 				loginButton.setReadPermissions(Arrays.asList(readPermissions));
 			}
-		}
+		} 
 		if (props.containsKey("audience")) {
 			Object value = props.get("audience");
 			int audience = TiConvert.toInt(value, TiFacebookModule.AUDIENCE_NONE);
 			switch(audience){
 				case TiFacebookModule.AUDIENCE_NONE:
-					loginButton.setDefaultAudience(SessionDefaultAudience.NONE);
+					loginButton.setDefaultAudience(DefaultAudience.NONE);
 					break;
 				case TiFacebookModule.AUDIENCE_ONLY_ME:
-					loginButton.setDefaultAudience(SessionDefaultAudience.ONLY_ME);
+					loginButton.setDefaultAudience(DefaultAudience.ONLY_ME);
 					break;
 				case TiFacebookModule.AUDIENCE_FRIENDS:
-					loginButton.setDefaultAudience(SessionDefaultAudience.FRIENDS);
+					loginButton.setDefaultAudience(DefaultAudience.FRIENDS);
 					break;
 				case TiFacebookModule.AUDIENCE_EVERYONE:
-					loginButton.setDefaultAudience(SessionDefaultAudience.EVERYONE);
+					loginButton.setDefaultAudience(DefaultAudience.EVERYONE);
 					break;
 			}
 		}
-		if (props.containsKey("sessionLoginBehavior")) {
-			Object value = props.get("sessionLoginBehavior");
-			int loginBehavior = TiConvert.toInt(value, TiFacebookModule.SSO_WITH_FALLBACK);
-			switch(loginBehavior){
-				case TiFacebookModule.SSO_WITH_FALLBACK:
-					loginButton.setLoginBehavior(SessionLoginBehavior.SSO_WITH_FALLBACK);
-					break;
-				case TiFacebookModule.SSO_ONLY:
-					loginButton.setLoginBehavior(SessionLoginBehavior.SSO_ONLY);
-					break;
-				case TiFacebookModule.SUPPRESS_SSO:
-					loginButton.setLoginBehavior(SessionLoginBehavior.SUPPRESS_SSO);
-					break;
-			}
-		}
-
 	}
 	
 	@Override
@@ -115,33 +96,21 @@ public class LoginButtonView extends TiUIView {
 				String[] readPermissions = TiConvert.toStringArray((Object[]) newValue);				
 				loginButton.setReadPermissions(Arrays.asList(readPermissions));
 			}
+			
 		} else if (key.equals("audience")) {
 			int audience = TiConvert.toInt(newValue, TiFacebookModule.AUDIENCE_NONE);
-			switch(audience){
+			switch (audience) {
 				case TiFacebookModule.AUDIENCE_NONE:
-					loginButton.setDefaultAudience(SessionDefaultAudience.NONE);
+					loginButton.setDefaultAudience(DefaultAudience.NONE);
 					break;
 				case TiFacebookModule.AUDIENCE_ONLY_ME:
-					loginButton.setDefaultAudience(SessionDefaultAudience.ONLY_ME);
+					loginButton.setDefaultAudience(DefaultAudience.ONLY_ME);
 					break;
 				case TiFacebookModule.AUDIENCE_FRIENDS:
-					loginButton.setDefaultAudience(SessionDefaultAudience.FRIENDS);
+					loginButton.setDefaultAudience(DefaultAudience.FRIENDS);
 					break;
 				case TiFacebookModule.AUDIENCE_EVERYONE:
-					loginButton.setDefaultAudience(SessionDefaultAudience.EVERYONE);
-					break;
-			}
-		} else if (key.equals("sessionLoginBehavior")) {
-			int loginBehavior = TiConvert.toInt(newValue, TiFacebookModule.SSO_WITH_FALLBACK);
-			switch(loginBehavior){
-				case TiFacebookModule.SSO_WITH_FALLBACK:
-					loginButton.setLoginBehavior(SessionLoginBehavior.SSO_WITH_FALLBACK);
-					break;
-				case TiFacebookModule.SSO_ONLY:
-					loginButton.setLoginBehavior(SessionLoginBehavior.SSO_ONLY);
-					break;
-				case TiFacebookModule.SUPPRESS_SSO:
-					loginButton.setLoginBehavior(SessionLoginBehavior.SUPPRESS_SSO);
+					loginButton.setDefaultAudience(DefaultAudience.EVERYONE);
 					break;
 			}
 		} else {
@@ -150,4 +119,6 @@ public class LoginButtonView extends TiUIView {
 		
 		Log.d(TAG,"[VIEW LIFECYCLE EVENT] propertyChanged: " + key + ' ' + oldValue + ' ' + newValue);
 	}
+	
+
 }

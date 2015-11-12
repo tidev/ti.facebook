@@ -31,7 +31,7 @@ tabGroup.addTab(Titanium.UI.createTab({
     window:require('facebook_photos').window()
 }));
 
-fb.initialize(1000); // after you set up login/logout listeners and permissions
+fb.initialize(); // after you set up login/logout listeners and permissions
 
 // open tab group
 if (Ti.Platform.osname == 'android') {
