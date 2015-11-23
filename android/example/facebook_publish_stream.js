@@ -123,24 +123,12 @@ exports.window = function(value){
 	});
 
 	wallDialog.addEventListener('click', function() {		
-		if(fb.getCanPresentShareDialog()) {
-			fb.presentShareDialog({
-				link: 'https://appcelerator.com/',
-				name: 'great product',
-				description: 'Titanium is a great product',
-				caption: 'it rocks too',
-				picture: 'http://www.appcelerator.com/wp-content/uploads/scale_triangle1.png'
-			});
-		} else {
-			fb.presentWebShareDialog({
-				link: 'https://appcelerator.com/',
-				name: 'great product',
-				description: 'Titanium is a great product',
-				caption: 'it rocks too',
-				picture: 'http://www.appcelerator.com/wp-content/uploads/scale_triangle1.png'
-			});
-		}
-		
+		fb.presentShareDialog({
+			link: 'https://appcelerator.com/',
+			title: 'great product',
+			description: 'Titanium is a great product',
+			picture: 'http://www.appcelerator.com/wp-content/uploads/scale_triangle1.png'
+		});
 	});
 	
 	fb.addEventListener('shareCompleted', function(e){
@@ -171,7 +159,7 @@ exports.window = function(value){
 
 	fb.addEventListener('requestDialogCompleted', function(e) {
 		if (e.success) {
-			alert('Request dialog completed');
+			alert('Request dialog completed. Returned data is ' + e.data);
 		}
 		else if (e.cancelled) {
 			alert('Request dialog cancelled');
@@ -188,12 +176,11 @@ exports.window = function(value){
 		    top: 230,
 		    height: "50%", // Note: on iOS setting Ti.UI.SIZE dimensions prevented the button click
 		    width: "50%",
-		    objectId: "https://www.facebook.com/appcelerator", // URL or Facebook ID
+		    objectID: "https://www.facebook.com/appcelerator", // URL or Facebook ID
 		    foregroundColor: "white", // A color in Titanium format - see Facebook docs
 		    likeViewStyle: 'box_count', // standard, button, box_count - see FB docs
 		    auxiliaryViewPosition: 'inline', // bottom, inline, top - see FB docs
 		    horizontalAlignment: 'left', // center, left, right - see FB docs,
-		    objectType: 'page', // iOS only, 'page', 'openGraphObject', or 'unknown' - see FB docs
 		    soundEnabled: true // boolean, iOS only
 		});
 	

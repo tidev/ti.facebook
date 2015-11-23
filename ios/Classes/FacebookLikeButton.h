@@ -5,10 +5,10 @@
  * Please see the LICENSE included with this distribution for details.
  */
 #import "TiUIView.h"
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
 
 @interface FacebookLikeButton : TiUIView {
-    FBLikeControl *like;
+    FBSDKLikeControl *like;
 }
 
 @end

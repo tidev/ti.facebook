@@ -28,6 +28,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 
+
 import com.facebook.widget.LikeView.*;
 import com.facebook.internal.LikeActionController;
 import com.facebook.share.widget.LikeView;
@@ -97,7 +98,7 @@ public class LikeButtonView extends TiUIView
     	KrollDict kd = new KrollDict();
     	this.proxy.fireEvent("statuschanged", kd);	
     }
-	
+
 	public LikeButtonView(TiViewProxy proxy) 
 	{
 		super(proxy);
