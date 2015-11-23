@@ -19,7 +19,17 @@ import org.appcelerator.titanium.proxy.TiViewProxy;
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.titanium.util.TiColorHelper;
 import org.appcelerator.titanium.util.TiConvert;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 
+import com.facebook.widget.LikeView.*;
+import com.facebook.internal.LikeActionController;
 import com.facebook.share.widget.LikeView;
 import com.facebook.share.widget.LikeView.AuxiliaryViewPosition;
 import com.facebook.share.widget.LikeView.HorizontalAlignment;
@@ -28,17 +38,71 @@ import com.facebook.share.widget.LikeView.Style;
 
 public class LikeButtonView extends TiUIView 
 {
-	private static final String TAG = "LikeButtonView";
-	private LikeView likeView;
-		
-	public LikeButtonView(TiViewProxy proxy) 
-	{
+    private static final String TAG = "LikeButtonView";
+    
+	public static final String ACTION_LIKE_ACTION_CONTROLLER_UPDATED = "com.facebook.sdk.UPDATED";
+    public static final String ACTION_LIKE_ACTION_CONTROLLER_DID_ERROR = "com.facebook.sdk.DID_ERROR";
+    public static final String ACTION_LIKE_ACTION_CONTROLLER_DID_RESET = "com.facebook.sdk.DID_RESET";
+    public static final String ACTION_OBJECT_ID_KEY = "com.facebook.sdk.OBJECT_ID";
+
+    private LikeView likeView;
+    private BroadcastReceiver broadcastReceiver;
+    private String objectId;
+	
+	private class LikeControllerBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String intentAction = intent.getAction();
+            Bundle extras = intent.getExtras();
+            boolean shouldRespond = true;
+            if (extras != null) {
+                // See if an Id was set in the broadcast Intent. If it was, treat it as a filter.
+                String broadcastObjectId = extras.getString(
+                		LikeActionController.ACTION_OBJECT_ID_KEY);
+                shouldRespond = broadcastObjectId == null || broadcastObjectId.equals("") ||
+                        objectId.equalsIgnoreCase(broadcastObjectId);
+            }
+
+            if (!shouldRespond) {
+                return;
+            }
+
+            if (LikeActionController.ACTION_LIKE_ACTION_CONTROLLER_UPDATED.equals(intentAction)) {
+            	updateLikeStatus();
+            } else if (LikeActionController.ACTION_LIKE_ACTION_CONTROLLER_DID_ERROR.equals(intentAction)) {
+            	updateLikeStatus();
+            } else if (LikeActionController.ACTION_LIKE_ACTION_CONTROLLER_DID_RESET.equals(intentAction)) {
+                updateLikeStatus();
+            }
+        }
+    }
+	
+	protected void updateLikeStatus() {
+		triggerStatusChangedEvent(); //Call js event 'statuschanged'
+	}
+	
+    public void triggerStatusChangedEvent() {
+        KrollDict kd = new KrollDict();
+        this.proxy.fireEvent("statuschanged", kd);
+    }
+	
+	public LikeButtonView(TiViewProxy proxy) {
 		super(proxy);
-		Log.d(TAG, "[VIEW LIFECYCLE EVENT] view");
 		likeView = new LikeView(proxy.getActivity());
 		// Set the view as the native view. You must set the native view
 		// for your view to be rendered correctly.
 		setNativeView(likeView);
+		
+		this.broadcastReceiver = new LikeControllerBroadcastReceiver();
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(proxy.getActivity());
+
+        // add the broadcast receiver
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(LikeActionController.ACTION_LIKE_ACTION_CONTROLLER_UPDATED);
+        filter.addAction(LikeActionController.ACTION_LIKE_ACTION_CONTROLLER_DID_ERROR);
+        filter.addAction(LikeActionController.ACTION_LIKE_ACTION_CONTROLLER_DID_RESET);
+
+        localBroadcastManager.registerReceiver(broadcastReceiver, filter);
 	}
 		
 	// The view is automatically registered as a model listener when the view
@@ -73,10 +137,8 @@ public class LikeButtonView extends TiUIView
 	}
 	
 	@Override
-	public void processProperties(KrollDict props) 
-	{
+	public void processProperties(KrollDict props)  {
 		super.processProperties(props);
-		Log.d(TAG,"[VIEW LIFECYCLE EVENT] processProperties " + props);
 		if (props.containsKey("objectId")) {
 			likeView.setObjectIdAndType(props.getString("objectID"),LikeView.ObjectType.PAGE);
 		}
@@ -99,8 +161,7 @@ public class LikeButtonView extends TiUIView
 	}
 	
 	@Override
-	public void propertyChanged(String key, Object oldValue, Object newValue, KrollProxy proxy)
-	{
+	public void propertyChanged(String key, Object oldValue, Object newValue, KrollProxy proxy) {
 		// This method is called whenever a proxy property value is updated. Note that this 
 		// method is only called if the new value is different than the current value.
 		if (key.equals("objectID")) {
@@ -116,7 +177,6 @@ public class LikeButtonView extends TiUIView
 		} else {
 			super.propertyChanged(key, oldValue, newValue, proxy);
 		}
-		Log.d(TAG,"[VIEW LIFECYCLE EVENT] propertyChanged: " + key + ' ' + oldValue + ' ' + newValue);
 	}
 	
 }
