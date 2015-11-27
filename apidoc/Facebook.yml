@@ -139,7 +139,7 @@ description: |
     To enable the use of Facebook dialogs (e.g., Login, Share), you also need to include the following key and values in `tiapp.xml`
     to handle the switching in and out of your app:
 
-    <key>LSApplicationQueriesSchemes</key>
+        <key>LSApplicationQueriesSchemes</key>
         <array>
             <string>fbapi</string>
             <string>fb-messenger-api</string>
@@ -149,35 +149,28 @@ description: |
 
     For iOS9 and titanium 5.0.0.GA and above, App Transport Security is disabled by default.
     If you choose to enable it, you have to set the following keys and values in `tiapp.xml` <ios> section for facebook module:
-            <ti:app>
-                <ios>
-                    <plist>
+    
+        <key>NSAppTransportSecurity</key>
+        <dict>
+            <key>NSExceptionDomains</key>
+                <dict>
+                    <key>facebook.com</key>
                         <dict>
-                            <key>NSAppTransportSecurity</key>
-                                <dict>
-                                    <key>NSExceptionDomains</key>
-                                        <dict>
-                                            <key>facebook.com</key>
-                                                <dict>
-                                                    <key>NSIncludesSubdomains</key> <true/>        
-                                                    <key>NSExceptionRequiresForwardSecrecy</key> <false/>
-                                                </dict>
-                                            <key>fbcdn.net</key>
-                                                <dict>
-                                                    <key>NSIncludesSubdomains</key> <true/>
-                                                    <key>NSExceptionRequiresForwardSecrecy</key>  <false/>
-                                                </dict>
-                                            <key>akamaihd.net</key>
-                                                <dict>
-                                                    <key>NSIncludesSubdomains</key> <true/>
-                                                    <key>NSExceptionRequiresForwardSecrecy</key> <false/>
-                                                </dict>
-                                        </dict>
-                                </dict>
+                            <key>NSIncludesSubdomains</key> <true/>        
+                            <key>NSExceptionRequiresForwardSecrecy</key> <false/>
                         </dict>
-                    </plist>
-                </ios>
-            </ti:app>
+                    <key>fbcdn.net</key>
+                        <dict>
+                            <key>NSIncludesSubdomains</key> <true/>
+                            <key>NSExceptionRequiresForwardSecrecy</key>  <false/>
+                        </dict>
+                    <key>akamaihd.net</key>
+                        <dict>
+                            <key>NSIncludesSubdomains</key> <true/>
+                            <key>NSExceptionRequiresForwardSecrecy</key> <false/>
+                        </dict>
+                </dict>
+        </dict>
 
     ### Additional Android Setup Steps
 
