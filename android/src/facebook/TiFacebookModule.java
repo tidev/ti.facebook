@@ -121,7 +121,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
         super.onResume(activity);
         Log.d(TAG, "Calling activateApp");
         AppEventsLogger.activateApp(activity);
-        AppEventsLogger.flush();
     }
     
     @Override
