@@ -225,6 +225,19 @@ requestWithGraphPath
 Same as the original Titanium Facebook module. However, there is automatic error handling.
 So in case of error only alert the user if `error == 'An unexpected error'`, everything else was already handled for you.
 
+Deferred App links
+------------------
+
+Deferred deep linking allows you to send people to a custom view after they installed your app via the app store.
+
+You can simply call `openDeferredAppLink` on startup to open *eventually incoming* app links.
+
+```
+var fb = require('facebook');
+fb.openDeferredAppLink();
+```
+
+
 To do
 -------
 *	Facebook branded buttons - use the SDK implementation or don't do it.

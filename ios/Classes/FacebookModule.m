@@ -384,7 +384,7 @@ NSDictionary *launchOptions = nil;
 {
     id params = [args objectAtIndex:0];
     ENSURE_SINGLE_ARG(params, NSDictionary);
-        
+
     TiThreadPerformOnMainThread(^{
         FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
         content.contentURL = [NSURL URLWithString:[params objectForKey:@"link"]];
@@ -496,7 +496,7 @@ NSDictionary *launchOptions = nil;
                                              [NSNumber numberWithBool:success],@"success",
                                              [NSNumber numberWithBool:cancelled],@"cancelled",
                                              errorCode,@"code", errorString,@"error", nil];
-            
+
             KrollEvent * invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:propertiesDict thisObject:self];
             [[callback context] enqueue:invocationEvent];
             [invocationEvent release];
@@ -555,7 +555,7 @@ NSDictionary *launchOptions = nil;
                                              [NSNumber numberWithBool:success],@"success",
                                              [NSNumber numberWithBool:cancelled],@"cancelled",
                                              errorCode,@"code", errorString,@"error", nil];
-            
+
             KrollEvent * invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:propertiesDict thisObject:self];
             [[callback context] enqueue:invocationEvent];
             [invocationEvent release];
@@ -624,16 +624,28 @@ NSDictionary *launchOptions = nil;
                      returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys:
                                        NUMBOOL(success), @"success",
                                        path, @"path", errorString, @"error", nil];
-                     
+
                  }
                  KrollEvent * invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:returnedObject thisObject:self];
                  [[callback context] enqueue:invocationEvent];
                  [invocationEvent release];
                  [returnedObject release];
-                 
+
              }];
         }
     }, NO);
+}
+
+-(void)openDeferredAppLink:(id)args
+{
+    TiThreadPerformOnMainThread(^{
+        [FBSDKAppLinkUtility fetchDeferredAppLink:^(NSURL *url, NSError *error) {
+            if (error != nil) NSLog(@"Received error while fetching deferred app link %@", error);
+            if (url) {
+                [[UIApplication sharedApplication] openURL:url];
+            }
+        }];
+    }, YES);
 }
 
 #pragma mark Listener work
@@ -656,7 +668,7 @@ NSDictionary *launchOptions = nil;
         }
         [event setObject:errorString forKey:@"error"];
     }
-    
+
     if(result != nil){
         FBSDKProfile *profile = (FBSDKProfile*)result;
         NSDictionary *jsonDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -667,7 +679,7 @@ NSDictionary *launchOptions = nil;
                                         profile.name, @"name",
                                         [profile.linkURL absoluteString], @"linkURL",
                                         nil];
-        
+
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDictionary options:0 error:&error];
         NSString *resultString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         [event setObject:resultString forKey:@"data"];
