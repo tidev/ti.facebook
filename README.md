@@ -278,6 +278,22 @@ See official Facebook Dialogs documentation for more details.
     });
 ```
 
+Deferred App links
+------------------
+
+Deferred deep linking allows you to send people to a custom view after they installed your app via the app store.
+
+You can simply call fetchDeferredAppLink on startup to open eventually incoming app links.
+
+```
+var fb = require('facebook');
+fb.fetchDeferredAppLink(function(e) {
+    if (e.url) {
+        // Dispatch internal routes
+    }
+});
+```
+
 Like Button
 -----------
 

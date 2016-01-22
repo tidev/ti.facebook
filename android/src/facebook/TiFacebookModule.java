@@ -29,6 +29,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.facebook.AccessToken;
+import com.facebook.applinks.AppLinkData;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -590,6 +591,25 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
         .setSuggestions(suggestionsList)
         .build();
 		requestDialog.show(content);
+	}
+
+	@Kroll.method
+	public void fetchDeferredAppLink(final KrollFunction callback)
+	{
+		AppLinkData.fetchDeferredAppLinkData(TiApplication.getInstance().getCurrentActivity(), new AppLinkData.CompletionHandler() {
+			@Override
+			public void onDeferredAppLinkDataFetched(AppLinkData appLinkData) {
+				KrollDict data = new KrollDict();
+
+				if (appLinkData == null) {
+					data.put("error", true);
+				} else {
+					data.put("url", appLinkData.getTargetUri().toString());
+				}
+
+				callback.callAsync(getKrollObject(), data);
+			}
+		});
 	}
 
 	@Override
