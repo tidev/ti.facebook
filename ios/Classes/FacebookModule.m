@@ -649,7 +649,7 @@ NSDictionary *launchOptions = nil;
                 returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys:[url absoluteURL],@"url", nil];
             } else {
                 if (error) {
-                    NSLog(@"Received error while fetching deferred app link %@", error);
+                    NSLog(@"[ERROR] Received error while fetching deferred app link %@", error);
                     NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
                     returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys: errorString,@"error", nil];
                 } else {
