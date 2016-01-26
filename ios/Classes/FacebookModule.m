@@ -75,13 +75,9 @@ NSDictionary *launchOptions = nil;
 
 -(void)startup
 {
-//    NSLog(@"[DEBUG] startup: running FB sdk version: %@", [FBSettings sdkVersion]);
-/* Uncomment to get a ton of debug prints
-    [FBSettings setLoggingBehavior:
-     [NSSet setWithObjects:FBLoggingBehaviorFBRequests, FBLoggingBehaviorFBURLConnections,
-      FBLoggingBehaviorAccessTokens, FBLoggingBehaviorSessionStateTransitions, FBLoggingBehaviorAppEvents,
-      FBLoggingBehaviorInformational, FBLoggingBehaviorCacheErrors, FBLoggingBehaviorDeveloperErrors, nil]];
-*/
+    // Uncomment to enable really verbose Facebook SDK debug
+    // [FBSDKSettings setLoggingBehavior: [NSSet setWithObjects:FBSDKLoggingBehaviorAccessTokens,FBSDKLoggingBehaviorPerformanceCharacteristics,FBSDKLoggingBehaviorAppEvents,FBSDKLoggingBehaviorInformational,FBSDKLoggingBehaviorCacheErrors,FBSDKLoggingBehaviorUIControlErrors,FBSDKLoggingBehaviorGraphAPIDebugWarning,FBSDKLoggingBehaviorGraphAPIDebugInfo,FBSDKLoggingBehaviorNetworkRequests,FBSDKLoggingBehaviorDeveloperErrors, nil]];
+
     [super startup];
 }
 
@@ -112,7 +108,7 @@ NSDictionary *launchOptions = nil;
             [self fireLogin:user cancelled:NO withError:nil];
         }
         else {
-//            DebugLog(@"[ERROR] Not logged in");
+//            NSLog(@"[ERROR] Not logged in");
             [self fireLogin:nil cancelled:NO withError:nil];
         }
     }, NO);
@@ -321,19 +317,18 @@ NSDictionary *launchOptions = nil;
 -(void)authorize:(id)args
 {
     ENSURE_SINGLE_ARG_OR_NIL(args, NSNumber);
-    BOOL allowUI = args == nil ? YES : NO;
     NSArray *permissions_ = permissions == nil ? [NSArray array] : permissions;
     FBSDKLoginManager *loginManager = [[[FBSDKLoginManager alloc] init] autorelease];
     TiThreadPerformOnMainThread(^{
         [loginManager logInWithReadPermissions: permissions_ fromViewController:nil handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
             if (error) {
-                //DebugLog(@"[ERROR] Process error.");
+                // NSLog(@"[ERROR] Process error.");
                 [self fireLogin:nil cancelled:NO withError:error];
             } else if (result.isCancelled) {
-                //DebugLog(@"[ERROR] User cancelled");
+                // NSLog(@"[ERROR] User cancelled");
                 [self fireLogin:nil cancelled:YES withError:nil];
             } else {
-                //DebugLog(@"[INFO] Logged in");
+                // NSLog(@"[INFO] Logged in");
             }
         }];
     }, YES);
@@ -615,7 +610,7 @@ NSDictionary *launchOptions = nil;
                                        resultString,@"result", NUMBOOL(success), @"success",
                                        path, @"path",nil];
                  } else {
-                     //DebugLog(@"requestWithGraphPath error for path, %@", path);
+                     //NSLog(@"requestWithGraphPath error for path, %@", path);
                      success = NO;
                      NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
                      if (errorString == nil) {
@@ -634,6 +629,35 @@ NSDictionary *launchOptions = nil;
              }];
         }
     }, NO);
+}
+
+-(void)fetchDeferredAppLink:(id)args
+{
+    id callback = [args objectAtIndex:0];
+    ENSURE_SINGLE_ARG(callback, KrollCallback);
+
+    TiThreadPerformOnMainThread(^{
+        [FBSDKAppLinkUtility fetchDeferredAppLink:^(NSURL *url, NSError *error) {
+            NSDictionary* returnedObject;
+
+            if (url) {
+                returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys:[url absoluteURL],@"url", nil];
+            } else {
+                if (error) {
+                    NSLog(@"[ERROR] Received error while fetching deferred app link %@", error);
+                    NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
+                    returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys: errorString,@"error", nil];
+                } else {
+                    returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys: NUMBOOL(YES),@"error", nil];
+                }
+            }
+
+            KrollEvent * invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:returnedObject thisObject:self];
+            [[callback context] enqueue:invocationEvent];
+            [invocationEvent release];
+            [returnedObject release];
+        }];
+    }, YES);
 }
 
 #pragma mark Listener work

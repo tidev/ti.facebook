@@ -88,7 +88,7 @@ If you choose to enable it, you have to set the following keys and values in tia
 
 On the android platform, in tiapp.xml or AndroidManifest.xml you must declare the following inside the \<application\> node 
 ```xml
-<activity android:name="com.facebook.LoginActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:label="YourAppName"/>
+<activity android:name="com.facebook.FacebookActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:label="YourAppName"/>
 <activity android:name="com.facebook.FacebookActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:label="YourAppName" android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" />
 ```
 You must also reference the string containing your Facebook app ID, inside the \<application\> node as well: 
@@ -276,6 +276,22 @@ See official Facebook Dialogs documentation for more details.
             social_karma: '5'
         }
     });
+```
+
+Deferred App links
+------------------
+
+Deferred deep linking allows you to send people to a custom view after they installed your app via the app store.
+
+You can simply call fetchDeferredAppLink on startup to open eventually incoming app links.
+
+```
+var fb = require('facebook');
+fb.fetchDeferredAppLink(function(e) {
+    if (e.url) {
+        // Dispatch internal routes
+    }
+});
 ```
 
 Like Button
