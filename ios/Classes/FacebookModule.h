@@ -16,6 +16,8 @@
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
 
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+
 @interface FacebookModule : TiModule <FBSDKSharingDelegate, FBSDKGameRequestDialogDelegate>
 {
     NSString *uid;
