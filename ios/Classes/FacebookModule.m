@@ -48,7 +48,14 @@ NSDictionary *launchOptions = nil;
     launchOptions = [appDelegate launchOptions];
     NSString *urlString = [launchOptions objectForKey:@"url"];
     NSString *sourceApplication = [launchOptions objectForKey:@"source"];
-    NSString *annotation = [launchOptions objectForKey:@"UIApplicationOpenURLOptionsAnnotationKey"];
+    NSString *annotation;
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0")) {
+        annotation = [launchOptions objectForKey:UIApplicationOpenURLOptionsAnnotationKey];
+    } else {
+        annotation = nil;
+    }
+    
     if (urlString != nil) {
         FBSDKAccessToken *token = [FBSDKAccessToken currentAccessToken];
         NSSet* failed = token.declinedPermissions;
