@@ -50,7 +50,7 @@ NSDictionary *launchOptions = nil;
     NSString *sourceApplication = [launchOptions objectForKey:@"source"];
     NSString *annotation;
     
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0")) {
+    if ([TiUtils isIOS9OrGreater]) {
         annotation = [launchOptions objectForKey:UIApplicationOpenURLOptionsAnnotationKey];
     } else {
         annotation = nil;
