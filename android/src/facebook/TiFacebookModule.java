@@ -236,13 +236,19 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		request.setHttpMethod(method);
 		request.executeAsync();
 	}
-	
+
 	@Kroll.method
-	public void logCustomEvent(String event) {
+	public void logCustomEvent(String event, @Kroll.argument(optional = true) Double valueToSum, @Kroll.argument(optional = true) KrollDict parameters) {
 		Activity activity = TiApplication.getInstance().getCurrentActivity();
 		AppEventsLogger logger = AppEventsLogger.newLogger(activity);
+		Bundle paramBundle = parameters != null ? Utils.mapToBundle(parameters) : null;
+		Log.d(TAG, "logCustomEvent: "+ event + " valueToSum: " + valueToSum);
 		if (logger != null) {
-			logger.logEvent(event);
+			if (valueToSum == null){
+				logger.logEvent(event, paramBundle);
+			}else{
+				logger.logEvent(event, valueToSum, paramBundle);
+			}
 		}
 	}
 	
