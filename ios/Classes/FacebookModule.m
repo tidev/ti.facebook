@@ -11,6 +11,7 @@
  */
 
 #import "FacebookModule.h"
+#import "FacebookConstants.h"
 #import "TiBase.h"
 #import "TiHost.h"
 #import "TiUtils.h"
@@ -248,6 +249,32 @@ NSDictionary *launchOptions = nil;
 {
     return [NSNumber numberWithInt:FBSDKGameRequestFilterAppNonUsers];
 }
+
+-(id)MESSENGER_BUTTON_MODE_RECTANGULAR
+{
+    return [NSNumber numberWithInt:TiFacebookShareButtonModeRectangular];
+}
+
+-(id)MESSENGER_BUTTON_MODE_CIRCULAR
+{
+    return [NSNumber numberWithInt:TiFacebookShareButtonModeCircular];
+}
+
+-(id)MESSENGER_BUTTON_STYLE_BLUE
+{
+    return [NSNumber numberWithInt:FBSDKMessengerShareButtonStyleBlue];
+}
+
+-(id)MESSENGER_BUTTON_STYLE_WHITE
+{
+    return [NSNumber numberWithInt:FBSDKMessengerShareButtonStyleWhite];
+}
+
+-(id)MESSENGER_BUTTON_STYLE_WHITE_BORDERED
+{
+    return [NSNumber numberWithInt:FBSDKMessengerShareButtonStyleWhiteBordered];
+}
+
 /**
  * JS example:
  *
@@ -411,6 +438,34 @@ NSDictionary *launchOptions = nil;
                                         delegate:self];
     }, NO);
 }
+
+// Presents a messenger dialog to share content using the Facebook messenger
+-(void)presentMessengerDialog:(id)args
+{
+    id params = [args objectAtIndex:0];
+    ENSURE_SINGLE_ARG(params, NSDictionary);
+   
+    TiThreadPerformOnMainThread(^{
+        FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
+        [content setContentURL:[NSURL URLWithString:[params objectForKey:@"link"]]];
+        [content setContentDescription:[params objectForKey:@"description"]];
+        [content setContentTitle:[params objectForKey:@"title"]];
+        [content setPlaceID:[params objectForKey:@"placeID"]];
+        [content setRef:[params objectForKey:@"referal"]];
+        [content setImageURL:[NSURL URLWithString:[params objectForKey:@"picture"]]];
+        
+        id to = [params objectForKey:@"to"];
+        ENSURE_TYPE_OR_NIL(to, NSArray);
+        
+        if (to != nil) {
+            [content setPeopleIDs:to];
+        }
+
+        
+        [FBSDKMessageDialog showWithContent:content delegate:self];
+    }, NO);
+}
+
 //presents share dialog using web dialog. Useful for devices with no facebook app installed.
 -(void)presentWebShareDialog:(id)args
 {
