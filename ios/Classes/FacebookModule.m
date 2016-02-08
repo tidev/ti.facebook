@@ -460,10 +460,31 @@ NSDictionary *launchOptions = nil;
         if (to != nil) {
             [content setPeopleIDs:to];
         }
-
         
         [FBSDKMessageDialog showWithContent:content delegate:self];
     }, NO);
+}
+
+-(void)shareMediaToMessenger:(id)args
+{
+    id media = [args valueForKey:@"media"];
+    
+    ENSURE_TYPE(media, TiBlob);
+    
+    FBSDKMessengerShareOptions *options = [[FBSDKMessengerShareOptions alloc] init];
+    options.metadata = [args objectForKey:@"metadata"];
+    options.sourceURL = [NSURL URLWithString:[args objectForKey:@"link"]];
+    options.renderAsSticker = [TiUtils boolValue:[args objectForKey:@"renderAsSticker"] def:NO];
+    
+    if ([[media mimeType]  isEqual: @"image/gif"]) {
+        [FBSDKMessengerSharer shareAnimatedGIF:[(TiBlob*)media data] withOptions:options];
+    } else if ([[media mimeType] containsString:@"image/"]) {
+        [FBSDKMessengerSharer shareImage:[TiUtils image:media proxy:self] withOptions:options];
+    } else if ([[media mimeType] containsString:@"video/"]) {
+        [FBSDKMessengerSharer shareVideo:[(TiBlob*)media data] withOptions:options];
+    } else {
+        NSLog(@"[ERROR] Unknown media provided. Allowed media: Image, GIF and video.");
+    }
 }
 
 //presents share dialog using web dialog. Useful for devices with no facebook app installed.

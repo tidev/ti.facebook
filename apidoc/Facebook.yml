@@ -820,6 +820,16 @@ methods:
         type: Callback<FacebookPermissionResponse>
     since: 4.0.0
 
+  - name: shareMediaToMessenger
+    summary: Call this method to open Messenger and share an image, animated GIF or video.
+    parameter:
+      - name: params
+        summary: |
+            A dictionary object containing required and optional parameters.
+        type: ShareToMessengerParams
+    since: 6.0.0
+    platforms: [iphone, ipad]
+
 events:
 
   - name: login
@@ -1706,3 +1716,40 @@ properties:
     type: String
     optional: true    
     since: "5.0.0"
+
+---
+name: ShareToMessengerParams
+summary: |
+    Parameters to pass to [shareMediaToMessenger()](Modules.Facebook.shareMediaToMessenger) method.
+since: "6.0.0"
+platforms: [iphone, ipad]
+properties:
+  - name: media
+    summary: Media to send with the messenger. Allowed media are images, GIF's and videos.
+    type: Titanium.Blob
+    optional: false 
+
+  - name: metadata
+    summary: |
+        Pass additional information to be sent to Messenger which is sent back to the user's app when 
+        they reply to an attributed message.
+    type: String
+    optional: true 
+
+  - name: link
+    summary: Optional property describing the www source URL of the content.
+    description: |
+        Setting this property improves performance by allowing Messenger to download the content directly 
+        rather than uploading the content from your app. This option is only used for animated GIFs.
+    type: String
+    optional: true 
+
+  - name: renderAsSticker
+    summary: Optional property describing whether the content should be rendered like a sticker.
+    description: |
+        Setting this property informs Messenger that the media content should be rendered as a sticker.
+        This option is only used for static images.
+    type: Boolean
+    default: false 
+    optional: true
+
