@@ -279,10 +279,10 @@ NSDictionary *launchOptions = nil;
  * facebook.logCustomEvent('clappedHands');
  *
  */
--(void)logCustomEvent:(id)args
+-(void)logCustomEvent:(id)event
 {
-    ENSURE_SINGLE_ARG(args, NSString);
-    NSString* event = [args objectAtIndex:0];
+    ENSURE_SINGLE_ARG(event, NSString);
+    //NSString* event = [args objectAtIndex:0];
     [FBSDKAppEvents logEvent:event];
 }
 
