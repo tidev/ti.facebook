@@ -282,8 +282,7 @@ NSDictionary *launchOptions = nil;
 -(void)logCustomEvent:(id)event
 {
     ENSURE_SINGLE_ARG(event, NSString);
-    //NSString* event = [args objectAtIndex:0];
-    [FBSDKAppEvents logEvent:event];
+    [FBSDKAppEvents logEvent:[TiUtils stringValue:event]];
 }
 
 /**
