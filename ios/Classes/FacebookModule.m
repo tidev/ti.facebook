@@ -465,32 +465,51 @@ NSDictionary *launchOptions = nil;
     }, NO);
 }
 
+// Shares images, GIFs and videos to the messenger
 -(void)shareMediaToMessenger:(id)args
 {
-    id media = [args valueForKey:@"media"];
-    
+    id params = [args objectAtIndex:0];
+    ENSURE_SINGLE_ARG(params, NSDictionary);
+
+    id media = [params valueForKey:@"media"];
     ENSURE_TYPE(media, TiBlob);
-    
-    FBSDKMessengerShareOptions *options = [[FBSDKMessengerShareOptions alloc] init];
-    options.metadata = [args objectForKey:@"metadata"];
-    options.sourceURL = [NSURL URLWithString:[args objectForKey:@"link"]];
-    options.renderAsSticker = [TiUtils boolValue:[args objectForKey:@"renderAsSticker"] def:NO];
-    
-    if ([[media mimeType]  isEqual: @"image/gif"]) {
-        [FBSDKMessengerSharer shareAnimatedGIF:[(TiBlob*)media data] withOptions:options];
-    } else if ([[media mimeType] containsString:@"image/"]) {
-        [FBSDKMessengerSharer shareImage:[TiUtils image:media proxy:self] withOptions:options];
-    } else if ([[media mimeType] containsString:@"video/"]) {
-        [FBSDKMessengerSharer shareVideo:[(TiBlob*)media data] withOptions:options];
-    } else {
-        NSLog(@"[ERROR] Unknown media provided. Allowed media: Image, GIF and video.");
-    }
+
+    TiThreadPerformOnMainThread(^{
+        FBSDKMessengerShareOptions *options = [[FBSDKMessengerShareOptions alloc] init];
+        options.metadata = [params objectForKey:@"metadata"];
+        options.sourceURL = [NSURL URLWithString:[params objectForKey:@"link"]];
+        options.renderAsSticker = [TiUtils boolValue:[params objectForKey:@"renderAsSticker"] def:NO];
+        
+        if ([[media mimeType]  isEqual: @"image/gif"]) {
+            [FBSDKMessengerSharer shareAnimatedGIF:[NSData dataWithContentsOfFile:[(TiBlob*)media path]] withOptions:options];
+        } else if ([[media mimeType] containsString:@"image/"]) {
+            [FBSDKMessengerSharer shareImage:[TiUtils image:media proxy:self] withOptions:options];
+        } else if ([[media mimeType] containsString:@"video/"]) {
+            [FBSDKMessengerSharer shareVideo:[NSData dataWithContentsOfFile:[(TiBlob*)media path]] withOptions:options];
+        } else {
+            NSLog(@"[ERROR] Unknown media provided. Allowed media: Image, GIF and video.");
+        }
+    }, NO);
 }
 
 //presents share dialog using web dialog. Useful for devices with no facebook app installed.
 -(void)presentWebShareDialog:(id)args
 {
     DEPRECATED_REPLACED_REMOVED(@"Facebook.presentWebShareDialog", @"5.0.0", @"5.0.0", @"Titanium.Facebook.presentShareDialog");
+}
+
+// Presents an invite dialog using the native application. 
+-(void)presentInviteDialog:(id)args
+{
+    id params = [args objectAtIndex:0];
+
+    TiThreadPerformOnMainThread(^{
+        FBSDKAppInviteContent *content =[[FBSDKAppInviteContent alloc] init];
+        content.appLinkURL = [NSURL URLWithString:[params objectForKey:@"appLink"]];
+        content.appInvitePreviewImageURL = [NSURL URLWithString:[params objectForKey:@"appPreviewImageLink"]];
+        
+        [FBSDKAppInviteDialog showFromViewController:nil withContent:content delegate:self];
+    },NO);
 }
 
 //presents game request dialog.

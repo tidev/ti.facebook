@@ -17,7 +17,7 @@
 #import <FBSDKShareKit/FBSDKShareKit.h>
 #import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 
-@interface FacebookModule : TiModule <FBSDKSharingDelegate, FBSDKGameRequestDialogDelegate>
+@interface FacebookModule : TiModule <FBSDKSharingDelegate, FBSDKGameRequestDialogDelegate, FBSDKAppInviteDialogDelegate>
 {
     NSString *uid;
     NSArray *permissions;

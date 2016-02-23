@@ -48,6 +48,8 @@ description: |
 
     * **dialog() method** -- Use either
       [presentSendRequestDialog()](Modules.Facebook.presentSendRequestDialog),
+      [presentInviteDialog()](Modules.Facebook.presentInviteDialog),
+      [presentMessengerDialog()](Modules.Facebook.presentMessengerDialog),
       [presentShareDialog()](Modules.Facebook.presentShareDialog) or
       [presentWebShareDialog()](Modules.Facebook.presentWebShareDialog).
       For more details, see 'Share Dialogs' and 'Request Dialogs' below.
@@ -382,6 +384,8 @@ description: |
     A request dialog allows a user to invite another user to use your application.
     Facebook will send a private message to the recipient.
     The typical use case is to invite another user to play a game.
+    If you want to invite people to your application which is not a game, use the
+    [presentInviteDialog()](Modules.Facebook.presentInviteDialog) method instead.
 
     To send a request to a user, call the
     [presentSendRequestDialog()](Modules.Facebook.presentSendRequestDialog) method and pass the
@@ -414,11 +418,11 @@ description: |
     For details on request dialogs see the
     [official Facebook Request Dialogs documentation](https://developers.facebook.com/docs/games/requests/v2.2).
 
-    ### Requests Dialog
+    ### Messenger Dialog
 
     A messenger dialog allows a user to send content to the Facebook Messenger using your application.
 
-    To send a message to a user, call the [presentMessengerDialog()](Modules.presentMessengerDialog) method 
+    To send a message to a user, call the [presentMessengerDialog()](Modules.Facebook.presentMessengerDialog) method 
     and pass the method a dictionary with the optional values "title", "description", "link", "to", "placeID" 
     and "referal".
 
@@ -618,6 +622,17 @@ methods:
         Be sure to set your [appid](Modules.Facebook.appid) before calling `publishInstall`.
     since: "3.4.1"
 
+  - name: presentInviteDialog
+    summary: |
+        Opens a supported Facebook Invite dialog from the Facebook App.
+    parameters:
+      - name: params
+        summary: |
+            A dictionary object containing required and optional parameters.
+        type: InviteDialogParams
+    since: "5.4.0"
+    platforms: [iphone, ipad]
+
   - name: presentShareDialog
     summary: |
         Opens a supported Facebook Share dialog from the Facebook App.
@@ -652,6 +667,7 @@ methods:
             A dictionary object containing optional parameters.
         type: MessengerDialogParams
     since: 5.1.0
+    platforms: [iphone, ipad]
 
   - name: presentWebShareDialog
     summary: |
@@ -827,7 +843,7 @@ methods:
         summary: |
             A dictionary object containing required and optional parameters.
         type: ShareToMessengerParams
-    since: 6.0.0
+    since: 5.4.0
     platforms: [iphone, ipad]
 
 events:
@@ -1614,7 +1630,7 @@ properties:
 name: MessengerDialogParams
 summary: |
     Optional parameters to pass to either the
-    [presentMessengerDialog()](Modules.Facebook. presentMessengerDialog) method.
+    [presentMessengerDialog()](Modules.Facebook.presentMessengerDialog) method.
 since: 5.1.0
 platforms: [iphone, ipad]
 properties:
@@ -1721,7 +1737,7 @@ properties:
 name: ShareToMessengerParams
 summary: |
     Parameters to pass to [shareMediaToMessenger()](Modules.Facebook.shareMediaToMessenger) method.
-since: "6.0.0"
+since: "5.4.0"
 platforms: [iphone, ipad]
 properties:
   - name: media
@@ -1753,3 +1769,21 @@ properties:
     default: false 
     optional: true
 
+---
+name: InviteDialogParams
+summary: |
+    Parameters to pass to [presentInviteDialog()](Modules.Facebook.presentInviteDialog) method.
+since: "5.4.0"
+platforms: [iphone, ipad]
+properties:
+  - name: appLink
+    summary: An app link target that will be used as a target when the user accept the invite.
+    description: This is a requirement.
+    type: String
+    optional: false 
+
+  - name: appPreviewImageLink
+    summary: A URL to a preview image that will be displayed with the app invite
+    description: This is optional. If you don't include it a fallback image will be used.
+    type: String
+    optional: true 
