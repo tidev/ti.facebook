@@ -625,6 +625,9 @@ methods:
   - name: presentInviteDialog
     summary: |
         Opens a supported Facebook Invite dialog from the Facebook App.
+    description: |
+        To monitor if the share request succeeded or not, listen to the 
+        <Modules.Facebook.shareCompleted> event.
     parameters:
       - name: params
         summary: |

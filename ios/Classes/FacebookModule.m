@@ -805,79 +805,67 @@ NSDictionary *launchOptions = nil;
 }
 
 
-#pragma mark share delegates
+#pragma mark Share dialog delegates
 -(void)sharer: (id<FBSDKSharing>)sharer didCompleteWithResults: (NSDictionary *)results
 {
-    BOOL success = YES;
-    BOOL cancelled = NO;
-    NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                  NUMBOOL(cancelled),@"cancelled",
-                                  NUMBOOL(success),@"success",
-                                  @"", @"error", nil];
-    [self fireEvent:@"shareCompleted" withObject:event];
+    [self fireDialogEventWithSuccess:YES andError:nil cancelled:NO];
 }
 
 -(void)sharer:(id<FBSDKSharing>)sharer didFailWithError:(NSError *)error
 {
-    BOOL success = NO;
-    BOOL cancelled = NO;
-    NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
-    if (errorString == nil) {
-        errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
-    }
-    NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                  NUMBOOL(cancelled),@"cancelled",
-                                  NUMBOOL(success),@"success",
-                                  errorString, @"error", nil];
-    [self fireEvent:@"shareCompleted" withObject:event];
+    [self fireDialogEventWithSuccess:NO andError:error cancelled:NO];
 }
 
 -(void)sharerDidCancel:(id<FBSDKSharing>)sharer
 {
-    BOOL success = NO;
-    BOOL cancelled = YES;
-    NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                  NUMBOOL(cancelled),@"cancelled",
-                                  NUMBOOL(success),@"success",
-                                  @"", @"error", nil];
-    [self fireEvent:@"shareCompleted" withObject:event];
+    [self fireDialogEventWithSuccess:NO andError:nil cancelled:YES];
 }
-#pragma game request delegates
+
+#pragma Game request delegates
 -(void)gameRequestDialog:(FBSDKGameRequestDialog *)gameRequestDialog didCompleteWithResults:(NSDictionary *)results
 {
-    BOOL success = YES;
-    BOOL cancelled = NO;
-    NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                  NUMBOOL(cancelled),@"cancelled",
-                                  NUMBOOL(success),@"success",
-                                  @"", @"error", nil];
-    [self fireEvent:@"requestDialogCompleted" withObject:event];
+    [self fireDialogEventWithSuccess:YES andError:nil cancelled:NO];
 }
 
 -(void)gameRequestDialog:(FBSDKGameRequestDialog *)gameRequestDialog didFailWithError:(NSError *)error
 {
-    BOOL success = NO;
-    BOOL cancelled = NO;
-    NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
-    if (errorString == nil) {
-        errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
-    }
-    NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                  NUMBOOL(cancelled),@"cancelled",
-                                  NUMBOOL(success),@"success",
-                                  errorString, @"error", nil];
-    [self fireEvent:@"requestDialogCompleted" withObject:event];
+    [self fireDialogEventWithSuccess:NO andError:error cancelled:NO];
 }
 
 -(void)gameRequestDialogDidCancel:(FBSDKGameRequestDialog *)gameRequestDialog
 {
-    BOOL success = NO;
-    BOOL cancelled = YES;
-    NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                  NUMBOOL(cancelled),@"cancelled",
-                                  NUMBOOL(success),@"success",
-                                  @"", @"error", nil];
-    [self fireEvent:@"requestDialogCompleted" withObject:event];
+    [self fireDialogEventWithSuccess:NO andError:nil cancelled:YES];
+}
+
+#pragma mark Invite dialog delegates
+-(void)appInviteDialog:(FBSDKAppInviteDialog *)appInviteDialog didFailWithError:(NSError *)error
+{
+    [self fireDialogEventWithSuccess:YES andError:error cancelled:NO];
+}
+
+-(void)appInviteDialog:(FBSDKAppInviteDialog *)appInviteDialog didCompleteWithResults:(NSDictionary *)results
+{
+    [self fireDialogEventWithSuccess:YES andError:nil cancelled:NO];
+}
+
+-(void)fireDialogEventWithSuccess:(BOOL)success andError:(NSError*)error cancelled:(BOOL)cancelled
+{
+    NSMutableDictionary *event = [NSMutableDictionary dictionaryWithDictionary:@{
+        @"cancelled": NUMBOOL(cancelled),
+        @"success": NUMBOOL(success)}
+    ];
+    
+    if (error) {
+        NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
+        if (errorString == nil) {
+            errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+        }
+        [event setValue:errorString forKey:@"error"];
+    }
+    
+    if ([self _hasListeners:@"requestDialogCompleted"]) {
+        [self fireEvent:@"requestDialogCompleted" withObject:event];
+    }
 }
 
 // A function for parsing URL parameters returned by the Feed Dialog.

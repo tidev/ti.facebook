@@ -37,7 +37,7 @@ examples:
 
         win.add(messengerButton);
 
-since: "6.0.0"
+since: "5.4.0"
 platforms: [iphone, ipad]
 extends: Titanium.UI.View
 properties:
