@@ -11,7 +11,6 @@
 
 @implementation FacebookMessengerButton
 
-
 -(void)dealloc
 {
     [messengerButton removeTarget:self action:@selector(didTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];

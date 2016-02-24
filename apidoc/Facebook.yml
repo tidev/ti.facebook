@@ -1480,7 +1480,7 @@ examples:
 
             wallDialog.addEventListener('click', function() {
                 FB.presentInviteDialog({
-                    appLink: "https://fb.me/814669901978535",
+                    appLink: "https://fb.me/xxxxxxxx",
 	            appPreviewImageLink: "https://www.mydomain.com/my_invite_image.jpg"
                 });
             });
@@ -1522,7 +1522,7 @@ examples:
                 options.show();
             });
 
-        For more information on sharing media to the Facebook Mesenger, see:
+        For more information on sharing media to the Facebook Messenger, see:
 
         * [Facebook Messenger Reference](https://developers.facebook.com/docs/messenger)
 

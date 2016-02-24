@@ -11,4 +11,6 @@
     UIButton *messengerButton;
 }
 
+-(UIButton*)messengerButton;
+
 @end
