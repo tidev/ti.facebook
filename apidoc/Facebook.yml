@@ -669,7 +669,7 @@ methods:
         summary: |
             A dictionary object containing optional parameters.
         type: MessengerDialogParams
-    since: 5.1.0
+    since: "5.4.0"
     platforms: [iphone, ipad]
 
   - name: presentWebShareDialog
@@ -846,7 +846,7 @@ methods:
         summary: |
             A dictionary object containing required and optional parameters.
         type: ShareToMessengerParams
-    since: 5.4.0
+    since: "5.4.0"
     platforms: [iphone, ipad]
 
 events:
@@ -1153,7 +1153,7 @@ properties:
         that topic [here](http://docs.appcelerator.com/platform/latest/#!/guide/Internationalization).
     type: Number
     permission: read-only
-    since: 5.1.0
+    since: "5.4.0"
     platforms: [iphone, ipad]
 
   - name: MESSENGER_BUTTON_MODE_RECTANGULAR
@@ -1165,7 +1165,7 @@ properties:
         that topic [here](http://docs.appcelerator.com/platform/latest/#!/guide/Internationalization).
     type: Number
     permission: read-only
-    since: 5.1.0
+    since: "5.4.0"
     platforms: [iphone, ipad]
 
   - name: MESSENGER_BUTTON_STYLE_BLUE
@@ -1174,7 +1174,7 @@ properties:
         the default send button style.
     type: Number
     permission: read-only
-    since: 5.1.0
+    since: "5.4.0"
     platforms: [iphone, ipad]
 
   - name: MESSENGER_BUTTON_STYLE_WHITE
@@ -1183,7 +1183,7 @@ properties:
         the default send button style.
     type: Number
     permission: read-only
-    since: 5.1.0
+    since: "5.4.0"
     platforms: [iphone, ipad]
 
   - name: MESSENGER_BUTTON_STYLE_WHITE_BORDERED
@@ -1192,7 +1192,7 @@ properties:
         the default send button style.
     type: Number
     permission: read-only
-    since: 5.1.0
+    since: "5.4.0"
     platforms: [iphone, ipad]
 
   - name: permissions
@@ -1692,7 +1692,7 @@ name: MessengerDialogParams
 summary: |
     Optional parameters to pass to either the
     [presentMessengerDialog()](Modules.Facebook.presentMessengerDialog) method.
-since: 5.1.0
+since: "5.4.0"
 platforms: [iphone, ipad]
 properties:
   - name: title
