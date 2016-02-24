@@ -1468,6 +1468,64 @@ examples:
 
         * [Facebook Share Dialog Reference](https://developers.facebook.com/docs/sharing/reference/share-dialog)
 
+  - title: Show the Invite Dialog
+    example: |
+
+        This example shows how to use the Invite Dialog.
+
+            var wallDialog = Ti.UI.createButton({
+                title: 'Invite friends!',
+                top: 135, left: 10, right: 10, height: 40
+            });
+
+            wallDialog.addEventListener('click', function() {
+                FB.presentInviteDialog({
+                    appLink: "https://fb.me/814669901978535",
+	            appPreviewImageLink: "https://www.mydomain.com/my_invite_image.jpg"
+                });
+            });
+
+        For more information on Invite Dialogs, see:
+
+        * [Facebook Invite Dialog Reference](https://developers.facebook.com/docs/app-invites/ios)
+
+  - title: Share content to the Facebook Messenger
+    example: |
+        
+        This example shows how to share images, GIF's and videos to the Facebook messenger.
+
+            var btn = Ti.UI.createButton({
+                title: "Share media to messenger"
+            });
+            btn.addEventListener("click", function(e) {
+                var media = [
+                    Ti.UI.createView({height: 30,width:30,backgroundColor: "#ff0"}).toImage(), // Image blob
+                    Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, "test.gif").read(), // GIF Blob
+                    Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, "movie.mp4").read() // Video Blob
+                ];
+
+                var options = Ti.UI.createOptionDialog({
+                    options: ["Photo", "GIF", "Video", "Cancel"],
+                    cancel: 3
+                });
+                options.addEventListener("click", function(e) {
+                    if (e.index == 3) {
+                        return;
+                    }
+                    FB.shareMediaToMessenger({
+                        media: media[e.index],
+                        metadata: "Ti rocks!",
+                        link: "https://appcelerator.com",
+                        //renderAsSticker: true // Only for photos e.g. selfies
+                    });
+                });
+                options.show();
+            });
+
+        For more information on sharing media to the Facebook Mesenger, see:
+
+        * [Facebook Messenger Reference](https://developers.facebook.com/docs/messenger)
+
   - title: Requesting additional permissions
     example: |
 
@@ -1744,7 +1802,9 @@ since: "5.4.0"
 platforms: [iphone, ipad]
 properties:
   - name: media
-    summary: Media to send with the messenger. Allowed media are images, GIF's and videos.
+    summary: | 
+        Media to send with the messenger. Allowed media are images, GIF's and videos represented
+        as Blobs.
     type: Titanium.Blob
     optional: false 
 
@@ -1781,7 +1841,8 @@ platforms: [iphone, ipad]
 properties:
   - name: appLink
     summary: An app link target that will be used as a target when the user accept the invite.
-    description: This is a requirement.
+    description: | 
+        This is a requirement. You can find out more about app links [here](https://developers.facebook.com/docs/applinks).
     type: String
     optional: false 
 

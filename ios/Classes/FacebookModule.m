@@ -502,14 +502,15 @@ NSDictionary *launchOptions = nil;
 -(void)presentInviteDialog:(id)args
 {
     id params = [args objectAtIndex:0];
+    ENSURE_SINGLE_ARG(params, NSDictionary);
 
     TiThreadPerformOnMainThread(^{
         FBSDKAppInviteContent *content =[[FBSDKAppInviteContent alloc] init];
-        content.appLinkURL = [NSURL URLWithString:[params objectForKey:@"appLink"]];
-        content.appInvitePreviewImageURL = [NSURL URLWithString:[params objectForKey:@"appPreviewImageLink"]];
+        [content setAppLinkURL:[NSURL URLWithString:[params objectForKey:@"appLink"]]];
+        [content setAppInvitePreviewImageURL:[NSURL URLWithString:[params objectForKey:@"appPreviewImageLink"]]];
         
         [FBSDKAppInviteDialog showFromViewController:nil withContent:content delegate:self];
-    },NO);
+    }, NO);
 }
 
 //presents game request dialog.
@@ -845,7 +846,11 @@ NSDictionary *launchOptions = nil;
 
 -(void)appInviteDialog:(FBSDKAppInviteDialog *)appInviteDialog didCompleteWithResults:(NSDictionary *)results
 {
-    [self fireDialogEventWithSuccess:YES andError:nil cancelled:NO];
+    BOOL cancelled = NO;
+    if (results) {
+        cancelled = [[results valueForKey:@"completionGesture"] isEqualToString:@"cancel"];
+    }
+    [self fireDialogEventWithSuccess:!cancelled andError:nil cancelled:cancelled];
 }
 
 -(void)fireDialogEventWithSuccess:(BOOL)success andError:(NSError*)error cancelled:(BOOL)cancelled
