@@ -1481,7 +1481,7 @@ examples:
             wallDialog.addEventListener('click', function() {
                 FB.presentInviteDialog({
                     appLink: "https://fb.me/xxxxxxxx",
-	            appPreviewImageLink: "https://www.mydomain.com/my_invite_image.jpg"
+	                appPreviewImageLink: "https://www.mydomain.com/my_invite_image.jpg"
                 });
             });
 
