@@ -52,7 +52,9 @@ NSDictionary *launchOptions = nil;
     NSString *annotation;
     
     if ([TiUtils isIOS9OrGreater]) {
+#ifdef __IPHONE_9_0
         annotation = [launchOptions objectForKey:UIApplicationOpenURLOptionsAnnotationKey];
+#endif
     } else {
         annotation = nil;
     }
