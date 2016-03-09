@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:module xmlns:ti="http://ti.appcelerator.org" xmlns:android="http://schemas.android.com/apk/res/android">
-	<ios>
-		<plist>
-			<dict>
-				<key>LSApplicationQueriesSchemes</key>
-				<array>
-					<string>fbapi</string>
+    <ios>
+        <plist>
+            <dict>
+                <key>LSApplicationQueriesSchemes</key>
+                <array>
+                    <string>fbapi</string>
                     <string>fbapi20130214</string>
                     <string>fbapi20130410</string>
                     <string>fbapi20130702</string>
@@ -18,9 +18,9 @@
                     <string>fbauth</string>
                     <string>fbauth2</string>
                     <string>fb-messenger-api</string>
-                    <string>fb-messenger-api20140430</string>					
-			    </array>
-			</dict>
-		</plist>
-	</ios>
+                    <string>fb-messenger-api20140430</string>
+                </array>
+            </dict>
+        </plist>
+    </ios>
 </ti:module>
