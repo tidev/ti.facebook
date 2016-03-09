@@ -1,6 +1,10 @@
 # Change Log
 <pre>
-v5.0.0 Updated Facebook API to 4.7 in iOS, that supports iOS9 [TIMOB-19383]
+v5.1.0 Updated Facebook API to 4.10.0 in iOS  [MOD-2180]
+       Support for the Facebook Messenger API. [MOD-2180]
+       Support for the Invite Dialog [MOD-2200]
+
+v5.0.0 Updated Facebook API to 4.7.0 in iOS, that supports iOS9 [TIMOB-19383]
 	   Updated Facebook API to 4.7.0 in Android [TIMOB-19577]
 
 v4.0.5 fixed presentSendRequestDialog with to and title params [MOD-2126]

@@ -8,28 +8,36 @@ var fb = require('facebook');
 // create base UI tab and root window
 //
 
-tabGroup.addTab(Titanium.UI.createTab({  
+tabGroup.addTab(Titanium.UI.createTab({
     icon:'KS_nav_views.png',
     title:'Login',
     window:require('facebook_login_logout').window()
 }));
-tabGroup.addTab(Titanium.UI.createTab({  
+tabGroup.addTab(Titanium.UI.createTab({
     icon:'KS_nav_views.png',
     title:'Read',
     window:require('facebook_read_stream').window()
 }));
 
-tabGroup.addTab(Titanium.UI.createTab({  
+tabGroup.addTab(Titanium.UI.createTab({
     icon:'KS_nav_views.png',
     title:'Publish',
     window:require('facebook_publish_stream').window()
 }));
 
-tabGroup.addTab(Titanium.UI.createTab({  
+tabGroup.addTab(Titanium.UI.createTab({
     icon:'KS_nav_views.png',
     title:'Photo',
     window:require('facebook_photos').window()
 }));
+
+if (Ti.Platform.osname != 'android') {
+    tabGroup.addTab(Titanium.UI.createTab({
+        icon:'KS_nav_views.png',
+        title:'Messenger',
+        window:require('facebook_messenger').window()
+    }));
+}
 
 fb.initialize(); // after you set up login/logout listeners and permissions
 
@@ -37,5 +45,5 @@ fb.initialize(); // after you set up login/logout listeners and permissions
 if (Ti.Platform.osname == 'android') {
 	tabGroup.fbProxy = fb.createActivityWorker({lifecycleContainer: tabGroup});
 }
-	
+
 tabGroup.open();

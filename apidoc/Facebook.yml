@@ -48,6 +48,8 @@ description: |
 
     * **dialog() method** -- Use either
       [presentSendRequestDialog()](Modules.Facebook.presentSendRequestDialog),
+      [presentInviteDialog()](Modules.Facebook.presentInviteDialog),
+      [presentMessengerDialog()](Modules.Facebook.presentMessengerDialog),
       [presentShareDialog()](Modules.Facebook.presentShareDialog) or
       [presentWebShareDialog()](Modules.Facebook.presentWebShareDialog).
       For more details, see 'Share Dialogs' and 'Request Dialogs' below.
@@ -382,6 +384,8 @@ description: |
     A request dialog allows a user to invite another user to use your application.
     Facebook will send a private message to the recipient.
     The typical use case is to invite another user to play a game.
+    If you want to invite people to your application which is not a game, use the
+    [presentInviteDialog()](Modules.Facebook.presentInviteDialog) method instead.
 
     To send a request to a user, call the
     [presentSendRequestDialog()](Modules.Facebook.presentSendRequestDialog) method and pass the
@@ -411,8 +415,44 @@ description: |
                 }
             });
 
-    For details on dialog see the
+    For details on request dialogs see the
     [official Facebook Request Dialogs documentation](https://developers.facebook.com/docs/games/requests/v2.2).
+
+    ### Messenger Dialog
+
+    A messenger dialog allows a user to send content to the Facebook Messenger using your application.
+
+    To send a message to a user, call the [presentMessengerDialog()](Modules.Facebook.presentMessengerDialog) method 
+    and pass the method a dictionary with the optional values "title", "description", "link", "to", "placeID" 
+    and "referal".
+
+            fb.presentMessengerDialog({
+                title: "Appcelerator Titanium rocks!", // The title of the link
+                description: "Shared from my Titanium application", // The description of the link
+                link: "https://appcelerator.com", // The link you want to share
+                referal: "ti_app", // The referal to be added as a suffix to your link
+                placeID: "my_id", // The ID for a place to tag with this content
+                to: [] // List of IDs for taggable people to tag with this content
+            });
+
+    For details on dialog see the
+    [official Facebook Messenger Dialogs documentation](https://developers.facebook.com/docs/messenger).
+
+    ### Messenger Button
+
+    The Messenger button provides a quick mechanism for users to share content to the Facebook Messenger. 
+    A click on the button can share the content to multiple users.
+
+    To create a Messenger button, call the [createMessengerButton()](Modules.Facebook.createMessengerButton) 
+    method and pass the "mode" and "style" properties: 
+
+        var messengerButton = fb.createMessengerButton({
+            mode: fb.MESSENGER_BUTTON_MODE_RECTANGULAR
+            style: fb.MESSENGER_BUTTON_STYLE_BLUE
+        });
+        win.add(messengerButton);
+
+    For more information, see the [MessengerButton API reference](Modules.Facebook.MessengerButton).
 
     ### Like Button
 
@@ -582,6 +622,20 @@ methods:
         Be sure to set your [appid](Modules.Facebook.appid) before calling `publishInstall`.
     since: "3.4.1"
 
+  - name: presentInviteDialog
+    summary: |
+        Opens a supported Facebook Invite dialog from the Facebook App.
+    description: |
+        To monitor if the share request succeeded or not, listen to the 
+        <Modules.Facebook.shareCompleted> event.
+    parameters:
+      - name: params
+        summary: |
+            A dictionary object containing required and optional parameters.
+        type: InviteDialogParams
+    since: "5.4.0"
+    platforms: [iphone, ipad]
+
   - name: presentShareDialog
     summary: |
         Opens a supported Facebook Share dialog from the Facebook App.
@@ -599,6 +653,24 @@ methods:
             A dictionary object containing optional parameters.
         type: ShareDialogParams
     since: 4.0.0
+
+  - name: presentMessengerDialog
+    summary: |
+        Opens a supported Messenger dialog from the Facebook Messenger App.
+    description: |
+        Be sure to check if the device can support this method by calling [canOpenURL](Titanium.Platform.canOpenURL) with "fb-messenger-api://"
+        before using this method. If true, you can use this method. If false, the Facebook Messenger application
+        is probably not installed in the device. 
+
+        Listen for the <Modules.Facebook.shareCompleted> to be notified if the attempt was
+        successful or not.
+    parameters:
+      - name: params
+        summary: |
+            A dictionary object containing optional parameters.
+        type: MessengerDialogParams
+    since: "5.4.0"
+    platforms: [iphone, ipad]
 
   - name: presentWebShareDialog
     summary: |
@@ -766,6 +838,16 @@ methods:
         summary: Callback to invoke when the request completes.
         type: Callback<FacebookPermissionResponse>
     since: 4.0.0
+
+  - name: shareMediaToMessenger
+    summary: Call this method to open Messenger and share an image, animated GIF or video.
+    parameter:
+      - name: params
+        summary: |
+            A dictionary object containing required and optional parameters.
+        type: ShareToMessengerParams
+    since: "5.4.0"
+    platforms: [iphone, ipad]
 
 events:
 
@@ -1062,6 +1144,57 @@ properties:
     type: Boolean
     permission: read-only
 
+  - name: MESSENGER_BUTTON_MODE_CIRCULAR
+    summary: |
+        Use with [MessengerButton.mode](Modules.Facebook.MessengerButton.mode) to specify
+        the default send button reading "Send".
+    description: | 
+        You can localize the button by localizing "Send" in your strings.xml. Learn more about
+        that topic [here](http://docs.appcelerator.com/platform/latest/#!/guide/Internationalization).
+    type: Number
+    permission: read-only
+    since: "5.4.0"
+    platforms: [iphone, ipad]
+
+  - name: MESSENGER_BUTTON_MODE_RECTANGULAR
+    summary: |
+        Use with [MessengerButton.mode](Modules.Facebook.MessengerButton.mode) to specify
+        the default send button reading "Send".
+    description: | 
+        You can localize the button by localizing "Send" in your strings.xml. Learn more about
+        that topic [here](http://docs.appcelerator.com/platform/latest/#!/guide/Internationalization).
+    type: Number
+    permission: read-only
+    since: "5.4.0"
+    platforms: [iphone, ipad]
+
+  - name: MESSENGER_BUTTON_STYLE_BLUE
+    summary: |
+        Use with [MessengerButton.style](Modules.Facebook.MessengerButton.style) to specify
+        the default send button style.
+    type: Number
+    permission: read-only
+    since: "5.4.0"
+    platforms: [iphone, ipad]
+
+  - name: MESSENGER_BUTTON_STYLE_WHITE
+    summary: |
+        Use with [MessengerButton.style](Modules.Facebook.MessengerButton.style) to specify
+        the default send button style.
+    type: Number
+    permission: read-only
+    since: "5.4.0"
+    platforms: [iphone, ipad]
+
+  - name: MESSENGER_BUTTON_STYLE_WHITE_BORDERED
+    summary: |
+        Use with [MessengerButton.style](Modules.Facebook.MessengerButton.style) to specify
+        the default send button style.
+    type: Number
+    permission: read-only
+    since: "5.4.0"
+    platforms: [iphone, ipad]
+
   - name: permissions
     summary: Array of permissions to request for your app.
     description: |
@@ -1335,6 +1468,64 @@ examples:
 
         * [Facebook Share Dialog Reference](https://developers.facebook.com/docs/sharing/reference/share-dialog)
 
+  - title: Show the Invite Dialog
+    example: |
+
+        This example shows how to use the Invite Dialog.
+
+            var wallDialog = Ti.UI.createButton({
+                title: 'Invite friends!',
+                top: 135, left: 10, right: 10, height: 40
+            });
+
+            wallDialog.addEventListener('click', function() {
+                FB.presentInviteDialog({
+                    appLink: "https://fb.me/xxxxxxxx",
+	                appPreviewImageLink: "https://www.mydomain.com/my_invite_image.jpg"
+                });
+            });
+
+        For more information on Invite Dialogs, see:
+
+        * [Facebook Invite Dialog Reference](https://developers.facebook.com/docs/app-invites/ios)
+
+  - title: Share content to the Facebook Messenger
+    example: |
+        
+        This example shows how to share images, GIF's and videos to the Facebook messenger.
+
+            var btn = Ti.UI.createButton({
+                title: "Share media to messenger"
+            });
+            btn.addEventListener("click", function(e) {
+                var media = [
+                    Ti.UI.createView({height: 30,width:30,backgroundColor: "#ff0"}).toImage(), // Image blob
+                    Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, "test.gif").read(), // GIF Blob
+                    Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, "movie.mp4").read() // Video Blob
+                ];
+
+                var options = Ti.UI.createOptionDialog({
+                    options: ["Photo", "GIF", "Video", "Cancel"],
+                    cancel: 3
+                });
+                options.addEventListener("click", function(e) {
+                    if (e.index == 3) {
+                        return;
+                    }
+                    FB.shareMediaToMessenger({
+                        media: media[e.index],
+                        metadata: "Ti rocks!",
+                        link: "https://appcelerator.com",
+                        //renderAsSticker: true // Only for photos e.g. selfies
+                    });
+                });
+                options.show();
+            });
+
+        For more information on sharing media to the Facebook Messenger, see:
+
+        * [Facebook Messenger Reference](https://developers.facebook.com/docs/messenger)
+
   - title: Requesting additional permissions
     example: |
 
@@ -1497,6 +1688,52 @@ properties:
     type: String
 
 ---
+name: MessengerDialogParams
+summary: |
+    Optional parameters to pass to either the
+    [presentMessengerDialog()](Modules.Facebook.presentMessengerDialog) method.
+since: "5.4.0"
+platforms: [iphone, ipad]
+properties:
+  - name: title
+    summary: The title to display for this link.
+    description: |
+        This value may be discarded for specially handled links (ex: iTunes URLs).
+    type: String
+
+  - name: description
+    summary: The description of the link.
+    description: |
+        If not specified, this field is automatically populated by information scraped from the contentURL,
+        typically the title of the page. This value may be discarded for specially handled links (ex: iTunes URLs).
+    type: String
+
+  - name: link
+    summary: URL for the content being shared.
+    description: |
+        This URL will be checked for all link meta tags for linking in platform specific ways.
+        See Facebook documentation for App Links (https://developers.facebook.com/docs/applinks/).
+    type: String
+
+  - name: picture
+    summary: Link to a thumbnail to associate with the link.
+    type: String
+
+  - name: to
+    summary: List of IDs for taggable people to tag with this content.
+    description: |
+        See Facebook documentation for Taggable Friends (https://developers.facebook.com/docs/graph-api/reference/user/taggable_friends)
+    type: Array
+
+  - name: placeID
+    summary: The ID for a place to tag with this content.
+    type: String
+
+  - name: referal
+    summary: A value to be added to the referrer URL when a person follows a link from this shared content on feed.
+    type: String
+
+---
 name: RequestDialogParams
 summary: |
     Parameters to pass to [presentSendRequestDialog()](Modules.Facebook.presentSendRequestDialog) method.
@@ -1556,3 +1793,61 @@ properties:
     type: String
     optional: true    
     since: "5.0.0"
+
+---
+name: ShareToMessengerParams
+summary: |
+    Parameters to pass to [shareMediaToMessenger()](Modules.Facebook.shareMediaToMessenger) method.
+since: "5.4.0"
+platforms: [iphone, ipad]
+properties:
+  - name: media
+    summary: | 
+        Media to send with the messenger. Allowed media are images, GIF's and videos represented
+        as Blobs.
+    type: Titanium.Blob
+    optional: false 
+
+  - name: metadata
+    summary: |
+        Pass additional information to be sent to Messenger which is sent back to the user's app when 
+        they reply to an attributed message.
+    type: String
+    optional: true 
+
+  - name: link
+    summary: Optional property describing the www source URL of the content.
+    description: |
+        Setting this property improves performance by allowing Messenger to download the content directly 
+        rather than uploading the content from your app. This option is only used for animated GIFs.
+    type: String
+    optional: true 
+
+  - name: renderAsSticker
+    summary: Optional property describing whether the content should be rendered like a sticker.
+    description: |
+        Setting this property informs Messenger that the media content should be rendered as a sticker.
+        This option is only used for static images.
+    type: Boolean
+    default: false 
+    optional: true
+
+---
+name: InviteDialogParams
+summary: |
+    Parameters to pass to [presentInviteDialog()](Modules.Facebook.presentInviteDialog) method.
+since: "5.4.0"
+platforms: [iphone, ipad]
+properties:
+  - name: appLink
+    summary: An app link target that will be used as a target when the user accept the invite.
+    description: | 
+        This is a requirement. You can find out more about app links [here](https://developers.facebook.com/docs/applinks).
+    type: String
+    optional: false 
+
+  - name: appPreviewImageLink
+    summary: A URL to a preview image that will be displayed with the app invite
+    description: This is optional. If you don't include it a fallback image will be used.
+    type: String
+    optional: true 

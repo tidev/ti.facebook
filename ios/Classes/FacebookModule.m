@@ -5,12 +5,13 @@
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  *
- * Copyright (c) 2009-2015 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2016 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  */
 
 #import "FacebookModule.h"
+#import "FacebookConstants.h"
 #import "TiBase.h"
 #import "TiHost.h"
 #import "TiUtils.h"
@@ -51,7 +52,9 @@ NSDictionary *launchOptions = nil;
     NSString *annotation;
     
     if ([TiUtils isIOS9OrGreater]) {
+#ifdef __IPHONE_9_0
         annotation = [launchOptions objectForKey:UIApplicationOpenURLOptionsAnnotationKey];
+#endif
     } else {
         annotation = nil;
     }
@@ -248,6 +251,32 @@ NSDictionary *launchOptions = nil;
 {
     return [NSNumber numberWithInt:FBSDKGameRequestFilterAppNonUsers];
 }
+
+-(id)MESSENGER_BUTTON_MODE_RECTANGULAR
+{
+    return [NSNumber numberWithInt:TiFacebookShareButtonModeRectangular];
+}
+
+-(id)MESSENGER_BUTTON_MODE_CIRCULAR
+{
+    return [NSNumber numberWithInt:TiFacebookShareButtonModeCircular];
+}
+
+-(id)MESSENGER_BUTTON_STYLE_BLUE
+{
+    return [NSNumber numberWithInt:FBSDKMessengerShareButtonStyleBlue];
+}
+
+-(id)MESSENGER_BUTTON_STYLE_WHITE
+{
+    return [NSNumber numberWithInt:FBSDKMessengerShareButtonStyleWhite];
+}
+
+-(id)MESSENGER_BUTTON_STYLE_WHITE_BORDERED
+{
+    return [NSNumber numberWithInt:FBSDKMessengerShareButtonStyleWhiteBordered];
+}
+
 /**
  * JS example:
  *
@@ -410,10 +439,79 @@ NSDictionary *launchOptions = nil;
                                         delegate:self];
     }, NO);
 }
+
+// Presents a messenger dialog to share content using the Facebook messenger
+-(void)presentMessengerDialog:(id)args
+{
+    id params = [args objectAtIndex:0];
+    ENSURE_SINGLE_ARG(params, NSDictionary);
+   
+    TiThreadPerformOnMainThread(^{
+        FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
+        [content setContentURL:[NSURL URLWithString:[params objectForKey:@"link"]]];
+        [content setContentDescription:[params objectForKey:@"description"]];
+        [content setContentTitle:[params objectForKey:@"title"]];
+        [content setPlaceID:[params objectForKey:@"placeID"]];
+        [content setRef:[params objectForKey:@"referal"]];
+        [content setImageURL:[NSURL URLWithString:[params objectForKey:@"picture"]]];
+        
+        id to = [params objectForKey:@"to"];
+        ENSURE_TYPE_OR_NIL(to, NSArray);
+        
+        if (to != nil) {
+            [content setPeopleIDs:to];
+        }
+        
+        [FBSDKMessageDialog showWithContent:content delegate:self];
+    }, NO);
+}
+
+// Shares images, GIFs and videos to the messenger
+-(void)shareMediaToMessenger:(id)args
+{
+    id params = [args objectAtIndex:0];
+    ENSURE_SINGLE_ARG(params, NSDictionary);
+
+    id media = [params valueForKey:@"media"];
+    ENSURE_TYPE(media, TiBlob);
+
+    TiThreadPerformOnMainThread(^{
+        FBSDKMessengerShareOptions *options = [[FBSDKMessengerShareOptions alloc] init];
+        options.metadata = [params objectForKey:@"metadata"];
+        options.sourceURL = [NSURL URLWithString:[params objectForKey:@"link"]];
+        options.renderAsSticker = [TiUtils boolValue:[params objectForKey:@"renderAsSticker"] def:NO];
+        
+        if ([[media mimeType]  isEqual: @"image/gif"]) {
+            [FBSDKMessengerSharer shareAnimatedGIF:[NSData dataWithContentsOfFile:[(TiBlob*)media path]] withOptions:options];
+        } else if ([[media mimeType] containsString:@"image/"]) {
+            [FBSDKMessengerSharer shareImage:[TiUtils image:media proxy:self] withOptions:options];
+        } else if ([[media mimeType] containsString:@"video/"]) {
+            [FBSDKMessengerSharer shareVideo:[NSData dataWithContentsOfFile:[(TiBlob*)media path]] withOptions:options];
+        } else {
+            NSLog(@"[ERROR] Unknown media provided. Allowed media: Image, GIF and video.");
+        }
+    }, NO);
+}
+
 //presents share dialog using web dialog. Useful for devices with no facebook app installed.
 -(void)presentWebShareDialog:(id)args
 {
     DEPRECATED_REPLACED_REMOVED(@"Facebook.presentWebShareDialog", @"5.0.0", @"5.0.0", @"Titanium.Facebook.presentShareDialog");
+}
+
+// Presents an invite dialog using the native application. 
+-(void)presentInviteDialog:(id)args
+{
+    id params = [args objectAtIndex:0];
+    ENSURE_SINGLE_ARG(params, NSDictionary);
+
+    TiThreadPerformOnMainThread(^{
+        FBSDKAppInviteContent *content =[[FBSDKAppInviteContent alloc] init];
+        [content setAppLinkURL:[NSURL URLWithString:[params objectForKey:@"appLink"]]];
+        [content setAppInvitePreviewImageURL:[NSURL URLWithString:[params objectForKey:@"appPreviewImageLink"]]];
+        
+        [FBSDKAppInviteDialog showFromViewController:nil withContent:content delegate:self];
+    }, NO);
 }
 
 //presents game request dialog.
@@ -709,79 +807,71 @@ NSDictionary *launchOptions = nil;
 }
 
 
-#pragma mark share delegates
+#pragma mark Share dialog delegates
 -(void)sharer: (id<FBSDKSharing>)sharer didCompleteWithResults: (NSDictionary *)results
 {
-    BOOL success = YES;
-    BOOL cancelled = NO;
-    NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                  NUMBOOL(cancelled),@"cancelled",
-                                  NUMBOOL(success),@"success",
-                                  @"", @"error", nil];
-    [self fireEvent:@"shareCompleted" withObject:event];
+    [self fireDialogEventWithSuccess:YES andError:nil cancelled:NO];
 }
 
 -(void)sharer:(id<FBSDKSharing>)sharer didFailWithError:(NSError *)error
 {
-    BOOL success = NO;
-    BOOL cancelled = NO;
-    NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
-    if (errorString == nil) {
-        errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
-    }
-    NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                  NUMBOOL(cancelled),@"cancelled",
-                                  NUMBOOL(success),@"success",
-                                  errorString, @"error", nil];
-    [self fireEvent:@"shareCompleted" withObject:event];
+    [self fireDialogEventWithSuccess:NO andError:error cancelled:NO];
 }
 
 -(void)sharerDidCancel:(id<FBSDKSharing>)sharer
 {
-    BOOL success = NO;
-    BOOL cancelled = YES;
-    NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                  NUMBOOL(cancelled),@"cancelled",
-                                  NUMBOOL(success),@"success",
-                                  @"", @"error", nil];
-    [self fireEvent:@"shareCompleted" withObject:event];
+    [self fireDialogEventWithSuccess:NO andError:nil cancelled:YES];
 }
-#pragma game request delegates
+
+#pragma Game request delegates
 -(void)gameRequestDialog:(FBSDKGameRequestDialog *)gameRequestDialog didCompleteWithResults:(NSDictionary *)results
 {
-    BOOL success = YES;
-    BOOL cancelled = NO;
-    NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                  NUMBOOL(cancelled),@"cancelled",
-                                  NUMBOOL(success),@"success",
-                                  @"", @"error", nil];
-    [self fireEvent:@"requestDialogCompleted" withObject:event];
+    [self fireDialogEventWithSuccess:YES andError:nil cancelled:NO];
 }
 
 -(void)gameRequestDialog:(FBSDKGameRequestDialog *)gameRequestDialog didFailWithError:(NSError *)error
 {
-    BOOL success = NO;
-    BOOL cancelled = NO;
-    NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
-    if (errorString == nil) {
-        errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
-    }
-    NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                  NUMBOOL(cancelled),@"cancelled",
-                                  NUMBOOL(success),@"success",
-                                  errorString, @"error", nil];
-    [self fireEvent:@"requestDialogCompleted" withObject:event];
+    [self fireDialogEventWithSuccess:NO andError:error cancelled:NO];
 }
 
 -(void)gameRequestDialogDidCancel:(FBSDKGameRequestDialog *)gameRequestDialog
 {
-    BOOL success = NO;
-    BOOL cancelled = YES;
-    NSMutableDictionary *event = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                  NUMBOOL(cancelled),@"cancelled",
-                                  NUMBOOL(success),@"success",
-                                  @"", @"error", nil];
-    [self fireEvent:@"requestDialogCompleted" withObject:event];
+    [self fireDialogEventWithSuccess:NO andError:nil cancelled:YES];
+}
+
+#pragma mark Invite dialog delegates
+-(void)appInviteDialog:(FBSDKAppInviteDialog *)appInviteDialog didFailWithError:(NSError *)error
+{
+    [self fireDialogEventWithSuccess:YES andError:error cancelled:NO];
+}
+
+-(void)appInviteDialog:(FBSDKAppInviteDialog *)appInviteDialog didCompleteWithResults:(NSDictionary *)results
+{
+    BOOL cancelled = NO;
+    if (results) {
+        cancelled = [[results valueForKey:@"completionGesture"] isEqualToString:@"cancel"];
+    }
+    [self fireDialogEventWithSuccess:!cancelled andError:nil cancelled:cancelled];
+}
+
+-(void)fireDialogEventWithSuccess:(BOOL)success andError:(NSError*)error cancelled:(BOOL)cancelled
+{
+    NSMutableDictionary *event = [NSMutableDictionary dictionaryWithDictionary:@{
+        @"cancelled": NUMBOOL(cancelled),
+        @"success": NUMBOOL(success)}
+    ];
+    
+    if (error) {
+        NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
+        if (errorString == nil) {
+            errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+        }
+        [event setValue:errorString forKey:@"error"];
+    }
+    
+    if ([self _hasListeners:@"requestDialogCompleted"]) {
+        [self fireEvent:@"requestDialogCompleted" withObject:event];
+    }
 }
 
 // A function for parsing URL parameters returned by the Feed Dialog.

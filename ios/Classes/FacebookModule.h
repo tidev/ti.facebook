@@ -5,7 +5,7 @@
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  *
- * Copyright (c) 2009-2015 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-2016 by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  */
@@ -15,8 +15,9 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
+#import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 
-@interface FacebookModule : TiModule <FBSDKSharingDelegate, FBSDKGameRequestDialogDelegate>
+@interface FacebookModule : TiModule <FBSDKSharingDelegate, FBSDKGameRequestDialogDelegate, FBSDKAppInviteDialogDelegate>
 {
     NSString *uid;
     NSArray *permissions;

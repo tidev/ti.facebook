@@ -259,6 +259,73 @@ To share more information, example:
     });
 ```
 
+Invite Dialog
+------------
+
+Opens a supported Facebook Invite dialog from the Facebook App. To monitor if the share request succeeded 
+or not, listen to the `shareCompleted` event. Example:
+
+```javascript
+    var fb = require('facebook');
+    fb.presentInviteDialog({
+        appLink: "https://fb.me/xxxxxxxx",
+        appPreviewImageLink: "https://www.mydomain.com/my_invite_image.jpg"
+    });
+```
+
+Messenger Dialogs
+------------
+
+You can share content (including links and places) using the `presentMessengerDialog` method and 
+share media including images, GIF's and videos using the `shareMediaToMessenger` method. 
+
+Share links:
+
+```javascript
+    var fb = require('facebook');
+    fb.presentMessengerDialog({
+        title: "Appcelerator Titanium rocks!", // The title of the link
+        description: "Shared from my Titanium application", // The description of the link
+        link: "https://appcelerator.com", // The link you want to share
+        referal: "ti_app", // The referal to be added as a suffix to your link
+        placeID: "my_id", // The ID for a place to tag with this content
+        to: [] // List of IDs for taggable people to tag with this content
+    });
+```
+
+Share media:
+
+```javascript
+    var fb = require('facebook');
+    var btn = Ti.UI.createButton({
+        title: "Share media to messenger"
+    });
+    btn.addEventListener("click", function(e) {
+        var media = [
+            Ti.UI.createView({height: 30,width:30,backgroundColor: "#ff0"}).toImage(), // Image blob
+            Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, "test.gif").read(), // GIF Blob
+            Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, "movie.mp4").read() // Video Blob
+        ];
+
+        var options = Ti.UI.createOptionDialog({
+            options: ["Photo", "GIF", "Video", "Cancel"],
+            cancel: 3
+        });
+        options.addEventListener("click", function(e) {
+            if (e.index == 3) {
+                return;
+            }
+            fb.shareMediaToMessenger({
+                media: media[e.index],
+                metadata: "Ti rocks!",
+                link: "https://appcelerator.com", 
+                renderAsSticker: true // Only for photos e.g. selfies
+            });
+        });
+        options.show();
+    });
+```
+
 Send Requests Dialog
 --------------------
 
@@ -284,15 +351,33 @@ Like Button
 We can create a Like button just like any other view, with specific parameters documented in Facebook docs. Note there is no completion callback or event, and Facebook policies state "If you use the Like button on iOS or Android, don’t collect or use any information from it."
 
 ```javascript
-var likeButton = fb.createLikeButton({
-    objectId: "https://www.facebook.com/appcelerator", // URL or Facebook ID
-    foregroundColor: "white", // A color in Titanium format - see Facebook docs
-    likeViewStyle: 'box_count', // standard, button, box_count - see FB docs
-    auxiliaryViewPosition: 'inline', // bottom, inline, top - see FB docs
-    horizontalAlignment: 'left', // center, left, right - see FB docs,
-    soundEnabled: true // boolean, iOS only
-});
-win.add(likeButton);
+    var fb = require('facebook');
+    var likeButton = fb.createLikeButton({
+        objectId: "https://www.facebook.com/appcelerator", // URL or Facebook ID
+        foregroundColor: "white", // A color in Titanium format - see Facebook docs
+        likeViewStyle: 'box_count', // standard, button, box_count - see FB docs
+        auxiliaryViewPosition: 'inline', // bottom, inline, top - see FB docs
+        horizontalAlignment: 'left', // center, left, right - see FB docs,
+        soundEnabled: true // boolean, iOS only
+    });
+    win.add(likeButton);
+```
+
+Messenger Button
+-----------
+
+The Messenger button provides a quick mechanism for users to share content to the Facebook Messenger. 
+A click on the button can share the content to multiple users.
+
+To create a Messenger button, call the `createMessengerButton` method. Example: 
+
+```javascript
+    var fb = require('facebook');
+    var messengerButton = fb.createMessengerButton({
+        mode: fb.MESSENGER_BUTTON_MODE_RECTANGULAR
+        style: fb.MESSENGER_BUTTON_STYLE_BLUE
+    });
+    win.add(messengerButton);
 ```
 
 Notes
