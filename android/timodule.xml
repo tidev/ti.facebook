@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:module xmlns:ti="http://ti.appcelerator.org" xmlns:android="http://schemas.android.com/apk/res/android">
-	<!--
-		Similar to tiapp.xml, but contains module/platform specific
-		configuration in <iphone>, <android>, and <mobileweb> sections
-	-->
-	<iphone>
-	</iphone>
 	<android xmlns:android="http://schemas.android.com/apk/res/android">
-	</android>
-	<mobileweb>
-	</mobileweb>
+          <manifest>
+              <application>
+				  <activity
+					  android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+					  android:label="KitchenSinkFacebook"
+					  android:name="com.facebook.FacebookActivity"
+					  android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+
+                  <meta-data
+					  android:name="com.facebook.sdk.ApplicationId"
+					  android:value="@string/facebook_app_id"/>
+              </application>
+          </manifest>
+      </android>
 </ti:module>
