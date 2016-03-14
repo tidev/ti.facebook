@@ -49,17 +49,6 @@ Also make sure you have a URL Scheme in tiapp.xml that looks like fb123456789101
 
 To define a url scheme suffix for multiple apps sharing the same facebook app ID, simply add the suffix (in lower case and must start with a letter) to the relevant string under the CFBundleURLSchemes key. In this example, it will look like fb134793934930foo if you are adding the suffix foo. This will also require additional configurations in the facebook dashboard, see https://developers.facebook.com/docs/ios/troubleshooting#sharedappid for details.
 
-To enable the use of Facebook dialogs (e.g., Login, Share), you also need to include the following key and values in tiapp.xml to handle the switching in and out of your app:
-```xml
-<key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>fbapi</string>
-        <string>fb-messenger-api</string>
-        <string>fbauth2</string>
-        <string>fbshareextension</string>
-    </array>
-```
-
 For iOS9 and titanium 5.0.0.GA and above, App Transport Security is disabled by default.
 If you choose to enable it, you have to set the following keys and values in tiapp.xml:
 ```xml
@@ -86,16 +75,7 @@ If you choose to enable it, you have to set the following keys and values in tia
     </dict>
 ```
 
-On the android platform, in tiapp.xml or AndroidManifest.xml you must declare the following inside the \<application\> node 
-```xml
-<activity android:name="com.facebook.LoginActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:label="YourAppName"/>
-<activity android:name="com.facebook.FacebookActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:label="YourAppName" android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" />
-```
-You must also reference the string containing your Facebook app ID, inside the \<application\> node as well: 
-```xml
-<meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
-```
-The app id goes into the the file /platform/android/res/values/strings.xml, where you should define 
+On the android platform, the app id goes into the the file /platform/android/res/values/strings.xml, where you should define 
 ```xml
 <resources><string name="app_id">1234567890123456</string></resources>
 ```
