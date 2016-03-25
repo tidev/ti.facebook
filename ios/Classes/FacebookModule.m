@@ -50,7 +50,7 @@ NSDictionary *launchOptions = nil;
     NSString *urlString = [launchOptions objectForKey:@"url"];
     NSString *sourceApplication = [launchOptions objectForKey:@"source"];
     NSString *annotation;
-    
+
     if ([TiUtils isIOS9OrGreater]) {
 #ifdef __IPHONE_9_0
         annotation = [launchOptions objectForKey:UIApplicationOpenURLOptionsAnnotationKey];
@@ -58,7 +58,7 @@ NSDictionary *launchOptions = nil;
     } else {
         annotation = nil;
     }
-    
+
     if (urlString != nil) {
         FBSDKAccessToken *token = [FBSDKAccessToken currentAccessToken];
         NSSet* failed = token.declinedPermissions;
@@ -359,6 +359,7 @@ NSDictionary *launchOptions = nil;
     BOOL allowUI = args == nil ? YES : NO;
     NSArray *permissions_ = permissions == nil ? [NSArray array] : permissions;
     FBSDKLoginManager *loginManager = [[[FBSDKLoginManager alloc] init] autorelease];
+    [loginManager setLoginBehavior: FBSDKLoginBehaviorBrowser];
     TiThreadPerformOnMainThread(^{
         [loginManager logInWithReadPermissions: permissions_ fromViewController:nil handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
             if (error) {
@@ -419,7 +420,7 @@ NSDictionary *launchOptions = nil;
 {
     id params = [args objectAtIndex:0];
     ENSURE_SINGLE_ARG(params, NSDictionary);
-        
+
     TiThreadPerformOnMainThread(^{
         FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
         content.contentURL = [NSURL URLWithString:[params objectForKey:@"link"]];
@@ -445,7 +446,7 @@ NSDictionary *launchOptions = nil;
 {
     id params = [args objectAtIndex:0];
     ENSURE_SINGLE_ARG(params, NSDictionary);
-   
+
     TiThreadPerformOnMainThread(^{
         FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
         [content setContentURL:[NSURL URLWithString:[params objectForKey:@"link"]]];
@@ -454,14 +455,14 @@ NSDictionary *launchOptions = nil;
         [content setPlaceID:[params objectForKey:@"placeID"]];
         [content setRef:[params objectForKey:@"referal"]];
         [content setImageURL:[NSURL URLWithString:[params objectForKey:@"picture"]]];
-        
+
         id to = [params objectForKey:@"to"];
         ENSURE_TYPE_OR_NIL(to, NSArray);
-        
+
         if (to != nil) {
             [content setPeopleIDs:to];
         }
-        
+
         [FBSDKMessageDialog showWithContent:content delegate:self];
     }, NO);
 }
@@ -480,7 +481,7 @@ NSDictionary *launchOptions = nil;
         options.metadata = [params objectForKey:@"metadata"];
         options.sourceURL = [NSURL URLWithString:[params objectForKey:@"link"]];
         options.renderAsSticker = [TiUtils boolValue:[params objectForKey:@"renderAsSticker"] def:NO];
-        
+
         if ([[media mimeType]  isEqual: @"image/gif"]) {
             [FBSDKMessengerSharer shareAnimatedGIF:[NSData dataWithContentsOfFile:[(TiBlob*)media path]] withOptions:options];
         } else if ([[media mimeType] containsString:@"image/"]) {
@@ -499,7 +500,7 @@ NSDictionary *launchOptions = nil;
     DEPRECATED_REPLACED_REMOVED(@"Facebook.presentWebShareDialog", @"5.0.0", @"5.0.0", @"Titanium.Facebook.presentShareDialog");
 }
 
-// Presents an invite dialog using the native application. 
+// Presents an invite dialog using the native application.
 -(void)presentInviteDialog:(id)args
 {
     id params = [args objectAtIndex:0];
@@ -509,7 +510,7 @@ NSDictionary *launchOptions = nil;
         FBSDKAppInviteContent *content =[[FBSDKAppInviteContent alloc] init];
         [content setAppLinkURL:[NSURL URLWithString:[params objectForKey:@"appLink"]]];
         [content setAppInvitePreviewImageURL:[NSURL URLWithString:[params objectForKey:@"appPreviewImageLink"]]];
-        
+
         [FBSDKAppInviteDialog showFromViewController:nil withContent:content delegate:self];
     }, NO);
 }
@@ -600,7 +601,7 @@ NSDictionary *launchOptions = nil;
                                              [NSNumber numberWithBool:success],@"success",
                                              [NSNumber numberWithBool:cancelled],@"cancelled",
                                              errorCode,@"code", errorString,@"error", nil];
-            
+
             KrollEvent * invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:propertiesDict thisObject:self];
             [[callback context] enqueue:invocationEvent];
             [invocationEvent release];
@@ -659,7 +660,7 @@ NSDictionary *launchOptions = nil;
                                              [NSNumber numberWithBool:success],@"success",
                                              [NSNumber numberWithBool:cancelled],@"cancelled",
                                              errorCode,@"code", errorString,@"error", nil];
-            
+
             KrollEvent * invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:propertiesDict thisObject:self];
             [[callback context] enqueue:invocationEvent];
             [invocationEvent release];
@@ -728,13 +729,13 @@ NSDictionary *launchOptions = nil;
                      returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys:
                                        NUMBOOL(success), @"success",
                                        path, @"path", errorString, @"error", nil];
-                     
+
                  }
                  KrollEvent * invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:returnedObject thisObject:self];
                  [[callback context] enqueue:invocationEvent];
                  [invocationEvent release];
                  [returnedObject release];
-                 
+
              }];
         }
     }, NO);
@@ -760,7 +761,7 @@ NSDictionary *launchOptions = nil;
         }
         [event setObject:errorString forKey:@"error"];
     }
-    
+
     if(result != nil){
         FBSDKProfile *profile = (FBSDKProfile*)result;
         NSDictionary *jsonDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -771,7 +772,7 @@ NSDictionary *launchOptions = nil;
                                         profile.name, @"name",
                                         [profile.linkURL absoluteString], @"linkURL",
                                         nil];
-        
+
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDictionary options:0 error:&error];
         NSString *resultString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         [event setObject:resultString forKey:@"data"];
@@ -860,7 +861,7 @@ NSDictionary *launchOptions = nil;
         @"cancelled": NUMBOOL(cancelled),
         @"success": NUMBOOL(success)}
     ];
-    
+
     if (error) {
         NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
         if (errorString == nil) {
@@ -868,7 +869,7 @@ NSDictionary *launchOptions = nil;
         }
         [event setValue:errorString forKey:@"error"];
     }
-    
+
     if ([self _hasListeners:@"requestDialogCompleted"]) {
         [self fireEvent:@"requestDialogCompleted" withObject:event];
     }
