@@ -321,6 +321,14 @@ NSDictionary *launchOptions = nil;
     [FBSDKAppEvents logEvent:[TiUtils stringValue:event]];
 }
 
+-(void)setLoginBehavior:(id)arg
+{
+    ENSURE_TYPE(arg, NSNumber);
+    
+    // validate FBSDKLoginBehavior Type?
+    loginBehavior = [arg unsignedIntegerValue];
+}
+
 /**
  * JS example:
  *
@@ -359,7 +367,10 @@ NSDictionary *launchOptions = nil;
     BOOL allowUI = args == nil ? YES : NO;
     NSArray *permissions_ = permissions == nil ? [NSArray array] : permissions;
     FBSDKLoginManager *loginManager = [[[FBSDKLoginManager alloc] init] autorelease];
-    [loginManager setLoginBehavior:FBSDKLoginBehaviorBrowser];
+    [loginManager setLoginBehavior:FBSDKLoginBehaviorNative];
+    if (loginBehavior) {
+        [loginManager setLoginBehavior:loginBehavior];
+    }
     TiThreadPerformOnMainThread(^{
         [loginManager logInWithReadPermissions: permissions_ fromViewController:nil handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
             if (error) {
