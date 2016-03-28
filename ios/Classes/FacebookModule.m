@@ -252,6 +252,26 @@ NSDictionary *launchOptions = nil;
     return [NSNumber numberWithInt:FBSDKGameRequestFilterAppNonUsers];
 }
 
+-(id)LOGIN_BEHAVIOR_BROWSER
+{
+    return [NSNumber numberWithUnsignedInteger:FBSDKLoginBehaviorBrowser];
+}
+
+-(id)LOGIN_BEHAVIOR_NATIVE
+{
+    return [NSNumber numberWithUnsignedInteger:FBSDKLoginBehaviorNative];
+}
+
+-(id)LOGIN_BEHAVIOR_SYTEM_ACCOUNT
+{
+    return [NSNumber numberWithUnsignedInteger:FBSDKLoginBehaviorSystemAccount];
+}
+
+-(id)LOGIN_BEHAVIOR_WEB
+{
+    return [NSNumber numberWithUnsignedInteger:FBSDKLoginBehaviorWeb];
+}
+
 -(id)MESSENGER_BUTTON_MODE_RECTANGULAR
 {
     return [NSNumber numberWithInt:TiFacebookShareButtonModeRectangular];
@@ -323,6 +343,7 @@ NSDictionary *launchOptions = nil;
 
 -(void)setLoginBehavior:(id)arg
 {
+    NSLog(@"The arg is: %@", arg);
     ENSURE_TYPE(arg, NSNumber);
     
     // validate FBSDKLoginBehavior Type?
@@ -367,7 +388,7 @@ NSDictionary *launchOptions = nil;
     BOOL allowUI = args == nil ? YES : NO;
     NSArray *permissions_ = permissions == nil ? [NSArray array] : permissions;
     FBSDKLoginManager *loginManager = [[[FBSDKLoginManager alloc] init] autorelease];
-    // [loginManager setLoginBehavior:FBSDKLoginBehaviorBrowser];
+    [loginManager setLoginBehavior:FBSDKLoginBehaviorBrowser];
     if (loginBehavior) {
         [loginManager setLoginBehavior:loginBehavior];
     }
