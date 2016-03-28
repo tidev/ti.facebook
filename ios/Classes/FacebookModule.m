@@ -367,7 +367,7 @@ NSDictionary *launchOptions = nil;
     BOOL allowUI = args == nil ? YES : NO;
     NSArray *permissions_ = permissions == nil ? [NSArray array] : permissions;
     FBSDKLoginManager *loginManager = [[[FBSDKLoginManager alloc] init] autorelease];
-    [loginManager setLoginBehavior:FBSDKLoginBehaviorNative];
+    // [loginManager setLoginBehavior:FBSDKLoginBehaviorBrowser];
     if (loginBehavior) {
         [loginManager setLoginBehavior:loginBehavior];
     }
