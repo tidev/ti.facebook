@@ -41,6 +41,7 @@ import com.facebook.HttpMethod;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.DefaultAudience;
 import com.facebook.login.LoginManager;
+import com.facebook.login.LoginBehavior;
 import com.facebook.login.LoginResult;
 import com.facebook.share.Sharer;
 import com.facebook.share.model.GameRequestContent;
@@ -90,9 +91,15 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
     @Kroll.constant public static final int FILTER_NONE = 0;
     @Kroll.constant public static final int FILTER_APP_USERS = 1;
     @Kroll.constant public static final int FILTER_APP_NON_USERS = 2;
+    
+    @Kroll.constant public static final String LOGIN_BEHAVIOR_BROWSER = "WEB_ONLY";
+    @Kroll.constant public static final String LOGIN_BEHAVIOR_NATIVE = "NATIVE_ONLY";
+    @Kroll.constant public static final String LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK = "NATIVE_WITH_FALLBACK";
+    @Kroll.constant public static final String LOGIN_BEHAVIOR_DEVICE_AUTH = "DEVICE_AUTH";
 
 	private static TiFacebookModule module;
 	private static String[] permissions = new String[]{};
+    private String loginBehavior;
 
 	private KrollFunction permissionCallback = null;
 
@@ -297,6 +304,16 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		}
 		return null;	
 	}
+    
+    @Kroll.setProperty @Kroll.method
+    public void setLoginBehavior(String behaviorConstant) {
+        loginBehavior = behaviorConstant;
+    }
+    
+    @Kroll.getProperty @Kroll.method
+    public String getLoginBehavior() {
+        return loginBehavior;
+    }
 
 	@Kroll.method
 	public void requestNewReadPermissions(String[] permissions, final KrollFunction callback) {
@@ -397,6 +414,9 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		for (int i=0; i < TiFacebookModule.permissions.length; i++){
 			Log.d(TAG, "authorizing permission: " + TiFacebookModule.permissions[i]);
 		}
+        if(loginBehavior != null) {
+            setLoginManagerLoginBehavior();
+        }
 		LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList(TiFacebookModule.permissions));
 	}
 	
@@ -611,6 +631,10 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		callbackManager.onActivityResult(requestCode, resultCode, data);
 		
 	}
+    
+    private void setLoginManagerLoginBehavior() {
+        LoginManager.getInstance().setLoginBehavior(LoginBehavior.valueOf(loginBehavior));
+    }
 }
 
 
