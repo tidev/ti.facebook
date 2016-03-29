@@ -341,6 +341,11 @@ NSDictionary *launchOptions = nil;
     [FBSDKAppEvents logEvent:[TiUtils stringValue:event]];
 }
 
+/**
+ * JS example:
+ * facebook.setLoginBehavior(facebook.LOGIN_BEHAVIOR_NATIVE);
+ *
+ */
 -(void)setLoginBehavior:(id)arg
 {
     ENSURE_TYPE(arg, NSNumber);
