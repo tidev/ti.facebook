@@ -343,10 +343,8 @@ NSDictionary *launchOptions = nil;
 
 -(void)setLoginBehavior:(id)arg
 {
-    NSLog(@"The arg is: %@", arg);
     ENSURE_TYPE(arg, NSNumber);
     
-    // validate FBSDKLoginBehavior Type?
     loginBehavior = [arg unsignedIntegerValue];
 }
 
