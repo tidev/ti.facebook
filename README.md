@@ -380,6 +380,22 @@ To create a Messenger button, call the `createMessengerButton` method. Example:
     win.add(messengerButton);
 ```
 
+Deferred App links
+------------------
+
+Deferred deep linking allows you to send people to a custom view after they installed your app via the app store.
+
+You can simply call fetchDeferredAppLink on startup to open eventually incoming app links.
+
+```javascript
+var fb = require('facebook');
+fb.fetchDeferredAppLink(function(e) {
+if (e.url) {
+// Dispatch internal routes
+}
+});
+```
+
 Notes
 ------------
 * Note that the FBSDKCoreKit.framework, FBSDKLoginKit.framework, FBSDKShareKit.framework directory is the prebuilt Facebook SDK directly downloaded from Facebook, zero modifications. 

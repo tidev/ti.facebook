@@ -740,6 +740,36 @@ NSDictionary *launchOptions = nil;
     }, NO);
 }
 
+-(void)fetchDeferredAppLink:(id)args
+{
+    id callback = [args objectAtIndex:0];
+    ENSURE_SINGLE_ARG(callback, KrollCallback);
+
+    TiThreadPerformOnMainThread(^{
+        [FBSDKAppLinkUtility fetchDeferredAppLink:^(NSURL *url, NSError *error) {
+            NSDictionary* returnedObject;
+
+            if (url) {
+                returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys:[url absoluteURL],@"url", nil];
+            } else {
+                if (error) {
+                    NSLog(@"[ERROR] Received error while fetching deferred app link %@", error);
+                    NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
+                    returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys: errorString,@"error", nil];
+                } else {
+                    returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys: NUMBOOL(YES),@"error", nil];
+                }
+            }
+
+            KrollEvent * invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:returnedObject thisObject:self];
+            [[callback context] enqueue:invocationEvent];
+            [invocationEvent release];
+            [returnedObject release];
+        }];
+    }, YES);
+}
+
+
 #pragma mark Listener work
 
 -(void)fireLogin:(id)result cancelled:(BOOL)cancelled withError:(NSError *)error
