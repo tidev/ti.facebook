@@ -44,6 +44,7 @@ public class LikeButtonView extends TiUIView
     public static final String ACTION_LIKE_ACTION_CONTROLLER_DID_ERROR = "com.facebook.sdk.DID_ERROR";
     public static final String ACTION_LIKE_ACTION_CONTROLLER_DID_RESET = "com.facebook.sdk.DID_RESET";
     public static final String ACTION_OBJECT_ID_KEY = "com.facebook.sdk.OBJECT_ID";
+    public static final String EVENT_STATUS_CHANGE = "statuschange";
 
     private LikeView likeView;
     private BroadcastReceiver broadcastReceiver;
@@ -78,12 +79,11 @@ public class LikeButtonView extends TiUIView
     }
 	
 	protected void updateLikeStatus() {
-		triggerStatusChangedEvent(); //Call js event 'statuschanged'
+		triggerStatusChangedEvent(); //Call js event 'statuschange'
 	}
 	
     public void triggerStatusChangedEvent() {
-        KrollDict kd = new KrollDict();
-        this.proxy.fireEvent("statuschanged", kd);
+        this.proxy.fireEvent(EVENT_STATUS_CHANGE, new KrollDict());
     }
 	
 	public LikeButtonView(TiViewProxy proxy) {

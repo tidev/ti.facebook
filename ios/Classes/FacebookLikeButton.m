@@ -12,6 +12,7 @@
 
 -(void)dealloc
 {
+    [like removeTarget:self action:@selector(likeStatusChanged:) forControlEvents:UIControlEventValueChanged];
     RELEASE_TO_NIL(like);
     [super dealloc];
 }
@@ -21,15 +22,16 @@
     if (like == nil) {
         like = [[FBSDKLikeControl alloc] init];
         
-        [like addTarget:self action:@selector(likeChanged:) forControlEvents:UIControlEventValueChanged];
+        [like addTarget:self action:@selector(likeStatusChanged:) forControlEvents:UIControlEventValueChanged];
         [self addSubview:like];
     }
     return like;
 }
 
-- (IBAction)likeChanged:(id)sender {
-    NSDictionary *e = [NSDictionary dictionary];
-    [self.proxy fireEvent:@"statuschanged" withObject:e];
+- (IBAction)likeStatusChanged:(id)sender {
+    if ([[self proxy] _hasListeners:@"statuschange"]) {
+        [[self proxy ] fireEvent:@"statuschange" withObject:@{}];
+    }
 }
 
 -(void)frameSizeChanged:(CGRect)frame bounds:(CGRect)bounds
