@@ -750,15 +750,23 @@ NSDictionary *launchOptions = nil;
             NSDictionary* returnedObject;
 
             if (url) {
-                returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys:[url absoluteURL],@"url", nil];
+                returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys: 
+                    NUMBOOL(YES), @"success", 
+                    [url absoluteURL], @"url",
+                    nil, @"error"
+                nil];
             } else {
-                if (error) {
-                    NSLog(@"[ERROR] Received error while fetching deferred app link %@", error);
+
+                NSString *errorString = "An error occurred. Please try again.";
+                if (error != nil) {
                     NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
-                    returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys: errorString,@"error", nil];
-                } else {
-                    returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys: NUMBOOL(YES),@"error", nil];
                 }
+
+                returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys: 
+                    NUMBOOL(NO), @"success",
+                    errorString, @"error", 
+                nil];
+
             }
 
             KrollEvent * invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:returnedObject thisObject:self];

@@ -839,6 +839,17 @@ methods:
         type: Callback<FacebookPermissionResponse>
     since: 4.0.0
 
+  - name: fetchDeferredAppLink
+    summary: Fetch the deferred app link
+    description: Deferred deep linking allows you to send people to a custom view after they installed your app via the app store.
+    parameters:
+
+      - name: callback
+        summary: Callback to invoke when the request completes.
+        type: Callback<FacebookDeferredAppLinkResponse>
+
+    since: "5.4.0"
+
   - name: shareMediaToMessenger
     summary: Call this method to open Messenger and share an image, animated GIF or video.
     parameter:
@@ -1851,3 +1862,21 @@ properties:
     description: This is optional. If you don't include it a fallback image will be used.
     type: String
     optional: true 
+
+---
+name: FacebookDeferredAppLinkResponse
+summary: Object returned from the [fetchDeferredAppLink()](Modules.Facebook.fetchDeferredAppLink) method
+platforms: [android, iphone, ipad]
+since: "5.4.0"
+properties:
+  - name: url
+    summary: The URL returned from the server.
+    type: String
+
+  - name: success
+    summary: Indicates if the response has succeded and the response contain a URL.
+    type: Boolean
+
+  - name: error
+    summary: A string that contain the error.
+    type: String
