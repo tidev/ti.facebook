@@ -1,5 +1,7 @@
 # Change Log
 <pre>
+v5.2.0 Added support for `LikeButton` event `statuschange`. [MOD-2241]
+
 v5.1.0 Updated Facebook API to 4.10.0 in iOS  [MOD-2180]
        Support for the Facebook Messenger API. [MOD-2180]
        Support for the Invite Dialog [MOD-2200]
