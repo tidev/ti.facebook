@@ -522,23 +522,6 @@ methods:
         Set the [appid](Modules.Facebook.appid) property as well as the `permissions` property
         before calling `authorize()`.
 
-  - name: setLoginBehavior
-    summary: |
-        Sets the behaviour that the module will attempt to use for authorize().
-    description: |
-        Be sure to set this before calling authorize if this is needed. It is
-        recommended to follow Facebook's [guidelines](https://developers.facebook.com/blog/post/2015/10/29/Facebook-Login-iOS9)
-        for ideal login behavior
-    type: Number
-    constants: [LOGIN_BEHAVIOR_*]
-    default:
-        Defaults to <Titanium.Modules.Facebook.LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK>
-        on Android and <Titanium.Modules.Facebook.LOGIN_BEHAVIOR_NATIVE> on iOS
-        (identical to the Android default).
-    since: "5.4.0"
-    availability: creation
-    platforms: [android, iphone, ipad]
-
   - name: createActivityWorker
     summary: |
         Creates a Facebook proxy to hook into the activity of either a standalone <Titanium.UI.Window>
@@ -1075,13 +1058,13 @@ properties:
     type: Number
     permission: read-only
 
-    - name: LOGIN_BEHAVIOR_BROWSER
-  summary: |
-      Opens login window in the default Web Browser (Safari/Firefox etc...)
-  type: Number
-  permission: read-only
-  since: "5.4.0"
-  platforms: [android, iphone, ipad]
+  - name: LOGIN_BEHAVIOR_BROWSER
+    summary: |
+        Opens login window in the default Web Browser (Safari/Firefox etc...)
+    type: Number
+    permission: read-only
+    since: "5.4.0"
+    platforms: [android, iphone, ipad]
 
   - name: LOGIN_BEHAVIOR_NATIVE
     summary: |
@@ -1119,7 +1102,7 @@ properties:
     type: Number
     permission: read-only
     since: "5.4.0"
-    platforms: [Android]
+    platforms: [android]
 
   - name: LOGIN_BEHAVIOR_DEVICE_AUTH
     summary: |
@@ -1127,7 +1110,7 @@ properties:
     type: Number
     permission: read-only
     since: "5.4.0"
-    platforms: [Android]
+    platforms: [android]
 
   - name: SSO_ONLY
     summary: Only attempt single sign-on.
@@ -1265,6 +1248,23 @@ properties:
     permission: read-only
     since: "5.4.0"
     platforms: [iphone, ipad]
+
+  - name: loginBehavior
+    summary: |
+        Defines the behavior that the module will attempt to use for authorize().
+    description: |
+        Be sure to set this before calling authorize if this is needed. It is
+        recommended to follow Facebook's [guidelines](https://developers.facebook.com/blog/post/2015/10/29/Facebook-Login-iOS9)
+        for ideal login behavior
+    type: Number
+    constants: [LOGIN_BEHAVIOR_*]
+    default:
+        Defaults to <Titanium.Modules.Facebook.LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK>
+        on Android and <Titanium.Modules.Facebook.LOGIN_BEHAVIOR_NATIVE> on iOS
+        (identical to the Android default).
+    since: "5.4.0"
+    availability: creation
+    platforms: [android, iphone, ipad]
 
   - name: permissions
     summary: Array of permissions to request for your app.
