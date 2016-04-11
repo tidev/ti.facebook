@@ -28,8 +28,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 
-import com.facebook.widget.LikeView.*;
-import com.facebook.internal.LikeActionController;
+import com.facebook.share.internal.LikeActionController;
 import com.facebook.share.widget.LikeView;
 import com.facebook.share.widget.LikeView.AuxiliaryViewPosition;
 import com.facebook.share.widget.LikeView.HorizontalAlignment;

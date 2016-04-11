@@ -148,3 +148,8 @@ properties:
         Set to `true` for sound.
     platforms: [iphone,ipad]
     type: Boolean
+
+events:
+
+  - name: statuschange
+    summary: Fired when the like button status changed.
