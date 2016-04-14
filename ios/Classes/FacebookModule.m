@@ -753,11 +753,11 @@ NSDictionary *launchOptions = nil;
                 returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys: 
                     NUMBOOL(YES), @"success", 
                     [url absoluteURL], @"url",
-                    nil, @"error"
+                    nil, @"error", 
                 nil];
             } else {
 
-                NSString *errorString = "An error occurred. Please try again.";
+                NSString *errorString = @"An error occurred. Please try again.";
                 if (error != nil) {
                     NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
                 }
