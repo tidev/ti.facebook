@@ -752,7 +752,7 @@ NSDictionary *launchOptions = nil;
 
 -(void)setCurrentAccessToken:(id)args 
 {
-    ENSURE_SINGLE_ARG(args, NSString);
+    ENSURE_SINGLE_ARG(args, NSDictionary);
 
     FBSDKAccessToken* token = [[FBSDKAccessToken alloc] 
         initWithTokenString: [args objectForKey:@"accessToken"] 
