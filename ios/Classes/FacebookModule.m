@@ -195,6 +195,16 @@ NSDictionary *launchOptions = nil;
     }, YES);
     return token;
 }
+
+-(id)appID
+{
+    __block NSString * appID;
+    TiThreadPerformOnMainThread(^{
+        appID = [FBSDKSettings appID];
+    }, YES);
+    return appID;
+}
+
 //deprecated and removed
 -(id)AUDIENCE_NONE
 {
@@ -738,6 +748,22 @@ NSDictionary *launchOptions = nil;
              }];
         }
     }, NO);
+}
+
+-(void)setCurrentAccessToken:(id)args 
+{
+    ENSURE_SINGLE_ARG(args, NSString);
+
+    FBSDKAccessToken* token = [[FBSDKAccessToken alloc] 
+        initWithTokenString: [args objectForKey:@"accessToken"] 
+        permissions: [args objectForKey:@"permissions"] 
+        declinedPermissions: [args objectForKey:@"declinedPermissions"]
+        appID: [args objectForKey:@"appID"]
+        userID: [args objectForKey:@"userID"]
+        expirationDate: [args objectForKey:@"expirationDate"]
+        refreshDate: [args objectForKey:@"refreshDate"]
+    ];
+    [FBSDKAccessToken setCurrentAccessToken:token];
 }
 
 #pragma mark Listener work
