@@ -162,14 +162,6 @@ NSDictionary *launchOptions = nil;
     return NULL;
 }
 
-/**
- * JS example:
- *
- * var facebook = require('facebook');
- * facebook.permissions = ['read_stream'];
- * alert(facebook.permissions);
- *
- */
 -(id)permissions
 {
     __block NSArray *perms;
@@ -179,19 +171,11 @@ NSDictionary *launchOptions = nil;
     return perms;
 }
 
-/**
- * JS example:
- *
- * var facebook = require('facebook');
- * alert(facebook.accessToken);
- *
- */
-
 -(id)accessToken
 {
     __block NSString * token;
     TiThreadPerformOnMainThread(^{
-		token = [[FBSDKAccessToken currentAccessToken] tokenString];
+        token = [[FBSDKAccessToken currentAccessToken] tokenString];
     }, YES);
     return token;
 }
