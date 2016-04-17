@@ -230,12 +230,6 @@ To do
 *	Facebook branded buttons - use the SDK implementation or don't do it.
 *	[Share sheet](https://developers.facebook.com/docs/ios/ios-6/#nativepostcontroller) - it's more lightweight than the Share Dialog, but also with many less features. Some apps use Share Dialog (e.g. Pintrest), some the Share Sheet (e.g. Foodspotting).
 *	Additional dialogs. But why?!?!??!? They are web based, require permissions, few good apps use them today. Just use the Share Dialog, or Share Sheet, or don't bother, in my opinion.
-
-Custom App Events
------------------
-```
-fb.logCustomEvent('handsClapped'); // Pass a string for the event name, view the events on Facebook Insights
-```
 	
 Feel free to comment and help out! :)
 -------------------------------------

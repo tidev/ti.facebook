@@ -607,7 +607,21 @@ methods:
       - name: event
         summary: Arbitrary string to log as an event.
         type: String
-    since: 4.0.0
+    since: "4.0.0"
+    
+  - name: logPurchase
+    summary:  Log a purchase of the specified amount, in the specified currency.
+    parameters:
+      - name: amount
+        summary: |
+            Purchase amount to be logged, as expressed in the specified currency.
+            This value will be rounded to the thousandths place (e.g., 12.34567 becomes 12.346).
+        type: Number
+      - name: currency
+        summary: |
+            Currency, is denoted as, e.g. "USD", "EUR", "GBP".  See ISO-4217 for specific values.
+        type: String
+    since: "5.2.0"
 
   - name: logout
     summary: Clears the OAuth `accessToken` and logs out the user.

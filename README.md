@@ -380,6 +380,18 @@ To create a Messenger button, call the `createMessengerButton` method. Example:
     win.add(messengerButton);
 ```
 
+Log App Events
+-----------------
+```
+fb.logCustomEvent('handsClapped'); // Pass a string for the event name, view the events on Facebook Insights
+```
+
+Log Purchases
+-----------------
+```
+fb.logPurchase(13.37, 'USD'); // Pass a number of the amound and a string for the currency.
+```
+
 Notes
 ------------
 * Note that the FBSDKCoreKit.framework, FBSDKLoginKit.framework, FBSDKShareKit.framework directory is the prebuilt Facebook SDK directly downloaded from Facebook, zero modifications. 
