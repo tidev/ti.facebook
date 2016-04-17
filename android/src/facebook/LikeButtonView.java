@@ -37,53 +37,51 @@ import com.facebook.share.widget.LikeView.Style;
 
 public class LikeButtonView extends TiUIView 
 {
-    private static final String TAG = "LikeButtonView";
+	private static final String TAG = "LikeButtonView";
     
 	public static final String ACTION_LIKE_ACTION_CONTROLLER_UPDATED = "com.facebook.sdk.UPDATED";
-    public static final String ACTION_LIKE_ACTION_CONTROLLER_DID_ERROR = "com.facebook.sdk.DID_ERROR";
-    public static final String ACTION_LIKE_ACTION_CONTROLLER_DID_RESET = "com.facebook.sdk.DID_RESET";
-    public static final String ACTION_OBJECT_ID_KEY = "com.facebook.sdk.OBJECT_ID";
-    public static final String EVENT_STATUS_CHANGE = "statuschange";
+	public static final String ACTION_LIKE_ACTION_CONTROLLER_DID_ERROR = "com.facebook.sdk.DID_ERROR";
+	public static final String ACTION_LIKE_ACTION_CONTROLLER_DID_RESET = "com.facebook.sdk.DID_RESET";
+	public static final String ACTION_OBJECT_ID_KEY = "com.facebook.sdk.OBJECT_ID";
+	public static final String EVENT_STATUS_CHANGE = "statuschange";
 
-    private LikeView likeView;
-    private BroadcastReceiver broadcastReceiver;
-    private String objectId;
+	private LikeView likeView;
+	private BroadcastReceiver broadcastReceiver;
+	private String objectId;
 	
 	private class LikeControllerBroadcastReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String intentAction = intent.getAction();
-            Bundle extras = intent.getExtras();
-            boolean shouldRespond = true;
-            if (extras != null) {
-                // See if an Id was set in the broadcast Intent. If it was, treat it as a filter.
-                String broadcastObjectId = extras.getString(
-                		LikeActionController.ACTION_OBJECT_ID_KEY);
-                shouldRespond = broadcastObjectId == null || broadcastObjectId.equals("") ||
-                        objectId.equalsIgnoreCase(broadcastObjectId);
-            }
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String intentAction = intent.getAction();
+			Bundle extras = intent.getExtras();
+			boolean shouldRespond = true;
+			if (extras != null) {
+				// See if an Id was set in the broadcast Intent. If it was, treat it as a filter.
+				String broadcastObjectId = extras.getString(LikeActionController.ACTION_OBJECT_ID_KEY);
+				shouldRespond = broadcastObjectId == null || broadcastObjectId.equals("") || objectId.equalsIgnoreCase(broadcastObjectId);
+			}
 
-            if (!shouldRespond) {
-                return;
-            }
+			if (!shouldRespond) {
+				return;
+			}
 
-            if (LikeActionController.ACTION_LIKE_ACTION_CONTROLLER_UPDATED.equals(intentAction)) {
-            	updateLikeStatus();
-            } else if (LikeActionController.ACTION_LIKE_ACTION_CONTROLLER_DID_ERROR.equals(intentAction)) {
-            	updateLikeStatus();
-            } else if (LikeActionController.ACTION_LIKE_ACTION_CONTROLLER_DID_RESET.equals(intentAction)) {
-                updateLikeStatus();
-            }
-        }
-    }
+			if (LikeActionController.ACTION_LIKE_ACTION_CONTROLLER_UPDATED.equals(intentAction)) {
+				updateLikeStatus();
+			} else if (LikeActionController.ACTION_LIKE_ACTION_CONTROLLER_DID_ERROR.equals(intentAction)) {
+				updateLikeStatus();
+			} else if (LikeActionController.ACTION_LIKE_ACTION_CONTROLLER_DID_RESET.equals(intentAction)) {
+				updateLikeStatus();
+			}
+		}
+	}
 	
 	protected void updateLikeStatus() {
 		triggerStatusChangedEvent(); //Call js event 'statuschange'
 	}
 	
-    public void triggerStatusChangedEvent() {
-        this.proxy.fireEvent(EVENT_STATUS_CHANGE, new KrollDict());
-    }
+	public void triggerStatusChangedEvent() {
+		this.proxy.fireEvent(EVENT_STATUS_CHANGE, new KrollDict());
+	}
 	
 	public LikeButtonView(TiViewProxy proxy) {
 		super(proxy);
@@ -93,15 +91,15 @@ public class LikeButtonView extends TiUIView
 		setNativeView(likeView);
 		
 		this.broadcastReceiver = new LikeControllerBroadcastReceiver();
-        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(proxy.getActivity());
+		LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(proxy.getActivity());
 
-        // add the broadcast receiver
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(LikeActionController.ACTION_LIKE_ACTION_CONTROLLER_UPDATED);
-        filter.addAction(LikeActionController.ACTION_LIKE_ACTION_CONTROLLER_DID_ERROR);
-        filter.addAction(LikeActionController.ACTION_LIKE_ACTION_CONTROLLER_DID_RESET);
+		// add the broadcast receiver
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(LikeActionController.ACTION_LIKE_ACTION_CONTROLLER_UPDATED);
+		filter.addAction(LikeActionController.ACTION_LIKE_ACTION_CONTROLLER_DID_ERROR);
+		filter.addAction(LikeActionController.ACTION_LIKE_ACTION_CONTROLLER_DID_RESET);
 
-        localBroadcastManager.registerReceiver(broadcastReceiver, filter);
+		localBroadcastManager.registerReceiver(broadcastReceiver, filter);
 	}
 		
 	// The view is automatically registered as a model listener when the view
