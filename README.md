@@ -414,3 +414,12 @@ The error handling adheres to the new Facebook guideline for events such as `log
         label.text = 'Logged In = ' + fb.loggedIn;
     });
 ```
+
+Credits
+---
+Big shout-out to @mokesmokes for the initial version of this module, great work! :rocket:
+
+Contributors
+---
+* Please see https://github.com/appcelerator-modules/ti.map/graphs/contributors
+* Interested in contributing? Read the [contributors/committer's](https://wiki.appcelerator.org/display/community/Home) guide.
