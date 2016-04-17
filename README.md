@@ -417,7 +417,7 @@ The error handling adheres to the new Facebook guideline for events such as `log
 
 Credits
 ---
-Big shout-out to @mokesmokes for the initial version of this module, great work! :rocket:
+Big shout-out to [@mokesmokes](https://github.com/mokesmokes) for the initial version of this module, great work! :rocket:
 
 Contributors
 ---
