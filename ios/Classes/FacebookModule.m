@@ -734,7 +734,6 @@ NSDictionary *launchOptions = nil;
                  [[callback context] enqueue:invocationEvent];
                  [invocationEvent release];
                  [returnedObject release];
-                 
              }];
         }
     }, NO);
@@ -748,21 +747,25 @@ NSDictionary *launchOptions = nil;
 
     TiThreadPerformOnMainThread(^{
         [FBSDKAppLinkUtility fetchDeferredAppLink:^(NSURL *url, NSError *error) {
-            NSMutableDictionary* event = [NSMutableDictionary dictionaryWithDictionary:@{@"success": NUMBOOL(url != nil)}];
+            NSDictionary* returnedObject;
+
             if (url) {
-                [event setValue:url forKey:@"url"];
+                returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys:[url absoluteURL],@"url", NUMBOOL(YES),@"success", nil];
             } else {
                 NSString *errorString = @"An error occurred. Please try again.";
                 if (error != nil) {
                     errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
+                    if (errorString == nil) {
+                        errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+                    }
                 }
-                [event setValue:errorString forKey:@"error"];
+                returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys: errorString,@"error", NUMBOOL(NO),@"success", nil];
             }
 
-            KrollEvent * invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:event thisObject:self];
+            KrollEvent * invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:returnedObject thisObject:self];
             [[callback context] enqueue:invocationEvent];
             [invocationEvent release];
-            [event release];
+            [returnedObject release];
         }];
     }, YES);
 }
