@@ -742,37 +742,27 @@ NSDictionary *launchOptions = nil;
 
 -(void)fetchDeferredAppLink:(id)args
 {
-    id callback = [args objectAtIndex:0];
-    ENSURE_SINGLE_ARG(callback, KrollCallback);
+    ENSURE_TYPE(args, NSArray);
+    ENSURE_TYPE([args objectAtIndex:0], KrollCallback);
+    KrollCallback *callback = [args objectAtIndex:0];
 
     TiThreadPerformOnMainThread(^{
         [FBSDKAppLinkUtility fetchDeferredAppLink:^(NSURL *url, NSError *error) {
-            NSDictionary* returnedObject;
-
+            NSMutableDictionary* event = [NSMutableDictionary dictionaryWithDictionary:@{@"success": NUMBOOL(url != nil)}];
             if (url) {
-                returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys: 
-                    NUMBOOL(YES), @"success", 
-                    [url absoluteURL], @"url",
-                    nil, @"error", 
-                nil];
+                [event setValue:url forKey:@"url"];
             } else {
-
                 NSString *errorString = @"An error occurred. Please try again.";
                 if (error != nil) {
-                    NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
+                    errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
                 }
-
-                returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys: 
-                    NUMBOOL(NO), @"success",
-                    errorString, @"error", 
-                nil];
-
+                [event setValue:errorString forKey:@"error"];
             }
 
-            KrollEvent * invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:returnedObject thisObject:self];
+            KrollEvent * invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:event thisObject:self];
             [[callback context] enqueue:invocationEvent];
             [invocationEvent release];
-            [returnedObject release];
+            [event release];
         }];
     }, YES);
 }

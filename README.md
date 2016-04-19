@@ -390,7 +390,7 @@ You can simply call fetchDeferredAppLink on startup to open eventually incoming 
 ```javascript
 var fb = require('facebook');
 fb.fetchDeferredAppLink(function(e) {
-    if (e.url) {
+    if (e.success) {
         // Dispatch internal routes
     }
 });

@@ -626,8 +626,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 					data.put("error", "An error occurred. Please try again.");
 				} else {
 					data.put("success", true);
-					data.put("error", null);
-
 					data.put("url", appLinkData.getTargetUri().toString());
 				}
 
