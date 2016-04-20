@@ -141,6 +141,24 @@ Facebook Login and Authorization
 
 To use Facebook, a user must log in to Facebook and explicitly authorize the application to perform certain actions, such as accessing profile information or posting status messages.
 
+Before calling `authorize()` it is possible to set the behavior that facebook will try to use when logging users in.
+The following behaviors are available:
+ * LOGIN_BEHAVIOR_BROWSER
+ * LOGIN_BEHAVIOR_NATIVE
+ * LOGIN_BEHAVIOR_SYSTEM_ACCOUNT (iOS only)
+ * LOGIN_BEHAVIOR_WEB (iOS only)
+ * LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK (Android only - NATIVE will attempt to fallback on iOS)
+ * LOGIN_BEHAVIOR_DEVICE_AUTH (Android only)
+ 
+These constants correspond to the ones exposed the by the Facebook SDK on each platform - for more information, see the Facebook documentation.
+
+```javascript
+    var fb = require('facebook');
+    fb.setLoginBehavior(fb.LOGIN_BEHAVIOR_NATIVE);
+    fb.permissions = ['email'];
+    fb.authorize();
+```
+
 There are two ways to initiate the login process:
 
 Create a Facebook LoginButton to allow the user to log in if desired. You can also add either readPermissions or publishPermissions, otherwise the default is request for `public_profile`. Doing so will let the LoginButton request for permissions when logging in. Note that Facebook does not support setting both parameters at the same time to the LoginButton. For a complete list of permissions, see the official Facebook Permissions Reference.
@@ -433,3 +451,12 @@ The error handling adheres to the new Facebook guideline for events such as `log
         label.text = 'Logged In = ' + fb.loggedIn;
     });
 ```
+
+Credits
+---
+Big shout-out to [@mokesmokes](https://github.com/mokesmokes) for the initial version of this module, great work! :rocket:
+
+Contributors
+---
+* Please see https://github.com/appcelerator-modules/ti.map/graphs/contributors
+* Interested in contributing? Read the [contributors/committer's](https://wiki.appcelerator.org/display/community/Home) guide.

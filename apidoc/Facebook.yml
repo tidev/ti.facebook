@@ -16,9 +16,9 @@ description: |
 
     **Note:** As of April 30th, 2015, Facebook no longer supports version 1.0 of their API, which
     includes the FQL and REST APIs.  Only the Graph APIs will be supported.
- 
+
     **Migration from the Facebook module v4.x to v5.x**
-   
+
     * **dialog() method** -- [presentWebShareDialog()](Modules.Facebook.presentWebShareDialog) is
       deprecated and removed. The module will auto determine if you have a native Facebook App installed.
       [canPresentShareDialog()](Modules.Facebook.canPresentShareDialog) is also deprecated and removed.
@@ -33,15 +33,15 @@ description: |
 
     The following APIs were removed due to changes in the native Facebook SDKs and
     removal of the Facebook v1.0 REST APIs:
-    
+
     * **appid property** -- The Facebook application ID can no longer be set programmatically
       in the application.  Set the Facebook application ID in the `tiapp.xml` file.
-      For more details, see 'Getting Started' below for more details.   
+      For more details, see 'Getting Started' below for more details.
     **Migration from the Facebook module v3.x to v4.x**
 
     The following APIs were removed due to changes in the native Facebook SDKs and
     removal of the Facebook v1.0 REST APIs:
-    
+
     * **appid property** -- The Facebook application ID can no longer be set programmatically
       in the application.  Set the Facebook application ID in the `tiapp.xml` file.
       For more details, see 'Getting Started' below for more details.
@@ -56,15 +56,15 @@ description: |
 
     * **forceDialogAuth property** -- On Android, you can force dialog authorization with the
       [LoginButton.sessionLoginBehavior](Modules.Facebook.LoginButton.sessionLoginBehavior) property.
-    
+
     * **publishInstall() method** -- The underlying Facebook API has been deprecated and
       is now handled automatically by the module.
-      
+
     * **request() method** -- Due to the removal of the Facebook v1.0 APIs,
       all applications should call the Graph APIs instead. If you make any REST API calls
       with the `request()` method, transition to the Graph APIs and use the
       [requestWithGraphPath()](Modules.Facebook.requestWithGraphPath) method.
-      
+
     * **reauthorize() method** -- To request additional Facebook permissions once the
       user authorizes the application, use either the
       [requestNewReadPermissions()](Modules.Facebook.requestNewReadPermissions) or
@@ -149,7 +149,7 @@ description: |
             <string>fbshareextension</string>
         </array>
 
-    If you are using the older Ti.Facebook Module 4.0.5 and wish to support iOS9, you will instead need to include the following key 
+    If you are using the older Ti.Facebook Module 4.0.5 and wish to support iOS9, you will instead need to include the following key
     and values in `tiapp.xml` to handle the switching in and out of your app:
 
     <key>LSApplicationQueriesSchemes</key>
@@ -171,14 +171,14 @@ description: |
 
     For iOS9 and titanium 5.0.0.GA and above, App Transport Security is disabled by default.
     If you choose to enable it, you have to set the following keys and values in `tiapp.xml` <ios> section for facebook module:
-    
+
         <key>NSAppTransportSecurity</key>
         <dict>
             <key>NSExceptionDomains</key>
                 <dict>
                     <key>facebook.com</key>
                         <dict>
-                            <key>NSIncludesSubdomains</key> <true/>        
+                            <key>NSIncludesSubdomains</key> <true/>
                             <key>NSExceptionRequiresForwardSecrecy</key> <false/>
                         </dict>
                     <key>fbcdn.net</key>
@@ -371,7 +371,7 @@ description: |
             fb.presentShareDialog({
                 link: 'https://appcelerator.com/',
                 title: 'great product',
-                description: 'Titanium is a great product',                    
+                description: 'Titanium is a great product',
                 picture: 'http://www.appcelerator.com/wp-content/uploads/scale_triangle1.png'
             });
 
@@ -422,8 +422,8 @@ description: |
 
     A messenger dialog allows a user to send content to the Facebook Messenger using your application.
 
-    To send a message to a user, call the [presentMessengerDialog()](Modules.Facebook.presentMessengerDialog) method 
-    and pass the method a dictionary with the optional values "title", "description", "link", "to", "placeID" 
+    To send a message to a user, call the [presentMessengerDialog()](Modules.Facebook.presentMessengerDialog) method
+    and pass the method a dictionary with the optional values "title", "description", "link", "to", "placeID"
     and "referal".
 
             fb.presentMessengerDialog({
@@ -440,11 +440,11 @@ description: |
 
     ### Messenger Button
 
-    The Messenger button provides a quick mechanism for users to share content to the Facebook Messenger. 
+    The Messenger button provides a quick mechanism for users to share content to the Facebook Messenger.
     A click on the button can share the content to multiple users.
 
-    To create a Messenger button, call the [createMessengerButton()](Modules.Facebook.createMessengerButton) 
-    method and pass the "mode" and "style" properties: 
+    To create a Messenger button, call the [createMessengerButton()](Modules.Facebook.createMessengerButton)
+    method and pass the "mode" and "style" properties:
 
         var messengerButton = fb.createMessengerButton({
             mode: fb.MESSENGER_BUTTON_MODE_RECTANGULAR
@@ -510,7 +510,7 @@ methods:
 
         A [login](Modules.Facebook.login) event is generated to indicate a successful or
         unsuccessful login attempt.
-        
+
         #### iOS Platform Notes
 
         On iOS, do not request any write permissions before calling this method.  Use the
@@ -640,7 +640,7 @@ methods:
     summary: |
         Opens a supported Facebook Invite dialog from the Facebook App.
     description: |
-        To monitor if the share request succeeded or not, listen to the 
+        To monitor if the share request succeeded or not, listen to the
         <Modules.Facebook.shareCompleted> event.
     parameters:
       - name: params
@@ -674,7 +674,7 @@ methods:
     description: |
         Be sure to check if the device can support this method by calling [canOpenURL](Titanium.Platform.canOpenURL) with "fb-messenger-api://"
         before using this method. If true, you can use this method. If false, the Facebook Messenger application
-        is probably not installed in the device. 
+        is probably not installed in the device.
 
         Listen for the <Modules.Facebook.shareCompleted> to be notified if the attempt was
         successful or not.
@@ -1072,6 +1072,60 @@ properties:
     type: Number
     permission: read-only
 
+  - name: LOGIN_BEHAVIOR_BROWSER
+    summary: |
+        Opens login window in the default Web Browser (Safari/Firefox etc...)
+    type: Number
+    permission: read-only
+    since: "5.4.0"
+    platforms: [android, iphone, ipad]
+
+  - name: LOGIN_BEHAVIOR_NATIVE
+    summary: |
+        Opens login window with the native Facebook app. On iOS it will attempt to
+        fallback to <Titanium.Modules.Facebook.LOGIN_BEHAVIOR_BROWSER> if the Facebook app
+        is not installed. For Android use <Titanium.Modules.Facebook.LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK>
+        to get this behavior.
+    type: Number
+    permission: read-only
+    since: "5.4.0"
+    platforms: [android, iphone, ipad]
+
+  - name: LOGIN_BEHAVIOR_SYSTEM_ACCOUNT
+    summary: |
+        Attempts to login with through the Facebook account currently signed in through
+        Settings.
+    type: Number
+    permission: read-only
+    since: "5.4.0"
+    platforms: [iphone, ipad]
+
+  - name: LOGIN_BEHAVIOR_WEB
+    summary: |
+        Opens login window through a modal browser window.
+    type: Number
+    permission: read-only
+    since: "5.4.0"
+    platforms: [iphone, ipad]
+
+  - name: LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK
+    summary: |
+        Opens login window with the native Facebook app. On Android it will attempt to
+        fallback to <Titanium.Modules.Facebook.LOGIN_BEHAVIOR_BROWSER> if the Facebook app
+        is not installed. For iOS use <Titanium.Modules.Facebook.NATIVE> to get this behavior.
+    type: Number
+    permission: read-only
+    since: "5.4.0"
+    platforms: [android]
+
+  - name: LOGIN_BEHAVIOR_DEVICE_AUTH
+    summary: |
+        Expose Facebook Login for devices such as Android TV and Fire TV.
+    type: Number
+    permission: read-only
+    since: "5.4.0"
+    platforms: [android]
+
   - name: SSO_ONLY
     summary: Only attempt single sign-on.
     description: |
@@ -1162,7 +1216,7 @@ properties:
     summary: |
         Use with [MessengerButton.mode](Modules.Facebook.MessengerButton.mode) to specify
         the default send button reading "Send".
-    description: | 
+    description: |
         You can localize the button by localizing "Send" in your strings.xml. Learn more about
         that topic [here](http://docs.appcelerator.com/platform/latest/#!/guide/Internationalization).
     type: Number
@@ -1174,7 +1228,7 @@ properties:
     summary: |
         Use with [MessengerButton.mode](Modules.Facebook.MessengerButton.mode) to specify
         the default send button reading "Send".
-    description: | 
+    description: |
         You can localize the button by localizing "Send" in your strings.xml. Learn more about
         that topic [here](http://docs.appcelerator.com/platform/latest/#!/guide/Internationalization).
     type: Number
@@ -1209,12 +1263,29 @@ properties:
     since: "5.4.0"
     platforms: [iphone, ipad]
 
+  - name: loginBehavior
+    summary: |
+        Defines the behavior that the module will attempt to use for authorize().
+    description: |
+        Be sure to set this before calling authorize if this is needed. It is
+        recommended to follow Facebook's [guidelines](https://developers.facebook.com/blog/post/2015/10/29/Facebook-Login-iOS9)
+        for ideal login behavior
+    type: Number
+    constants: [LOGIN_BEHAVIOR_*]
+    default:
+        Defaults to <Titanium.Modules.Facebook.LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK>
+        on Android and <Titanium.Modules.Facebook.LOGIN_BEHAVIOR_NATIVE> on iOS
+        (identical to the Android default).
+    since: "5.4.0"
+    availability: creation
+    platforms: [android, iphone, ipad]
+
   - name: permissions
     summary: Array of permissions to request for your app.
     description: |
         Be sure the permissions you want are set before calling
         [authorize](Modules.Facebook.authorize).
-        
+
         For a complete list of permissions, see the
         [official Facebook Permissions Reference](https://developers.facebook.com/docs/facebook-login/permissions/v2.2)
 
@@ -1505,7 +1576,7 @@ examples:
 
   - title: Share content to the Facebook Messenger
     example: |
-        
+
         This example shows how to share images, GIF's and videos to the Facebook messenger.
 
             var btn = Ti.UI.createButton({
@@ -1757,12 +1828,12 @@ properties:
   - name: message
     summary: Message to send with the request.
     type: String
-    optional: false    
+    optional: false
 
   - name: title
     summary: Title of request.
     type: String
-    optional: true    
+    optional: true
 
   - name: to
     summary: Array of pre-selected facebook ids.
@@ -1781,18 +1852,18 @@ properties:
   - name: recipientSuggestions
     summary: An array of user IDs that will be included in the dialog as the first suggested friends. Cannot be used together with filters.
     type: Array
-    optional: true    
+    optional: true
     since: "5.0.0"
 
   - name: data
     summary: Additional data to send with the request object.
     type: Dictionary
-    optional: true    
+    optional: true
 
   - name: actionType
     summary: The nature of the request. Required if objectID is set.
     type: Number
-    optional: true    
+    optional: true
     constants: Modules.Facebook.ACTION_TYPE_*
     since: "5.0.0"
 
@@ -1805,7 +1876,7 @@ properties:
   - name: objectID
     summary: The Open Graph object ID of the object being sent. Required if actionType is set.
     type: String
-    optional: true    
+    optional: true
     since: "5.0.0"
 
 ---
@@ -1816,26 +1887,26 @@ since: "5.4.0"
 platforms: [iphone, ipad]
 properties:
   - name: media
-    summary: | 
+    summary: |
         Media to send with the messenger. Allowed media are images, GIF's and videos represented
         as Blobs.
     type: Titanium.Blob
-    optional: false 
+    optional: false
 
   - name: metadata
     summary: |
-        Pass additional information to be sent to Messenger which is sent back to the user's app when 
+        Pass additional information to be sent to Messenger which is sent back to the user's app when
         they reply to an attributed message.
     type: String
-    optional: true 
+    optional: true
 
   - name: link
     summary: Optional property describing the www source URL of the content.
     description: |
-        Setting this property improves performance by allowing Messenger to download the content directly 
+        Setting this property improves performance by allowing Messenger to download the content directly
         rather than uploading the content from your app. This option is only used for animated GIFs.
     type: String
-    optional: true 
+    optional: true
 
   - name: renderAsSticker
     summary: Optional property describing whether the content should be rendered like a sticker.
@@ -1843,7 +1914,7 @@ properties:
         Setting this property informs Messenger that the media content should be rendered as a sticker.
         This option is only used for static images.
     type: Boolean
-    default: false 
+    default: false
     optional: true
 
 ---
@@ -1855,13 +1926,13 @@ platforms: [iphone, ipad]
 properties:
   - name: appLink
     summary: An app link target that will be used as a target when the user accept the invite.
-    description: | 
+    description: |
         This is a requirement. You can find out more about app links [here](https://developers.facebook.com/docs/applinks).
     type: String
-    optional: false 
+    optional: false
 
   - name: appPreviewImageLink
     summary: A URL to a preview image that will be displayed with the app invite
     description: This is optional. If you don't include it a fallback image will be used.
     type: String
-    optional: true 
+    optional: true
