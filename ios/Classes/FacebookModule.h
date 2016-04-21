@@ -21,6 +21,7 @@
 {
     NSString *uid;
     NSArray *permissions;
+    FBSDKLoginBehavior loginBehavior;
 //    FBSDKLoginManager *loginManager;
 }
 
