@@ -263,11 +263,10 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		Activity activity = TiApplication.getInstance().getCurrentActivity();
 		AppEventsLogger logger = AppEventsLogger.newLogger(activity);
 		Bundle paramBundle = parameters != null ? Utils.mapToBundle(parameters) : null;
-		Log.d(TAG, "logCustomEvent: "+ event + " valueToSum: " + valueToSum);
 		if (logger != null) {
-			if (valueToSum == null){
+			if (valueToSum == null) {
 				logger.logEvent(event, paramBundle);
-			}else{
+			} else {
 				logger.logEvent(event, valueToSum, paramBundle);
 			}
 		}
