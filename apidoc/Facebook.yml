@@ -468,6 +468,12 @@ description: |
         });
         win.add(likeButton);
 
+    You can be notified when the like status changes:
+
+        likeButton.addEventListener("statuschange", function() {
+            fb.requestWithGraphPath(...); // Check the exact status using the Graph API 
+        });
+
     For more information, see the [LikeButton API reference](Modules.Facebook.LikeButton).
 
     ### Submitting an iOS Application to the iTunes Store
