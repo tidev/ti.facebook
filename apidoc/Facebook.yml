@@ -1084,8 +1084,12 @@ properties:
     summary: |
         Opens login window with the native Facebook app. On iOS it will attempt to
         fallback to <Titanium.Modules.Facebook.LOGIN_BEHAVIOR_BROWSER> if the Facebook app
-        is not installed. For Android use <Titanium.Modules.Facebook.LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK>
-        to get this behavior.
+        is not installed or Facebook chooses it internally. For Android use
+        <Titanium.Modules.Facebook.LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK> to get this behavior.
+        
+        Note: As of today (Facebook SDK 4.11.0), Facebook seems to not allow logging in using 
+        the Facebook app to login, so this constant won't work proper on iOS. This issue is 
+        discussed [here](https://developers.facebook.com/bugs/786729821439894/?search_id).
     type: Number
     permission: read-only
     since: "5.4.0"
@@ -1274,8 +1278,8 @@ properties:
     constants: [LOGIN_BEHAVIOR_*]
     default:
         Defaults to <Titanium.Modules.Facebook.LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK>
-        on Android and <Titanium.Modules.Facebook.LOGIN_BEHAVIOR_NATIVE> on iOS
-        (identical to the Android default).
+        on Android and <Titanium.Modules.Facebook.LOGIN_BEHAVIOR_BROWSER> on iOS
+        (which uses the native Safari Dialog internally).
     since: "5.4.0"
     availability: creation
     platforms: [android, iphone, ipad]
