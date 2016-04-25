@@ -607,6 +607,19 @@ methods:
       - name: event
         summary: Arbitrary string to log as an event.
         type: String
+      - name: valueToSum
+        summary: |
+            An arbitrary number that can represent any value (e.g., a price or a quantity). 
+            When reported, all of the valueToSum properties will be summed together in Facebook Analytics for Apps.
+        type: Number
+        optional: true
+        since: "5.4.0"
+      - name: params
+        summary: |
+            A dictionary object containing optional parameters.
+        type: Object
+        optional: true
+        since: "5.4.0"
     since: "4.0.0"
     
   - name: logPurchase
@@ -737,7 +750,8 @@ methods:
 
       - name: audience
         summary: |
-            The extent of the visibility write permissions will have. The value of audience should be one of "me", "friends", or "everyone"
+            The extent of the visibility write permissions will have. 
+            The value of audience should be one of "me", "friends", or "everyone"
         type: String
 
       - name: callback
@@ -1570,12 +1584,11 @@ examples:
             wallDialog.addEventListener('click', function() {
                 FB.presentInviteDialog({
                     appLink: "https://fb.me/xxxxxxxx",
-	                appPreviewImageLink: "https://www.mydomain.com/my_invite_image.jpg"
+                    appPreviewImageLink: "https://www.mydomain.com/my_invite_image.jpg"
                 });
             });
 
         For more information on Invite Dialogs, see:
-
         * [Facebook Invite Dialog Reference](https://developers.facebook.com/docs/app-invites/ios)
 
   - title: Share content to the Facebook Messenger
