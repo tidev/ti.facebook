@@ -610,7 +610,8 @@ methods:
 
       - name: valueToSum
         summary: |
-            An arbitrary number that can represent any value (e.g., a price or a quantity). When reported, all of the valueToSum properties will be summed together in Facebook Analytics for Apps.
+            An arbitrary number that can represent any value (e.g., a price or a quantity). 
+            When reported, all of the valueToSum properties will be summed together in Facebook Analytics for Apps.
         type: Number
         optional: true
         since: "5.4.0"
@@ -738,7 +739,8 @@ methods:
 
       - name: audience
         summary: |
-            The extent of the visibility write permissions will have. The value of audience should be one of "me", "friends", or "everyone"
+            The extent of the visibility write permissions will have. 
+            The value of audience should be one of "me", "friends", or "everyone"
         type: String
 
       - name: callback
