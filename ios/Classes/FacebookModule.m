@@ -332,13 +332,24 @@ NSDictionary *launchOptions = nil;
 /**
  * JS example:
  *
- * facebook.logCustomEvent('clappedHands');
+ * facebook.logCustomEvent('clappedHands', 54.23, {"CONTENT TYPE": "shoes", "CONTENT ID": "HDFU-8452"});
  *
  */
--(void)logCustomEvent:(id)event
+-(void)logCustomEvent:(id)args
 {
-    ENSURE_SINGLE_ARG(event, NSString);
-    [FBSDKAppEvents logEvent:[TiUtils stringValue:event]];
+    id args0 = [args objectAtIndex:0];
+    ENSURE_SINGLE_ARG(args0, NSString);
+    NSString* event = args0;
+
+    id args1 = [args count] > 1 ? [args objectAtIndex:1] : nil;
+    ENSURE_SINGLE_ARG_OR_NIL(args1, NSNumber);
+    double valueToSum = [TiUtils doubleValue:args1];
+
+    id args2 = [args count] > 2 ? [args objectAtIndex:2] : nil;
+    ENSURE_SINGLE_ARG_OR_NIL(args2, NSDictionary);
+    NSDictionary *parameters = args2;
+
+    [FBSDKAppEvents logEvent:event valueToSum:valueToSum parameters:parameters];
 }
 
 /**
