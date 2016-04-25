@@ -332,6 +332,24 @@ NSDictionary *launchOptions = nil;
 /**
  * JS example:
  *
+ * facebook.logPurchase(13.37, 'USD');
+ *
+ */
+-(void)logPurchase:(id)args
+{
+    ENSURE_TYPE(args, NSArray);
+    ENSURE_TYPE([args objectAtIndex:0], NSNumber);
+    ENSURE_TYPE([args objectAtIndex:1], NSString);
+    
+    double amount = [TiUtils doubleValue:[args objectAtIndex:0]];
+    NSString* currency = [TiUtils stringValue:[args objectAtIndex:1]];
+    
+    [FBSDKAppEvents logPurchase:amount currency:currency];
+}
+
+/**
+ * JS example:
+ *
  * facebook.logCustomEvent('clappedHands', 54.23, {"CONTENT TYPE": "shoes", "CONTENT ID": "HDFU-8452"});
  *
  */
