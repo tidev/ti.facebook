@@ -173,16 +173,20 @@ exports.window = function(value){
 	win.add(actionsView);
 
 	var likeButton = fb.createLikeButton({
-		    top: 230,
-		    height: "50%", // Note: on iOS setting Ti.UI.SIZE dimensions prevented the button click
-		    width: "50%",
-		    objectID: "https://www.facebook.com/appcelerator", // URL or Facebook ID
-		    foregroundColor: "white", // A color in Titanium format - see Facebook docs
-		    likeViewStyle: 'box_count', // standard, button, box_count - see FB docs
-		    auxiliaryViewPosition: 'inline', // bottom, inline, top - see FB docs
-		    horizontalAlignment: 'left', // center, left, right - see FB docs,
-		    soundEnabled: true // boolean, iOS only
-		});
+	    top: 230,
+	    height: "50%", // Note: on iOS setting Ti.UI.SIZE dimensions prevented the button click
+	    width: "50%",
+	    objectID: "https://www.facebook.com/appcelerator", // URL or Facebook ID
+	    foregroundColor: "white", // A color in Titanium format - see Facebook docs
+	    likeViewStyle: 'box_count', // standard, button, box_count - see FB docs
+	    auxiliaryViewPosition: 'inline', // bottom, inline, top - see FB docs
+	    horizontalAlignment: 'left', // center, left, right - see FB docs,
+	    soundEnabled: true // boolean, iOS only
+	});
+	
+	likeButton.addEventListener("statuschange", function() {
+		Ti.API.warn("The like status changed!");
+	});
 	
 	if (Ti.Platform.osname == 'android') {
 		likeButton.height = Ti.UI.SIZE;
