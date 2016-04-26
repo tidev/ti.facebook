@@ -12,11 +12,13 @@
 package facebook;
 
 import java.util.Arrays;
+import java.util.Currency;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.math.BigDecimal;
 
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollFunction;
@@ -42,6 +44,7 @@ import com.facebook.HttpMethod;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.DefaultAudience;
 import com.facebook.login.LoginManager;
+import com.facebook.login.LoginBehavior;
 import com.facebook.login.LoginResult;
 import com.facebook.share.Sharer;
 import com.facebook.share.model.GameRequestContent;
@@ -91,9 +94,15 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
     @Kroll.constant public static final int FILTER_NONE = 0;
     @Kroll.constant public static final int FILTER_APP_USERS = 1;
     @Kroll.constant public static final int FILTER_APP_NON_USERS = 2;
+    
+    @Kroll.constant public static final String LOGIN_BEHAVIOR_BROWSER = "WEB_ONLY";
+    @Kroll.constant public static final String LOGIN_BEHAVIOR_NATIVE = "NATIVE_ONLY";
+    @Kroll.constant public static final String LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK = "NATIVE_WITH_FALLBACK";
+    @Kroll.constant public static final String LOGIN_BEHAVIOR_DEVICE_AUTH = "DEVICE_AUTH";
 
 	private static TiFacebookModule module;
 	private static String[] permissions = new String[]{};
+    private String loginBehavior;
 
 	private KrollFunction permissionCallback = null;
 
@@ -253,11 +262,25 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	}
 	
 	@Kroll.method
-	public void logCustomEvent(String event) {
+	public void logCustomEvent(String event, @Kroll.argument(optional = true) Double valueToSum, @Kroll.argument(optional = true) KrollDict parameters) {
+		Activity activity = TiApplication.getInstance().getCurrentActivity();
+		AppEventsLogger logger = AppEventsLogger.newLogger(activity);
+		Bundle paramBundle = parameters != null ? Utils.mapToBundle(parameters) : null;
+		if (logger != null) {
+			if (valueToSum == null) {
+				logger.logEvent(event, paramBundle);
+			} else {
+				logger.logEvent(event, valueToSum, paramBundle);
+			}
+		}
+	}
+	
+	@Kroll.method
+	public void logPurchase(double amount, String currency) {
 		Activity activity = TiApplication.getInstance().getCurrentActivity();
 		AppEventsLogger logger = AppEventsLogger.newLogger(activity);
 		if (logger != null) {
-			logger.logEvent(event);
+			logger.logPurchase(BigDecimal.valueOf(amount), Currency.getInstance(currency));
 		}
 	}
 	
@@ -298,6 +321,16 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		}
 		return null;	
 	}
+    
+    @Kroll.setProperty @Kroll.method
+    public void setLoginBehavior(String behaviorConstant) {
+        loginBehavior = behaviorConstant;
+    }
+    
+    @Kroll.getProperty @Kroll.method
+    public String getLoginBehavior() {
+        return loginBehavior;
+    }
 
 	@Kroll.method
 	public void requestNewReadPermissions(String[] permissions, final KrollFunction callback) {
@@ -398,6 +431,9 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		for (int i=0; i < TiFacebookModule.permissions.length; i++){
 			Log.d(TAG, "authorizing permission: " + TiFacebookModule.permissions[i]);
 		}
+        if(loginBehavior != null) {
+            setLoginManagerLoginBehavior();
+        }
 		LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList(TiFacebookModule.permissions));
 	}
 	
@@ -633,6 +669,10 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			}
 		});
 	}
+    
+    private void setLoginManagerLoginBehavior() {
+        LoginManager.getInstance().setLoginBehavior(LoginBehavior.valueOf(loginBehavior));
+    }
 }
 
 

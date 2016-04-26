@@ -21,7 +21,7 @@
 {
     NSString *uid;
     NSArray *permissions;
-//    FBSDKLoginManager *loginManager;
+    FBSDKLoginBehavior loginBehavior;
 }
 
 -(void)authorize:(id)args;

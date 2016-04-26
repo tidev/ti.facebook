@@ -252,6 +252,26 @@ NSDictionary *launchOptions = nil;
     return [NSNumber numberWithInt:FBSDKGameRequestFilterAppNonUsers];
 }
 
+-(id)LOGIN_BEHAVIOR_BROWSER
+{
+    return [NSNumber numberWithUnsignedInteger:FBSDKLoginBehaviorBrowser];
+}
+
+-(id)LOGIN_BEHAVIOR_NATIVE
+{
+    return [NSNumber numberWithUnsignedInteger:FBSDKLoginBehaviorNative];
+}
+
+-(id)LOGIN_BEHAVIOR_SYTEM_ACCOUNT
+{
+    return [NSNumber numberWithUnsignedInteger:FBSDKLoginBehaviorSystemAccount];
+}
+
+-(id)LOGIN_BEHAVIOR_WEB
+{
+    return [NSNumber numberWithUnsignedInteger:FBSDKLoginBehaviorWeb];
+}
+
 -(id)MESSENGER_BUTTON_MODE_RECTANGULAR
 {
     return [NSNumber numberWithInt:TiFacebookShareButtonModeRectangular];
@@ -312,13 +332,53 @@ NSDictionary *launchOptions = nil;
 /**
  * JS example:
  *
- * facebook.logCustomEvent('clappedHands');
+ * facebook.logPurchase(13.37, 'USD');
  *
  */
--(void)logCustomEvent:(id)event
+-(void)logPurchase:(id)args
 {
-    ENSURE_SINGLE_ARG(event, NSString);
-    [FBSDKAppEvents logEvent:[TiUtils stringValue:event]];
+    ENSURE_TYPE(args, NSArray);
+    ENSURE_TYPE([args objectAtIndex:0], NSNumber);
+    ENSURE_TYPE([args objectAtIndex:1], NSString);
+    
+    double amount = [TiUtils doubleValue:[args objectAtIndex:0]];
+    NSString* currency = [TiUtils stringValue:[args objectAtIndex:1]];
+    
+    [FBSDKAppEvents logPurchase:amount currency:currency];
+}
+
+/**
+ * JS example:
+ *
+ * facebook.logCustomEvent('clappedHands', 54.23, {"CONTENT TYPE": "shoes", "CONTENT ID": "HDFU-8452"});
+ *
+ */
+-(void)logCustomEvent:(id)args
+{
+    id args0 = [args objectAtIndex:0];
+    ENSURE_SINGLE_ARG(args0, NSString);
+    NSString* event = args0;
+
+    id args1 = [args count] > 1 ? [args objectAtIndex:1] : nil;
+    ENSURE_SINGLE_ARG_OR_NIL(args1, NSNumber);
+    double valueToSum = [TiUtils doubleValue:args1];
+
+    id args2 = [args count] > 2 ? [args objectAtIndex:2] : nil;
+    ENSURE_SINGLE_ARG_OR_NIL(args2, NSDictionary);
+    NSDictionary *parameters = args2;
+
+    [FBSDKAppEvents logEvent:event valueToSum:valueToSum parameters:parameters];
+}
+
+/**
+ * JS example:
+ * facebook.setLoginBehavior(facebook.LOGIN_BEHAVIOR_NATIVE);
+ *
+ */
+-(void)setLoginBehavior:(id)arg
+{
+    ENSURE_TYPE(arg, NSNumber);
+    loginBehavior = [arg unsignedIntegerValue];
 }
 
 /**
@@ -359,6 +419,7 @@ NSDictionary *launchOptions = nil;
     BOOL allowUI = args == nil ? YES : NO;
     NSArray *permissions_ = permissions == nil ? [NSArray array] : permissions;
     FBSDKLoginManager *loginManager = [[[FBSDKLoginManager alloc] init] autorelease];
+    [loginManager setLoginBehavior:loginBehavior];
     TiThreadPerformOnMainThread(^{
         [loginManager logInWithReadPermissions: permissions_ fromViewController:nil handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
             if (error) {
@@ -390,7 +451,10 @@ NSDictionary *launchOptions = nil;
         [nc addObserver:self selector:@selector(accessTokenChanged:) name:FBSDKAccessTokenDidChangeNotification object:nil];
 		[nc addObserver:self selector:@selector(activateApp:) name:UIApplicationDidFinishLaunchingNotification object:nil];
         [nc addObserver:self selector:@selector(currentProfileChanged:) name:FBSDKProfileDidChangeNotification object:nil];
-		if ([FBSDKAccessToken currentAccessToken] == nil) {
+        
+        loginBehavior = FBSDKLoginBehaviorBrowser;
+
+        if ([FBSDKAccessToken currentAccessToken] == nil) {
             [self activateApp];
         } else {
             [self handleRelaunch];
