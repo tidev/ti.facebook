@@ -162,14 +162,6 @@ NSDictionary *launchOptions = nil;
     return NULL;
 }
 
-/**
- * JS example:
- *
- * var facebook = require('facebook');
- * facebook.permissions = ['read_stream'];
- * alert(facebook.permissions);
- *
- */
 -(id)permissions
 {
     __block NSArray *perms;
@@ -179,22 +171,24 @@ NSDictionary *launchOptions = nil;
     return perms;
 }
 
-/**
- * JS example:
- *
- * var facebook = require('facebook');
- * alert(facebook.accessToken);
- *
- */
-
 -(id)accessToken
 {
     __block NSString * token;
     TiThreadPerformOnMainThread(^{
-		token = [[FBSDKAccessToken currentAccessToken] tokenString];
+        token = [[FBSDKAccessToken currentAccessToken] tokenString];
     }, YES);
     return token;
 }
+
+-(id)appID
+{
+    __block NSString * appID;
+    TiThreadPerformOnMainThread(^{
+        appID = [FBSDKSettings appID];
+    }, YES);
+    return appID;
+}
+
 //deprecated and removed
 -(id)AUDIENCE_NONE
 {
@@ -802,6 +796,22 @@ NSDictionary *launchOptions = nil;
              }];
         }
     }, NO);
+}
+
+-(void)setCurrentAccessToken:(id)args 
+{
+    ENSURE_SINGLE_ARG(args, NSDictionary);
+
+    FBSDKAccessToken* token = [[FBSDKAccessToken alloc] 
+        initWithTokenString: [args objectForKey:@"accessToken"] 
+        permissions: [args objectForKey:@"permissions"] 
+        declinedPermissions: [args objectForKey:@"declinedPermissions"]
+        appID: [args objectForKey:@"appID"]
+        userID: [args objectForKey:@"userID"]
+        expirationDate: [args objectForKey:@"expirationDate"]
+        refreshDate: [args objectForKey:@"refreshDate"]
+    ];
+    [FBSDKAccessToken setCurrentAccessToken:token];
 }
 
 #pragma mark Listener work
