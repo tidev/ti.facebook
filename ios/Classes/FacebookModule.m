@@ -798,11 +798,42 @@ NSDictionary *launchOptions = nil;
                  [[callback context] enqueue:invocationEvent];
                  [invocationEvent release];
                  [returnedObject release];
-                 
              }];
         }
     }, NO);
 }
+
+-(void)fetchDeferredAppLink:(id)args
+{
+    ENSURE_TYPE(args, NSArray);
+    ENSURE_TYPE([args objectAtIndex:0], KrollCallback);
+    KrollCallback *callback = [args objectAtIndex:0];
+
+    TiThreadPerformOnMainThread(^{
+        [FBSDKAppLinkUtility fetchDeferredAppLink:^(NSURL *url, NSError *error) {
+            NSDictionary* returnedObject;
+
+            if (url) {
+                returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys:[url absoluteURL],@"url", NUMBOOL(YES),@"success", nil];
+            } else {
+                NSString *errorString = @"An error occurred. Please try again.";
+                if (error != nil) {
+                    errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
+                    if (errorString == nil) {
+                        errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+                    }
+                }
+                returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys: errorString,@"error", NUMBOOL(NO),@"success", nil];
+            }
+
+            KrollEvent * invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:returnedObject thisObject:self];
+            [[callback context] enqueue:invocationEvent];
+            [invocationEvent release];
+            [returnedObject release];
+        }];
+    }, YES);
+}
+
 
 #pragma mark Listener work
 
