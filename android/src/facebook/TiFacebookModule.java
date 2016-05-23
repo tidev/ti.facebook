@@ -80,8 +80,8 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	public static final String PROPERTY_RESULT = "result";
 	public static final String PROPERTY_PATH = "path";
 	public static final String PROPERTY_METHOD = "method";
-    public static final String EVENT_SHARE_COMPLETE = "shareCompleted";
-    public static final String EVENT_INVITE_COMPLETE = "inviteCompleted";
+	public static final String EVENT_SHARE_COMPLETE = "shareCompleted";
+	public static final String EVENT_INVITE_COMPLETE = "inviteCompleted";
 	public static final String EVENT_REQUEST_DIALOG_COMPLETE = "requestDialogCompleted";
 	
     @Kroll.constant public static final int AUDIENCE_NONE = 0;
