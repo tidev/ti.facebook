@@ -901,43 +901,42 @@ NSDictionary *launchOptions = nil;
     }
 }
 
-
 #pragma mark Share dialog delegates
 -(void)sharer: (id<FBSDKSharing>)sharer didCompleteWithResults: (NSDictionary *)results
 {
-    [self fireDialogEventWithName:@"shareCompleted" success:YES andError:nil cancelled:NO];
+    [self fireDialogEventWithName:TiFacebookEventTypeShareCompleted success:YES andError:nil cancelled:NO];
 }
 
 -(void)sharer:(id<FBSDKSharing>)sharer didFailWithError:(NSError *)error
 {
-    [self fireDialogEventWithName:@"shareCompleted" success:NO andError:error cancelled:NO];
+    [self fireDialogEventWithName:TiFacebookEventTypeShareCompleted success:NO andError:error cancelled:NO];
 }
 
 -(void)sharerDidCancel:(id<FBSDKSharing>)sharer
 {
-    [self fireDialogEventWithName:@"shareCompleted" success:NO andError:nil cancelled:YES];
+    [self fireDialogEventWithName:TiFacebookEventTypeShareCompleted success:NO andError:nil cancelled:YES];
 }
 
 #pragma Game request delegates
 -(void)gameRequestDialog:(FBSDKGameRequestDialog *)gameRequestDialog didCompleteWithResults:(NSDictionary *)results
 {
-    [self fireDialogEventWithName:@"requestDialogCompleted" success:YES andError:nil cancelled:NO];
+    [self fireDialogEventWithName:TiFacebookEventTypeRequestDialogCompleted success:YES andError:nil cancelled:NO];
 }
 
 -(void)gameRequestDialog:(FBSDKGameRequestDialog *)gameRequestDialog didFailWithError:(NSError *)error
 {
-    [self fireDialogEventWithName:@"requestDialogCompleted" success:NO andError:error cancelled:NO];
+    [self fireDialogEventWithName:TiFacebookEventTypeRequestDialogCompleted success:NO andError:error cancelled:NO];
 }
 
 -(void)gameRequestDialogDidCancel:(FBSDKGameRequestDialog *)gameRequestDialog
 {
-    [self fireDialogEventWithName:@"requestDialogCompleted" success:NO andError:nil cancelled:YES];
+    [self fireDialogEventWithName:TiFacebookEventTypeRequestDialogCompleted success:NO andError:nil cancelled:YES];
 }
 
 #pragma mark Invite dialog delegates
 -(void)appInviteDialog:(FBSDKAppInviteDialog *)appInviteDialog didFailWithError:(NSError *)error
 {
-    [self fireDialogEventWithName:@"inviteCompleted" success:YES andError:error cancelled:NO];
+    [self fireDialogEventWithName:TiFacebookEventTypeInviteCompleted success:YES andError:error cancelled:NO];
 }
 
 -(void)appInviteDialog:(FBSDKAppInviteDialog *)appInviteDialog didCompleteWithResults:(NSDictionary *)results
@@ -946,7 +945,7 @@ NSDictionary *launchOptions = nil;
     if (results) {
         cancelled = [[results valueForKey:@"completionGesture"] isEqualToString:@"cancel"];
     }
-    [self fireDialogEventWithName:@"inviteCompleted" success:!cancelled andError:nil cancelled:cancelled];
+    [self fireDialogEventWithName:TiFacebookEventTypeInviteCompleted success:!cancelled andError:nil cancelled:cancelled];
 }
 
 -(void)fireDialogEventWithName:(NSString*)name success:(BOOL)success andError:(NSError*)error cancelled:(BOOL)cancelled
