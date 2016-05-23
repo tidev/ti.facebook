@@ -539,35 +539,37 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
         AppInviteDialog appInviteDialog = new AppInviteDialog(TiApplication.getInstance().getCurrentActivity());
         
         appInviteDialog.registerCallback(callbackManager, new FacebookCallback<AppInviteDialog.Result>() {
-            KrollDict data = new KrollDict();
+            KrollDict event = new KrollDict();
             @Override
             public void onCancel() {
-                data.put(PROPERTY_SUCCESS, false);
-                data.put(PROPERTY_CANCELLED, true);
-                fireEvent(EVENT_INVITE_COMPLETE, data);
+                event.put(PROPERTY_SUCCESS, false);
+                event.put(PROPERTY_CANCELLED, true);
+                fireEvent(EVENT_INVITE_COMPLETE, event);
             }
             
             @Override
             public void onError(FacebookException error) {
-                data.put(PROPERTY_SUCCESS, false);
-                data.put(PROPERTY_CANCELLED, false);
-                data.put(PROPERTY_ERROR, "Error inviting people");
-                fireEvent(EVENT_INVITE_COMPLETE, data);
+                event.put(PROPERTY_SUCCESS, false);
+                event.put(PROPERTY_CANCELLED, false);
+                event.put(PROPERTY_ERROR, "Error inviting people");
+                fireEvent(EVENT_INVITE_COMPLETE, event);
             }
             
             @Override
             public void onSuccess(AppInviteDialog.Result results) {
-                data.put(PROPERTY_SUCCESS, true);
-                data.put(PROPERTY_CANCELLED, false);
-                fireEvent(EVENT_INVITE_COMPLETE, data);
+                event.put(PROPERTY_SUCCESS, true);
+                event.put(PROPERTY_CANCELLED, false);
+                fireEvent(EVENT_INVITE_COMPLETE, event);
             }
         });
         
         if (appInviteDialog.canShow()) {
-            data.put(PROPERTY_SUCCESS, false);
-            data.put(PROPERTY_CANCELLED, false);
-            data.put(PROPERTY_ERROR, "Could not show invite dialog");
-            fireEvent(EVENT_INVITE_COMPLETE, data);
+            KrollDict errorEvent = new KrollDict();
+
+            errorEvent.put(PROPERTY_SUCCESS, false);
+            errorEvent.put(PROPERTY_CANCELLED, false);
+            errorEvent.put(PROPERTY_ERROR, "Could not show invite dialog");
+            fireEvent(EVENT_INVITE_COMPLETE, errorEvent);
         } else {
             String appLink = (String) args.get("appLink");
             String appPreviewImageLink = (String) args.get("appPreviewImageLink");
