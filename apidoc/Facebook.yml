@@ -976,6 +976,26 @@ events:
         type: String
     since: 4.0.0
 
+  - name: inviteCompleted
+    summary: Fired when the Invite dialog is closed.
+    properties:
+      - name: success
+        summary: |
+            Returns `true` if request succeeded, `false` otherwise.
+        type: Boolean
+
+      - name: cancelled
+        summary: |
+            Indicates if the user canceled the request by closing the dialog.
+        type: Number
+
+      - name: error
+        summary: |
+            Error message, if any returned.
+            Will be undefined if `success` is `true`.
+        type: String
+    since: 5.4.0
+
   - name: tokenUpdated
     summary: Fired when [refreshPermissionsFromServer](Modules.Facebook.refreshPermissionsFromServer) is completed.
     since: 4.0.0
