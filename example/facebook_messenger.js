@@ -1,4 +1,9 @@
-exports.window = function(value){
+exports.window = function(value) {
+	if (Ti.Platform.osname == "android") {
+		Ti.API.warn("This feature is currently iOS-only.");
+		return;
+	}
+	
 	var fb = require('facebook');
 
 	var win = Ti.UI.createWindow({
