@@ -51,8 +51,10 @@ import com.facebook.share.model.GameRequestContent;
 import com.facebook.share.model.GameRequestContent.ActionType;
 import com.facebook.share.model.GameRequestContent.Filters;
 import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.model.AppInviteContent;
 import com.facebook.share.widget.GameRequestDialog;
 import com.facebook.share.widget.ShareDialog;
+import com.facebook.share.widget.AppInviteDialog;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -79,6 +81,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	public static final String PROPERTY_PATH = "path";
 	public static final String PROPERTY_METHOD = "method";
 	public static final String EVENT_SHARE_COMPLETE = "shareCompleted";
+	public static final String EVENT_INVITE_COMPLETE = "inviteCompleted";
 	public static final String EVENT_REQUEST_DIALOG_COMPLETE = "requestDialogCompleted";
 	
     @Kroll.constant public static final int AUDIENCE_NONE = 0;
@@ -459,7 +462,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 
 	}
 	
-	//ShareButton
 	@Kroll.method
 	public void presentShareDialog(@Kroll.argument(optional = true) final KrollDict args)
 	{
@@ -530,6 +532,56 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			shareDialog.show(shareContent);
 		}
 	}
+    
+    @Kroll.method
+    public void presentInviteDialog(@Kroll.argument(optional = true) final KrollDict args)
+    {
+        AppInviteDialog appInviteDialog = new AppInviteDialog(TiApplication.getInstance().getCurrentActivity());
+        
+        appInviteDialog.registerCallback(callbackManager, new FacebookCallback<AppInviteDialog.Result>() {
+            KrollDict event = new KrollDict();
+            @Override
+            public void onCancel() {
+                event.put(PROPERTY_SUCCESS, false);
+                event.put(PROPERTY_CANCELLED, true);
+                fireEvent(EVENT_INVITE_COMPLETE, event);
+            }
+            
+            @Override
+            public void onError(FacebookException error) {
+                event.put(PROPERTY_SUCCESS, false);
+                event.put(PROPERTY_CANCELLED, false);
+                event.put(PROPERTY_ERROR, "Error inviting people");
+                fireEvent(EVENT_INVITE_COMPLETE, event);
+            }
+            
+            @Override
+            public void onSuccess(AppInviteDialog.Result results) {
+                event.put(PROPERTY_SUCCESS, true);
+                event.put(PROPERTY_CANCELLED, false);
+                fireEvent(EVENT_INVITE_COMPLETE, event);
+            }
+        });
+        
+        if (!appInviteDialog.canShow()) {
+            KrollDict errorEvent = new KrollDict();
+
+            errorEvent.put(PROPERTY_SUCCESS, false);
+            errorEvent.put(PROPERTY_CANCELLED, false);
+            errorEvent.put(PROPERTY_ERROR, "Could not show invite dialog");
+            fireEvent(EVENT_INVITE_COMPLETE, errorEvent);
+        } else {
+            String appLink = (String) args.get("appLink");
+            String appPreviewImageLink = (String) args.get("appPreviewImageLink");
+            
+            AppInviteContent content = new AppInviteContent.Builder()
+            .setApplinkUrl(appLink)
+            .setPreviewImageUrl(appPreviewImageLink)
+            .build();
+            
+            appInviteDialog.show(content);
+        }
+    }
 	
 	@Kroll.method
 	public void presentWebShareDialog(@Kroll.argument(optional = true) final KrollDict args)

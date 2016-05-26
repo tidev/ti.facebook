@@ -25,13 +25,13 @@ Also you will need a Facebook App ID ready. To create a Facebook App ID, go to t
 On the iOS platform, add the following property to the \<ios\>\<plist\>\<dict\> section in tiapp.xml:
 ```xml
 <key>FacebookAppID</key>
-<string>1234567891011</string>
+<string>1234567890123456</string>
 <key>FacebookDisplayName</key>
 <string>SomeName</string>
 ```
 where SomeName is exactly as appears in the Facebook developer settings page
 
-Also make sure you have a URL Scheme in tiapp.xml that looks like fb1234567891010. See Facebook docs for details on this. Add an entry to \<ios\>\<plist\>\<dict\> that looks like this, modify it for your app:
+Also make sure you have a URL Scheme in tiapp.xml that looks like fb1234567890123456. See Facebook docs for details on this. Add an entry to \<ios\>\<plist\>\<dict\> that looks like this, modify it for your app:
 ```xml
 <key>CFBundleURLTypes</key>
 <array>
@@ -41,13 +41,13 @@ Also make sure you have a URL Scheme in tiapp.xml that looks like fb123456789101
         <key>CFBundleURLSchemes</key>
         <array>
             <string>kitchensink</string>
-            <string>fb134793934930</string>
+            <string>fb1234567890123456</string>
         </array>
     </dict>
 </array>
 ```
 
-To define a url scheme suffix for multiple apps sharing the same facebook app ID, simply add the suffix (in lower case and must start with a letter) to the relevant string under the CFBundleURLSchemes key. In this example, it will look like fb134793934930foo if you are adding the suffix foo. This will also require additional configurations in the facebook dashboard, see https://developers.facebook.com/docs/ios/troubleshooting#sharedappid for details.
+To define a url scheme suffix for multiple apps sharing the same facebook app ID, simply add the suffix (in lower case and must start with a letter) to the relevant string under the CFBundleURLSchemes key. In this example, it will look like fb1234567890123456foo if you are adding the suffix foo. This will also require additional configurations in the facebook dashboard, see https://developers.facebook.com/docs/ios/troubleshooting#sharedappid for details.
 
 To enable the use of Facebook dialogs (e.g., Login, Share), you also need to include the following key and values in tiapp.xml to handle the switching in and out of your app:
 ```xml
@@ -101,9 +101,15 @@ You must also reference the string containing your Facebook app ID, inside the \
 ```xml
 <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
 ```
-The app id goes into the the file /platform/android/res/values/strings.xml, where you should define 
+The app id goes into the the file /platform/android/res/values/strings.xml (or your custom theme), where you should define 
 ```xml
-<resources><string name="app_id">1234567890123456</string></resources>
+<?xml version="1.0" encoding="utf-8"?>
+    <resources>
+        <!-- ... -->
+        <string name="app_id">1234567890123456</string>
+        <!-- ... -->
+    </resources>
+</xml>
 ```
 where the number is of course the app ID. The app ID is not set programmatically.
 
@@ -284,7 +290,7 @@ To share more information, example:
     });
 ```
 
-Invite Dialog (iOS)
+Invite Dialog
 ---
 
 Opens a supported Facebook Invite dialog from the Facebook App. To monitor if the share request succeeded 
