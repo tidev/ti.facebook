@@ -563,7 +563,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
             }
         });
         
-        if (appInviteDialog.canShow()) {
+        if (!appInviteDialog.canShow()) {
             KrollDict errorEvent = new KrollDict();
 
             errorEvent.put(PROPERTY_SUCCESS, false);
