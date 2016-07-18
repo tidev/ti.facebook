@@ -514,9 +514,9 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			String ref = (String) args.get("ref");
 			Mode mode = Mode.AUTOMATIC;
             
-			switch(args.get("mode")) {
+			switch((int)args.get("mode")) {
 				case TiFacebookModule.SHARE_DIALOG_MODE_NATIVE:
-					mode = Mode.Native;
+					mode = Mode.NATIVE;
 					break;
 				case TiFacebookModule.SHARE_DIALOG_MODE_WEB:
 					mode = Mode.WEB;
