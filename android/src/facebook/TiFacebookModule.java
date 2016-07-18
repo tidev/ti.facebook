@@ -514,7 +514,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			String ref = (String) args.get("ref");
 			Mode mode = Mode.AUTOMATIC;
             
-			switch((int)args.get("mode")) {
+			switch(TiConvert.toInt(args.get("mode"), TiFacebookModule.SHARE_DIALOG_MODE_AUTOMATIC)) {
 				case TiFacebookModule.SHARE_DIALOG_MODE_NATIVE:
 					mode = Mode.NATIVE;
 					break;
@@ -553,7 +553,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			}
 		}
 		
-		if (shareDialog != null) {
+		if (shareDialog != null && shareDialog.canShow(shareContent, mode)) {
 			shareDialog.show(shareContent, mode);
 		}
 	}
