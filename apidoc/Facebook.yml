@@ -1210,7 +1210,7 @@ properties:
     type: Number
     permission: read-only
     since: "6.0.0"
-    platforms: [iphone, ipad]
+    platforms: [iphone, ipad, android]
 
   - name: SHARE_DIALOG_MODE_NATIVE
     summary: Displays the dialog in the main native Facebook app.
@@ -1218,7 +1218,7 @@ properties:
     type: Number
     permission: read-only
     since: "6.0.0"
-    platforms: [iphone, ipad]
+    platforms: [iphone, ipad, android]
 
   - name: SHARE_DIALOG_MODE_SHARE_SHEET
     summary: Displays the dialog in the iOS integrated share sheet.
@@ -1242,7 +1242,7 @@ properties:
     type: Number
     permission: read-only
     since: "6.0.0"
-    platforms: [iphone, ipad]
+    platforms: [iphone, ipad, android]
 
   - name: SHARE_DIALOG_MODE_FEED_BROWSER
     summary: Displays the feed dialog in Safari.
@@ -1258,7 +1258,7 @@ properties:
     type: Number
     permission: read-only
     since: "6.0.0"
-    platforms: [iphone, ipad]
+    platforms: [iphone, ipad, android]
 
   - name: accessToken
     summary: OAuth token set after a successful `authorize`.
@@ -1879,7 +1879,7 @@ properties:
     type: String
 
   - name: mode
-    summary: The mode to select for presenting a share dialog (iOS-only).
+    summary: The mode to select for presenting a share dialog.
     description: |
         The automatic mode will progressively check the availability of different modes and 
         open the most appropriate mode for the dialog that is available.

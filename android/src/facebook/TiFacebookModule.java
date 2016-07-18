@@ -54,6 +54,7 @@ import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.model.AppInviteContent;
 import com.facebook.share.widget.GameRequestDialog;
 import com.facebook.share.widget.ShareDialog;
+import com.facebook.share.widget.ShareDialog.Mode;
 import com.facebook.share.widget.AppInviteDialog;
 
 import android.app.Activity;
@@ -102,6 +103,12 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
     @Kroll.constant public static final String LOGIN_BEHAVIOR_NATIVE = "NATIVE_ONLY";
     @Kroll.constant public static final String LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK = "NATIVE_WITH_FALLBACK";
     @Kroll.constant public static final String LOGIN_BEHAVIOR_DEVICE_AUTH = "DEVICE_AUTH";
+    
+    @Kroll.constant public static final int SHARE_DIALOG_MODE_AUTOMATIC = 0;
+    @Kroll.constant public static final int SHARE_DIALOG_MODE_NATIVE = 1;
+    @Kroll.constant public static final int SHARE_DIALOG_MODE_WEB = 2;
+    @Kroll.constant public static final int SHARE_DIALOG_MODE_FEED_WEB = 6; // For iOS-parity
+
 
 	private static TiFacebookModule module;
 	private static String[] permissions = new String[]{};
@@ -505,6 +512,24 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			String picture = (String) args.get("picture");
 			String placeId = (String) args.get("placeId");
 			String ref = (String) args.get("ref");
+			Mode mode = Mode.AUTOMATIC;
+            
+			switch(args.get("mode")) {
+				case TiFacebookModule.SHARE_DIALOG_MODE_NATIVE:
+					mode = Mode.Native;
+					break;
+				case TiFacebookModule.SHARE_DIALOG_MODE_WEB:
+					mode = Mode.WEB;
+					break;
+				case TiFacebookModule.SHARE_DIALOG_MODE_FEED_WEB:
+					mode = Mode.FEED;
+					break;
+				default:
+				case TiFacebookModule.SHARE_DIALOG_MODE_AUTOMATIC:
+					mode = Mode.AUTOMATIC;
+					break;
+			}
+
 			Uri uriLink = null;
 			Uri uriPicture = null;
 			
@@ -529,7 +554,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		}
 		
 		if (shareDialog != null) {
-			shareDialog.show(shareContent);
+			shareDialog.show(shareContent, mode);
 		}
 	}
     
