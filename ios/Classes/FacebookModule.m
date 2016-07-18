@@ -480,10 +480,9 @@ MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_FEED_WEB, FBSDKShareDialogModeFeedWeb);
 -(void)logout:(id)args
 {
     TiThreadPerformOnMainThread(^{
-        FBSDKLoginManager *loginManager = [FBSDKLoginManager new];
+        FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
         [loginManager logOut];
         RELEASE_TO_NIL(loginManager)
-        [FBSDKAccessToken setCurrentAccessToken:nil];
     }, NO);
 }
 
