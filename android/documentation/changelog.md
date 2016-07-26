@@ -1,8 +1,15 @@
 # Change Log
 <pre>
-v5.1.0 Added support for `LikeButton` event `statuschange`. [MOD-2241]
+v5.2.0 Updated Facebook API to 4.11.0 in iOS and Android
+       Support `loginBehavior` on iOS and Android [MOD-2242]
+       Support new parameters in `logCustomEvent` on iOS and Android [MOD-2248]
+       Support `logPurchase` on iOS and Android [MOD-2244]
 
-v5.0.0 Updated Facebook API to 4.7 in iOS, that supports iOS9 [TIMOB-19383]
+v5.1.0 Updated Facebook API to 4.10.0 in iOS  [MOD-2180]
+       Support for the Facebook Messenger API. [MOD-2180]
+       Support for the Invite Dialog [MOD-2200]
+
+v5.0.0 Updated Facebook API to 4.7.0 in iOS, that supports iOS9 [TIMOB-19383]
 	   Updated Facebook API to 4.7.0 in Android [TIMOB-19577]
 
 v4.0.5 fixed presentSendRequestDialog with to and title params [MOD-2126]
@@ -16,7 +23,7 @@ v4.0.2 Updated Facebook SDK from 3.21.1 to 3.23.1
        Bumped iOS module version to be same as android
 	   Fixed `requestNewReadPermissions` and the `LikeButton` in Android [MOD-2105]
 
-v4.0.1 Changing sessionDefaultAudence to audience in Android [MOD-2107]
+v4.0.1 Changing sessionDefaultAudence to audience in Android [MOD-2107]        
 
 v4.0.0 Combined and updated the Facebook module from https://github.com/mokesmokes/titanium-android-facebook/ and https://github.com/mokesmokes/titanium-ios-facebook
 

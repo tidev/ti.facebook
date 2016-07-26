@@ -18,3 +18,22 @@ typedef NS_ENUM(NSUInteger, TiFacebookShareButtonMode) {
     TiFacebookShareButtonModeRectangular = 0,
     TiFacebookShareButtonModeCircular = 1
 };
+
+/*!
+ @abstract
+ Used to fire share-events from fb.presentShareDialog()
+ */
+NSString* const TiFacebookEventTypeShareCompleted = @"shareCompleted";
+
+
+/*!
+ @abstract
+ Used to fire invite-events from fb.presentInviteDialog()
+ */
+NSString* const TiFacebookEventTypeInviteCompleted = @"inviteCompleted";
+
+/*!
+ @abstract
+ Used to fire game-request-events from fb.presentSendRequestDialog()
+ */
+NSString* const TiFacebookEventTypeRequestDialogCompleted = @"requestDialogCompleted";

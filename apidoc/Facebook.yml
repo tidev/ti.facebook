@@ -211,8 +211,10 @@ description: |
             <android xmlns:android="http://schemas.android.com/apk/res/android">
                 <manifest>
                     <application>
-                        <activity android:label="@string/app_name"
-                            android:name="com.facebook.LoginActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+                        <activity android:label="YourAppName"
+                                  android:name="com.facebook.FacebookActivity" 
+                                  android:theme="@android:style/Theme.Translucent.NoTitleBar" 
+                                  android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" />
                         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
                     </application>
                 </manifest>
@@ -667,7 +669,7 @@ methods:
             A dictionary object containing required and optional parameters.
         type: InviteDialogParams
     since: "5.4.0"
-    platforms: [iphone, ipad]
+    platforms: [iphone, ipad, android]
 
   - name: presentShareDialog
     summary: |
@@ -981,6 +983,26 @@ events:
             Will be undefined if `success` is `true`.
         type: String
     since: 4.0.0
+
+  - name: inviteCompleted
+    summary: Fired when the Invite dialog is closed.
+    properties:
+      - name: success
+        summary: |
+            Returns `true` if request succeeded, `false` otherwise.
+        type: Boolean
+
+      - name: cancelled
+        summary: |
+            Indicates if the user canceled the request by closing the dialog.
+        type: Number
+
+      - name: error
+        summary: |
+            Error message, if any returned.
+            Will be undefined if `success` is `true`.
+        type: String
+    since: 5.4.0
 
   - name: tokenUpdated
     summary: Fired when [refreshPermissionsFromServer](Modules.Facebook.refreshPermissionsFromServer) is completed.
@@ -1956,7 +1978,7 @@ name: InviteDialogParams
 summary: |
     Parameters to pass to [presentInviteDialog()](Modules.Facebook.presentInviteDialog) method.
 since: "5.4.0"
-platforms: [iphone, ipad]
+platforms: [iphone, ipad, android]
 properties:
   - name: appLink
     summary: An app link target that will be used as a target when the user accept the invite.

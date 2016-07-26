@@ -20,22 +20,16 @@
 -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_enabled="false">
-        <shape android:shape="rectangle">
-            <corners android:radius="@dimen/com_facebook_button_corner_radius" />
-            <solid android:color="@color/com_facebook_button_background_color_disabled" />
-        </shape>
-    </item>
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <corners android:radius="@dimen/com_facebook_button_corner_radius" />
-            <solid android:color="@color/com_facebook_button_login_silver_background_color_pressed" />
+            <corners android:radius="2dp" />
+            <solid android:color="#999999" />
         </shape>
     </item>
     <item>
         <shape android:shape="rectangle">
-            <corners android:radius="@dimen/com_facebook_button_corner_radius" />
-            <solid android:color="@color/com_facebook_button_login_silver_background_color" />
+            <corners android:radius="2dp" />
+            <solid android:color="#33999999" />
         </shape>
     </item>
 </selector>
