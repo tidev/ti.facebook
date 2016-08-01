@@ -27,6 +27,7 @@ import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.titanium.TiApplication;
 import org.appcelerator.titanium.TiLifecycle.OnActivityResultEvent;
+import org.appcelerator.titanium.util.TiConvert;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -502,6 +503,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		});
 		
 		ShareLinkContent shareContent = null;
+		Mode mode = Mode.AUTOMATIC;
 		if (args == null || args.isEmpty()) {
 			shareContent = new ShareLinkContent.Builder()
 				.build();
@@ -512,7 +514,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			String picture = (String) args.get("picture");
 			String placeId = (String) args.get("placeId");
 			String ref = (String) args.get("ref");
-			Mode mode = Mode.AUTOMATIC;
             
 			switch(TiConvert.toInt(args.get("mode"), TiFacebookModule.SHARE_DIALOG_MODE_AUTOMATIC)) {
 				case TiFacebookModule.SHARE_DIALOG_MODE_NATIVE:
