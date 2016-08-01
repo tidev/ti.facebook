@@ -1204,6 +1204,62 @@ properties:
     since: 4.0.0
     platforms: [android]
 
+  - name: SHARE_DIALOG_MODE_AUTOMATIC
+    summary: Acts with the most appropriate mode that is available.
+    description: Use with [presentShareDialog()](Modules.Facebook.presentShareDialog).
+    type: Number
+    permission: read-only
+    since: "6.0.0"
+    platforms: [iphone, ipad, android]
+
+  - name: SHARE_DIALOG_MODE_NATIVE
+    summary: Displays the dialog in the main native Facebook app.
+    description: Use with [presentShareDialog()](Modules.Facebook.presentShareDialog).
+    type: Number
+    permission: read-only
+    since: "6.0.0"
+    platforms: [iphone, ipad, android]
+
+  - name: SHARE_DIALOG_MODE_SHARE_SHEET
+    summary: Displays the dialog in the iOS integrated share sheet.
+    description: Use with [presentShareDialog()](Modules.Facebook.presentShareDialog).
+    type: Number
+    permission: read-only
+    since: "6.0.0"
+    platforms: [iphone, ipad]
+
+  - name: SHARE_DIALOG_MODE_BROWSER
+    summary: Displays the dialog in Safari.
+    description: Use with [presentShareDialog()](Modules.Facebook.presentShareDialog).
+    type: Number
+    permission: read-only
+    since: "6.0.0"
+    platforms: [iphone, ipad]
+
+  - name: SHARE_DIALOG_MODE_WEB
+    summary: Displays the dialog in a web view within the app.
+    description: Use with [presentShareDialog()](Modules.Facebook.presentShareDialog).
+    type: Number
+    permission: read-only
+    since: "6.0.0"
+    platforms: [iphone, ipad, android]
+
+  - name: SHARE_DIALOG_MODE_FEED_BROWSER
+    summary: Displays the feed dialog in Safari.
+    description: Use with [presentShareDialog()](Modules.Facebook.presentShareDialog).
+    type: Number
+    permission: read-only
+    since: "6.0.0"
+    platforms: [iphone, ipad]
+
+  - name: SHARE_DIALOG_MODE_FEED_WEB
+    summary: Displays the feed dialog in a webview within the app.
+    description: Use with [presentShareDialog()](Modules.Facebook.presentShareDialog).
+    type: Number
+    permission: read-only
+    since: "6.0.0"
+    platforms: [iphone, ipad, android]
+
   - name: accessToken
     summary: OAuth token set after a successful `authorize`.
     type: String
@@ -1821,6 +1877,17 @@ properties:
   - name: picture
     summary: Link to a thumbnail to associate with the link.
     type: String
+
+  - name: mode
+    summary: The mode to select for presenting a share dialog.
+    description: |
+        The automatic mode will progressively check the availability of different modes and 
+        open the most appropriate mode for the dialog that is available.
+    type: Number
+    optional: true
+    default: Modules.Facebook.SHARE_DIALOG_MODE_AUTOMATIC
+    constants: Modules.Facebook.SHARE_DIALOG_MODE_*
+    since: "6.0.0"
 
 ---
 name: MessengerDialogParams

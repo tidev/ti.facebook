@@ -297,6 +297,14 @@ NSDictionary *launchOptions = nil;
     return [NSNumber numberWithInt:FBSDKMessengerShareButtonStyleWhiteBordered];
 }
 
+MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_AUTOMATIC, FBSDKShareDialogModeAutomatic);
+MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_NATIVE, FBSDKShareDialogModeNative);
+MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_SHARE_SHEET, FBSDKShareDialogModeShareSheet);
+MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_BROWSER, FBSDKShareDialogModeBrowser);
+MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_WEB, FBSDKShareDialogModeWeb);
+MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_FEED_BROWSER, FBSDKShareDialogModeFeedBrowser);
+MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_FEED_WEB, FBSDKShareDialogModeFeedWeb);
+
 /**
  * JS example:
  *
@@ -498,9 +506,17 @@ NSDictionary *launchOptions = nil;
             DEPRECATED_REMOVED(@"Facebook.presentShareDialog.caption", @"5.0.0", @"5.0.0");
         }
         content.imageURL = [NSURL URLWithString:[params objectForKey:@"picture"]];
-        [FBSDKShareDialog showFromViewController:nil
-                                     withContent:content
-                                        delegate:self];
+        
+        FBSDKShareDialog *dialog = [FBSDKShareDialog new];
+        [dialog setFromViewController:nil];
+        [dialog setShareContent:content];
+        [dialog setDelegate:self];
+        
+        if ([params objectForKey:@"mode"] != nil){
+            [dialog setMode:[TiUtils intValue:[params objectForKey:@"mode"]]];
+        }
+        
+        [dialog show];
     }, NO);
 }
 
