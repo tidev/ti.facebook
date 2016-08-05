@@ -262,7 +262,7 @@ NSDictionary *launchOptions = nil;
     return [NSNumber numberWithUnsignedInteger:FBSDKLoginBehaviorNative];
 }
 
--(id)LOGIN_BEHAVIOR_SYTEM_ACCOUNT
+-(id)LOGIN_BEHAVIOR_SYSTEM_ACCOUNT
 {
     return [NSNumber numberWithUnsignedInteger:FBSDKLoginBehaviorSystemAccount];
 }
