@@ -172,11 +172,7 @@ NSDictionary *launchOptions = nil;
  */
 -(id)permissions
 {
-    __block NSArray *perms;
-    TiThreadPerformOnMainThread(^{
-        perms = [[[FBSDKAccessToken currentAccessToken] permissions] allObjects];
-    }, YES);
-    return perms;
+    return [[[FBSDKAccessToken currentAccessToken] permissions] allObjects];
 }
 
 /**

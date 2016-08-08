@@ -23,17 +23,17 @@ typedef NS_ENUM(NSUInteger, TiFacebookShareButtonMode) {
  @abstract
  Used to fire share-events from fb.presentShareDialog()
  */
-NSString* const TiFacebookEventTypeShareCompleted = @"shareCompleted";
+extern NSString* const TiFacebookEventTypeShareCompleted;
 
 
 /*!
  @abstract
  Used to fire invite-events from fb.presentInviteDialog()
  */
-NSString* const TiFacebookEventTypeInviteCompleted = @"inviteCompleted";
+extern NSString* const TiFacebookEventTypeInviteCompleted;
 
 /*!
  @abstract
  Used to fire game-request-events from fb.presentSendRequestDialog()
  */
-NSString* const TiFacebookEventTypeRequestDialogCompleted = @"requestDialogCompleted";
+extern NSString* const TiFacebookEventTypeRequestDialogCompleted;
