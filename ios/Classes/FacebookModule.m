@@ -60,8 +60,6 @@ NSDictionary *launchOptions = nil;
     }
     
     if (urlString != nil) {
-        FBSDKAccessToken *token = [FBSDKAccessToken currentAccessToken];
-        NSSet* failed = token.declinedPermissions;
         return [[FBSDKApplicationDelegate sharedInstance] application:[UIApplication sharedApplication] openURL: [NSURL URLWithString:urlString] sourceApplication:sourceApplication annotation:annotation];
     } else {
         return NO;
@@ -420,7 +418,6 @@ MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_FEED_WEB, FBSDKShareDialogModeFeedWeb);
 -(void)authorize:(id)args
 {
     ENSURE_SINGLE_ARG_OR_NIL(args, NSNumber);
-    BOOL allowUI = args == nil ? YES : NO;
     NSArray *permissions_ = permissions == nil ? [NSArray array] : permissions;
     FBSDKLoginManager *loginManager = [[[FBSDKLoginManager alloc] init] autorelease];
     [loginManager setLoginBehavior:loginBehavior];
@@ -513,6 +510,7 @@ MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_FEED_WEB, FBSDKShareDialogModeFeedWeb);
         }
         
         [dialog show];
+        RELEASE_TO_NIL(content);
     }, NO);
 }
 
@@ -539,6 +537,7 @@ MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_FEED_WEB, FBSDKShareDialogModeFeedWeb);
         }
         
         [FBSDKMessageDialog showWithContent:content delegate:self];
+        RELEASE_TO_NIL(content);
     }, NO);
 }
 
@@ -566,6 +565,7 @@ MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_FEED_WEB, FBSDKShareDialogModeFeedWeb);
         } else {
             NSLog(@"[ERROR] Unknown media provided. Allowed media: Image, GIF and video.");
         }
+        RELEASE_TO_NIL(options);
     }, NO);
 }
 
@@ -587,6 +587,7 @@ MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_FEED_WEB, FBSDKShareDialogModeFeedWeb);
         [content setAppInvitePreviewImageURL:[NSURL URLWithString:[params objectForKey:@"appPreviewImageLink"]]];
         
         [FBSDKAppInviteDialog showFromViewController:nil withContent:content delegate:self];
+        RELEASE_TO_NIL(content);
     }, NO);
 }
 
@@ -610,6 +611,7 @@ MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_FEED_WEB, FBSDKShareDialogModeFeedWeb);
 
     TiThreadPerformOnMainThread(^{
         FBSDKGameRequestContent *gameRequestContent = [[[FBSDKGameRequestContent alloc] init] autorelease];
+        gameRequestContent.title = title;
         gameRequestContent.message = message;
         gameRequestContent.recipients = recipients;
         gameRequestContent.objectID = objectID;
@@ -885,6 +887,7 @@ MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_FEED_WEB, FBSDKShareDialogModeFeedWeb);
         if (uid != nil){
             [event setObject:uid forKey:@"uid"];
         }
+        RELEASE_TO_NIL(resultString);
     }
     [self fireEvent:@"login" withObject:event];
 }
