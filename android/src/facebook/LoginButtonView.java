@@ -79,6 +79,16 @@ public class LoginButtonView extends TiUIView {
 					break;
 			}
 		}
+		if (props.containsKey("tooltipBehavior")) {
+			Object value = props.get("tooltipBehavior");
+			int tooltipBehavior = TiConvert.toInt(value, TiFacebookModule.LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC);
+			loginButton.setToolTipMode(tooltipBehavior);
+		}
+		if (props.containsKey("tooltipColorStyle")) {
+			Object value = props.get("tooltipColorStyle");
+			String tooltipColorStyle = TiConvert.toString(value, TiFacebookModule.LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY);
+			loginButton.setToolTipStyle(tooltipColorStyle);
+		}
 	}
 	
 	@Override

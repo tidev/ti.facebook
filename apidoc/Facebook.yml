@@ -1192,15 +1192,15 @@ properties:
         (determined by possible server round trip).
     type: Number
     permission: read-only
-    since: "6.0.0"
-    platforms: [iphone, ipad]
+    since: "7.0.0"
+    platforms: [iphone, ipad, android]
 
   - name: LOGIN_BUTTON_TOOLTIP_BEHAVIOR_FORCE_DISPLAY
     summary: Force display of the tooltip (typically for UI testing).
     type: Number
     permission: read-only
-    since: "6.0.0"
-    platforms: [iphone, ipad]
+    since: "7.0.0"
+    platforms: [iphone, ipad, android]
 
   - name: LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE
     summary: |
@@ -1208,22 +1208,22 @@ properties:
         constructing a new login button.
     type: Number
     permission: read-only
-    since: "6.0.0"
-    platforms: [iphone, ipad]
+    since: "7.0.0"
+    platforms: [iphone, ipad, android]
 
   - name: LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY
     summary: Dark gray background, white text, light gray close button.
     type: Number
     permission: read-only
-    since: "6.0.0"
-    platforms: [iphone, ipad]
+    since: "7.0.0"
+    platforms: [iphone, ipad, android]
 
   - name: LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE
     summary: Light blue background, white text, faded blue close button.
     type: Number
     permission: read-only
-    since: "6.0.0"
-    platforms: [iphone, ipad]
+    since: "7.0.0"
+    platforms: [iphone, ipad, android]
 
   - name: SSO_WITH_FALLBACK
     summary: Attempt single sign-on, then fallback to dialog authorization.
