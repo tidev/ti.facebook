@@ -58,8 +58,8 @@ import com.facebook.share.widget.ShareDialog;
 import com.facebook.share.widget.ShareDialog.Mode;
 import com.facebook.share.widget.AppInviteDialog;
 
-import com.facebook.widget.ToolTipPopup;
-import com.facebook.widget.LoginButton.ToolTipMode;
+import com.facebook.login.widget.ToolTipPopup;
+import com.facebook.login.widget.LoginButton.ToolTipMode;
 
 import android.app.Activity;
 import android.content.Intent;
