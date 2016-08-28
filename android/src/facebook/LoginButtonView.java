@@ -84,7 +84,7 @@ public class LoginButtonView extends TiUIView {
 			Object value = props.get("tooltipBehavior");
 			int tooltipBehavior = TiConvert.toInt(value, TiFacebookModule.LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC);
             
-			switch(tooltipBehavior){
+			switch (tooltipBehavior) {
 				case TiFacebookModule.LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC:
 					loginButton.setToolTipMode(ToolTipMode.AUTOMATIC);
 					break;
@@ -100,13 +100,10 @@ public class LoginButtonView extends TiUIView {
 			Object value = props.get("tooltipColorStyle");
 			String tooltipColorStyle = TiConvert.toString(value, TiFacebookModule.LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY);
 
-			switch(tooltipColorStyle){
-				case TiFacebookModule.LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY:
-					loginButton.setToolTipStyle(ToolTipPopup.Style.BLACK);
-					break;
-				case TiFacebookModule.LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE:
-					loginButton.setToolTipStyle(ToolTipPopup.Style.BLUE);
-					break;
+			if (tooltipColorStyle == TiFacebookModule.LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY) {
+				loginButton.setToolTipStyle(ToolTipPopup.Style.BLACK);
+			} else if (tooltipColorStyle == TiFacebookModule.LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE) {
+				loginButton.setToolTipStyle(ToolTipPopup.Style.BLUE);
 			}
 		}
 	}
