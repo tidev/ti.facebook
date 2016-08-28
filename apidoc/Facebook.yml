@@ -79,9 +79,6 @@ description: |
     To use the Facebook module, you need a Facebook application. To create a Facebook App,
     go to the Facebook Developer App: [developers.facebook.com/apps](https://developers.facebook.com/apps).
 
-    Note that this module is only available for Release 3.1.0 and later, and is included with the
-    Titanium SDK.  You do not need to download or unpack it.
-
     -   Edit the `modules` section of your tiapp.xml file to include this module:
 
             <modules>
@@ -178,18 +175,24 @@ description: |
                 <dict>
                     <key>facebook.com</key>
                         <dict>
-                            <key>NSIncludesSubdomains</key> <true/>
-                            <key>NSExceptionRequiresForwardSecrecy</key> <false/>
+                            <key>NSIncludesSubdomains</key> 
+                            <true/>
+                            <key>NSExceptionRequiresForwardSecrecy</key> 
+                            <false/>
                         </dict>
                     <key>fbcdn.net</key>
                         <dict>
-                            <key>NSIncludesSubdomains</key> <true/>
-                            <key>NSExceptionRequiresForwardSecrecy</key>  <false/>
+                            <key>NSIncludesSubdomains</key> 
+                            <true/>
+                            <key>NSExceptionRequiresForwardSecrecy</key>  
+                            <false/>
                         </dict>
                     <key>akamaihd.net</key>
                         <dict>
-                            <key>NSIncludesSubdomains</key> <true/>
-                            <key>NSExceptionRequiresForwardSecrecy</key> <false/>
+                            <key>NSIncludesSubdomains</key> 
+                            <true/>
+                            <key>NSExceptionRequiresForwardSecrecy</key> 
+                            <false/>
                         </dict>
                 </dict>
         </dict>
@@ -211,9 +214,9 @@ description: |
             <android xmlns:android="http://schemas.android.com/apk/res/android">
                 <manifest>
                     <application>
-                        <activity android:label="YourAppName"
-                                  android:name="com.facebook.FacebookActivity" 
+                        <activity android:name="com.facebook.FacebookActivity" 
                                   android:theme="@android:style/Theme.Translucent.NoTitleBar" 
+                                  android:label="YourAppName" 
                                   android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" />
                         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
                     </application>
@@ -309,10 +312,10 @@ description: |
     additional permissions.
 
         var fb = require('facebook');
-        fb.requestNewReadPermissions(['read_stream','user_hometown', etc...], function(e){
-            if(e.success){
+        fb.requestNewReadPermissions(['read_stream','user_hometown', etc...], function(e) {
+            if (e.success) {
                 fb.requestWithGraphPath(...);
-            } else if (e.cancelled){
+            } else if (e.cancelled) {
                 ....
             } else {
                 Ti.API.debug('Failed authorization due to: ' + e.error);
@@ -330,10 +333,10 @@ description: |
     additional permissions.
 
         var fb = require('facebook');
-        fb.requestNewPublishPermissions(['read_stream','user_hometown', etc...], fb.AUDIENCE_FRIENDS, function(e){
-            if(e.success){
+        fb.requestNewPublishPermissions(['read_stream','user_hometown', etc...], fb.AUDIENCE_FRIENDS, function(e) {
+            if (e.success) {
                 fb.requestWithGraphPath(...);
-            } else if (e.cancelled){
+            } else if (e.cancelled) {
             ....
             } else {
                 Ti.API.debug('Failed authorization due to: ' + e.error);
@@ -471,32 +474,6 @@ description: |
         win.add(likeButton);
 
     For more information, see the [LikeButton API reference](Modules.Facebook.LikeButton).
-
-    ### Submitting an iOS Application to the iTunes Store
-
-    When including the **Facebook 3.x module** in an iOS project and built for the iTunes Store, during the
-    validation process you may receive an error message referring to an Improper Advertising identifier
-    [IDFA] Usage.
-
-    As part of the Apple review process when submitting an application, you will be asked if your app
-    uses the Advertising Identifier (IDFA). Please check "Yes". You will then be asked how your app
-    makes use of it. The question will take this form:
-
-        This app uses the Advertising Identifier to (select all that apply)?
-        - Serve advertisements within the app
-        - Attribute this app installation to a previously served advertisement
-        - Attribute an action taken within this app to a previously served advertisement
-
-    Select the second and third options.
-
-    You will also be asked to check a box to confirm that your app honors a user's Limit Ad Tracking
-    setting in iOS. The Facebook SDK honors the iOS Limited Ad Tracking Setting. When a person enables
-    Limited Ad Tracking, Facebook only uses data obtained through the use of the Advertising Identifier
-    for "Limited Advertising Purposes" as defined by the iOS Developer Program License Agreement. Please
-    make sure to check this box when prompted.
-
-    For more information, see [Facebook Issue #242477629268301](https://developers.facebook.com/bugs/242477629268301/)
-    and [TIMODOPEN-391](https://jira.appcelerator.org/browse/TIMODOPEN-391).
 
 extends: Titanium.Module
 since: "3.1.0"
@@ -1590,17 +1567,17 @@ examples:
                     {
                         b1.title = 'Uploading Photo...';
                         var data = {picture: event.media};
-                        //If publish_actions permission is not granted, request it
-                        if(fb.permissions.indexOf('publish_actions') < 0) {
-                            fb.requestNewPublishPermissions(['publish_actions'],fb.AUDIENCE_FRIENDS,function(e){
-                                if(e.success) {
+                        // If publish_actions permission is not granted, request it
+                        if (fb.permissions.indexOf('publish_actions') < 0) {
+                            fb.requestNewPublishPermissions(['publish_actions'], fb.AUDIENCE_FRIENDS, function(e) {
+                                if (e.success) {
                                     Ti.API.info('Permissions:'+fb.permissions);
                                     fb.requestWithGraphPath('me/photos', data, "POST", showRequestResult);
                                 }
-                                if(e.error) {
+                                if (e.error) {
                                     Ti.API.info('Publish permission error');
                                 }
-                                if(e.cancelled) {
+                                if (e.cancelled) {
                                     Ti.API.info('Publish permission cancelled');
                                 }
                             });
@@ -1628,10 +1605,12 @@ examples:
         This example posts a photo to the user's account using the Graph API.
         This requires the "publish_actions" permission.
 
-            var B2_TITLE = 'Upload Photo from file with Graph API';
             var b2 = Ti.UI.createButton({
-                title: B2_TITLE,
-                left: 10, right: 10, top: 90, height: 80
+                title: 'Upload Photo from file with Graph API',
+                left: 10, 
+                right: 10, 
+                top: 90, 
+                height: 80
             });
 
             b2.addEventListener('click', function() {
@@ -1642,17 +1621,17 @@ examples:
                     caption: 'behold, a flower',
                     picture: blob
                 };
-                //If publish_actions permission is not granted, request it
-                if(fb.permissions.indexOf('publish_actions') < 0) {
-                    fb.requestNewPublishPermissions(['publish_actions'],fb.AUDIENCE_FRIENDS,function(e){
-                        if(e.success) {
+                // If publish_actions permission is not granted, request it
+                if (fb.permissions.indexOf('publish_actions') < 0) {
+                    fb.requestNewPublishPermissions(['publish_actions'], fb.AUDIENCE_FRIENDS, function(e) {
+                        if (e.success) {
                             Ti.API.info('Permissions:'+fb.permissions);
                             fb.requestWithGraphPath('me/photos', data, "POST", showRequestResult);
                         }
-                        if(e.error) {
+                        if (e.error) {
                             Ti.API.info('Publish permission error');
                         }
-                        if(e.cancelled) {
+                        if (e.cancelled) {
                             Ti.API.info('Publish permission cancelled');
                         }
                     });
@@ -1672,11 +1651,14 @@ examples:
 
             var wallDialog = Ti.UI.createButton({
                 title: 'Share URL with Share Dialog',
-                top: 135, left: 10, right: 10, height: 40
+                top: 135, 
+                left: 10, 
+                right: 10, 
+                height: 40
             });
 
             wallDialog.addEventListener('click', function() {
-                if(fb.getCanPresentShareDialog()) {
+                if (fb.getCanPresentShareDialog()) {
                     fb.presentShareDialog({
                         link: 'https://appcelerator.com/',
                         name: 'great product',
@@ -1706,7 +1688,10 @@ examples:
 
             var wallDialog = Ti.UI.createButton({
                 title: 'Invite friends!',
-                top: 135, left: 10, right: 10, height: 40
+                top: 135, 
+                left: 10, 
+                right: 10, 
+                height: 40
             });
 
             wallDialog.addEventListener('click', function() {
@@ -1762,8 +1747,8 @@ examples:
         This example shows how to use the `requestNewPublishPermissions` method to request additional permissions
         to publish a post to the user's wall.
 
-            fb.requestNewPublishPermissions(['publish_actions'],fb.AUDIENCE_FRIENDS,function(e){
-                if(e.success){
+            fb.requestNewPublishPermissions(['publish_actions'], fb.AUDIENCE_FRIENDS, function(e) {
+                if (e.success) {
                     fb.requestWithGraphPath('me/feed', null, "POST", showRequestResult);
                 } else {
                     Ti.API.debug('Failed authorization due to: ' + e.error);
