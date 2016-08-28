@@ -60,8 +60,6 @@ NSDictionary *launchOptions = nil;
     }
     
     if (urlString != nil) {
-        FBSDKAccessToken *token = [FBSDKAccessToken currentAccessToken];
-        NSSet* failed = token.declinedPermissions;
         return [[FBSDKApplicationDelegate sharedInstance] application:[UIApplication sharedApplication] openURL: [NSURL URLWithString:urlString] sourceApplication:sourceApplication annotation:annotation];
     } else {
         return NO;
@@ -172,11 +170,7 @@ NSDictionary *launchOptions = nil;
  */
 -(id)permissions
 {
-    __block NSArray *perms;
-    TiThreadPerformOnMainThread(^{
-        perms = [[[FBSDKAccessToken currentAccessToken] permissions] allObjects];
-    }, YES);
-    return perms;
+    return [[[FBSDKAccessToken currentAccessToken] permissions] allObjects];
 }
 
 /**
@@ -262,7 +256,7 @@ NSDictionary *launchOptions = nil;
     return [NSNumber numberWithUnsignedInteger:FBSDKLoginBehaviorNative];
 }
 
--(id)LOGIN_BEHAVIOR_SYTEM_ACCOUNT
+-(id)LOGIN_BEHAVIOR_SYSTEM_ACCOUNT
 {
     return [NSNumber numberWithUnsignedInteger:FBSDKLoginBehaviorSystemAccount];
 }
@@ -296,6 +290,14 @@ NSDictionary *launchOptions = nil;
 {
     return [NSNumber numberWithInt:FBSDKMessengerShareButtonStyleWhiteBordered];
 }
+
+MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_AUTOMATIC, FBSDKShareDialogModeAutomatic);
+MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_NATIVE, FBSDKShareDialogModeNative);
+MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_SHARE_SHEET, FBSDKShareDialogModeShareSheet);
+MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_BROWSER, FBSDKShareDialogModeBrowser);
+MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_WEB, FBSDKShareDialogModeWeb);
+MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_FEED_BROWSER, FBSDKShareDialogModeFeedBrowser);
+MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_FEED_WEB, FBSDKShareDialogModeFeedWeb);
 
 /**
  * JS example:
@@ -416,7 +418,6 @@ NSDictionary *launchOptions = nil;
 -(void)authorize:(id)args
 {
     ENSURE_SINGLE_ARG_OR_NIL(args, NSNumber);
-    BOOL allowUI = args == nil ? YES : NO;
     NSArray *permissions_ = permissions == nil ? [NSArray array] : permissions;
     FBSDKLoginManager *loginManager = [[[FBSDKLoginManager alloc] init] autorelease];
     [loginManager setLoginBehavior:loginBehavior];
@@ -498,9 +499,18 @@ NSDictionary *launchOptions = nil;
             DEPRECATED_REMOVED(@"Facebook.presentShareDialog.caption", @"5.0.0", @"5.0.0");
         }
         content.imageURL = [NSURL URLWithString:[params objectForKey:@"picture"]];
-        [FBSDKShareDialog showFromViewController:nil
-                                     withContent:content
-                                        delegate:self];
+        
+        FBSDKShareDialog *dialog = [FBSDKShareDialog new];
+        [dialog setFromViewController:nil];
+        [dialog setShareContent:content];
+        [dialog setDelegate:self];
+        
+        if ([params objectForKey:@"mode"] != nil){
+            [dialog setMode:[TiUtils intValue:[params objectForKey:@"mode"]]];
+        }
+        
+        [dialog show];
+        RELEASE_TO_NIL(content);
     }, NO);
 }
 
@@ -527,6 +537,7 @@ NSDictionary *launchOptions = nil;
         }
         
         [FBSDKMessageDialog showWithContent:content delegate:self];
+        RELEASE_TO_NIL(content);
     }, NO);
 }
 
@@ -554,6 +565,7 @@ NSDictionary *launchOptions = nil;
         } else {
             NSLog(@"[ERROR] Unknown media provided. Allowed media: Image, GIF and video.");
         }
+        RELEASE_TO_NIL(options);
     }, NO);
 }
 
@@ -575,6 +587,7 @@ NSDictionary *launchOptions = nil;
         [content setAppInvitePreviewImageURL:[NSURL URLWithString:[params objectForKey:@"appPreviewImageLink"]]];
         
         [FBSDKAppInviteDialog showFromViewController:nil withContent:content delegate:self];
+        RELEASE_TO_NIL(content);
     }, NO);
 }
 
@@ -598,6 +611,7 @@ NSDictionary *launchOptions = nil;
 
     TiThreadPerformOnMainThread(^{
         FBSDKGameRequestContent *gameRequestContent = [[[FBSDKGameRequestContent alloc] init] autorelease];
+        gameRequestContent.title = title;
         gameRequestContent.message = message;
         gameRequestContent.recipients = recipients;
         gameRequestContent.objectID = objectID;
@@ -873,6 +887,7 @@ NSDictionary *launchOptions = nil;
         if (uid != nil){
             [event setObject:uid forKey:@"uid"];
         }
+        RELEASE_TO_NIL(resultString);
     }
     [self fireEvent:@"login" withObject:event];
 }
