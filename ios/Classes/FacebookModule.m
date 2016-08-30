@@ -783,13 +783,17 @@ MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE, FBSDKTooltipColorStyl
     id args3 = [args objectAtIndex:3];
     ENSURE_SINGLE_ARG(args3, KrollCallback);
     KrollCallback *callback = args3;
-    for(NSString *key in params) {
+    
+    for (NSUInteger i = 0; i <  [[params allKeys] count]; i++) {
+        NSString *key = [[params allKeys] objectAtIndex:i];
         id value = [params objectForKey:key];
+        
         if ([value isKindOfClass:[TiBlob class]]) {
             TiBlob *blob = (TiBlob*)value;
             [params setObject:[blob data] forKey:key];
         }
     }
+    
     TiThreadPerformOnMainThread(^{
         if ([FBSDKAccessToken currentAccessToken]) {
             [[[FBSDKGraphRequest alloc] initWithGraphPath:path parameters:params HTTPMethod:httpMethod]
