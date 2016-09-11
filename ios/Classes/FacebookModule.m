@@ -69,11 +69,9 @@ NSDictionary *launchOptions = nil;
     [FBSDKAppEvents activateApp];
 }
 
--(void)activateApp
+-(void)activateApp:(NSNotification *)notification
 {
-    TiApp * appDelegate = [TiApp app];
-	launchOptions = [appDelegate launchOptions];
-	[[FBSDKApplicationDelegate sharedInstance] application:[UIApplication sharedApplication] didFinishLaunchingWithOptions:launchOptions];
+	[[FBSDKApplicationDelegate sharedInstance] application:[UIApplication sharedApplication] didFinishLaunchingWithOptions:[notification userInfo]];
 }
 
 -(void)startup
@@ -442,17 +440,17 @@ MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_FEED_WEB, FBSDKShareDialogModeFeedWeb);
     }
     TiThreadPerformOnMainThread(^{
         [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
+        loginBehavior = FBSDKLoginBehaviorBrowser;
+        
         NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
         [nc addObserver:self selector:@selector(logEvents:) name:UIApplicationDidBecomeActiveNotification object:nil];
         [nc addObserver:self selector:@selector(accessTokenChanged:) name:FBSDKAccessTokenDidChangeNotification object:nil];
-		[nc addObserver:self selector:@selector(activateApp:) name:UIApplicationDidFinishLaunchingNotification object:nil];
+        [nc addObserver:self selector:@selector(activateApp:) name:UIApplicationDidFinishLaunchingNotification object:nil];
         [nc addObserver:self selector:@selector(currentProfileChanged:) name:FBSDKProfileDidChangeNotification object:nil];
         [nc addObserver:self selector:@selector(handleRelaunch:) name:kTiApplicationLaunchedFromURL object:nil];
-        
-        loginBehavior = FBSDKLoginBehaviorBrowser;
 
         if ([FBSDKAccessToken currentAccessToken] == nil) {
-            [self activateApp];
+            [self activateApp:nil];
         } else {
             [self handleRelaunch:nil];
         }
