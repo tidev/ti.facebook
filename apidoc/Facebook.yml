@@ -15,20 +15,20 @@ description: |
     * Sharing content using Facebook dialogs or the [Like button](Modules.Facebook.LikeButton).
 
     **Using Facebook module with iOS 10 and Xcode 8**
-    To log in using facebook, we now have to include an entitlements file that enables Keychain Sharing
+    To log in using Facebook, we now have to include an entitlements file that enables Keychain Sharing
     Capabilities. To do so, create a `/platform/ios/<appname>.entitlements` file with this content
 
-    <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-    <plist version="1.0">
-    <dict>
-    	<key>keychain-access-groups</key>
-    	<array>
-            <!-- Application ID same as the id value in the tiapp.xml file -->
-            <string>APP_ID</string>
-    	</array>
-    </dict>
-    </plist>
+            <?xml version="1.0" encoding="UTF-8"?>
+            <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+            <plist version="1.0">
+            <dict>
+            	<key>keychain-access-groups</key>
+            	<array>
+                    <!-- Application ID same as the id value in the tiapp.xml file -->
+                    <string>APP_ID</string>
+            	</array>
+            </dict>
+            </plist>
 
     **Note:** As of April 30th, 2015, Facebook no longer supports version 1.0 of their API, which
     includes the FQL and REST APIs.  Only the Graph APIs will be supported.
