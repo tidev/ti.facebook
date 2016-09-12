@@ -48,14 +48,12 @@ NSDictionary *launchOptions = nil;
     launchOptions = [[TiApp app] launchOptions];
     NSString *urlString = [launchOptions objectForKey:@"url"];
     NSString *sourceApplication = [launchOptions objectForKey:@"source"];
-    NSString *annotation;
+    id annotation = nil;
     
     if ([TiUtils isIOS9OrGreater]) {
 #ifdef __IPHONE_9_0
         annotation = [launchOptions objectForKey:UIApplicationOpenURLOptionsAnnotationKey];
 #endif
-    } else {
-        annotation = nil;
     }
     
     if (urlString != nil) {
@@ -660,6 +658,14 @@ MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_FEED_WEB, FBSDKShareDialogModeFeedWeb);
                 errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
                 if (errorString == nil) {
                     errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+                    
+                    if (errorString == nil) {
+                        if ([error code] == 308) {
+                            errorString = [NSString stringWithFormat:@"Error 308 detected: Please enable keychain-sharing in your project by creating an Entitlements file. For more information check the \"Migrate to iOS 10\" section in https://docs.appcelerator.com/platform/latest/#!/api/Modules.Facebook"];
+                        } else {
+                            errorString = [error localizedDescription];
+                        }
+                    }
                 }
             }
             else if (result.isCancelled) {
@@ -719,6 +725,14 @@ MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_FEED_WEB, FBSDKShareDialogModeFeedWeb);
                 errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
                 if (errorString == nil) {
                     errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+                    
+                    if (errorString == nil) {
+                        if ([error code] == 308) {
+                            errorString = [NSString stringWithFormat:@"Error 308 detected: Please enable keychain-sharing in your project by creating an Entitlements file. For more information check the \"Migrate to iOS 10\" section in https://docs.appcelerator.com/platform/latest/#!/api/Modules.Facebook"];
+                        } else {
+                            errorString = [error localizedDescription];
+                        }
+                    }
                 }
             }
             else if (result.isCancelled) {
@@ -800,6 +814,14 @@ MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_FEED_WEB, FBSDKShareDialogModeFeedWeb);
                      NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
                      if (errorString == nil) {
                          errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+                         
+                         if (errorString == nil) {
+                             if ([error code] == 308) {
+                                 errorString = [NSString stringWithFormat:@"Error 308 detected: Please enable keychain-sharing in your project by creating an Entitlements file. For more information check the \"Migrate to iOS 10\" section in https://docs.appcelerator.com/platform/latest/#!/api/Modules.Facebook"];
+                             } else {
+                                 errorString = [error localizedDescription];
+                             }
+                         }
                      }
                      returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys:
                                        NUMBOOL(success), @"success",
@@ -833,6 +855,14 @@ MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_FEED_WEB, FBSDKShareDialogModeFeedWeb);
                     errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
                     if (errorString == nil) {
                         errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+                        
+                        if (errorString == nil) {
+                            if ([error code] == 308) {
+                                errorString = [NSString stringWithFormat:@"Error 308 detected: Please enable keychain-sharing in your project by creating an Entitlements file. For more information check the \"Migrate to iOS 10\" section in https://docs.appcelerator.com/platform/latest/#!/api/Modules.Facebook"];
+                            } else {
+                                errorString = [error localizedDescription];
+                            }
+                        }
                     }
                 }
                 returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys: errorString,@"error", NUMBOOL(NO),@"success", nil];
@@ -864,6 +894,14 @@ MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_FEED_WEB, FBSDKShareDialogModeFeedWeb);
         NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
         if (errorString == nil) {
             errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+            
+            if (errorString == nil) {
+                if ([error code] == 308) {
+                    errorString = [NSString stringWithFormat:@"Error 308 detected: Please enable keychain-sharing in your project by creating an Entitlements file. For more information check the \"Migrate to iOS 10\" section in https://docs.appcelerator.com/platform/latest/#!/api/Modules.Facebook"];
+                } else {
+                    errorString = [error localizedDescription];
+                }
+            }
         }
         [event setObject:errorString forKey:@"error"];
     }
@@ -972,6 +1010,14 @@ MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_FEED_WEB, FBSDKShareDialogModeFeedWeb);
         NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
         if (errorString == nil) {
             errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+            
+            if (errorString == nil) {
+                if ([error code] == 308) {
+                    errorString = [NSString stringWithFormat:@"Error 308 detected: Please enable keychain-sharing in your project by creating an Entitlements file. For more information check the \"Migrate to iOS 10\" section in https://docs.appcelerator.com/platform/latest/#!/api/Modules.Facebook"];
+                } else {
+                    errorString = [error localizedDescription];
+                }
+            }
         }
         [event setValue:errorString forKey:@"error"];
     }
