@@ -24,8 +24,8 @@ description: |
             <dict>
             	<key>keychain-access-groups</key>
             	<array>
-                    <!-- Application ID same as the id value in the tiapp.xml file -->
-                    <string>APP_ID</string>
+                    <!-- APP_ID same as the id value in the tiapp.xml file -->
+                    <string>$(AppIdentifierPrefix)APP_ID</string>
             	</array>
             </dict>
             </plist>
