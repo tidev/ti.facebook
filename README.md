@@ -92,8 +92,9 @@ If you choose to enable it, you have to set the following keys and values in tia
     </dict>
 ```
 
-For iOS 10+ and Titanium 5.5.0.GA and above, to log in using Facebook, we now have to include an entitlements file that enables 
-Keychain Sharing Capabilities. To do so, create a `/platform/ios/<appname>.entitlements` file with the following content:
+For iOS 10+ and Titanium 5.5.0.GA and above, to log in using Facebook on iOS Simulator , we now have to include an entitlements 
+file that enables Keychain Sharing Capabilities. To do so, create a `/platform/ios/<appname>.entitlements` file (<name> is the name
+element in `tiapp.xml`) with the following content:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
