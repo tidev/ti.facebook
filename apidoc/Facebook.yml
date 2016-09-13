@@ -14,7 +14,7 @@ description: |
 
     * Sharing content using Facebook dialogs or the [Like button](Modules.Facebook.LikeButton).
 
-    **Using Facebook module with iOS 10 and Xcode 8**
+    **Using Ti.Facebook with iOS 10 and Xcode 8**
     To log in using Facebook, we now have to include an entitlements file that enables Keychain Sharing
     Capabilities. To do so, create a `/platform/ios/<appname>.entitlements` file with this content
 

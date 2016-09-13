@@ -60,7 +60,7 @@ To enable the use of Facebook dialogs (e.g., Login, Share), you also need to inc
     </array>
 ```
 
-For iOS9 and titanium 5.0.0.GA and above, App Transport Security is disabled by default so you don't need these keys.
+For iOS 9+ and Titanium 5.0.0.GA and above, App Transport Security is disabled by default so you don't need these keys.
 If you choose to enable it, you have to set the following keys and values in tiapp.xml:
 ```xml
 <key>NSAppTransportSecurity</key>
@@ -90,6 +90,23 @@ If you choose to enable it, you have to set the following keys and values in tia
                     </dict>
             </dict>
     </dict>
+```
+
+For iOS 10+ and Titanium 5.5.0.GA and above, to log in using Facebook, we now have to include an entitlements file that enables 
+Keychain Sharing Capabilities. To do so, create a `/platform/ios/<appname>.entitlements` file with the following content:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>keychain-access-groups</key>
+        <array>
+            <!-- APP_ID same as the id value in the tiapp.xml file -->
+            <string>$(AppIdentifierPrefix)APP_ID</string>
+        </array>
+    </dict>
+</plist>
 ```
 
 On the android platform, in tiapp.xml or AndroidManifest.xml you must declare the following inside the \<application\> node 
