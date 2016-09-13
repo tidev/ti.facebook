@@ -15,10 +15,10 @@ description: |
     * Sharing content using Facebook dialogs or the [Like button](Modules.Facebook.LikeButton).
 
     **Using Ti.Facebook with iOS 10 and Xcode 8**
-    To log in using Facebook on iOS Simulator, we now have to include an entitlements file that enables 
-    Keychain Sharing Capabilities. This is not necessary for device builds, as it will be self-generated, but it 
-    is still fine to have it there. To do this, create a `/platform/ios/<name>.entitlements` file (<name> is the name
-    element in `tiapp.xml`) with this content:
+    To log in using Facebook on iOS Simulator, you now must include an entitlements file that enables Keychain 
+    Sharing Capabilities. While the entitlements file is not necessary for device build (it is self-generated), 
+    it won't affect anything in your build. To do so, create a `/platform/ios/<name>.entitlements` file (replace 
+    <name> with the name element in tiapp.xml) with this content:
 
             <?xml version="1.0" encoding="UTF-8"?>
             <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
