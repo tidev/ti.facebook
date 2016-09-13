@@ -63,7 +63,7 @@ NSDictionary *launchOptions = nil;
 
 -(void)resumed:(id)note
 {
-//    NSLog(@"[DEBUG] facebook resumed");
+    [self handleRelaunch:nil];
     [FBSDKAppEvents activateApp];
 }
 
@@ -89,16 +89,6 @@ NSDictionary *launchOptions = nil;
 //    NSLog(@"[DEBUG] facebook shutdown");
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super shutdown:sender];
-}
-
--(void)suspend:(id)sender
-{
-//    NSLog(@"[DEBUG] facebook suspend");
-}
-
--(void)paused:(id)sender
-{
-//    NSLog(@"[DEBUG] facebook paused");
 }
 
 #pragma mark Auth Internals
@@ -445,7 +435,10 @@ MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_FEED_WEB, FBSDKShareDialogModeFeedWeb);
         [nc addObserver:self selector:@selector(accessTokenChanged:) name:FBSDKAccessTokenDidChangeNotification object:nil];
         [nc addObserver:self selector:@selector(activateApp:) name:UIApplicationDidFinishLaunchingNotification object:nil];
         [nc addObserver:self selector:@selector(currentProfileChanged:) name:FBSDKProfileDidChangeNotification object:nil];
-        [nc addObserver:self selector:@selector(handleRelaunch:) name:kTiApplicationLaunchedFromURL object:nil];
+        
+        // Only triggered by Titanium SDK 5.5.0+
+        // Older SDK's get notified by the `resumed:` delegate
+        [nc addObserver:self selector:@selector(handleRelaunch:) name:@"TiApplicationLaunchedFromURL" object:nil];
 
         if ([FBSDKAccessToken currentAccessToken] == nil) {
             [self activateApp:nil];
