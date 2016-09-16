@@ -1,11 +1,11 @@
 //
-// PLACE ANY BUILD DEFINITIONS IN THIS FILE AND THEY WILL BE 
+// PLACE ANY BUILD DEFINITIONS IN THIS FILE AND THEY WILL BE
 // PICKED UP DURING THE APP BUILD FOR YOUR MODULE
 //
 // see the following webpage for instructions on the settings
 // for this file:
 // http://developer.apple.com/mac/library/documentation/DeveloperTools/Conceptual/XcodeBuildSystem/400-Build_Configurations/build_configs.html
-// 
+//
 
 //
 // How to add a Framework (example)
@@ -25,4 +25,4 @@ OTHER_LDFLAGS=$(inherited) -framework Social -framework FBSDKCoreKit -framework 
 // OTHER_CFLAGS=$(inherited) -DFOO=1
 //
 // IMPORTANT NOTE: always use $(inherited) in your overrides
-// 
+//
