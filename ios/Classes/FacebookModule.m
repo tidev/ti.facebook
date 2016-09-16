@@ -400,8 +400,9 @@ MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_FEED_WEB, FBSDKShareDialogModeFeedWeb);
 {
     ENSURE_SINGLE_ARG_OR_NIL(args, NSNumber);
     NSArray *permissions_ = permissions == nil ? [NSArray array] : permissions;
-    FBSDKLoginManager *loginManager = [[[FBSDKLoginManager alloc] init] autorelease];
+    __block FBSDKLoginManager *loginManager = [[FBSDKLoginManager new] retain];
     [loginManager setLoginBehavior:loginBehavior];
+    
     TiThreadPerformOnMainThread(^{
         [loginManager logInWithReadPermissions: permissions_ fromViewController:nil handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
             if (error) {
@@ -413,6 +414,7 @@ MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_FEED_WEB, FBSDKShareDialogModeFeedWeb);
             } else {
                 //DebugLog(@"[INFO] Logged in");
             }
+            RELEASE_TO_NIL(loginManager);
         }];
     }, YES);
 }
