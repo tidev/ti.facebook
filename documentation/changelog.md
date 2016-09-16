@@ -1,5 +1,13 @@
 # Change Log
 <pre>
+v5.2.7 Fix iOS 10 login issue, update Facebook iOS-SDK to 4.15.1 to enhance iOS 10 / Xcode 8 support (TIMOB-23884)
+       Fix error with sending blobs to requestWithGraphPath (MOD-2286)
+       Fix permissions crash (MOD-2280)
+       Fix certain memory-leaks in share-dialogs
+       Update Facebook-SDK to 4.14.0
+       Fix typo in iOS-constant LOGIN_BEHAVIOR_SYSTEM_ACCOUNT
+       Fix presenting-mode in presentShareDialog (TIMOB-23521)
+
 v5.2.0 Updated Facebook API to 4.11.0 in iOS and Android
        Support `loginBehavior` on iOS and Android [MOD-2242]
        Support new parameters in `logCustomEvent` on iOS and Android [MOD-2248]
