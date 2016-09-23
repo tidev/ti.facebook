@@ -63,7 +63,7 @@ NSDictionary *launchOptions = nil;
 
 -(void)resumed:(id)note
 {
-//    NSLog(@"[DEBUG] facebook resumed");
+    [self handleRelaunch:nil];
     [FBSDKAppEvents activateApp];
 }
 
@@ -89,16 +89,6 @@ NSDictionary *launchOptions = nil;
 //    NSLog(@"[DEBUG] facebook shutdown");
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super shutdown:sender];
-}
-
--(void)suspend:(id)sender
-{
-//    NSLog(@"[DEBUG] facebook suspend");
-}
-
--(void)paused:(id)sender
-{
-//    NSLog(@"[DEBUG] facebook paused");
 }
 
 #pragma mark Auth Internals
@@ -417,8 +407,9 @@ MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE, FBSDKTooltipColorStyl
 {
     ENSURE_SINGLE_ARG_OR_NIL(args, NSNumber);
     NSArray *permissions_ = permissions == nil ? [NSArray array] : permissions;
-    FBSDKLoginManager *loginManager = [[[FBSDKLoginManager alloc] init] autorelease];
+    __block FBSDKLoginManager *loginManager = [[FBSDKLoginManager new] retain];
     [loginManager setLoginBehavior:loginBehavior];
+    
     TiThreadPerformOnMainThread(^{
         [loginManager logInWithReadPermissions: permissions_ fromViewController:nil handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
             if (error) {
@@ -430,6 +421,7 @@ MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE, FBSDKTooltipColorStyl
             } else {
                 //DebugLog(@"[INFO] Logged in");
             }
+            RELEASE_TO_NIL(loginManager);
         }];
     }, YES);
 }
@@ -452,7 +444,10 @@ MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE, FBSDKTooltipColorStyl
         [nc addObserver:self selector:@selector(accessTokenChanged:) name:FBSDKAccessTokenDidChangeNotification object:nil];
         [nc addObserver:self selector:@selector(activateApp:) name:UIApplicationDidFinishLaunchingNotification object:nil];
         [nc addObserver:self selector:@selector(currentProfileChanged:) name:FBSDKProfileDidChangeNotification object:nil];
-        [nc addObserver:self selector:@selector(handleRelaunch:) name:kTiApplicationLaunchedFromURL object:nil];
+        
+        // Only triggered by Titanium SDK 5.5.0+
+        // Older SDK's get notified by the `resumed:` delegate
+        [nc addObserver:self selector:@selector(handleRelaunch:) name:@"TiApplicationLaunchedFromURL" object:nil];
 
         if ([FBSDKAccessToken currentAccessToken] == nil) {
             [self activateApp:nil];
