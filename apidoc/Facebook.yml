@@ -358,20 +358,20 @@ description: |
     To monitor if the share request succeeded or not, listen to the <Modules.Facebook.shareCompleted>
     event.
 
-            fb.addEventListener('shareCompleted', function (e) {
-                if (e.success) {
-                    Ti.API.info('Share request succeeded.');
-                } else {
-                    Ti.API.warn('Failed to share.');
-                }
-            });
+          fb.addEventListener('shareCompleted', function (e) {
+              if (e.success) {
+                  Ti.API.info('Share request succeeded.');
+              } else {
+                  Ti.API.warn('Failed to share.');
+              }
+          });
 
-            fb.presentShareDialog({
-                link: 'https://appcelerator.com/',
-                title: 'great product',
-                description: 'Titanium is a great product',                    
-                picture: 'http://www.appcelerator.com/wp-content/uploads/scale_triangle1.png'
-            });
+          fb.presentShareDialog({
+              link: 'https://appcelerator.com/',
+              title: 'great product',
+              description: 'Titanium is a great product',                    
+              picture: 'http://www.appcelerator.com/wp-content/uploads/scale_triangle1.png'
+          });
 
 
     For details on the Share dialog, see the
@@ -455,10 +455,10 @@ description: |
 
     For more information, see [Facebook Issue #242477629268301](https://developers.facebook.com/bugs/242477629268301/)
     and [TIMODOPEN-391](https://jira.appcelerator.org/browse/TIMODOPEN-391).
-
 extends: Titanium.Module
 since: "3.1.0"
 platforms: [android, iphone, ipad]
+
 methods:
   - name: authorize
     summary: |
@@ -522,16 +522,14 @@ methods:
       - name: action
         summary: Specifies which dialog to show, such as "feed".
         type: String
-
       - name: params
         summary: |
             A dictionary object for pre-filling some of the dialog's fields.
         type: Object
-
       - name: callback
         summary: Callback to invoke  when the user completes or cancels the dialog.
         type: Callback<FacebookDialogResponse>
-
+        
   - name: initialize
     summary: |
         Loads a cached Facebook session if available, then fires the `login` event.
@@ -648,12 +646,10 @@ methods:
             Array of additional permissions to request. For a complete list of permissions, see the
             [official Facebook Permissions Reference](http://developers.facebook.com/docs/reference/api/permissions/)
         type: Array<String>
-
       - name: audience
         summary: |
             The extent of the visibility write permissions will have. The value of audience should be one of "me", "friends", or "everyone"
         type: String
-
       - name: callback
         summary: Callback to invoke when the request completes.
         type: Callback<FacebookReauthResponse>
@@ -680,16 +676,13 @@ methods:
         For details on API calls and responses, see the
         [offical Facebook REST API documentation](http://developers.facebook.com/docs/reference/rest/).
     parameters:
-
       - name: method
         summary: The REST API method to call.
         type: String
-
       - name: params
         summary: |
             A dictionary object for setting parameters required by the call, if any.
         type: Object
-
       - name: callback
         summary: Callback to invoke  when the request completes.
         type: Callback<FacebookRESTResponse>
@@ -707,20 +700,16 @@ methods:
         For a complete list of Graph API methods, parameters and return types, see the
         [official Facebook Graph API documentation](https://developers.facebook.com/docs/graph-api).
     parameters:
-
       - name: path
         summary: Graph API path to request.
         type: String
-
       - name: params
         summary: |
             A dictionary object for setting parameters required by the call, if any.
         type: Dictionary
-
       - name: httpMethod
         summary: The HTTP method (GET/POST/DELETE) to use for the call.
         type: String
-
       - name: callback
         summary: Callback to invoke  when the request completes.
         type: Callback<FacebookGraphResponse>
@@ -731,13 +720,11 @@ methods:
         Note that it is not an error for the user to 'Skip' your requested permissions,
         so you should check the module's `permissions` property following the call.
     parameters:
-
       - name: permissions
         summary: |
             Array of additional permissions to request. For a complete list of permissions, see the
             [official Facebook Permissions Reference](https://developers.facebook.com/docs/facebook-login/permissions/v2.2)
         type: Array<String>
-
       - name: callback
         summary: Callback to invoke when the request completes.
         type: Callback<FacebookPermissionResponse>
@@ -749,26 +736,22 @@ methods:
         Note that it is not an error for the user to 'Skip' your requested permissions,
         so you should check the module's `permissions` property following the call.
     parameters:
-
       - name: permissions
         summary: |
             Array of additional permissions to request. For a complete list of permissions, see the
             [official Facebook Permissions Reference](https://developers.facebook.com/docs/facebook-login/permissions/v2.2)
         type: Array<String>
-
       - name: audience
         summary: |
             The extent of the visibility write permissions will have.
         type: Number
         constants: Modules.Facebook.AUDIENCE_*
-
       - name: callback
         summary: Callback to invoke when the request completes.
         type: Callback<FacebookPermissionResponse>
     since: 4.0.0
-
+    
 events:
-
   - name: login
     summary: Fired at session login.
     properties:
@@ -777,18 +760,15 @@ events:
             Indicates if the user was logged in successfully.
             Returns `true` if request succeeded, `false` otherwise.
         type: Boolean
-
       - name: cancelled
         summary: |
             Indicates if the user canceled the login request by closing the dialog.
         type: Number
-
       - name: error
         summary: |
             Error message, if any returned.
             Will be undefined if `success` is `true`.
         type: String
-
       - name: code
         summary: |
             Error code.
@@ -796,11 +776,9 @@ events:
             was generated by the operating system, that system's error value is used.
             Otherwise, this value will be -1.
         type: Number
-
       - name: uid
         summary: User ID returned by Facebook if the login was successful.
         type: String
-
       - name: data
         summary: |
             Data returned by Facebook when we query for the UID (using graph path "me")
@@ -854,11 +832,10 @@ events:
             Will be undefined if `success` is `true`.
         type: String
     since: 4.0.0
-
+    
   - name: tokenUpdated
     summary: Fired when [refreshPermissionsFromServer](Modules.Facebook.refreshPermissionsFromServer) is completed.
     since: 4.0.0
-
 
 properties:
   - name: AUDIENCE_NONE
@@ -1089,9 +1066,8 @@ properties:
     summary: Unique user ID returned from Facebook.
     type: String
     permission: read-only
-
+    
 examples:
-
   - title: Alloy Example
     example: |
         Displays the Facebook Login and Like buttons in a window.
@@ -1120,9 +1096,8 @@ examples:
 
   - title: Authorize
     example: |
-
         Shows official Facebook dialog for logging in the user and prompting the user to approve your
-        requested permissions.  Listen for the module's [login](Modules.Facebook.login) event to
+        requested permissions. Listen for the module's [login](Modules.Facebook.login) event to
         determine whether the request succeeded.
 
             var fb = require('facebook');
@@ -1143,8 +1118,7 @@ examples:
 
   - title: Logout
     example: |
-
-        Logout the user and forget the authorization token.  The
+        Logout the user and forget the authorization token. The
         [logout](Modules.Facebook.logout) event is fired after the user is logged out.
 
             fb.addEventListener('logout', function(e) {
@@ -1155,10 +1129,9 @@ examples:
 
   - title: Authorize/Logout Using the Facebook LoginButton
     example: |
-
         You can use the the native Facebook [LoginButton](Modules.Facebook.LoginButton)
         to allow the user to log in as required. The button updates its state automatically depending
-        on whether the user is logged in or not.  When the user is logged in, then the button
+        on whether the user is logged in or not. When the user is logged in, then the button
         will show "Logout", and vice-versa.
 
         Note that you don't need to set a click listener or anything else on the button.
@@ -1193,9 +1166,8 @@ examples:
 
   - title: Simple Graph API Call
     example: |
-
         This example makes a call to the "me" graph path, which represents the current
-        user. The JSON results are simply displayed in an alert.  This example assumes
+        user. The JSON results are simply displayed in an alert. This example assumes
         the user is already logged in. You can check this with <Modules.Facebook.loggedIn>.
 
             fb.requestWithGraphPath('me', {}, 'GET', function(e) {
@@ -1210,7 +1182,6 @@ examples:
 
   - title: Post a Photo Using the Graph API from the Gallery.
     example: |
-
         This example posts a photo to the user's account using the Graph API.
         This requires the "publish_actions" permission.
 
@@ -1260,7 +1231,6 @@ examples:
 
   - title: Post a Photo Using the Graph API with an image in resources directory
     example: |
-
         This example posts a photo to the user's account using the Graph API.
         This requires the "publish_actions" permission.
 
@@ -1303,7 +1273,6 @@ examples:
 
   - title: Show the Share Dialog
     example: |
-
         This example shows how to use the Share Dialog.
 
             var wallDialog = Ti.UI.createButton({
@@ -1337,7 +1306,6 @@ examples:
 
   - title: Requesting additional permissions
     example: |
-
         This example shows how to use the `requestNewPublishPermissions` method to request additional permissions
         to publish a post to the user's wall.
 
@@ -1348,7 +1316,7 @@ examples:
                     Ti.API.debug('Failed authorization due to: ' + e.error);
                 }
             });
-
+            
 ---
 name: FacebookGraphResponse
 extends: ErrorResponse
@@ -1361,11 +1329,30 @@ properties:
   - name: path
     summary: Graph API path of the original request.
     type: String
-
   - name: result
     summary: |
         If successful, returns the JSON response returned by Facebook.
         If the request is not successfully completed, the result is undefined.
+    type: String
+    
+---
+name: FacebookPermissionResponse
+extends: ErrorResponse
+summary: Argument passed to the dialog callback when a dialog is completed or canceled.
+description: |
+    The `success` and `cancelled` properties may not be reliable for dialogs. In the event
+    that the user canceled the dialog, the `result` field is `undefined`.
+platforms: [android, iphone, ipad]
+since: 4.0.0
+properties:
+  - name: cancelled
+    summary: Indicates if the user canceled the dialog.
+    type: Boolean
+  - name: success
+    summary: Indicates if successful
+    type: Boolean
+  - name: error
+    summary: Error message, if any returned. Will be undefined if `success` is `true`.
     type: String
 
 ---
@@ -1378,22 +1365,18 @@ description: |
 platforms: [android, iphone, ipad]
 since: 4.0.0
 properties:
-
   - name: cancelled
     summary: Indicates if the user canceled the dialog.
     type: Boolean
-
   - name: success
     summary: |
         Indicates if successful
     type: Boolean
-
   - name: error
     summary: |
         Error message, if any returned.
         Will be undefined if `success` is `true`.
     type: String
-since: 4.0.0
 
 ---
 name: FacebookReauthResponse
@@ -1408,7 +1391,6 @@ properties:
   - name: cancelled
     summary: Indicates if the user canceled the dialog.
     type: Boolean
-
 
 ---
 name: FacebookDialogResponse
@@ -1426,13 +1408,11 @@ properties:
   - name: cancelled
     summary: Indicates if the user canceled the dialog.
     type: Boolean
-
   - name: result
     summary: |
         If successful, returns the JSON response containing the `post_id` of the new post.
         If the user canceled the dialog, the results is undefined.
     type: String
-
 
 ---
 name: FacebookRESTResponse
@@ -1449,7 +1429,6 @@ properties:
   - name: method
     summary: REST method call you specified.
     type: String
-
   - name: result
     summary: |
         If successful, returns the JSON response returned by Facebook.
@@ -1471,27 +1450,22 @@ properties:
     deprecated:
         since: "5.0.0"
         removed: "5.0.0"
-
   - name: description
     summary: Description associated with the link.
     type: String
-
   - name: link
     summary: URL to share.
     type: String
-
   - name: name
     summary: Name or title associated with the link.
     type: String
     deprecated:
         since: "5.0.0"
         removed: "5.0.0"
-
   - name: title
     summary: Title associated with the link.
     type: String
     since: "5.0.0"
-
   - name: picture
     summary: Link to a thumbnail to associate with the link.
     type: String
@@ -1507,12 +1481,10 @@ properties:
     summary: Message to send with the request.
     type: String
     optional: false    
-
   - name: title
     summary: Title of request.
     type: String
     optional: true    
-
   - name: to
     summary: Array of pre-selected facebook ids.
     type: Array
@@ -1520,37 +1492,31 @@ properties:
     deprecated:
         since: "5.0.0"
         removed: "5.0.0"
-
   - name: recipients
     summary: Array of pre-selected facebook ids.
     type: Array
     optional: true
     since: "5.0.0"
-
   - name: recipientSuggestions
     summary: An array of user IDs that will be included in the dialog as the first suggested friends. Cannot be used together with filters.
     type: Array
     optional: true    
     since: "5.0.0"
-
   - name: data
     summary: Additional data to send with the request object.
     type: Dictionary
     optional: true    
-
   - name: actionType
     summary: The nature of the request. Required if objectID is set.
     type: Number
     optional: true    
     constants: Modules.Facebook.ACTION_TYPE_*
     since: "5.0.0"
-
   - name: filters
     summary: The set of friends someone sees if a multi-friend selector is shown.
     type: Number
     constants: Modules.Facebook.FILTER_*
     since: "5.0.0"
-
   - name: objectID
     summary: The Open Graph object ID of the object being sent. Required if actionType is set.
     type: String
