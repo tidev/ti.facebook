@@ -1763,7 +1763,6 @@ description: |
 platforms: [android, iphone, ipad]
 since: 4.0.0
 properties:
-
   - name: cancelled
     summary: Indicates if the user canceled the dialog.
     type: Boolean
@@ -1778,7 +1777,6 @@ properties:
         Error message, if any returned.
         Will be undefined if `success` is `true`.
     type: String
-since: 4.0.0
 
 ---
 name: FacebookReauthResponse
