@@ -104,7 +104,14 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
     @Kroll.constant public static final String LOGIN_BEHAVIOR_NATIVE = "NATIVE_ONLY";
     @Kroll.constant public static final String LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK = "NATIVE_WITH_FALLBACK";
     @Kroll.constant public static final String LOGIN_BEHAVIOR_DEVICE_AUTH = "DEVICE_AUTH";
-    
+
+    @Kroll.constant public static final int LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC = 0;
+    @Kroll.constant public static final int LOGIN_BUTTON_TOOLTIP_BEHAVIOR_FORCE_DISPLAY = 1;
+    @Kroll.constant public static final int LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE = 2;
+
+    @Kroll.constant public static final String LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY = "NEUTRAL_GRAY";
+    @Kroll.constant public static final String LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE = "FRIENDLY_BLUE";
+
     @Kroll.constant public static final int SHARE_DIALOG_MODE_AUTOMATIC = 0;
     @Kroll.constant public static final int SHARE_DIALOG_MODE_NATIVE = 1;
     @Kroll.constant public static final int SHARE_DIALOG_MODE_WEB = 2;

@@ -20,7 +20,8 @@ import android.app.Activity;
 import com.facebook.CallbackManager;
 import com.facebook.login.DefaultAudience;
 import com.facebook.login.widget.LoginButton;
-
+import com.facebook.login.widget.ToolTipPopup;
+import com.facebook.login.widget.LoginButton.ToolTipMode;
 
 public class LoginButtonView extends TiUIView {
 
@@ -77,6 +78,32 @@ public class LoginButtonView extends TiUIView {
 				case TiFacebookModule.AUDIENCE_EVERYONE:
 					loginButton.setDefaultAudience(DefaultAudience.EVERYONE);
 					break;
+			}
+		}
+		if (props.containsKey("tooltipBehavior")) {
+			Object value = props.get("tooltipBehavior");
+			int tooltipBehavior = TiConvert.toInt(value, TiFacebookModule.LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC);
+            
+			switch (tooltipBehavior) {
+				case TiFacebookModule.LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC:
+					loginButton.setToolTipMode(ToolTipMode.AUTOMATIC);
+					break;
+				case TiFacebookModule.LOGIN_BUTTON_TOOLTIP_BEHAVIOR_FORCE_DISPLAY:
+					loginButton.setToolTipMode(ToolTipMode.DISPLAY_ALWAYS);
+					break;
+				case TiFacebookModule.LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE:
+					loginButton.setToolTipMode(ToolTipMode.NEVER_DISPLAY);
+				break;
+			}
+		}
+		if (props.containsKey("tooltipColorStyle")) {
+			Object value = props.get("tooltipColorStyle");
+			String tooltipColorStyle = TiConvert.toString(value, TiFacebookModule.LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY);
+
+			if (tooltipColorStyle.equals(TiFacebookModule.LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY)) {
+				loginButton.setToolTipStyle(ToolTipPopup.Style.BLACK);
+			} else if (tooltipColorStyle.equals(TiFacebookModule.LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE)) {
+				loginButton.setToolTipStyle(ToolTipPopup.Style.BLUE);
 			}
 		}
 	}
