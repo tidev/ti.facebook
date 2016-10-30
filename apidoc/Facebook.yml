@@ -167,7 +167,7 @@ description: |
     If you are using the older Ti.Facebook Module 4.0.5 and wish to support iOS9, you will instead need to include the following key
     and values in `tiapp.xml` to handle the switching in and out of your app:
 
-    <key>LSApplicationQueriesSchemes</key>
+        <key>LSApplicationQueriesSchemes</key>
         <array>
             <string>fbapi</string>
             <string>fbapi20130214</string>
