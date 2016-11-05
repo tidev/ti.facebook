@@ -14,6 +14,24 @@ description: |
 
     * Sharing content using Facebook dialogs or the [Like button](Modules.Facebook.LikeButton).
 
+    **Using Ti.Facebook with iOS 10 and Xcode 8**
+    To log in using Facebook on iOS Simulator, you now must include an entitlements file that enables Keychain
+    Sharing Capabilities. While the entitlements file is not necessary for device build (it is self-generated),
+    it won't affect anything in your build. To do so, create a `/platform/ios/name.entitlements` file (replace
+    name with the name element in tiapp.xml) with this content:
+
+            <?xml version="1.0" encoding="UTF-8"?>
+            <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+            <plist version="1.0">
+            <dict>
+            	<key>keychain-access-groups</key>
+            	<array>
+                    <!-- APP_ID same as the id value in the tiapp.xml file -->
+                    <string>$(AppIdentifierPrefix)APP_ID</string>
+            	</array>
+            </dict>
+            </plist>
+
     **Note:** As of April 30th, 2015, Facebook no longer supports version 1.0 of their API, which
     includes the FQL and REST APIs.  Only the Graph APIs will be supported.
 
@@ -149,7 +167,7 @@ description: |
     If you are using the older Ti.Facebook Module 4.0.5 and wish to support iOS9, you will instead need to include the following key
     and values in `tiapp.xml` to handle the switching in and out of your app:
 
-    <key>LSApplicationQueriesSchemes</key>
+        <key>LSApplicationQueriesSchemes</key>
         <array>
             <string>fbapi</string>
             <string>fbapi20130214</string>
@@ -1169,6 +1187,45 @@ properties:
     since: 4.0.0
     platforms: [android]
 
+  - name: LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC
+    summary: |
+        The default behavior. The tooltip will only be displayed if the app is eligible 
+        (determined by possible server round trip).
+    type: Number
+    permission: read-only
+    since: "6.1.0"
+    platforms: [iphone, ipad, android]
+
+  - name: LOGIN_BUTTON_TOOLTIP_BEHAVIOR_FORCE_DISPLAY
+    summary: Force display of the tooltip (typically for UI testing).
+    type: Number
+    permission: read-only
+    since: "6.1.0"
+    platforms: [iphone, ipad, android]
+
+  - name: LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE
+    summary: |
+        Force disable. In this case you can still exert more refined control by manually 
+        constructing a new login button.
+    type: Number
+    permission: read-only
+    since: "6.1.0"
+    platforms: [iphone, ipad, android]
+
+  - name: LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY
+    summary: Dark gray background, white text, light gray close button.
+    type: Number
+    permission: read-only
+    since: "6.1.0"
+    platforms: [iphone, ipad, android]
+
+  - name: LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE
+    summary: Light blue background, white text, faded blue close button.
+    type: Number
+    permission: read-only
+    since: "6.1.0"
+    platforms: [iphone, ipad, android]
+
   - name: SSO_WITH_FALLBACK
     summary: Attempt single sign-on, then fallback to dialog authorization.
     description: |
@@ -1751,7 +1808,6 @@ description: |
 platforms: [android, iphone, ipad]
 since: 4.0.0
 properties:
-
   - name: cancelled
     summary: Indicates if the user canceled the dialog.
     type: Boolean
@@ -1766,7 +1822,6 @@ properties:
         Error message, if any returned.
         Will be undefined if `success` is `true`.
     type: String
-since: 4.0.0
 
 ---
 name: FacebookReauthResponse
