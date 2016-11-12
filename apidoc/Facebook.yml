@@ -15,23 +15,10 @@ description: |
     * Sharing content using Facebook dialogs or the [Like button](Modules.Facebook.LikeButton).
 
     **Using Ti.Facebook with iOS 10 and Xcode 8**
-    To log in using Facebook on iOS Simulator, you now must include an entitlements file that enables Keychain
-    Sharing Capabilities. Please note that this will override the generated entitlements that may contain the 
-    push-related key `aps-environment`. This is an issue and is tracked in [TIMOB-24142](https://jira.appcelerator.org/browse/TIMOB-24142). As a workaround, 
-    just copy the contents from the generated entitlements to your own one. To do so, create a `/platform/ios/<name>.entitlements` 
-    file (replace `<name>` with the content of the `<name>` element in your tiapp.xml) with this content:
-
-            <?xml version="1.0" encoding="UTF-8"?>
-            <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-            <plist version="1.0">
-            <dict>
-            	<key>keychain-access-groups</key>
-            	<array>
-                    <!-- APP_ID same as the id value in the tiapp.xml file -->
-                    <string>$(AppIdentifierPrefix)APP_ID</string>
-            	</array>
-            </dict>
-            </plist>
+    
+    The paragraph about custom capabilities was only necessary between Titanium SDK 5.5.0 and 6.0.0. 
+    In 6.0.0.GA, we add the required capabilities automatically and based on our included modules. 
+    So you don't need to curate an own entitlements file anymore, which will avoid possible issues with concurring values.
 
     **Note:** As of April 30th, 2015, Facebook no longer supports version 1.0 of their API, which
     includes the FQL and REST APIs.  Only the Graph APIs will be supported.
@@ -110,7 +97,7 @@ description: |
          with the new Facebook object.
 
              var fb = require('facebook');
-             fb.permissions = [FACEBOOK_APP_PERMISSIONS];
+             fb.permissions = [FACEBOOK_APP_PERMISSIONS]; // e.g. ['email']
              fb.initialize();
              fb.authorize();
 
@@ -575,7 +562,11 @@ methods:
         Loads a cached Facebook session if available, then fires the `login` event.
     description: |
         Be sure to set your [login](Modules.Facebook.login) and [logout](Modules.Facebook.logout)
-        event listeners before calling `initialize`.
+        event listeners before calling `initialize`. 
+        
+        **Note: On iOS, this method needs to be called before calling <Modules.Facebook.authorize> 
+        in order to be handle the auth-flow correctly. Otherwise, you might see a white screen without
+        any response.
     deprecated:
         since: 5.0.0
     parameters:
@@ -1486,6 +1477,7 @@ examples:
         determine whether the request succeeded.
 
             var fb = require('facebook');
+            fb.initialize();
             fb.addEventListener('login', function(e) {
                 if (e.success) {
                     alert('login from uid: '+e.uid+', name: '+ JSON.parse(e.data).name);
