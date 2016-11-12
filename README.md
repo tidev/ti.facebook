@@ -92,23 +92,29 @@ If you choose to enable it, you have to set the following keys and values in tia
     </dict>
 ```
 
-For iOS 10+ and Titanium 5.5.0.GA and above, to log in using Facebook on iOS Simulator , you now must include an entitlements 
-file that enables Keychain Sharing Capabilities. While the entitlements file is not necessary for device build (it is self-generated), 
-it won't affect anything in your build. To do so, create a `/platform/ios/<name>.entitlements` file (replace <name> with the name
-element in tiapp.xml) with this content:
+#### iOS 10 Compatibility
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-    <dict>
-        <key>keychain-access-groups</key>
-        <array>
-            <!-- APP_ID same as the id value in the tiapp.xml file -->
-            <string>$(AppIdentifierPrefix)APP_ID</string>
-        </array>
-    </dict>
-</plist>
+**Note**: The following paragraph was only necessary between Titanium SDK 5.5.0 and 6.0.0. In 6.0.0.GA, we add the required
+capabilities automatically and based on our included modules. So you don't need to curate an own entitlements file anymore,
+which will avoid possible issues with concurring values.
+
+> For iOS 10+ and Titanium 5.5.0.GA and above, to log in using Facebook on iOS Simulator , you now must include an entitlements 
+> file that enables Keychain Sharing Capabilities. While the entitlements file is not necessary for device build (it is self-generated), 
+> it won't affect anything in your build. To do so, create a `/platform/ios/<name>.entitlements` file (replace <name> with the name
+> element in tiapp.xml) with this content:
+
+> ```xml
+> <?xml version="1.0" encoding="UTF-8"?>
+> <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+> <plist version="1.0">
+>    <dict>
+>        <key>keychain-access-groups</key>
+>        <array>
+>            <!-- APP_ID same as the id value in the tiapp.xml file -->
+>            <string>$(AppIdentifierPrefix)APP_ID</string>
+>        </array>
+>    </dict>
+></plist>
 ```
 
 On the android platform, in tiapp.xml or AndroidManifest.xml you must declare the following inside the \<application\> node 
@@ -136,10 +142,10 @@ Android Key Hash for Facebook developer profile
 
 Facebook requires you to add the Key Hash of the Android app in order for you to use the module. Steps to get the Key Hash as follows. Alternatively, if you do not have the correct Key Hash on the Android App, the App will give an error message when you login with the Key Hash of the App which you can then copy.
 
-If you are using Titanium SDK 5.0.2.GA, use the path as follows.
-On OS X, run:
+Use the following command to generate and receive the key-hashpath of your app. 
+To do do, replace `<sdk-version>` with your SDK-version and run:
 ```
-keytool -exportcert -alias androiddebugkey -keystore ~/Library/Application\ Support/Titanium/mobilesdk/osx/5.0.2.GA/dev_keystore | openssl sha1 -binary | openssl base64
+keytool -exportcert -alias androiddebugkey -keystore ~/Library/Application\ Support/Titanium/mobilesdk/osx/<sdk-version>/dev_keystore | openssl sha1 -binary | openssl base64
 ```
 
 You would also require, to fill up the `Google Play Package Name` which is the Application ID and the `Class Name` which is the Application ID followed by the Application Name concatenated with the word `Activity`. Example, an App called `Kitchensink` with Application ID of `com.appcelerator.kitchensink` will have the Class Name as `com.appcelerator.kitchensink.KitchensinkActivity`. Alternatively, you can check the Class Name in `/build/android/AndroidManifest.xml` which is generated when you build the project. The launcher activity is the Class Name of the Application.
@@ -149,11 +155,13 @@ For more info, please see https://developers.facebook.com/docs/android/getting-s
 Proxy required per Android activity
 ---
 
-Unlike iOS, where the entire app is active in memory, in Android only a single Activity is active at any time. In Titanium, an Activity corresponds to a standalone (i.e. not a Tab window) Ti.UI.Window or Ti.UI.TabGroup. The Facebook SDK contains tools to synchronize state between the various activities in the app, and this module implements that functionality, but for this to work we need to tell the module which is the currently active Activity. Thus the following is required:
+Unlike iOS, where the entire app is active in memory, in Android only a single Activity is active at any time. In Titanium, an Activity corresponds to a standalone (i.e. not a Tab window) `Ti.UI.Window` or `Ti.UI.TabGroup`. The Facebook SDK contains tools to synchronize state between the various activities in the app, and this module implements that functionality, but for this to work we need to tell the module which is the currently active Activity. Thus the following is required:
 
 All Windows/TabGroup in your app must create a proxy, e.g. : 
-```xml
-win1.fbProxy = fb.createActivityWorker({lifecycleContainer: win1});
+```js
+myWindow.fbProxy = fb.createActivityWorker({
+    lifecycleContainer: myWindow
+});
 ```
 where fb is the required module.
 We must pass to the proxy the Ti.UI.Window or Ti.UI.TabGroup that will be using the proxy, so that the proxy can attach itself to the window's or tabgroup's activity.
@@ -176,8 +184,9 @@ The following behaviors are available:
  
 These constants correspond to the ones exposed the by the Facebook SDK on each platform - for more information, see the Facebook documentation.
 
-```javascript
+```js
     var fb = require('facebook');
+    fb.initialize();
     fb.setLoginBehavior(fb.LOGIN_BEHAVIOR_NATIVE);
     fb.permissions = ['email'];
     fb.authorize();
@@ -199,8 +208,8 @@ Call authorize to prompt the user to login and authorize the application. This m
 
 ```javascript
     var fb = require('facebook');
-    fb.permissions = ['email'];
     fb.initialize(); 
+    fb.permissions = ['email'];
     facebook.authorize();
 ```
 Which approach you take depends on your UI and how central Facebook is to your application. Both approaches fire a `login` event.
@@ -215,9 +224,9 @@ For a complete list of permissions, see the official Facebook Permissions Refere
 ```javascript
 var fb = require('facebook');
 fb.requestNewReadPermissions(['read_stream','user_hometown', etc...], function(e){
-    if(e.success){
+    if(e.success) {
         fb.requestWithGraphPath(...);
-    } else if (e.cancelled){
+    } else if (e.cancelled) {
         ....
     } else {
         Ti.API.debug('Failed authorization due to: ' + e.error);
@@ -231,10 +240,10 @@ You must use the audience constants from the module, either AUDIENCE_NONE, AUDIE
 
 ```javascript
 var fb = require('facebook');
-fb.requestNewPublishPermissions(['read_stream','user_hometown', etc...], fb.AUDIENCE_FRIENDS, function(e){
-    if(e.success){
+fb.requestNewPublishPermissions(['read_stream','user_hometown', etc...], fb.AUDIENCE_FRIENDS, function(e) {
+    if (e.success) {
         fb.requestWithGraphPath(...);
-    } else if (e.cancelled){
+    } else if (e.cancelled) {
     ....
     } else {
         Ti.API.debug('Failed authorization due to: ' + e.error);
@@ -259,34 +268,32 @@ Example 1:
 
 ```javascript
     var fb = require('facebook');
-    fb.requestWithGraphPath('me/groups', {}, 'GET',  function(r)
-    {
-        if (!r.success) {
-            if (r.error) {
-                alert(r.error);
+    fb.requestWithGraphPath('me/groups', {}, 'GET',  function(e) {
+        if (!e.success) {
+            if (e.error) {
+                alert(e.error);
             } else {
                 alert("call was unsuccessful");
             }
             return;
         }
-        var result = JSON.parse(r.result).data;
+        var result = JSON.parse(e.result).data;
     }
 ```
 Example 2:
 
 ```javascript
     var fb = require('facebook');
-    fb.requestWithGraphPath('me/picture', {'redirect': 'false'}, 'GET',  function(r)
-    {
-        if (!r.success) {
-            if (r.error) {
-                alert(r.error);
+    fb.requestWithGraphPath('me/picture', {'redirect': 'false'}, 'GET',  function(e) {
+        if (!e.success) {
+            if (e.error) {
+                alert(e.error);
             } else {
                 alert("call was unsuccessful");
             }
             return;
         }
-        var result = JSON.parse(r.result)
+        var result = JSON.parse(e.result)
     }
 ```
 
