@@ -16,9 +16,10 @@ description: |
 
     **Using Ti.Facebook with iOS 10 and Xcode 8**
     To log in using Facebook on iOS Simulator, you now must include an entitlements file that enables Keychain
-    Sharing Capabilities. While the entitlements file is not necessary for device build (it is self-generated),
-    it won't affect anything in your build. To do so, create a `/platform/ios/name.entitlements` file (replace
-    name with the name element in tiapp.xml) with this content:
+    Sharing Capabilities. Please note that this will override the generated entitlements that may contain the 
+    push-related key `aps-environment`. This is an issue and is tracked in [TIMOB-24142](https://jira.appcelerator.org/browse/TIMOB-24142). As a workaround, 
+    just copy the contents from the generated entitlements to your own one. To do so, create a `/platform/ios/<name>.entitlements` 
+    file (replace `<name>` with the content of the `<name>` element in your tiapp.xml) with this content:
 
             <?xml version="1.0" encoding="UTF-8"?>
             <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
