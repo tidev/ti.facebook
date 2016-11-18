@@ -17,8 +17,9 @@ description: |
     **Using Ti.Facebook with iOS 10 and Xcode 8**
     
     The paragraph about custom capabilities was only necessary between Titanium SDK 5.5.0 and 6.0.0. 
-    In 6.0.0.GA, we add the required capabilities automatically and based on our included modules. 
-    So you don't need to curate an own entitlements file anymore, which will avoid possible issues with concurring values.
+    Since 6.0.1.GA, we add the required capabilities automatically, so you don't need to curate your 
+    own entitlements file anymore, which will avoid possible issues with concurring values. Please 
+    ensure to use both SDK and CLI 6.0.1 (or later).
 
     **Note:** As of April 30th, 2015, Facebook no longer supports version 1.0 of their API, which
     includes the FQL and REST APIs.  Only the Graph APIs will be supported.
