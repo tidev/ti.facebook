@@ -94,28 +94,9 @@ If you choose to enable it, you have to set the following keys and values in tia
 
 #### iOS 10 Compatibility
 
-**Note**: The following paragraph was only necessary between Titanium SDK 5.5.0 and 6.0.0. In 6.0.0.GA, we add the required
-capabilities automatically and based on our included modules. So you don't need to curate an own entitlements file anymore,
-which will avoid possible issues with concurring values.
-
-> For iOS 10+ and Titanium 5.5.0.GA and above, to log in using Facebook on iOS Simulator , you now must include an entitlements 
-> file that enables Keychain Sharing Capabilities. While the entitlements file is not necessary for device build (it is self-generated), 
-> it won't affect anything in your build. To do so, create a `/platform/ios/<name>.entitlements` file (replace <name> with the name
-> element in tiapp.xml) with this content:
-
-> ```xml
-> <?xml version="1.0" encoding="UTF-8"?>
-> <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-> <plist version="1.0">
->    <dict>
->        <key>keychain-access-groups</key>
->        <array>
->            <!-- APP_ID same as the id value in the tiapp.xml file -->
->            <string>$(AppIdentifierPrefix)APP_ID</string>
->        </array>
->    </dict>
-></plist>
-```
+**Note**: The paragraph about custom capabilities was only necessary between Titanium SDK 5.5.0 and 6.0.0. Since 6.0.1.GA, we add the 
+required capabilities automatically, so you don't need to curate your own entitlements file anymore, which will avoid possible issues 
+with concurring values. Please ensure to use both SDK and CLI 6.0.1 (or later).
 
 On the android platform, in tiapp.xml or AndroidManifest.xml you must declare the following inside the \<application\> node 
 ```xml
