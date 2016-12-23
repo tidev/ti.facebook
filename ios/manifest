@@ -2,12 +2,12 @@
 # this is your module manifest and used by Titanium
 # during compilation, packaging, distribution, etc.
 #
-version: 5.3.2
+version: 5.3.3
 apiversion: 2
 description: Allows Facebook integration for Titanium apps
 author: Mark Mokryn, Ng Chee Kiat and Hans Knoechel
 license: Apache License Version 2.0
-copyright: Copyright (c) 2009-2016 by Appcelerator, Inc.
+copyright: Copyright (c) 2009-2017 by Appcelerator, Inc.
 
 # these should not be edited
 name: Facebook
