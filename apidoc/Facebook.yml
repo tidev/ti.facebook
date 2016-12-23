@@ -600,16 +600,15 @@ methods:
       - name: valueToSum
         summary: |
             An arbitrary number that can represent any value (e.g., a price or a quantity). 
-            When reported, all of the valueToSum properties will be summed together in Facebook Analytics for Apps.
+            When reported, all of the valueToSum properties will be summed together in Facebook 
+            Analytics for Apps (since 5.4.0).
         type: Number
         optional: true
-        since: "5.4.0"
       - name: params
         summary: |
-            A dictionary object containing optional parameters.
+            A dictionary object containing optional parameters (since 5.4.0).
         type: Object
         optional: true
-        since: "5.4.0"
     since: "4.0.0"
     
   - name: logPurchase
@@ -870,12 +869,22 @@ methods:
 
   - name: shareMediaToMessenger
     summary: Call this method to open Messenger and share an image, animated GIF or video.
-    parameter:
+    parameters:
       - name: params
         summary: |
             A dictionary object containing required and optional parameters.
         type: ShareToMessengerParams
     since: "5.4.0"
+    platforms: [iphone, ipad]
+    
+  - name: setCurrentAccessToken
+    summary: Set a new access token for using Facebook services.
+    parameters:
+      - name: params
+        summary: |
+            A dictionary object containing required and optional parameters.
+        type: CurrentAccessTokenParams
+    since: "6.1.0"
     platforms: [iphone, ipad]
 
 events:
@@ -1292,12 +1301,12 @@ properties:
     type: String
     permission: read-only
 
-  - name: appid
-    summary: Your Facebook application id. You need to set this for anything to work.
-    deprecated:
-        since: 4.0.0
-        removed: 4.0.0
-        notes: Set the Facebook App ID in the `tiapp.xml` file.  See "Getting Started" above for details.
+  - name: appID
+    summary: |
+        If not explicitly set, the default will be read from the application's 
+        plist (FacebookAppID) which is the recommended way. 
+        
+        Since 6.1.0, this property also has a getter to return the currently set appID.
     type: String
 
   - name: canPresentOpenGraphActionDialog
@@ -1405,7 +1414,7 @@ properties:
         recommended to follow Facebook's [guidelines](https://developers.facebook.com/blog/post/2015/10/29/Facebook-Login-iOS9)
         for ideal login behavior
     type: Number
-    constants: [LOGIN_BEHAVIOR_*]
+    constants: [Modules.Facebook.LOGIN_BEHAVIOR_*]
     default:
         Defaults to <Titanium.Modules.Facebook.LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK>
         on Android and <Titanium.Modules.Facebook.LOGIN_BEHAVIOR_BROWSER> on iOS
@@ -2087,6 +2096,34 @@ properties:
     description: This is optional. If you don't include it a fallback image will be used.
     type: String
     optional: true 
+
+---
+name: CurrentAccessTokenParams
+summary: Dictionary of parameter passed to [setAccessToken()](Modules.Facebook.setAccessToken).
+platforms: [iphone, ipad]
+since: "6.1.0"
+properties:
+  - name: accessToken
+    summary: The opaque token string.
+    type: String
+  - name: permissions
+    summary: The granted permissions.
+    type: Array<String>
+  - name: declinedPermissions
+    summary: The declined permissions.
+    type: Array<String>
+  - name: appID
+    summary: The app ID.
+    type: String
+  - name: userID
+    summary: The user ID.
+    type: String
+  - name: exipirationDate
+    summary: The optional expiration date (defaults to distant future).
+    type: Date
+  - name: refreshDate
+    summary: The optional date the token was last refreshed (defaults to today).
+    type: Date
 
 ---
 name: FacebookDeferredAppLinkResponse

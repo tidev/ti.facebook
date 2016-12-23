@@ -65,7 +65,7 @@
 // The default audience to use, if publish permissions are requested at login time.
 -(NSNumber*)audience
 {
-    return [[self loginButton] defaultAudience];
+    return NUMUINTEGER([[self loginButton] defaultAudience]);
 }
 
 // Sets the desired tooltip behavior
@@ -78,7 +78,7 @@
 // Gets the desired tooltip behavior
 -(NSNumber*)tooltipBehavior
 {
-    return [[self loginButton] tooltipBehavior];
+    return NUMUINTEGER([[self loginButton] tooltipBehavior]);
 }
 
 // Sets the desired tooltip color style
@@ -91,7 +91,7 @@
 // Gets the desired tooltip color style
 -(NSNumber*)tooltipColorStyle
 {
-    return [[self loginButton] tooltipColorStyle];
+    return NUMUINTEGER([[self loginButton] tooltipColorStyle]);
 }
 
 @end
