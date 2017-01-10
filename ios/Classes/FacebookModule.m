@@ -134,11 +134,28 @@ NSDictionary *launchOptions = nil;
     return NUMBOOL([FBSDKAccessToken currentAccessToken] != nil);
 }
 
-//TODO
--(id)canPresentShareDialog
+/**
+ * JS example:
+ *
+ * var facebook = require('facebook');
+ * alert(facebook.appID);
+ *
+ */
+-(id)appID
 {
-    DEPRECATED_REMOVED(@"Facebook.canPresentShareDialog", @"5.0.0", @"5.0.0");
-    return NULL;
+    return [FBSDKSettings appID];
+}
+
+/**
+ * JS example:
+ *
+ * var facebook = require('facebook');
+ * facebook.setAppID('my-custom-appid');
+ *
+ */
+-(void)setAppID:(id)value
+{
+    [FBSDKSettings setAppID:[TiUtils stringValue:value]];
 }
 
 /**
@@ -161,7 +178,6 @@ NSDictionary *launchOptions = nil;
  * alert(facebook.accessToken);
  *
  */
-
 -(id)accessToken
 {
     __block NSString * token;
@@ -170,6 +186,20 @@ NSDictionary *launchOptions = nil;
     }, YES);
     return token;
 }
+
+-(void)setCurrentAccessToken:(id)args
+{
+    ENSURE_TYPE(args, NSDictionary);
+    
+    [FBSDKAccessToken setCurrentAccessToken:[[FBSDKAccessToken alloc] initWithTokenString:[TiUtils stringValue:@"accessToken" properties:args]
+                                                                              permissions:[args objectForKey:@"permissions"]
+                                                                      declinedPermissions:[args objectForKey:@"declinedPermissions"]
+                                                                                    appID:[TiUtils stringValue:@"appID" properties:args]
+                                                                                   userID:[TiUtils stringValue:@"userID" properties:args]
+                                                                           expirationDate:[args objectForKey:@"exipirationDate"]
+                                                                              refreshDate:[args objectForKey:@"refreshDate"]]];
+}
+
 //deprecated and removed
 -(id)AUDIENCE_NONE
 {
@@ -913,7 +943,7 @@ MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE, FBSDKTooltipColorStyl
         NSDictionary *jsonDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
                                         profile.userID, @"userID",
                                         profile.firstName, @"firstName",
-                                        profile.middleName == nil ? @"":profile.middleName, @"middleName",
+                                        profile.middleName ?: @"", @"middleName",
                                         profile.lastName, @"lastName",
                                         profile.name, @"name",
                                         [profile.linkURL absoluteString], @"linkURL",
