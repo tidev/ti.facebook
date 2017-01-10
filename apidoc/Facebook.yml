@@ -885,8 +885,8 @@ methods:
             A dictionary object containing required and optional parameters. 
             
             Note: There is an [open issue](https://developers.facebook.com/bugs/675847029242342/) in the native Facebook SDK causing the appID
-            from not being updated also specified in the parameters. You can use the 
-            <Modules.Facebook.appID> setter to change the appID inside your app.
+            from not being updated although specified in the parameters. You can use 
+            the <Modules.Facebook.appID> setter to change the appID inside your app.
         type: CurrentAccessTokenParams
     since: "6.1.0"
     platforms: [iphone, ipad]
