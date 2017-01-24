@@ -2147,3 +2147,48 @@ properties:
     summary: A string that contain the error.
     type: String
     optional: true
+
+---
+name: logPushNotificationOpen
+summary: Registers opened push with Facebook campaign. 
+platforms: [iphone, ipad]
+since: “6.0.0”
+properties:
+  - name: value
+    summary: Dictionary of data received in push notifications callback
+    type: Dictionary
+
+---
+name: setPushNotificationsDeviceToken
+summary: dictionary of data received in the push notification
+platforms: [iphone, ipad]
+since: “6.0.0”
+properties:
+  - name: value
+    summary: Device Token received when registering for push notifications
+    type: String
+
+---
+name: logPushNotificationOpen
+summary: Registers opened push with Facebook campaign. 
+platforms: [android]
+since: “6.0.0”
+properties:
+  - name: parameters
+    summary: Dictionary of data received in push notifications callback
+    type: Dictionary
+  
+  - name: action
+    summary: Action ID if required (pass empty string if you dont use it)
+    type: String
+
+---
+name: setPushNotificationsRegistrationId
+summary: dictionary of data received in the push notification
+platforms: [android]
+since: “6.0.0”
+properties:
+  - name: value
+    summary: Device Token received when registering for push notifications
+    type: String
+
