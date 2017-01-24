@@ -278,33 +278,26 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		request.setHttpMethod(method);
 		request.executeAsync();
 	}
+   
+	@Kroll.method
+	public void setPushNotificationsRegistrationId(String token)
+	{
+		AppEventsLogger.setPushNotificationsRegistrationId(token);
+	}
+
+	@Kroll.method
+	public void logPushNotificationOpen(KrollDict parameters, @Kroll.argument(optional = true) String action)
+	{
+		AppEventsLogger logger = AppEventsLogger.newLogger(TiApplication.getInstance().getCurrentActivity());
+		Bundle paramBundle = Utils.mapToBundle(parameters);
+		
+		if (action == null) {
+			logger.logPushNotificationOpen(paramBundle);
+		} else {
+			logger.logPushNotificationOpen(paramBundle, action);
+		}       
+	}
     
-    
-    
-    @Kroll.method
-    public void setPushNotificationsRegistrationId(String token)
-    {
-        AppEventsLogger.setPushNotificationsRegistrationId(token);
-    }
-    
-    @Kroll.method
-    public void logPushNotificationOpen(KrollDict parameters, @Kroll.argument(optional = true) String action)
-    {
-        Activity activity = TiApplication.getInstance().getCurrentActivity();
-        AppEventsLogger logger = AppEventsLogger.newLogger(activity);
-        Bundle paramBundle = Utils.mapToBundle(parameters);
-        if (action == null)
-        {
-            logger.logPushNotificationOpen(paramBundle);
-        }
-        else
-        {
-            logger.logPushNotificationOpen(paramBundle,action);
-        }
-        
-    }
-    
-	
 	@Kroll.method
 	public void logCustomEvent(String event, @Kroll.argument(optional = true) Double valueToSum, @Kroll.argument(optional = true) KrollDict parameters) {
 		Activity activity = TiApplication.getInstance().getCurrentActivity();
