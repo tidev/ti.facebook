@@ -892,35 +892,26 @@ methods:
     platforms: [iphone, ipad]
 
   - name: logPushNotificationOpen
-    summary: Registers opened push with Facebook campaign. 
+    summary: Log an app event that tracks that the application was open via Push Notification.
     platforms: [android, iphone, ipad]
-    since: “6.1.0”
+    since: "6.1.0"
     properties:
-      - name: data
-        summary: Dictionary of data received in push notifications callback
+      - name: payload
+        summary: Notification payload received via in the  push-notification callback.
         type: Dictionary
 
-      - name: actionId
+      - name: action
         optional: true
-        summary: Action ID 
+        summary: Name of the action that was taken.
         type: String
 
   - name: setPushNotificationsDeviceToken
-    summary: registers Device Token with Facebook
-    platforms: [iphone, ipad]
-    since: “6.1.0”
+    summary: Sets a device token to register the current application installation for push notifications.
+    platforms: [iphone, ipad, android]
+    since: "6.1.0"
     properties:
       - name: deviceToken
-        summary: Device Token received when registering for push notifications
-        type: String
-
-  - name: setPushNotificationsRegistrationId
-    summary: registers android device Registration ID with Facebook
-    platforms: [android]
-    since: “6.1.0”
-    properties:
-      - name: regisrationId
-        summary: Registration ID of the device received when registering for push notifications
+        summary: Device-token received when registering for push-notifications.
         type: String
 
 events:
