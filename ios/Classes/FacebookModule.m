@@ -400,13 +400,20 @@ MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE, FBSDKTooltipColorStyl
  */
 -(void)logPushNotificationOpen:(id)args
 {
-    id args0 = [args objectAtIndex:0];
-    ENSURE_SINGLE_ARG(args0, NSDictionary);
-    
-    id args1 = [args count] > 1 ? [args objectAtIndex:1] : nil;
-    ENSURE_SINGLE_ARG_OR_NIL(args1, NSString);
-    
-    [FBSDKAppEvents logPushNotificationOpen:args0 action:args1];
+    if ([args count] == 1) {
+        ENSURE_SINGLE_ARG(args, NSDictionary);
+        [FBSDKAppEvents logPushNotificationOpen:args];
+    } else if ([args count] == 2) {
+        id payload = [args objectAtIndex:0];
+        id action = [args objectAtIndex:1];
+        
+        ENSURE_TYPE(payload, NSDictionary);
+        ENSURE_TYPE(action, NSString);
+        
+        [FBSDKAppEvents logPushNotificationOpen:payload action:action];
+    } else {
+        NSLog(@"[ERROR] Invalid number of arguments provided, please check the docs for 'logPushNotificationOpen' and try again!");
+    }
 }
 
 /**

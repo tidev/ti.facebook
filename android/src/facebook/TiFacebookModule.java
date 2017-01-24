@@ -288,11 +288,20 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
     }
     
     @Kroll.method
-    public void logPushNotificationOpen(KrollDict parameters, String action) {
+    public void logPushNotificationOpen(KrollDict parameters, @Kroll.argument(optional = true) String action)
+    {
         Activity activity = TiApplication.getInstance().getCurrentActivity();
         AppEventsLogger logger = AppEventsLogger.newLogger(activity);
         Bundle paramBundle = Utils.mapToBundle(parameters);
-        logger.logPushNotificationOpen(paramBundle,action);
+        if (action == null)
+        {
+            logger.logPushNotificationOpen(paramBundle);
+        }
+        else
+        {
+            logger.logPushNotificationOpen(paramBundle,action);
+        }
+        
     }
     
 	

@@ -896,12 +896,13 @@ methods:
     platforms: [android, iphone, ipad]
     since: “6.1.0”
     properties:
-      - name: value
+      - name: data
         summary: Dictionary of data received in push notifications callback
         type: Dictionary
 
-      - name: action
-        summary: Action ID if required (pass empty string if you don’t use it, in iOS it’s optional)
+      - name: actionId
+        optional: true
+        summary: Action ID 
         type: String
 
   - name: setPushNotificationsDeviceToken
@@ -909,7 +910,7 @@ methods:
     platforms: [iphone, ipad]
     since: “6.1.0”
     properties:
-      - name: value
+      - name: deviceToken
         summary: Device Token received when registering for push notifications
         type: String
 
@@ -918,7 +919,7 @@ methods:
     platforms: [android]
     since: “6.1.0”
     properties:
-      - name: value
+      - name: regisrationId
         summary: Registration ID of the device received when registering for push notifications
         type: String
 
