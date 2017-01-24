@@ -901,7 +901,7 @@ methods:
         type: Dictionary
 
       - name: action
-        summary: Action ID if required (pass empty string if you don’t use it)
+        summary: Action ID if required (pass empty string if you don’t use it, in iOS it’s optional)
         type: String
 
   - name: setPushNotificationsDeviceToken
