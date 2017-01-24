@@ -278,6 +278,23 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		request.setHttpMethod(method);
 		request.executeAsync();
 	}
+    
+    
+    
+    @Kroll.method
+    public void setPushNotificationsRegistrationId(String token)
+    {
+        AppEventsLogger.setPushNotificationsRegistrationId(token);
+    }
+    
+    @Kroll.method
+    public void logPushNotificationOpen(KrollDict parameters, String action) {
+        Activity activity = TiApplication.getInstance().getCurrentActivity();
+        AppEventsLogger logger = AppEventsLogger.newLogger(activity);
+        Bundle paramBundle = Utils.mapToBundle(parameters);
+        logger.logPushNotificationOpen(paramBundle,action);
+    }
+    
 	
 	@Kroll.method
 	public void logCustomEvent(String event, @Kroll.argument(optional = true) Double valueToSum, @Kroll.argument(optional = true) KrollDict parameters) {
