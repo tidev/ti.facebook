@@ -919,7 +919,7 @@ methods:
     since: “6.1.0”
     properties:
       - name: value
-        summary: Device Token received when registering for push notifications
+        summary: Registration ID of the device received when registering for push notifications
         type: String
 
 events:
