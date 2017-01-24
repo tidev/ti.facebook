@@ -420,8 +420,6 @@ MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE, FBSDKTooltipColorStyl
 {
     ENSURE_TYPE(value, NSString);
     
-    NSLog(@"[DEBUG] ::FB::SETTING DEVICE TOKEN:%@",value);
-    
     [FBSDKAppEvents setPushNotificationsDeviceToken:[self dataFromHexString:value]];
 }
 
