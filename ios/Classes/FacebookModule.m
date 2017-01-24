@@ -394,15 +394,19 @@ MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE, FBSDKTooltipColorStyl
  * JS example:
  *
  * Ti.Network.addEventListener('remote', function(e) {
- *     facebook.logPushNotificationOpen(e.data);
+ *     facebook.logPushNotificationOpen(e.data,"actionId");
  * });
  *
  */
--(void)logPushNotificationOpen:(id)value
+-(void)logPushNotificationOpen:(id)args
 {
-    ENSURE_SINGLE_ARG(value, NSDictionary);
+    id args0 = [args objectAtIndex:0];
+    ENSURE_SINGLE_ARG(args0, NSDictionary);
     
-    [FBSDKAppEvents logPushNotificationOpen:value];
+    id args1 = [args count] > 1 ? [args objectAtIndex:1] : nil;
+    ENSURE_SINGLE_ARG_OR_NIL(args1, NSString);
+    
+    [FBSDKAppEvents logPushNotificationOpen:args0 action:args1];
 }
 
 /**
