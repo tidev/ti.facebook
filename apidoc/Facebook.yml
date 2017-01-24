@@ -905,7 +905,7 @@ methods:
         type: String
 
   - name: setPushNotificationsDeviceToken
-    summary: dictionary of data received in the push notification
+    summary: registered Device Token with Facebook
     platforms: [iphone, ipad]
     since: “6.1.0”
     properties:
@@ -914,7 +914,7 @@ methods:
         type: String
 
   - name: setPushNotificationsRegistrationId
-    summary: dictionary of data received in the push notification
+    summary: registers android device Registration ID with Facebook
     platforms: [android]
     since: “6.1.0”
     properties:
