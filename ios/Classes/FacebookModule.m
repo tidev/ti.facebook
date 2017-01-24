@@ -392,6 +392,59 @@ MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE, FBSDKTooltipColorStyl
 
 /**
  * JS example:
+ *
+ * Ti.Network.addEventListener('remote', function(e) {
+ *     facebook.logPushNotificationOpen(e.data);
+ * });
+ *
+ */
+-(void)logPushNotificationOpen:(id)value
+{
+    ENSURE_SINGLE_ARG(value, NSDictionary);
+    
+    [FBSDKAppEvents logPushNotificationOpen:value];
+}
+
+/**
+ * JS example:
+ *
+ * Ti.Network.registerForPushNotifications({
+ *     types: [ Ti.Network.NOTIFICATION_TYPE_BADGE, Ti.Network.NOTIFICATION_TYPE_ALERT, Ti.Network.NOTIFICATION_TYPE_SOUND ],
+ *     success: function(e) {
+ *         facebook.setPushNotificationsDeviceToken(e.deviceToken);
+ *     }
+ * });
+ *
+ */
+-(void)setPushNotificationsDeviceToken:(id)value
+{
+    ENSURE_TYPE(value, NSString);
+    
+    NSLog(@"[DEBUG] ::FB::SETTING DEVICE TOKEN:%@",value);
+    
+    [FBSDKAppEvents setPushNotificationsDeviceToken:[self dataFromHexString:value]];
+}
+
+
+// http://stackoverflow.com/a/41555957/5537752
+- (NSData *)dataFromHexString:(NSString *)string
+{
+    NSMutableData *stringData = [[[NSMutableData alloc] init] autorelease];
+    unsigned char whole_byte;
+    char byte_chars[3] = {'\0','\0','\0'};
+    int i;
+    for (i=0; i < [string length] / 2; i++) {
+        byte_chars[0] = [string characterAtIndex:i*2];
+        byte_chars[1] = [string characterAtIndex:i*2+1];
+        whole_byte = strtol(byte_chars, NULL, 16);
+        [stringData appendBytes:&whole_byte length:1];
+    }
+    return stringData;
+}
+
+
+/**
+ * JS example:
  * facebook.setLoginBehavior(facebook.LOGIN_BEHAVIOR_NATIVE);
  *
  */
