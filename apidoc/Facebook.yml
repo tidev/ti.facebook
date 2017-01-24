@@ -891,6 +891,29 @@ methods:
     since: "6.1.0"
     platforms: [iphone, ipad]
 
+  - name: logPushNotificationOpen
+    summary: Log an app event that tracks that the application was open via Push Notification.
+    platforms: [android, iphone, ipad]
+    since: "6.1.0"
+    properties:
+      - name: payload
+        summary: Notification payload received via in the  push-notification callback.
+        type: Dictionary
+
+      - name: action
+        optional: true
+        summary: Name of the action that was taken.
+        type: String
+
+  - name: setPushNotificationsDeviceToken
+    summary: Sets a device token to register the current application installation for push notifications.
+    platforms: [iphone, ipad, android]
+    since: "6.1.0"
+    properties:
+      - name: deviceToken
+        summary: Device-token received when registering for push-notifications.
+        type: String
+
 events:
 
   - name: login
@@ -2147,3 +2170,6 @@ properties:
     summary: A string that contain the error.
     type: String
     optional: true
+
+
+
