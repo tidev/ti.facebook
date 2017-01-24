@@ -280,7 +280,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	}
    
 	@Kroll.method
-	public void setPushNotificationsRegistrationId(String token)
+	public void setPushNotificationsDeviceToken(String token)
 	{
 		AppEventsLogger.setPushNotificationsRegistrationId(token);
 	}
