@@ -905,7 +905,7 @@ methods:
         type: String
 
   - name: setPushNotificationsDeviceToken
-    summary: registered Device Token with Facebook
+    summary: registers Device Token with Facebook
     platforms: [iphone, ipad]
     since: “6.1.0”
     properties:
