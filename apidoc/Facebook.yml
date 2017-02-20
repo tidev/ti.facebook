@@ -565,15 +565,11 @@ methods:
         Be sure to set your [login](Modules.Facebook.login) and [logout](Modules.Facebook.logout)
         event listeners before calling `initialize`. 
         
-        **Note: On iOS, this method needs to be called before calling <Modules.Facebook.authorize> 
+        **Note: This method needs to be called before calling <Modules.Facebook.authorize> 
         in order to be handle the auth-flow correctly. Otherwise, you might see a white screen without
         any response.
-    deprecated:
-        since: 5.0.0
-    parameters:
-      - name: timeout
-        summary: Sets initialize timeout in milliseconds.
-        type: Number
+        
+        The `timeout` parameter was deprecated in version 5.0.0 of Ti.Facebook and is not used anymore. 
     since: 4.0.0
 
   - name: logCustomEvent
