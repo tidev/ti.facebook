@@ -9,7 +9,7 @@
 
 //
 // How to add a Framework (example)
-FRAMEWORK_SEARCH_PATHS=$(SRCROOT)/../../modules/iphone/facebook/5.3.3/platform "~/Library/Application Support/Titanium/modules/iphone/facebook/5.3.3/platform"
+FRAMEWORK_SEARCH_PATHS=$(SRCROOT)/../../modules/iphone/facebook/5.4.0/platform "~/Library/Application Support/Titanium/modules/iphone/facebook/5.4.0/platform"
 OTHER_LDFLAGS=$(inherited) -framework Social -framework FBSDKCoreKit -framework FBSDKLoginKit -framework FBSDKShareKit -framework FBSDKMessengerShareKit -framework Bolts
 //
 // OTHER_LDFLAGS=$(inherited) -framework Foo
