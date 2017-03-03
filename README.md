@@ -431,26 +431,26 @@ fb.fetchDeferredAppLink(function(e) {
         // Dispatch internal routes
     }
 });
+```
 
 Log App Events
 ---
-```
+```js
 fb.logCustomEvent('handsClapped'); // Pass a string for the event name, view the events on Facebook Insights
 ```
 
 Log Purchases
 ---
-```
+```js
 fb.logPurchase(13.37, 'USD'); // Pass a number of the amound and a string for the currency.
 ```
 
 Notes
 ---
-* Note that the FBSDKCoreKit.framework, FBSDKLoginKit.framework, FBSDKShareKit.framework directory is the prebuilt Facebook SDK directly downloaded from Facebook, zero modifications. 
-* Facebook is moving away from the native iOS login, and towards login through the Facebook app. The default behavior of this module is the same as in the Facebook SDK: app login with a fallback to webview. The advantages of the app login are: user control over individual permissions, and a uniform login experience over iOS, Android, and web.
+* The FBSDKCoreKit.framework, FBSDKLoginKit.framework, FBSDKShareKit.framework directory is the prebuilt Facebook SDK directly downloaded from Facebook, zero modifications. 
+* Facebook is moving away from the native iOS login, and towards login through the Facebook app. The default behavior of this module is the same as in the Facebook SDK: app login with a fallback to webview. The advantages of the app login are: User control over individual permissions, and a uniform login experience over iOS, Android, and web.
 * AppEvents are automatically logged. Check out the app Insights on Facebook. We can also log custom events for Insights.
-* Choose to use LogInButton, rather than a customized UI, since it's directly from facebook and it's easier in maintaining facebook sessions.
-
+* Choose to use the LoginButton, rather than a customized UI, since it's directly from Facebook and it's easier in maintaining Facebook sessions.
 
 Events and error handling
 ---
@@ -458,18 +458,16 @@ Events and error handling
 The error handling adheres to the new Facebook guideline for events such as `login`, `shareCompleted` and `requestSendCompleted`. Here is how to handle `login` events:
 ```javascript
     var fb = require('facebook');
-    fb.addEventListener('login',function(e) {
+    fb.addEventListener('login', function(e) {
         // You *will* get this event if loggedIn == false below
         // Make sure to handle all possible cases of this event
         if (e.success) {
             alert('login from uid: '+e.uid+', name: '+JSON.parse(e.data).name);
             label.text = 'Logged In = ' + fb.loggedIn;
-        }
-        else if (e.cancelled) {
+        } else if (e.cancelled) {
             // user cancelled 
             alert('cancelled');
-        }
-        else {
+        } else {
             alert(e.error);         
         }
     });
@@ -485,5 +483,5 @@ Big shout-out to [@mokesmokes](https://github.com/mokesmokes) for the initial ve
 
 Contributors
 ---
-* Please see https://github.com/appcelerator-modules/ti.map/graphs/contributors
+* Please see https://github.com/appcelerator-modules/ti.facebook/graphs/contributors
 * Interested in contributing? Read the [contributors/committer's](https://wiki.appcelerator.org/display/community/Home) guide.
