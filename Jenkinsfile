@@ -11,7 +11,7 @@ def sdkSetup(sdkVersion) {
 	sh 'npm install -g appcelerator'
 	sh 'appc logout'
 	sh 'appc config set defaultEnvironment prod'
-	withCredentials([usernamePassword(credentialsId: credentialsId, passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+	withCredentials([usernamePassword(credentialsId: '895d8db1-87c2-4d96-a786-349c2ed2c04a', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
 		sh 'appc login --username "$USER" --password "$PASS" -l trace'
 	}
 	sh 'appc use latest'
