@@ -43,44 +43,33 @@ NSDictionary *launchOptions = nil;
     [super dealloc];
 }
 
--(BOOL)handleRelaunch
+-(void)handleRelaunch:(NSNotification *)notification
 {
-    TiApp * appDelegate = [TiApp app];
-    launchOptions = [appDelegate launchOptions];
+    launchOptions = [[TiApp app] launchOptions];
     NSString *urlString = [launchOptions objectForKey:@"url"];
     NSString *sourceApplication = [launchOptions objectForKey:@"source"];
-    NSString *annotation;
+    id annotation = nil;
     
     if ([TiUtils isIOS9OrGreater]) {
 #ifdef __IPHONE_9_0
         annotation = [launchOptions objectForKey:UIApplicationOpenURLOptionsAnnotationKey];
 #endif
-    } else {
-        annotation = nil;
     }
     
     if (urlString != nil) {
-        FBSDKAccessToken *token = [FBSDKAccessToken currentAccessToken];
-        NSSet* failed = token.declinedPermissions;
-        return [[FBSDKApplicationDelegate sharedInstance] application:[UIApplication sharedApplication] openURL: [NSURL URLWithString:urlString] sourceApplication:sourceApplication annotation:annotation];
-    } else {
-        return NO;
+        [[FBSDKApplicationDelegate sharedInstance] application:[UIApplication sharedApplication] openURL: [NSURL URLWithString:urlString] sourceApplication:sourceApplication annotation:annotation];
     }
-    return NO;
 }
 
 -(void)resumed:(id)note
 {
-//    NSLog(@"[DEBUG] facebook resumed");
-    [self handleRelaunch];
+    [self handleRelaunch:nil];
     [FBSDKAppEvents activateApp];
 }
 
--(void)activateApp
+-(void)activateApp:(NSNotification *)notification
 {
-    TiApp * appDelegate = [TiApp app];
-	launchOptions = [appDelegate launchOptions];
-	[[FBSDKApplicationDelegate sharedInstance] application:[UIApplication sharedApplication] didFinishLaunchingWithOptions:launchOptions];
+	[[FBSDKApplicationDelegate sharedInstance] application:[UIApplication sharedApplication] didFinishLaunchingWithOptions:[notification userInfo]];
 }
 
 -(void)startup
@@ -100,16 +89,6 @@ NSDictionary *launchOptions = nil;
 //    NSLog(@"[DEBUG] facebook shutdown");
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super shutdown:sender];
-}
-
--(void)suspend:(id)sender
-{
-//    NSLog(@"[DEBUG] facebook suspend");
-}
-
--(void)paused:(id)sender
-{
-//    NSLog(@"[DEBUG] facebook paused");
 }
 
 #pragma mark Auth Internals
@@ -155,11 +134,28 @@ NSDictionary *launchOptions = nil;
     return NUMBOOL([FBSDKAccessToken currentAccessToken] != nil);
 }
 
-//TODO
--(id)canPresentShareDialog
+/**
+ * JS example:
+ *
+ * var facebook = require('facebook');
+ * alert(facebook.appID);
+ *
+ */
+-(id)appID
 {
-    DEPRECATED_REMOVED(@"Facebook.canPresentShareDialog", @"5.0.0", @"5.0.0");
-    return NULL;
+    return [FBSDKSettings appID];
+}
+
+/**
+ * JS example:
+ *
+ * var facebook = require('facebook');
+ * facebook.setAppID('my-custom-appid');
+ *
+ */
+-(void)setAppID:(id)value
+{
+    [FBSDKSettings setAppID:[TiUtils stringValue:value]];
 }
 
 /**
@@ -172,11 +168,7 @@ NSDictionary *launchOptions = nil;
  */
 -(id)permissions
 {
-    __block NSArray *perms;
-    TiThreadPerformOnMainThread(^{
-        perms = [[[FBSDKAccessToken currentAccessToken] permissions] allObjects];
-    }, YES);
-    return perms;
+    return [[[FBSDKAccessToken currentAccessToken] permissions] allObjects];
 }
 
 /**
@@ -186,7 +178,6 @@ NSDictionary *launchOptions = nil;
  * alert(facebook.accessToken);
  *
  */
-
 -(id)accessToken
 {
     __block NSString * token;
@@ -195,6 +186,20 @@ NSDictionary *launchOptions = nil;
     }, YES);
     return token;
 }
+
+-(void)setCurrentAccessToken:(id)args
+{
+    ENSURE_TYPE(args, NSDictionary);
+    
+    [FBSDKAccessToken setCurrentAccessToken:[[FBSDKAccessToken alloc] initWithTokenString:[TiUtils stringValue:@"accessToken" properties:args]
+                                                                              permissions:[args objectForKey:@"permissions"]
+                                                                      declinedPermissions:[args objectForKey:@"declinedPermissions"]
+                                                                                    appID:[TiUtils stringValue:@"appID" properties:args]
+                                                                                   userID:[TiUtils stringValue:@"userID" properties:args]
+                                                                           expirationDate:[args objectForKey:@"exipirationDate"]
+                                                                              refreshDate:[args objectForKey:@"refreshDate"]]];
+}
+
 //deprecated and removed
 -(id)AUDIENCE_NONE
 {
@@ -262,7 +267,7 @@ NSDictionary *launchOptions = nil;
     return [NSNumber numberWithUnsignedInteger:FBSDKLoginBehaviorNative];
 }
 
--(id)LOGIN_BEHAVIOR_SYTEM_ACCOUNT
+-(id)LOGIN_BEHAVIOR_SYSTEM_ACCOUNT
 {
     return [NSNumber numberWithUnsignedInteger:FBSDKLoginBehaviorSystemAccount];
 }
@@ -296,6 +301,21 @@ NSDictionary *launchOptions = nil;
 {
     return [NSNumber numberWithInt:FBSDKMessengerShareButtonStyleWhiteBordered];
 }
+
+MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_AUTOMATIC, FBSDKShareDialogModeAutomatic);
+MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_NATIVE, FBSDKShareDialogModeNative);
+MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_SHARE_SHEET, FBSDKShareDialogModeShareSheet);
+MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_BROWSER, FBSDKShareDialogModeBrowser);
+MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_WEB, FBSDKShareDialogModeWeb);
+MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_FEED_BROWSER, FBSDKShareDialogModeFeedBrowser);
+MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_FEED_WEB, FBSDKShareDialogModeFeedWeb);
+
+MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC, FBSDKLoginButtonTooltipBehaviorAutomatic);
+MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_BEHAVIOR_FORCE_DISPLAY, FBSDKLoginButtonTooltipBehaviorForceDisplay);
+MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE, FBSDKLoginButtonTooltipBehaviorDisable);
+
+MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY, FBSDKTooltipColorStyleNeutralGray);
+MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE, FBSDKTooltipColorStyleFriendlyBlue);
 
 /**
  * JS example:
@@ -372,6 +392,68 @@ NSDictionary *launchOptions = nil;
 
 /**
  * JS example:
+ *
+ * Ti.Network.addEventListener('remote', function(e) {
+ *     facebook.logPushNotificationOpen(e.data,"actionId");
+ * });
+ *
+ */
+-(void)logPushNotificationOpen:(id)args
+{
+    if ([args count] == 1) {
+        ENSURE_SINGLE_ARG(args, NSDictionary);
+        [FBSDKAppEvents logPushNotificationOpen:args];
+    } else if ([args count] == 2) {
+        id payload = [args objectAtIndex:0];
+        id action = [args objectAtIndex:1];
+        
+        ENSURE_TYPE(payload, NSDictionary);
+        ENSURE_TYPE(action, NSString);
+        
+        [FBSDKAppEvents logPushNotificationOpen:payload action:action];
+    } else {
+        NSLog(@"[ERROR] Invalid number of arguments provided, please check the docs for 'logPushNotificationOpen' and try again!");
+    }
+}
+
+/**
+ * JS example:
+ *
+ * Ti.Network.registerForPushNotifications({
+ *     types: [ Ti.Network.NOTIFICATION_TYPE_BADGE, Ti.Network.NOTIFICATION_TYPE_ALERT, Ti.Network.NOTIFICATION_TYPE_SOUND ],
+ *     success: function(e) {
+ *         facebook.setPushNotificationsDeviceToken(e.deviceToken);
+ *     }
+ * });
+ *
+ */
+-(void)setPushNotificationsDeviceToken:(id)value
+{
+    ENSURE_TYPE(value, NSString);
+    
+    [FBSDKAppEvents setPushNotificationsDeviceToken:[self dataFromHexString:value]];
+}
+
+
+// http://stackoverflow.com/a/41555957/5537752
+- (NSData *)dataFromHexString:(NSString *)string
+{
+    NSMutableData *stringData = [[[NSMutableData alloc] init] autorelease];
+    unsigned char whole_byte;
+    char byte_chars[3] = {'\0','\0','\0'};
+    int i;
+    for (i=0; i < [string length] / 2; i++) {
+        byte_chars[0] = [string characterAtIndex:i*2];
+        byte_chars[1] = [string characterAtIndex:i*2+1];
+        whole_byte = strtol(byte_chars, NULL, 16);
+        [stringData appendBytes:&whole_byte length:1];
+    }
+    return stringData;
+}
+
+
+/**
+ * JS example:
  * facebook.setLoginBehavior(facebook.LOGIN_BEHAVIOR_NATIVE);
  *
  */
@@ -416,10 +498,10 @@ NSDictionary *launchOptions = nil;
 -(void)authorize:(id)args
 {
     ENSURE_SINGLE_ARG_OR_NIL(args, NSNumber);
-    BOOL allowUI = args == nil ? YES : NO;
     NSArray *permissions_ = permissions == nil ? [NSArray array] : permissions;
-    FBSDKLoginManager *loginManager = [[[FBSDKLoginManager alloc] init] autorelease];
+    __block FBSDKLoginManager *loginManager = [[FBSDKLoginManager new] retain];
     [loginManager setLoginBehavior:loginBehavior];
+    
     TiThreadPerformOnMainThread(^{
         [loginManager logInWithReadPermissions: permissions_ fromViewController:nil handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
             if (error) {
@@ -431,6 +513,7 @@ NSDictionary *launchOptions = nil;
             } else {
                 //DebugLog(@"[INFO] Logged in");
             }
+            RELEASE_TO_NIL(loginManager);
         }];
     }, YES);
 }
@@ -446,18 +529,22 @@ NSDictionary *launchOptions = nil;
     }
     TiThreadPerformOnMainThread(^{
         [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
+        loginBehavior = FBSDKLoginBehaviorBrowser;
+        
         NSNotificationCenter * nc = [NSNotificationCenter defaultCenter];
         [nc addObserver:self selector:@selector(logEvents:) name:UIApplicationDidBecomeActiveNotification object:nil];
         [nc addObserver:self selector:@selector(accessTokenChanged:) name:FBSDKAccessTokenDidChangeNotification object:nil];
-		[nc addObserver:self selector:@selector(activateApp:) name:UIApplicationDidFinishLaunchingNotification object:nil];
+        [nc addObserver:self selector:@selector(activateApp:) name:UIApplicationDidFinishLaunchingNotification object:nil];
         [nc addObserver:self selector:@selector(currentProfileChanged:) name:FBSDKProfileDidChangeNotification object:nil];
         
-        loginBehavior = FBSDKLoginBehaviorBrowser;
+        // Only triggered by Titanium SDK 5.5.0+
+        // Older SDK's get notified by the `resumed:` delegate
+        [nc addObserver:self selector:@selector(handleRelaunch:) name:@"TiApplicationLaunchedFromURL" object:nil];
 
         if ([FBSDKAccessToken currentAccessToken] == nil) {
-            [self activateApp];
+            [self activateApp:nil];
         } else {
-            [self handleRelaunch];
+            [self handleRelaunch:nil];
         }
     }, YES);
 }
@@ -498,9 +585,18 @@ NSDictionary *launchOptions = nil;
             DEPRECATED_REMOVED(@"Facebook.presentShareDialog.caption", @"5.0.0", @"5.0.0");
         }
         content.imageURL = [NSURL URLWithString:[params objectForKey:@"picture"]];
-        [FBSDKShareDialog showFromViewController:nil
-                                     withContent:content
-                                        delegate:self];
+        
+        FBSDKShareDialog *dialog = [FBSDKShareDialog new];
+        [dialog setFromViewController:nil];
+        [dialog setShareContent:content];
+        [dialog setDelegate:self];
+        
+        if ([params objectForKey:@"mode"] != nil){
+            [dialog setMode:[TiUtils intValue:[params objectForKey:@"mode"]]];
+        }
+        
+        [dialog show];
+        RELEASE_TO_NIL(content);
     }, NO);
 }
 
@@ -527,6 +623,7 @@ NSDictionary *launchOptions = nil;
         }
         
         [FBSDKMessageDialog showWithContent:content delegate:self];
+        RELEASE_TO_NIL(content);
     }, NO);
 }
 
@@ -554,6 +651,7 @@ NSDictionary *launchOptions = nil;
         } else {
             NSLog(@"[ERROR] Unknown media provided. Allowed media: Image, GIF and video.");
         }
+        RELEASE_TO_NIL(options);
     }, NO);
 }
 
@@ -575,6 +673,7 @@ NSDictionary *launchOptions = nil;
         [content setAppInvitePreviewImageURL:[NSURL URLWithString:[params objectForKey:@"appPreviewImageLink"]]];
         
         [FBSDKAppInviteDialog showFromViewController:nil withContent:content delegate:self];
+        RELEASE_TO_NIL(content);
     }, NO);
 }
 
@@ -598,6 +697,7 @@ NSDictionary *launchOptions = nil;
 
     TiThreadPerformOnMainThread(^{
         FBSDKGameRequestContent *gameRequestContent = [[[FBSDKGameRequestContent alloc] init] autorelease];
+        gameRequestContent.title = title;
         gameRequestContent.message = message;
         gameRequestContent.recipients = recipients;
         gameRequestContent.objectID = objectID;
@@ -652,6 +752,14 @@ NSDictionary *launchOptions = nil;
                 errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
                 if (errorString == nil) {
                     errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+                    
+                    if (errorString == nil) {
+                        if ([error code] == 308) {
+                            errorString = [NSString stringWithFormat:@"Error 308 detected: Please enable keychain-sharing in your project by creating an Entitlements file. For more information check the \"Migrate to iOS 10\" section in https://docs.appcelerator.com/platform/latest/#!/api/Modules.Facebook"];
+                        } else {
+                            errorString = [error localizedDescription];
+                        }
+                    }
                 }
             }
             else if (result.isCancelled) {
@@ -711,6 +819,14 @@ NSDictionary *launchOptions = nil;
                 errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
                 if (errorString == nil) {
                     errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+                    
+                    if (errorString == nil) {
+                        if ([error code] == 308) {
+                            errorString = [NSString stringWithFormat:@"Error 308 detected: Please enable keychain-sharing in your project by creating an Entitlements file. For more information check the \"Migrate to iOS 10\" section in https://docs.appcelerator.com/platform/latest/#!/api/Modules.Facebook"];
+                        } else {
+                            errorString = [error localizedDescription];
+                        }
+                    }
                 }
             }
             else if (result.isCancelled) {
@@ -762,13 +878,17 @@ NSDictionary *launchOptions = nil;
     id args3 = [args objectAtIndex:3];
     ENSURE_SINGLE_ARG(args3, KrollCallback);
     KrollCallback *callback = args3;
-    for(NSString *key in params) {
+    
+    for (NSUInteger i = 0; i <  [[params allKeys] count]; i++) {
+        NSString *key = [[params allKeys] objectAtIndex:i];
         id value = [params objectForKey:key];
+        
         if ([value isKindOfClass:[TiBlob class]]) {
             TiBlob *blob = (TiBlob*)value;
             [params setObject:[blob data] forKey:key];
         }
     }
+    
     TiThreadPerformOnMainThread(^{
         if ([FBSDKAccessToken currentAccessToken]) {
             [[[FBSDKGraphRequest alloc] initWithGraphPath:path parameters:params HTTPMethod:httpMethod]
@@ -788,6 +908,14 @@ NSDictionary *launchOptions = nil;
                      NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
                      if (errorString == nil) {
                          errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+                         
+                         if (errorString == nil) {
+                             if ([error code] == 308) {
+                                 errorString = [NSString stringWithFormat:@"Error 308 detected: Please enable keychain-sharing in your project by creating an Entitlements file. For more information check the \"Migrate to iOS 10\" section in https://docs.appcelerator.com/platform/latest/#!/api/Modules.Facebook"];
+                             } else {
+                                 errorString = [error localizedDescription];
+                             }
+                         }
                      }
                      returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys:
                                        NUMBOOL(success), @"success",
@@ -821,6 +949,14 @@ NSDictionary *launchOptions = nil;
                     errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
                     if (errorString == nil) {
                         errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+                        
+                        if (errorString == nil) {
+                            if ([error code] == 308) {
+                                errorString = [NSString stringWithFormat:@"Error 308 detected: Please enable keychain-sharing in your project by creating an Entitlements file. For more information check the \"Migrate to iOS 10\" section in https://docs.appcelerator.com/platform/latest/#!/api/Modules.Facebook"];
+                            } else {
+                                errorString = [error localizedDescription];
+                            }
+                        }
                     }
                 }
                 returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys: errorString,@"error", NUMBOOL(NO),@"success", nil];
@@ -852,6 +988,14 @@ NSDictionary *launchOptions = nil;
         NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
         if (errorString == nil) {
             errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+            
+            if (errorString == nil) {
+                if ([error code] == 308) {
+                    errorString = [NSString stringWithFormat:@"Error 308 detected: Please enable keychain-sharing in your project by creating an Entitlements file. For more information check the \"Migrate to iOS 10\" section in https://docs.appcelerator.com/platform/latest/#!/api/Modules.Facebook"];
+                } else {
+                    errorString = [error localizedDescription];
+                }
+            }
         }
         [event setObject:errorString forKey:@"error"];
     }
@@ -861,7 +1005,7 @@ NSDictionary *launchOptions = nil;
         NSDictionary *jsonDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
                                         profile.userID, @"userID",
                                         profile.firstName, @"firstName",
-                                        profile.middleName == nil ? @"":profile.middleName, @"middleName",
+                                        profile.middleName ?: @"", @"middleName",
                                         profile.lastName, @"lastName",
                                         profile.name, @"name",
                                         [profile.linkURL absoluteString], @"linkURL",
@@ -873,6 +1017,7 @@ NSDictionary *launchOptions = nil;
         if (uid != nil){
             [event setObject:uid forKey:@"uid"];
         }
+        RELEASE_TO_NIL(resultString);
     }
     [self fireEvent:@"login" withObject:event];
 }
@@ -959,6 +1104,14 @@ NSDictionary *launchOptions = nil;
         NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
         if (errorString == nil) {
             errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+            
+            if (errorString == nil) {
+                if ([error code] == 308) {
+                    errorString = [NSString stringWithFormat:@"Error 308 detected: Please enable keychain-sharing in your project by creating an Entitlements file. For more information check the \"Migrate to iOS 10\" section in https://docs.appcelerator.com/platform/latest/#!/api/Modules.Facebook"];
+                } else {
+                    errorString = [error localizedDescription];
+                }
+            }
         }
         [event setValue:errorString forKey:@"error"];
     }

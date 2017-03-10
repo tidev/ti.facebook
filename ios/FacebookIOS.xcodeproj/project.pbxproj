@@ -26,10 +26,7 @@
 		3A03CECF1C6142C3003A9ADF /* FacebookMessengerButtonProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03CECD1C6142C3003A9ADF /* FacebookMessengerButtonProxy.m */; };
 		3A03CED21C6142D4003A9ADF /* FacebookMessengerButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A03CED01C6142D4003A9ADF /* FacebookMessengerButton.h */; };
 		3A03CED31C6142D4003A9ADF /* FacebookMessengerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A03CED11C6142D4003A9ADF /* FacebookMessengerButton.m */; };
-		3A9A58461CC7B3D300F9AB1D /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A9A58421CC7B3D300F9AB1D /* FBSDKCoreKit.framework */; };
-		3A9A58471CC7B3D300F9AB1D /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A9A58431CC7B3D300F9AB1D /* FBSDKLoginKit.framework */; };
-		3A9A58481CC7B3D300F9AB1D /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A9A58441CC7B3D300F9AB1D /* FBSDKMessengerShareKit.framework */; };
-		3A9A58491CC7B3D300F9AB1D /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A9A58451CC7B3D300F9AB1D /* FBSDKShareKit.framework */; };
+		3A8CA5481D58B6DC00E6DADF /* FacebookConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A8CA5471D58B6DC00E6DADF /* FacebookConstants.m */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 		BBA44FD71A93096C00D4C043 /* Facebook_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = BBA44FD61A93096C00D4C043 /* Facebook_Prefix.pch */; };
 		BBA44FE41A93097B00D4C043 /* FacebookLoginButtonProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA44FD81A93097B00D4C043 /* FacebookLoginButtonProxy.m */; };
@@ -44,6 +41,11 @@
 		BBA44FED1A93097B00D4C043 /* FacebookLikeButtonProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = BBA44FE11A93097B00D4C043 /* FacebookLikeButtonProxy.h */; };
 		BBA44FEE1A93097B00D4C043 /* FacebookLikeButton.h in Headers */ = {isa = PBXBuildFile; fileRef = BBA44FE21A93097B00D4C043 /* FacebookLikeButton.h */; };
 		BBA44FEF1A93097B00D4C043 /* FacebookLikeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA44FE31A93097B00D4C043 /* FacebookLikeButton.m */; };
+		DB8680D21DC6B6AA003535CB /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB8680CD1DC6B6AA003535CB /* Bolts.framework */; };
+		DB8680D31DC6B6AA003535CB /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB8680CE1DC6B6AA003535CB /* FBSDKCoreKit.framework */; };
+		DB8680D41DC6B6AA003535CB /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB8680CF1DC6B6AA003535CB /* FBSDKLoginKit.framework */; };
+		DB8680D51DC6B6AA003535CB /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB8680D01DC6B6AA003535CB /* FBSDKMessengerShareKit.framework */; };
+		DB8680D61DC6B6AA003535CB /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB8680D11DC6B6AA003535CB /* FBSDKShareKit.framework */; };
 		EAC238AA19F1280B00E8103C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC238A919F1280B00E8103C /* Social.framework */; };
 /* End PBXBuildFile section */
 
@@ -64,10 +66,7 @@
 		3A03CED01C6142D4003A9ADF /* FacebookMessengerButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookMessengerButton.h; path = Classes/FacebookMessengerButton.h; sourceTree = "<group>"; };
 		3A03CED11C6142D4003A9ADF /* FacebookMessengerButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FacebookMessengerButton.m; path = Classes/FacebookMessengerButton.m; sourceTree = "<group>"; };
 		3A03CED41C6147C9003A9ADF /* FacebookConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FacebookConstants.h; path = Classes/FacebookConstants.h; sourceTree = "<group>"; };
-		3A9A58421CC7B3D300F9AB1D /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = platform/FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		3A9A58431CC7B3D300F9AB1D /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = platform/FBSDKLoginKit.framework; sourceTree = "<group>"; };
-		3A9A58441CC7B3D300F9AB1D /* FBSDKMessengerShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKMessengerShareKit.framework; path = platform/FBSDKMessengerShareKit.framework; sourceTree = "<group>"; };
-		3A9A58451CC7B3D300F9AB1D /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = platform/FBSDKShareKit.framework; sourceTree = "<group>"; };
+		3A8CA5471D58B6DC00E6DADF /* FacebookConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FacebookConstants.m; path = Classes/FacebookConstants.m; sourceTree = "<group>"; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BBA44FD61A93096C00D4C043 /* Facebook_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook_Prefix.pch; sourceTree = "<group>"; };
 		BBA44FD81A93097B00D4C043 /* FacebookLoginButtonProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FacebookLoginButtonProxy.m; path = Classes/FacebookLoginButtonProxy.m; sourceTree = "<group>"; };
@@ -83,6 +82,11 @@
 		BBA44FE21A93097B00D4C043 /* FacebookLikeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookLikeButton.h; path = Classes/FacebookLikeButton.h; sourceTree = "<group>"; };
 		BBA44FE31A93097B00D4C043 /* FacebookLikeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FacebookLikeButton.m; path = Classes/FacebookLikeButton.m; sourceTree = "<group>"; };
 		D2AAC07E0554694100DB518D /* libFacebook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFacebook.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB8680CD1DC6B6AA003535CB /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = platform/Bolts.framework; sourceTree = "<group>"; };
+		DB8680CE1DC6B6AA003535CB /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = platform/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		DB8680CF1DC6B6AA003535CB /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = platform/FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		DB8680D01DC6B6AA003535CB /* FBSDKMessengerShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKMessengerShareKit.framework; path = platform/FBSDKMessengerShareKit.framework; sourceTree = "<group>"; };
+		DB8680D11DC6B6AA003535CB /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = platform/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		EAC238A919F1280B00E8103C /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -91,11 +95,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB8680D21DC6B6AA003535CB /* Bolts.framework in Frameworks */,
+				DB8680D31DC6B6AA003535CB /* FBSDKCoreKit.framework in Frameworks */,
+				DB8680D41DC6B6AA003535CB /* FBSDKLoginKit.framework in Frameworks */,
+				DB8680D61DC6B6AA003535CB /* FBSDKShareKit.framework in Frameworks */,
 				EAC238AA19F1280B00E8103C /* Social.framework in Frameworks */,
-				3A9A58461CC7B3D300F9AB1D /* FBSDKCoreKit.framework in Frameworks */,
-				3A9A58491CC7B3D300F9AB1D /* FBSDKShareKit.framework in Frameworks */,
-				3A9A58481CC7B3D300F9AB1D /* FBSDKMessengerShareKit.framework in Frameworks */,
-				3A9A58471CC7B3D300F9AB1D /* FBSDKLoginKit.framework in Frameworks */,
+				DB8680D51DC6B6AA003535CB /* FBSDKMessengerShareKit.framework in Frameworks */,
 				AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -125,10 +130,11 @@
 		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3A9A58421CC7B3D300F9AB1D /* FBSDKCoreKit.framework */,
-				3A9A58431CC7B3D300F9AB1D /* FBSDKLoginKit.framework */,
-				3A9A58441CC7B3D300F9AB1D /* FBSDKMessengerShareKit.framework */,
-				3A9A58451CC7B3D300F9AB1D /* FBSDKShareKit.framework */,
+				DB8680CD1DC6B6AA003535CB /* Bolts.framework */,
+				DB8680CE1DC6B6AA003535CB /* FBSDKCoreKit.framework */,
+				DB8680CF1DC6B6AA003535CB /* FBSDKLoginKit.framework */,
+				DB8680D01DC6B6AA003535CB /* FBSDKMessengerShareKit.framework */,
+				DB8680D11DC6B6AA003535CB /* FBSDKShareKit.framework */,
 				EAC238A919F1280B00E8103C /* Social.framework */,
 				AACBBE490F95108600F1A2B1 /* Foundation.framework */,
 			);
@@ -155,6 +161,7 @@
 				3A03CED01C6142D4003A9ADF /* FacebookMessengerButton.h */,
 				3A03CED11C6142D4003A9ADF /* FacebookMessengerButton.m */,
 				3A03CED41C6147C9003A9ADF /* FacebookConstants.h */,
+				3A8CA5471D58B6DC00E6DADF /* FacebookConstants.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -213,7 +220,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0820;
 			};
 			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "FacebookIOS" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -263,6 +270,7 @@
 				3A03CED31C6142D4003A9ADF /* FacebookMessengerButton.m in Sources */,
 				BBA44FE41A93097B00D4C043 /* FacebookLoginButtonProxy.m in Sources */,
 				BBA44FE81A93097B00D4C043 /* FacebookModuleAssets.m in Sources */,
+				3A8CA5481D58B6DC00E6DADF /* FacebookConstants.m in Sources */,
 				BBA44FE61A93097B00D4C043 /* FacebookLoginButton.m in Sources */,
 				BBA44FEA1A93097B00D4C043 /* FacebookModule.m in Sources */,
 			);
@@ -349,7 +357,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INSTALL_PATH = /usr/local/lib;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "-DTI_POST_1_2";
 				OTHER_LDFLAGS = "-ObjC";
@@ -364,27 +372,43 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 24DD6D1B1134B66800162E58 /* titanium.xcconfig */;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DSTROOT = /tmp/ComFacebook.dst;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ComFacebook_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "TI_VERSION=$(TI_VERSION)";
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_SHADOW = NO;
 				GCC_WARN_STRICT_SELECTOR_MATCH = NO;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INSTALL_PATH = /usr/local/lib;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-DDEBUG",
@@ -405,25 +429,40 @@
 			baseConfigurationReference = 24DD6D1B1134B66800162E58 /* titanium.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				DSTROOT = /tmp/ComFacebook.dst;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_MODEL_TUNING = G5;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ComFacebook_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "TI_VERSION=$(TI_VERSION)";
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_SHADOW = NO;
 				GCC_WARN_STRICT_SELECTOR_MATCH = NO;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INSTALL_PATH = /usr/local/lib;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_CFLAGS = "-DTI_POST_1_2";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = ComFacebook;

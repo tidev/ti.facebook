@@ -14,6 +14,13 @@ description: |
 
     * Sharing content using Facebook dialogs or the [Like button](Modules.Facebook.LikeButton).
 
+    **Using Ti.Facebook with iOS 10 and Xcode 8**
+    
+    The paragraph about custom capabilities was only necessary between Titanium SDK 5.5.0 and 6.0.0. 
+    Since 6.0.1.GA, we add the required capabilities automatically, so you don't need to curate your 
+    own entitlements file anymore, which will avoid possible issues with concurring values. Please 
+    ensure to use both SDK and CLI 6.0.1 (or later).
+
     **Note:** As of April 30th, 2015, Facebook no longer supports version 1.0 of their API, which
     includes the FQL and REST APIs.  Only the Graph APIs will be supported.
 
@@ -79,9 +86,6 @@ description: |
     To use the Facebook module, you need a Facebook application. To create a Facebook App,
     go to the Facebook Developer App: [developers.facebook.com/apps](https://developers.facebook.com/apps).
 
-    Note that this module is only available for Release 3.1.0 and later, and is included with the
-    Titanium SDK.  You do not need to download or unpack it.
-
     -   Edit the `modules` section of your tiapp.xml file to include this module:
 
             <modules>
@@ -94,7 +98,7 @@ description: |
          with the new Facebook object.
 
              var fb = require('facebook');
-             fb.permissions = [FACEBOOK_APP_PERMISSIONS];
+             fb.permissions = [FACEBOOK_APP_PERMISSIONS]; // e.g. ['email']
              fb.initialize();
              fb.authorize();
 
@@ -152,7 +156,7 @@ description: |
     If you are using the older Ti.Facebook Module 4.0.5 and wish to support iOS9, you will instead need to include the following key
     and values in `tiapp.xml` to handle the switching in and out of your app:
 
-    <key>LSApplicationQueriesSchemes</key>
+        <key>LSApplicationQueriesSchemes</key>
         <array>
             <string>fbapi</string>
             <string>fbapi20130214</string>
@@ -178,18 +182,24 @@ description: |
                 <dict>
                     <key>facebook.com</key>
                         <dict>
-                            <key>NSIncludesSubdomains</key> <true/>
-                            <key>NSExceptionRequiresForwardSecrecy</key> <false/>
+                            <key>NSIncludesSubdomains</key> 
+                            <true/>
+                            <key>NSExceptionRequiresForwardSecrecy</key> 
+                            <false/>
                         </dict>
                     <key>fbcdn.net</key>
                         <dict>
-                            <key>NSIncludesSubdomains</key> <true/>
-                            <key>NSExceptionRequiresForwardSecrecy</key>  <false/>
+                            <key>NSIncludesSubdomains</key> 
+                            <true/>
+                            <key>NSExceptionRequiresForwardSecrecy</key>  
+                            <false/>
                         </dict>
                     <key>akamaihd.net</key>
                         <dict>
-                            <key>NSIncludesSubdomains</key> <true/>
-                            <key>NSExceptionRequiresForwardSecrecy</key> <false/>
+                            <key>NSIncludesSubdomains</key> 
+                            <true/>
+                            <key>NSExceptionRequiresForwardSecrecy</key> 
+                            <false/>
                         </dict>
                 </dict>
         </dict>
@@ -211,8 +221,10 @@ description: |
             <android xmlns:android="http://schemas.android.com/apk/res/android">
                 <manifest>
                     <application>
-                        <activity android:label="@string/app_name"
-                            android:name="com.facebook.LoginActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+                        <activity android:name="com.facebook.FacebookActivity" 
+                                  android:theme="@android:style/Theme.Translucent.NoTitleBar" 
+                                  android:label="YourAppName" 
+                                  android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" />
                         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
                     </application>
                 </manifest>
@@ -307,10 +319,10 @@ description: |
     additional permissions.
 
         var fb = require('facebook');
-        fb.requestNewReadPermissions(['read_stream','user_hometown', etc...], function(e){
-            if(e.success){
+        fb.requestNewReadPermissions(['read_stream','user_hometown', etc...], function(e) {
+            if (e.success) {
                 fb.requestWithGraphPath(...);
-            } else if (e.cancelled){
+            } else if (e.cancelled) {
                 ....
             } else {
                 Ti.API.debug('Failed authorization due to: ' + e.error);
@@ -328,10 +340,10 @@ description: |
     additional permissions.
 
         var fb = require('facebook');
-        fb.requestNewPublishPermissions(['read_stream','user_hometown', etc...], fb.AUDIENCE_FRIENDS, function(e){
-            if(e.success){
+        fb.requestNewPublishPermissions(['read_stream','user_hometown', etc...], fb.AUDIENCE_FRIENDS, function(e) {
+            if (e.success) {
                 fb.requestWithGraphPath(...);
-            } else if (e.cancelled){
+            } else if (e.cancelled) {
             ....
             } else {
                 Ti.API.debug('Failed authorization due to: ' + e.error);
@@ -470,32 +482,6 @@ description: |
 
     For more information, see the [LikeButton API reference](Modules.Facebook.LikeButton).
 
-    ### Submitting an iOS Application to the iTunes Store
-
-    When including the **Facebook 3.x module** in an iOS project and built for the iTunes Store, during the
-    validation process you may receive an error message referring to an Improper Advertising identifier
-    [IDFA] Usage.
-
-    As part of the Apple review process when submitting an application, you will be asked if your app
-    uses the Advertising Identifier (IDFA). Please check "Yes". You will then be asked how your app
-    makes use of it. The question will take this form:
-
-        This app uses the Advertising Identifier to (select all that apply)?
-        - Serve advertisements within the app
-        - Attribute this app installation to a previously served advertisement
-        - Attribute an action taken within this app to a previously served advertisement
-
-    Select the second and third options.
-
-    You will also be asked to check a box to confirm that your app honors a user's Limit Ad Tracking
-    setting in iOS. The Facebook SDK honors the iOS Limited Ad Tracking Setting. When a person enables
-    Limited Ad Tracking, Facebook only uses data obtained through the use of the Advertising Identifier
-    for "Limited Advertising Purposes" as defined by the iOS Developer Program License Agreement. Please
-    make sure to check this box when prompted.
-
-    For more information, see [Facebook Issue #242477629268301](https://developers.facebook.com/bugs/242477629268301/)
-    and [TIMODOPEN-391](https://jira.appcelerator.org/browse/TIMODOPEN-391).
-
 extends: Titanium.Module
 since: "3.1.0"
 platforms: [android, iphone, ipad]
@@ -577,13 +563,13 @@ methods:
         Loads a cached Facebook session if available, then fires the `login` event.
     description: |
         Be sure to set your [login](Modules.Facebook.login) and [logout](Modules.Facebook.logout)
-        event listeners before calling `initialize`.
-    deprecated:
-        since: 5.0.0
-    parameters:
-      - name: timeout
-        summary: Sets initialize timeout in milliseconds.
-        type: Number
+        event listeners before calling `initialize`. 
+        
+        **Note: This method needs to be called before calling <Modules.Facebook.authorize> 
+        in order to be handle the auth-flow correctly. Otherwise, you might see a white screen without
+        any response.
+        
+        The `timeout` parameter was deprecated in version 5.0.0 of Ti.Facebook and is not used anymore. 
     since: 4.0.0
 
   - name: logCustomEvent
@@ -610,16 +596,15 @@ methods:
       - name: valueToSum
         summary: |
             An arbitrary number that can represent any value (e.g., a price or a quantity). 
-            When reported, all of the valueToSum properties will be summed together in Facebook Analytics for Apps.
+            When reported, all of the valueToSum properties will be summed together in Facebook 
+            Analytics for Apps (since 5.4.0).
         type: Number
         optional: true
-        since: "5.4.0"
       - name: params
         summary: |
-            A dictionary object containing optional parameters.
+            A dictionary object containing optional parameters (since 5.4.0).
         type: Object
         optional: true
-        since: "5.4.0"
     since: "4.0.0"
     
   - name: logPurchase
@@ -880,13 +865,50 @@ methods:
 
   - name: shareMediaToMessenger
     summary: Call this method to open Messenger and share an image, animated GIF or video.
-    parameter:
+    parameters:
       - name: params
         summary: |
             A dictionary object containing required and optional parameters.
         type: ShareToMessengerParams
     since: "5.4.0"
     platforms: [iphone, ipad]
+    
+  - name: setCurrentAccessToken
+    summary: Set a new access token for using Facebook services.
+    parameters:
+      - name: params
+        summary: |
+            A dictionary object containing required and optional parameters. 
+            
+            Note: There is an [open issue](https://developers.facebook.com/bugs/675847029242342/) in the native Facebook SDK causing the appID
+            from not being updated although specified in the parameters. You can use 
+            the <Modules.Facebook.appID> setter to change the appID inside your app.
+        type: CurrentAccessTokenParams
+    since: "6.1.0"
+    platforms: [iphone, ipad]
+
+  - name: logPushNotificationOpen
+    summary: Log an app event that tracks that the application was open via Push Notification.
+    platforms: [android, iphone, ipad]
+    since: "6.1.0"
+    parameters:
+      - name: payload
+        summary: Notification payload received via in the  push-notification callback.
+        type: Dictionary
+
+      - name: action
+        optional: true
+        summary: Name of the action that was taken.
+        type: String
+
+  - name: setPushNotificationsDeviceToken
+    summary: Sets a device token to register the current application installation for push notifications.
+    platforms: [iphone, ipad, android]
+    since: "6.1.0"
+    parameters:
+      - name: deviceToken
+        summary: Device-token received when registering for push-notifications.
+        type: String
 
 events:
 
@@ -1184,6 +1206,45 @@ properties:
     since: 4.0.0
     platforms: [android]
 
+  - name: LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC
+    summary: |
+        The default behavior. The tooltip will only be displayed if the app is eligible 
+        (determined by possible server round trip).
+    type: Number
+    permission: read-only
+    since: "6.1.0"
+    platforms: [iphone, ipad, android]
+
+  - name: LOGIN_BUTTON_TOOLTIP_BEHAVIOR_FORCE_DISPLAY
+    summary: Force display of the tooltip (typically for UI testing).
+    type: Number
+    permission: read-only
+    since: "6.1.0"
+    platforms: [iphone, ipad, android]
+
+  - name: LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE
+    summary: |
+        Force disable. In this case you can still exert more refined control by manually 
+        constructing a new login button.
+    type: Number
+    permission: read-only
+    since: "6.1.0"
+    platforms: [iphone, ipad, android]
+
+  - name: LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY
+    summary: Dark gray background, white text, light gray close button.
+    type: Number
+    permission: read-only
+    since: "6.1.0"
+    platforms: [iphone, ipad, android]
+
+  - name: LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE
+    summary: Light blue background, white text, faded blue close button.
+    type: Number
+    permission: read-only
+    since: "6.1.0"
+    platforms: [iphone, ipad, android]
+
   - name: SSO_WITH_FALLBACK
     summary: Attempt single sign-on, then fallback to dialog authorization.
     description: |
@@ -1202,17 +1263,73 @@ properties:
     since: 4.0.0
     platforms: [android]
 
+  - name: SHARE_DIALOG_MODE_AUTOMATIC
+    summary: Acts with the most appropriate mode that is available.
+    description: Use with [presentShareDialog()](Modules.Facebook.presentShareDialog).
+    type: Number
+    permission: read-only
+    since: "6.0.0"
+    platforms: [iphone, ipad, android]
+
+  - name: SHARE_DIALOG_MODE_NATIVE
+    summary: Displays the dialog in the main native Facebook app.
+    description: Use with [presentShareDialog()](Modules.Facebook.presentShareDialog).
+    type: Number
+    permission: read-only
+    since: "6.0.0"
+    platforms: [iphone, ipad, android]
+
+  - name: SHARE_DIALOG_MODE_SHARE_SHEET
+    summary: Displays the dialog in the iOS integrated share sheet.
+    description: Use with [presentShareDialog()](Modules.Facebook.presentShareDialog).
+    type: Number
+    permission: read-only
+    since: "6.0.0"
+    platforms: [iphone, ipad]
+
+  - name: SHARE_DIALOG_MODE_BROWSER
+    summary: Displays the dialog in Safari.
+    description: Use with [presentShareDialog()](Modules.Facebook.presentShareDialog).
+    type: Number
+    permission: read-only
+    since: "6.0.0"
+    platforms: [iphone, ipad]
+
+  - name: SHARE_DIALOG_MODE_WEB
+    summary: Displays the dialog in a web view within the app.
+    description: Use with [presentShareDialog()](Modules.Facebook.presentShareDialog).
+    type: Number
+    permission: read-only
+    since: "6.0.0"
+    platforms: [iphone, ipad, android]
+
+  - name: SHARE_DIALOG_MODE_FEED_BROWSER
+    summary: Displays the feed dialog in Safari.
+    description: Use with [presentShareDialog()](Modules.Facebook.presentShareDialog).
+    type: Number
+    permission: read-only
+    since: "6.0.0"
+    platforms: [iphone, ipad]
+
+  - name: SHARE_DIALOG_MODE_FEED_WEB
+    summary: Displays the feed dialog in a webview within the app.
+    description: Use with [presentShareDialog()](Modules.Facebook.presentShareDialog).
+    type: Number
+    permission: read-only
+    since: "6.0.0"
+    platforms: [iphone, ipad, android]
+
   - name: accessToken
     summary: OAuth token set after a successful `authorize`.
     type: String
     permission: read-only
 
-  - name: appid
-    summary: Your Facebook application id. You need to set this for anything to work.
-    deprecated:
-        since: 4.0.0
-        removed: 4.0.0
-        notes: Set the Facebook App ID in the `tiapp.xml` file.  See "Getting Started" above for details.
+  - name: appID
+    summary: |
+        If not explicitly set, the default will be read from the application's 
+        plist (FacebookAppID) which is the recommended way. 
+        
+        Since 6.1.0, this property also has a getter to return the currently set appID.
     type: String
 
   - name: canPresentOpenGraphActionDialog
@@ -1320,7 +1437,7 @@ properties:
         recommended to follow Facebook's [guidelines](https://developers.facebook.com/blog/post/2015/10/29/Facebook-Login-iOS9)
         for ideal login behavior
     type: Number
-    constants: [LOGIN_BEHAVIOR_*]
+    constants: [Modules.Facebook.LOGIN_BEHAVIOR_*]
     default:
         Defaults to <Titanium.Modules.Facebook.LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK>
         on Android and <Titanium.Modules.Facebook.LOGIN_BEHAVIOR_BROWSER> on iOS
@@ -1393,6 +1510,7 @@ examples:
         determine whether the request succeeded.
 
             var fb = require('facebook');
+            fb.initialize();
             fb.addEventListener('login', function(e) {
                 if (e.success) {
                     alert('login from uid: '+e.uid+', name: '+ JSON.parse(e.data).name);
@@ -1493,17 +1611,17 @@ examples:
                     {
                         b1.title = 'Uploading Photo...';
                         var data = {picture: event.media};
-                        //If publish_actions permission is not granted, request it
-                        if(fb.permissions.indexOf('publish_actions') < 0) {
-                            fb.requestNewPublishPermissions(['publish_actions'],fb.AUDIENCE_FRIENDS,function(e){
-                                if(e.success) {
+                        // If publish_actions permission is not granted, request it
+                        if (fb.permissions.indexOf('publish_actions') < 0) {
+                            fb.requestNewPublishPermissions(['publish_actions'], fb.AUDIENCE_FRIENDS, function(e) {
+                                if (e.success) {
                                     Ti.API.info('Permissions:'+fb.permissions);
                                     fb.requestWithGraphPath('me/photos', data, "POST", showRequestResult);
                                 }
-                                if(e.error) {
+                                if (e.error) {
                                     Ti.API.info('Publish permission error');
                                 }
-                                if(e.cancelled) {
+                                if (e.cancelled) {
                                     Ti.API.info('Publish permission cancelled');
                                 }
                             });
@@ -1531,10 +1649,12 @@ examples:
         This example posts a photo to the user's account using the Graph API.
         This requires the "publish_actions" permission.
 
-            var B2_TITLE = 'Upload Photo from file with Graph API';
             var b2 = Ti.UI.createButton({
-                title: B2_TITLE,
-                left: 10, right: 10, top: 90, height: 80
+                title: 'Upload Photo from file with Graph API',
+                left: 10, 
+                right: 10, 
+                top: 90, 
+                height: 80
             });
 
             b2.addEventListener('click', function() {
@@ -1545,17 +1665,17 @@ examples:
                     caption: 'behold, a flower',
                     picture: blob
                 };
-                //If publish_actions permission is not granted, request it
-                if(fb.permissions.indexOf('publish_actions') < 0) {
-                    fb.requestNewPublishPermissions(['publish_actions'],fb.AUDIENCE_FRIENDS,function(e){
-                        if(e.success) {
+                // If publish_actions permission is not granted, request it
+                if (fb.permissions.indexOf('publish_actions') < 0) {
+                    fb.requestNewPublishPermissions(['publish_actions'], fb.AUDIENCE_FRIENDS, function(e) {
+                        if (e.success) {
                             Ti.API.info('Permissions:'+fb.permissions);
                             fb.requestWithGraphPath('me/photos', data, "POST", showRequestResult);
                         }
-                        if(e.error) {
+                        if (e.error) {
                             Ti.API.info('Publish permission error');
                         }
-                        if(e.cancelled) {
+                        if (e.cancelled) {
                             Ti.API.info('Publish permission cancelled');
                         }
                     });
@@ -1575,11 +1695,14 @@ examples:
 
             var wallDialog = Ti.UI.createButton({
                 title: 'Share URL with Share Dialog',
-                top: 135, left: 10, right: 10, height: 40
+                top: 135, 
+                left: 10, 
+                right: 10, 
+                height: 40
             });
 
             wallDialog.addEventListener('click', function() {
-                if(fb.getCanPresentShareDialog()) {
+                if (fb.getCanPresentShareDialog()) {
                     fb.presentShareDialog({
                         link: 'https://appcelerator.com/',
                         name: 'great product',
@@ -1609,7 +1732,10 @@ examples:
 
             var wallDialog = Ti.UI.createButton({
                 title: 'Invite friends!',
-                top: 135, left: 10, right: 10, height: 40
+                top: 135, 
+                left: 10, 
+                right: 10, 
+                height: 40
             });
 
             wallDialog.addEventListener('click', function() {
@@ -1665,8 +1791,8 @@ examples:
         This example shows how to use the `requestNewPublishPermissions` method to request additional permissions
         to publish a post to the user's wall.
 
-            fb.requestNewPublishPermissions(['publish_actions'],fb.AUDIENCE_FRIENDS,function(e){
-                if(e.success){
+            fb.requestNewPublishPermissions(['publish_actions'], fb.AUDIENCE_FRIENDS, function(e) {
+                if (e.success) {
                     fb.requestWithGraphPath('me/feed', null, "POST", showRequestResult);
                 } else {
                     Ti.API.debug('Failed authorization due to: ' + e.error);
@@ -1702,7 +1828,6 @@ description: |
 platforms: [android, iphone, ipad]
 since: 4.0.0
 properties:
-
   - name: cancelled
     summary: Indicates if the user canceled the dialog.
     type: Boolean
@@ -1717,7 +1842,6 @@ properties:
         Error message, if any returned.
         Will be undefined if `success` is `true`.
     type: String
-since: 4.0.0
 
 ---
 name: FacebookReauthResponse
@@ -1819,6 +1943,17 @@ properties:
   - name: picture
     summary: Link to a thumbnail to associate with the link.
     type: String
+
+  - name: mode
+    summary: The mode to select for presenting a share dialog.
+    description: |
+        The automatic mode will progressively check the availability of different modes and 
+        open the most appropriate mode for the dialog that is available.
+    type: Number
+    optional: true
+    default: Modules.Facebook.SHARE_DIALOG_MODE_AUTOMATIC
+    constants: Modules.Facebook.SHARE_DIALOG_MODE_*
+    since: "6.0.0"
 
 ---
 name: MessengerDialogParams
@@ -1984,6 +2119,34 @@ properties:
     description: This is optional. If you don't include it a fallback image will be used.
     type: String
     optional: true 
+
+---
+name: CurrentAccessTokenParams
+summary: Dictionary of parameter passed to [setAccessToken()](Modules.Facebook.setAccessToken).
+platforms: [iphone, ipad]
+since: "6.1.0"
+properties:
+  - name: accessToken
+    summary: The opaque token string.
+    type: String
+  - name: permissions
+    summary: The granted permissions.
+    type: Array<String>
+  - name: declinedPermissions
+    summary: The declined permissions.
+    type: Array<String>
+  - name: appID
+    summary: The app ID.
+    type: String
+  - name: userID
+    summary: The user ID.
+    type: String
+  - name: exipirationDate
+    summary: The optional expiration date (defaults to distant future).
+    type: Date
+  - name: refreshDate
+    summary: The optional date the token was last refreshed (defaults to today).
+    type: Date
 
 ---
 name: FacebookDeferredAppLinkResponse

@@ -16,10 +16,10 @@
     [super dealloc];
 }
 
--(FBSDKLoginButton*)login
+-(FBSDKLoginButton*)loginButton
 {
     if (login == nil) {
-        login = [[FBSDKLoginButton alloc] init];
+        login = [FBSDKLoginButton new];
         [self addSubview:login];
     }
     return login;
@@ -27,31 +27,71 @@
 
 -(void)frameSizeChanged:(CGRect)frame bounds:(CGRect)bounds
 {
-    [TiUtils setView:[self login] positionRect:bounds];
+    [TiUtils setView:[self loginButton] positionRect:bounds];
 }
 
-//Requested permissions when logging in. If set, do not set read permissions.
-//audience defaults to AUDIENCE_ONLY_ME if not specifically set
--(void)setPublishPermissions_:(id)publishPermissions
+// Requested permissions when logging in. If set, do not set read permissions
+// The audience defaults to AUDIENCE_ONLY_ME if not specifically set.
+-(void)setPublishPermissions_:(id)args
 {
-    ENSURE_ARRAY(publishPermissions);
-    FBSDKLoginButton *loginBtn = [self login];
-    loginBtn.publishPermissions = publishPermissions;
+    ENSURE_ARRAY(args);
+    [[self loginButton] setPublishPermissions:args];
 }
 
-//Requested permissions when logging in. If set, do not set publish permissions.
--(void)setReadPermissions_:(id)readPermissions
+-(NSArray*)publishPermissions
 {
-    ENSURE_ARRAY(readPermissions);
-    FBSDKLoginButton *loginBtn = [self login];
-    loginBtn.readPermissions = readPermissions;
+    return [[self loginButton] publishPermissions];
 }
 
-//default is AUDIENCE_ONLY_ME, only applicable to publish permissions
--(void)setAudience_:(id)audience
+// Requested permissions when logging in. If set, do not set publish permissions
+-(void)setReadPermissions_:(id)args
 {
-    ENSURE_SINGLE_ARG(audience, NSNumber);
-    FBSDKLoginButton *loginBtn = [self login];
-    loginBtn.defaultAudience = [audience intValue];
+    ENSURE_ARRAY(args);
+    [[self loginButton] setReadPermissions:args];
 }
+
+-(NSArray*)readPermissions
+{
+    return [[self loginButton] readPermissions];
+}
+
+// The default is AUDIENCE_ONLY_ME, only applicable to publish permissions
+-(void)setAudience_:(id)value
+{
+    ENSURE_SINGLE_ARG(value, NSNumber);
+    [[self loginButton] setDefaultAudience:[TiUtils intValue:value]];
+}
+
+// The default audience to use, if publish permissions are requested at login time.
+-(NSNumber*)audience
+{
+    return NUMUINTEGER([[self loginButton] defaultAudience]);
+}
+
+// Sets the desired tooltip behavior
+-(void)setTooltipBehavior_:(id)value
+{
+    ENSURE_SINGLE_ARG(value, NSNumber);
+    [[self loginButton] setTooltipBehavior:[TiUtils intValue:value]];
+}
+
+// Gets the desired tooltip behavior
+-(NSNumber*)tooltipBehavior
+{
+    return NUMUINTEGER([[self loginButton] tooltipBehavior]);
+}
+
+// Sets the desired tooltip color style
+-(void)setTooltipColorStyle_:(id)value
+{
+    ENSURE_SINGLE_ARG(value, NSNumber);
+    [[self loginButton] setTooltipColorStyle:[TiUtils intValue:value]];
+}
+
+// Gets the desired tooltip color style
+-(NSNumber*)tooltipColorStyle
+{
+    return NUMUINTEGER([[self loginButton] tooltipColorStyle]);
+}
+
 @end

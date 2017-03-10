@@ -27,6 +27,7 @@ import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.titanium.TiApplication;
 import org.appcelerator.titanium.TiLifecycle.OnActivityResultEvent;
+import org.appcelerator.titanium.util.TiConvert;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -54,6 +55,7 @@ import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.model.AppInviteContent;
 import com.facebook.share.widget.GameRequestDialog;
 import com.facebook.share.widget.ShareDialog;
+import com.facebook.share.widget.ShareDialog.Mode;
 import com.facebook.share.widget.AppInviteDialog;
 
 import android.app.Activity;
@@ -102,6 +104,19 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
     @Kroll.constant public static final String LOGIN_BEHAVIOR_NATIVE = "NATIVE_ONLY";
     @Kroll.constant public static final String LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK = "NATIVE_WITH_FALLBACK";
     @Kroll.constant public static final String LOGIN_BEHAVIOR_DEVICE_AUTH = "DEVICE_AUTH";
+
+    @Kroll.constant public static final int LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC = 0;
+    @Kroll.constant public static final int LOGIN_BUTTON_TOOLTIP_BEHAVIOR_FORCE_DISPLAY = 1;
+    @Kroll.constant public static final int LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE = 2;
+
+    @Kroll.constant public static final String LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY = "NEUTRAL_GRAY";
+    @Kroll.constant public static final String LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE = "FRIENDLY_BLUE";
+
+    @Kroll.constant public static final int SHARE_DIALOG_MODE_AUTOMATIC = 0;
+    @Kroll.constant public static final int SHARE_DIALOG_MODE_NATIVE = 1;
+    @Kroll.constant public static final int SHARE_DIALOG_MODE_WEB = 2;
+    @Kroll.constant public static final int SHARE_DIALOG_MODE_FEED_WEB = 6; // For iOS-parity
+
 
 	private static TiFacebookModule module;
 	private static String[] permissions = new String[]{};
@@ -263,7 +278,26 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		request.setHttpMethod(method);
 		request.executeAsync();
 	}
-	
+   
+	@Kroll.method
+	public void setPushNotificationsDeviceToken(String token)
+	{
+		AppEventsLogger.setPushNotificationsRegistrationId(token);
+	}
+
+	@Kroll.method
+	public void logPushNotificationOpen(KrollDict parameters, @Kroll.argument(optional = true) String action)
+	{
+		AppEventsLogger logger = AppEventsLogger.newLogger(TiApplication.getInstance().getCurrentActivity());
+		Bundle paramBundle = Utils.mapToBundle(parameters);
+		
+		if (action == null) {
+			logger.logPushNotificationOpen(paramBundle);
+		} else {
+			logger.logPushNotificationOpen(paramBundle, action);
+		}       
+	}
+    
 	@Kroll.method
 	public void logCustomEvent(String event, @Kroll.argument(optional = true) Double valueToSum, @Kroll.argument(optional = true) KrollDict parameters) {
 		Activity activity = TiApplication.getInstance().getCurrentActivity();
@@ -495,6 +529,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		});
 		
 		ShareLinkContent shareContent = null;
+		Mode mode = Mode.AUTOMATIC;
 		if (args == null || args.isEmpty()) {
 			shareContent = new ShareLinkContent.Builder()
 				.build();
@@ -505,6 +540,23 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			String picture = (String) args.get("picture");
 			String placeId = (String) args.get("placeId");
 			String ref = (String) args.get("ref");
+            
+			switch(TiConvert.toInt(args.get("mode"), TiFacebookModule.SHARE_DIALOG_MODE_AUTOMATIC)) {
+				case TiFacebookModule.SHARE_DIALOG_MODE_NATIVE:
+					mode = Mode.NATIVE;
+					break;
+				case TiFacebookModule.SHARE_DIALOG_MODE_WEB:
+					mode = Mode.WEB;
+					break;
+				case TiFacebookModule.SHARE_DIALOG_MODE_FEED_WEB:
+					mode = Mode.FEED;
+					break;
+				default:
+				case TiFacebookModule.SHARE_DIALOG_MODE_AUTOMATIC:
+					mode = Mode.AUTOMATIC;
+					break;
+			}
+
 			Uri uriLink = null;
 			Uri uriPicture = null;
 			
@@ -528,8 +580,8 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			}
 		}
 		
-		if (shareDialog != null) {
-			shareDialog.show(shareContent);
+		if (shareDialog != null && shareDialog.canShow(shareContent, mode)) {
+			shareDialog.show(shareContent, mode);
 		}
 	}
     

@@ -1,6 +1,6 @@
 ---
 name: Modules.Facebook.LoginButton
-summary: A Facebook login button.
+summary: A Facebook Login Button.
 description: |
     Use the [createLoginButton()](Modules.Facebook.createLoginButton) method
     to create a Login button. If you want to request user permissions when the
@@ -24,13 +24,11 @@ description: |
 
     #### iOS Platform Notes
 
-    In iOS, the width of the button can be changed using the `width` property.
+    In iOS, the width and height of the button can be changed using the `width` and `height` property.
+    The Facebook SDK 4.19.0 and later (used in Ti.Facebook 5.4.0 and later) provides an updated Login 
+    button. The title now is "Continue with Facebook" instead of "Login with Facebook" and the recommended 
+    height is 28px. Please always specify a height for best results.
     
-    #### Prior to Release 4.0.0
-
-    Before using the Login button, set the [appid](Modules.Facebook.appid) property
-    and [permissions](Modules.Facebook.permissions) property.    
-
 extends: Titanium.UI.View
 since: "3.1.0"
 platforms: [android, iphone, ipad]
@@ -92,26 +90,14 @@ properties:
     type: Array<String>
     since: 4.0.0
 
-  - name: sessionLoginBehavior
-    summary: Login behavior for the session.
-    since: 4.0.0
-    removed: 5.0.0
-    platforms: [android]
-    type: Number
-    default: Modules.Facebook.SSO_WITH_FALLBACK
-    constants: [Modules.Facebook.SSO_*, Modules.Facebook.SUPPRESS_SSO]
+  - name: tooltipBehavior
+    summary: Gets or sets the desired tooltip behavior.
+    constants: [Modules.Facebook.LOGIN_BUTTON_TOOLTIP_BEHAVIOR_*]
+    since: "6.1.0"
+    platforms: [iphone, ipad, android]
 
-  - name: style
-    summary: Sets the login button style.
-    deprecated:
-        since: 4.0.0
-        removed: 4.0.0
-    description: |
-        All versions of the button include the Facebook logo.
-
-        Use [BUTTON_STYLE_WIDE](Modules.Facebook.BUTTON_STYLE_WIDE) to show a wider version of the button
-        that includes the text, "Login with Facebook" or "Connect with Facebook".
-
-        Use [BUTTON_STYLE_NORMAL](Modules.Facebook.BUTTON_STYLE_NORMAL) to show a
-        narrower button that simply says, "Login" or "Connect".
-    type: Number
+  - name: tooltipColorStyle
+    summary: Gets or sets the desired tooltip color style.
+    constants: [Modules.Facebook.LOGIN_BUTTON_TOOLTIP_STYLE_*]
+    since: "6.1.0"
+    platforms: [iphone, ipad, android]
