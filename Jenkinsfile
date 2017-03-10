@@ -30,9 +30,19 @@ def buildAndroid(nodeVersion, tiSDKVersion, androidAPILevel) {
 				def activeSDKPath = sdkSetup(tiSDKVersion)
 
 				// We have to hack to make sure we pick up correct ANDROID_SDK/NDK values from the node that's currently running this section of the build.
+				def androidSDK = env.ANDROID_SDK // default to what's in env (may have come from jenkins env vars set on initial node)
+				def androidNDK = env.ANDROID_NDK
 				withEnv(['ANDROID_SDK=', 'ANDROID_NDK=']) {
-					def androidSDK = sh(returnStdout: true, script: 'printenv ANDROID_SDK')
-					def androidNDK = sh(returnStdout: true, script: 'printenv ANDROID_NDK')
+					try {
+						androidSDK = sh(returnStdout: true, script: 'printenv ANDROID_SDK')
+					} catch (e) {
+						// squash, env var not set at OS-level
+					}
+					try {
+						androidNDK = sh(returnStdout: true, script: 'printenv ANDROID_NDK')
+					} catch (e) {
+						// squash, env var not set at OS-level
+					}
 					sh "appc ti config android.sdkPath ${androidSDK}"
 					sh "appc ti config android.ndkPath ${androidNDK}"
 					dir('android') {
