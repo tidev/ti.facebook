@@ -4,7 +4,7 @@ def jsonParse(def json) {
 }
 
 def nodeVersion = '4.7.3'
-def tiSDKVersion = '5.3.0.GA'
+def tiSDKVersion = '6.0.2.GA'
 def androidAPILevel = '23'
 
 def sdkSetup(sdkVersion) {
@@ -19,6 +19,7 @@ def sdkSetup(sdkVersion) {
 		sh 'appc use latest'
 		sh "appc ti sdk install ${sdkVersion} -d"
 		sdkListOutput = sh(returnStdout: true, script: 'appc ti sdk list -o json')
+		sh 'appc logout'
 	}
 	echo sdkListOutput
 	def sdkListJSON = jsonParse(sdkListOutput)
@@ -64,7 +65,7 @@ google.apis=${androidSDK}/add-ons/addon-google_apis-google-${androidAPILevel}
 						// if build/docs folder doesn't exist, create it
 						sh 'mkdir -p build/docs'
 						def antHome = tool(name: 'Ant 1.9.2', type: 'ant')
-						withEnv(["PATH+ANT=${antHome}/bin"]) {
+						withEnv(["PATH+ANT=${antHome}/bin","ANDROID_SDK=${androidSDK}","ANDROID_NDK=${androidNDK}"]) {
 							sh 'ant clean'
 							sh 'ant'
 						}
