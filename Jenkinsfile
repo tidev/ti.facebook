@@ -16,7 +16,9 @@ def sdkSetup(sdkVersion) {
 	}
 	sh 'appc use latest'
 	sh "appc ti sdk install ${sdkVersion} -d"
-	def sdkListJSON = jsonParse(sh(returnStdout: true, script: 'appc ti sdk list -o json'))
+	def jsonOutput = sh(returnStdout: true, script: 'appc ti sdk list -o json')
+	echo jsonOutput
+	def sdkListJSON = jsonParse(jsonOutput)
 	def titaniumRoot = sdkListJSON['defaultInstallLocation']
 	def activeSDKVersion = sdkListJSON['activeSDK']
 	return sdkListJSON['installed'][activeSDKVersion]
