@@ -14,7 +14,7 @@ def sdkSetup(sdkVersion) {
 	def sdkListOutput = ''
 	lock('appc-login:895d8db1-87c2-4d96-a786-349c2ed2c04a') { // only let one login at a time for this user!
 		withCredentials([usernamePassword(credentialsId: '895d8db1-87c2-4d96-a786-349c2ed2c04a', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-			sh 'appc login --username "$USER" --password "$PASS" -l trace'
+			sh 'appc login --username "$USER" --password "$PASS"'
 		}
 		sh 'appc use latest'
 		sh "appc ti sdk install ${sdkVersion} -d"
@@ -64,12 +64,16 @@ google.apis=${androidSDK}/add-ons/addon-google_apis-google-${androidAPILevel}
 						sh 'mkdir -p build'
 						// if build/docs folder doesn't exist, create it
 						sh 'mkdir -p build/docs'
-						def antHome = tool(name: 'Ant 1.9.2', type: 'ant')
-						withEnv(["PATH+ANT=${antHome}/bin","ANDROID_SDK=${androidSDK}","ANDROID_NDK=${androidNDK}"]) {
-							sh 'ant clean'
-							sh 'ant'
+						lock('appc-login:895d8db1-87c2-4d96-a786-349c2ed2c04a') { // only let one login at a time for this user!
+							withCredentials([usernamePassword(credentialsId: '895d8db1-87c2-4d96-a786-349c2ed2c04a', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+								sh 'appc login --username "$USER" --password "$PASS"'
+							}
+							sh 'appc ti build -p android --build-only'
+							sh 'appc logout'
 						}
-						archiveArtifacts 'dist/*.zip'
+						dir('dist') {
+							archiveArtifacts '*.zip'
+						}
 					} // dir
 				} // withEnv
 			} // nodeJs
@@ -79,7 +83,7 @@ google.apis=${androidSDK}/add-ons/addon-google_apis-google-${androidAPILevel}
 
 def buildIOS(nodeVersion, tiSDKVersion) {
 	return {
-		node('osx && xcode && python') {
+		node('osx && xcode') {
 			unstash 'sources'
 			nodejs(nodeJSInstallationName: "node ${nodeVersion}") {
 				def activeSDKPath = sdkSetup(tiSDKVersion)
@@ -93,7 +97,13 @@ TITANIUM_BASE_SDK3 = \"\$(TITANIUM_SDK)/iphone/include/ASI\"
 TITANIUM_BASE_SDK4 = \"\$(TITANIUM_SDK)/iphone/include/APSHTTPClient\"
 HEADER_SEARCH_PATHS= \$(TITANIUM_BASE_SDK) \$(TITANIUM_BASE_SDK2) \$(TITANIUM_BASE_SDK3) \$(TITANIUM_BASE_SDK4) \${PROJECT_DIR}/**
 """
-					sh './build.py'
+					lock('appc-login:895d8db1-87c2-4d96-a786-349c2ed2c04a') { // only let one login at a time for this user!
+						withCredentials([usernamePassword(credentialsId: '895d8db1-87c2-4d96-a786-349c2ed2c04a', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+							sh 'appc login --username "$USER" --password "$PASS"'
+						}
+						sh 'appc ti build -p ios --build-only'
+						sh 'appc logout'
+					}
 					// TODO Test module in app! See https://raw.githubusercontent.com/sgtcoolguy/ci/v8/travis/script.sh
 					archiveArtifacts '*.zip'
 				} // dir
