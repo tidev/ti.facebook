@@ -22,7 +22,7 @@ def sdkSetup(sdkVersion) {
 	return sdkListJSON['installed'][activeSDKVersion]
 }
 
-def buildAndroid(nodeVersion, tiSDKVersion) {
+def buildAndroid(nodeVersion, tiSDKVersion, androidAPILevel) {
 	return {
 		node('android-sdk && android-ndk && (osx || linux)') {
 			unstash 'sources'
@@ -94,7 +94,7 @@ timestamps {
 			stash 'sources'
 			// Determine if we need to run android/ios branches!
 			if (fileExists('android')) {
-				branches['android'] = buildAndroid(nodeVersion, tiSDKVersion)
+				branches['android'] = buildAndroid(nodeVersion, tiSDKVersion, androidAPILevel)
 			}
 			if (fileExists('ios')) { // TODO Check for 'iphone' folder
 				branches['iOS'] = buildIOS(nodeVersion, tiSDKVersion)
