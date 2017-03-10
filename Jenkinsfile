@@ -11,14 +11,17 @@ def sdkSetup(sdkVersion) {
 	sh 'npm install -g appcelerator'
 	sh 'appc logout'
 	sh 'appc config set defaultEnvironment prod'
-	withCredentials([usernamePassword(credentialsId: '895d8db1-87c2-4d96-a786-349c2ed2c04a', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-		sh 'appc login --username "$USER" --password "$PASS" -l trace'
+	def sdkListJSON = ''
+	lock('appc-login:895d8db1-87c2-4d96-a786-349c2ed2c04a') { // only let one login at a time for this user!
+		withCredentials([usernamePassword(credentialsId: '895d8db1-87c2-4d96-a786-349c2ed2c04a', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+			sh 'appc login --username "$USER" --password "$PASS" -l trace'
+		}
+		sh 'appc use latest'
+		sh "appc ti sdk install ${sdkVersion} -d"
+		sdkListJSON = sh(returnStdout: true, script: 'appc ti sdk list -o json')
 	}
-	sh 'appc use latest'
-	sh "appc ti sdk install ${sdkVersion} -d"
-	def jsonOutput = sh(returnStdout: true, script: 'appc ti sdk list -o json')
-	echo jsonOutput
-	def sdkListJSON = jsonParse(jsonOutput)
+	echo sdkListJSON
+	def sdkListJSON = jsonParse(sdkListJSON)
 	def titaniumRoot = sdkListJSON['defaultInstallLocation']
 	def activeSDKVersion = sdkListJSON['activeSDK']
 	return sdkListJSON['installed'][activeSDKVersion]
