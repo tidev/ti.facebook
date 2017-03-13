@@ -7,24 +7,39 @@ def nodeVersion = '4.7.3'
 def tiSDKVersion = '6.0.2.GA'
 def androidAPILevel = '23'
 
-def sdkSetup(sdkVersion) {
-	sh 'npm install -g appcelerator'
-	sh 'appc logout'
-	sh 'appc config set defaultEnvironment prod'
-	def sdkListOutput = ''
+/*
+ * Allows us to pass in a "block" of code to execute while we are logged into
+ * the appc cli production environment. We acquire an exclusive lock for the login
+ * (blocking other logins until we're done), log into the cli/env, do whatever it is we
+ * want in our block, then log out and release the lock.
+ */
+def loggedIntoProduction(Closure body) {
+	// acquire exclusing lock to the login for these credentials
 	lock('appc-login:895d8db1-87c2-4d96-a786-349c2ed2c04a') { // only let one login at a time for this user!
+		sh 'appc config set defaultEnvironment prod'
 		withCredentials([usernamePassword(credentialsId: '895d8db1-87c2-4d96-a786-349c2ed2c04a', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
 			sh 'appc login --username "$USER" --password "$PASS"'
 		}
-		sh 'appc use latest'
-		sh "appc ti sdk install ${sdkVersion} -d"
-    sh "appc ti sdk select ${sdkVersion}" // Forcibly select it, because install may not have if already installed
-		sdkListOutput = sh(returnStdout: true, script: 'appc ti sdk list -o json')
+
+		// Now do whatever it is we want to actually do!
+		body()
+
+		// then log out
 		sh 'appc logout'
 	}
-	echo sdkListOutput
+}
+
+def sdkSetup(sdkVersion) {
+	sh 'npm install -g appcelerator'
+	sh 'appc logout' // it may have already been installed and logged into another user/env
+	def sdkListOutput = ''
+	loggedIntoProduction {
+		sh 'appc use latest'
+		sh "appc ti sdk install ${sdkVersion} -d"
+		sh "appc ti sdk select ${sdkVersion}" // Forcibly select it, because install may not have if already installed
+		sdkListOutput = sh(returnStdout: true, script: 'appc ti sdk list -o json')
+	}
 	def sdkListJSON = jsonParse(sdkListOutput)
-	// def titaniumRoot = sdkListJSON['defaultInstallLocation']
 	def activeSDKVersion = sdkListJSON['activeSDK']
 	return sdkListJSON['installed'][activeSDKVersion]
 }
@@ -50,8 +65,7 @@ def buildAndroid(nodeVersion, tiSDKVersion, androidAPILevel) {
 					} catch (e) {
 						// squash, env var not set at OS-level
 					}
-					sh "appc ti config android.sdkPath ${androidSDK}"
-					sh "appc ti config android.ndkPath ${androidNDK}"
+
 					dir('android') {
 						writeFile file: 'build.properties', text: """
 titanium.platform=${activeSDKPath}/android
@@ -65,12 +79,11 @@ google.apis=${androidSDK}/add-ons/addon-google_apis-google-${androidAPILevel}
 						sh 'mkdir -p build'
 						// if build/docs folder doesn't exist, create it
 						sh 'mkdir -p build/docs'
-						lock('appc-login:895d8db1-87c2-4d96-a786-349c2ed2c04a') { // only let one login at a time for this user!
-							withCredentials([usernamePassword(credentialsId: '895d8db1-87c2-4d96-a786-349c2ed2c04a', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-								sh 'appc login --username "$USER" --password "$PASS"'
-							}
+						loggedIntoProduction {
+							// Even setting config needs login, ugh
+							sh "appc ti config android.sdkPath ${androidSDK}"
+							sh "appc ti config android.ndkPath ${androidNDK}"
 							sh 'appc ti build -p android --build-only'
-							sh 'appc logout'
 						}
 						dir('dist') {
 							archiveArtifacts '*.zip'
@@ -98,12 +111,8 @@ TITANIUM_BASE_SDK3 = \"\$(TITANIUM_SDK)/iphone/include/ASI\"
 TITANIUM_BASE_SDK4 = \"\$(TITANIUM_SDK)/iphone/include/APSHTTPClient\"
 HEADER_SEARCH_PATHS= \$(TITANIUM_BASE_SDK) \$(TITANIUM_BASE_SDK2) \$(TITANIUM_BASE_SDK3) \$(TITANIUM_BASE_SDK4) \${PROJECT_DIR}/**
 """
-					lock('appc-login:895d8db1-87c2-4d96-a786-349c2ed2c04a') { // only let one login at a time for this user!
-						withCredentials([usernamePassword(credentialsId: '895d8db1-87c2-4d96-a786-349c2ed2c04a', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-							sh 'appc login --username "$USER" --password "$PASS"'
-						}
+					loggedIntoProduction {
 						sh 'appc ti build -p ios --build-only'
-						sh 'appc logout'
 					}
 					// TODO Test module in app! See https://raw.githubusercontent.com/sgtcoolguy/ci/v8/travis/script.sh
 					archiveArtifacts '*.zip'
