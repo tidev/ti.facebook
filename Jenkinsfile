@@ -116,7 +116,14 @@ timestamps {
 	def branches = [failFast: true]
 	node {
 		stage('Checkout') {
-			checkout scm
+			// checkout scm
+			// Hack for JENKINS-37658 - see https://support.cloudbees.com/hc/en-us/articles/226122247-How-to-Customize-Checkout-for-Pipeline-Multibranch
+			checkout([
+				$class: 'GitSCM',
+				branches: scm.branches,
+				extensions: scm.extensions + [[$class: 'CleanBeforeCheckout']],
+				userRemoteConfigs: scm.userRemoteConfigs
+			])
 			stash 'sources'
 			// Determine if we need to run android/ios branches!
 			if (fileExists('android')) {
