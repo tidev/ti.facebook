@@ -18,6 +18,7 @@ def sdkSetup(sdkVersion) {
 		}
 		sh 'appc use latest'
 		sh "appc ti sdk install ${sdkVersion} -d"
+    sh "appc ti sdk select ${sdkVersion}" // Forcibly select it, because install may not have if already installed
 		sdkListOutput = sh(returnStdout: true, script: 'appc ti sdk list -o json')
 		sh 'appc logout'
 	}
