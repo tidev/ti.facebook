@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="com_facebook_device_auth_instructions">Přejděte ze smartphonu nebo počítače na %@ a zadejte tento kód:</string>
+    <string name="com_facebook_device_auth_instructions">Navštivte &lt;b>facebook.com/device&lt;/b> a zadejte nahoře uvedený kód.</string>
     <string name="com_facebook_image_download_unknown_error">Při stahování obrázku došlo k nečekané chybě.</string>
     <string name="com_facebook_internet_permission_error_message">Webové přihlášení vyžaduje oprávnění použít INTERNET</string>
     <string name="com_facebook_internet_permission_error_title">Chyba AndroidManifest</string>
@@ -9,6 +9,7 @@
     <string name="com_facebook_loading">Načítání…</string>
     <string name="com_facebook_loginview_cancel_action">Zrušit</string>
     <string name="com_facebook_loginview_log_in_button">Přihlásit</string>
+    <string name="com_facebook_loginview_log_in_button_continue">Pokračovat přes Facebook</string>
     <string name="com_facebook_loginview_log_in_button_long">Přihlásit se přes Facebook</string>
     <string name="com_facebook_loginview_log_out_action">Odhlásit</string>
     <string name="com_facebook_loginview_log_out_button">Odhlásit</string>
@@ -16,6 +17,10 @@
     <string name="com_facebook_loginview_logged_in_using_facebook">Přihlášen(a) přes Facebook</string>
     <string name="com_facebook_send_button_text">Odeslat</string>
     <string name="com_facebook_share_button_text">Sdílet</string>
-    <string name="com_facebook_tooltip_default">Novinka! Je jen na vás, které informace chcete s aplikacemi sdílet.</string>
+    <string name="com_facebook_smart_device_instructions">Účet si můžete připojit tak, že si na mobilním zařízení spustíte aplikaci Facebook a podíváte se do upozornění.</string>
+    <string name="com_facebook_smart_device_instructions_or">- NEBO -</string>
+    <string name="com_facebook_smart_login_confirmation_cancel">Nejste to vy?</string>
+    <string name="com_facebook_smart_login_confirmation_title">Potvrdit přihlášení</string>
+    <string name="com_facebook_tooltip_default">Je jen na vás, které informace chcete s aplikacemi sdílet.</string>
     <string name="messenger_send_button_text">Odeslat</string>
 </resources>
