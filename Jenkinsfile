@@ -75,13 +75,11 @@ titanium.platform=${activeSDKPath}/android
 android.platform=${androidSDK}/platforms/android-${androidAPILevel}
 google.apis=${androidSDK}/add-ons/addon-google_apis-google-${androidAPILevel}
 """
-						// TODO Use 'appc ti build --build-only'!
-						// if lib folder doesn't exist, create it
-						sh 'mkdir -p lib'
-						// if build folder doesn't exist, create it
-						sh 'mkdir -p build'
-						// if build/docs folder doesn't exist, create it
-						sh 'mkdir -p build/docs'
+						// FIXME We should have a module clean command!
+						// manually clean
+						sh 'rm -rf build/'
+						sh 'rm -rf dist/'
+						sh 'rm -rf libs/'
 						loggedIntoProduction {
 							// Even setting config needs login, ugh
 							sh "appc ti config android.sdkPath ${androidSDK}"
@@ -114,6 +112,11 @@ TITANIUM_BASE_SDK3 = \"\$(TITANIUM_SDK)/iphone/include/ASI\"
 TITANIUM_BASE_SDK4 = \"\$(TITANIUM_SDK)/iphone/include/APSHTTPClient\"
 HEADER_SEARCH_PATHS= \$(TITANIUM_BASE_SDK) \$(TITANIUM_BASE_SDK2) \$(TITANIUM_BASE_SDK3) \$(TITANIUM_BASE_SDK4) \${PROJECT_DIR}/**
 """
+					// FIXME We should really "clean" first, but there is no module clean implementation!
+					// manually clean
+					sh 'rm -rf build/'
+					sh 'rm -rf *-iphone-*.zip'
+					sh 'rm -rf metadata.json'
 					loggedIntoProduction {
 						sh 'appc run -p ios --build-only'
 					}
