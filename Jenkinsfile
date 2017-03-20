@@ -86,7 +86,7 @@ google.apis=${androidSDK}/add-ons/addon-google_apis-google-${androidAPILevel}
 							// Even setting config needs login, ugh
 							sh "appc ti config android.sdkPath ${androidSDK}"
 							sh "appc ti config android.ndkPath ${androidNDK}"
-							sh 'appc ti build -p android --build-only'
+							sh 'appc run -p android --build-only'
 						}
 						dir('dist') {
 							archiveArtifacts '*.zip'
@@ -115,7 +115,7 @@ TITANIUM_BASE_SDK4 = \"\$(TITANIUM_SDK)/iphone/include/APSHTTPClient\"
 HEADER_SEARCH_PATHS= \$(TITANIUM_BASE_SDK) \$(TITANIUM_BASE_SDK2) \$(TITANIUM_BASE_SDK3) \$(TITANIUM_BASE_SDK4) \${PROJECT_DIR}/**
 """
 					loggedIntoProduction {
-						sh 'appc ti build -p ios --build-only'
+						sh 'appc run -p ios --build-only'
 					}
 					// TODO Test module in app! See https://raw.githubusercontent.com/sgtcoolguy/ci/v8/travis/script.sh
 					archiveArtifacts '*.zip'
