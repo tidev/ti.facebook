@@ -18,6 +18,7 @@ def androidAPILevel = '23'
 def loggedIntoProduction(Closure body) {
 	// acquire exclusing lock to the login for these credentials
 	lock('appc-login:895d8db1-87c2-4d96-a786-349c2ed2c04a') { // only let one login at a time for this user!
+		sh 'rm -rf ~/.appcelerator/appc-cli.json' // Forcibly wipe the config because we often get into a bad state here
 		sh 'appc config set defaultEnvironment prod'
 		withCredentials([usernamePassword(credentialsId: '895d8db1-87c2-4d96-a786-349c2ed2c04a', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
 			sh 'appc login --username "$USER" --password "$PASS"'
