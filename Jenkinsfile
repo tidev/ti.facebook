@@ -1,4 +1,4 @@
-@Library('pipeline-library@module') _
+@Library('pipeline-library') _
 
 buildModule {
 	nodeVersion = '4.7.3'
