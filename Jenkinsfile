@@ -4,7 +4,9 @@ def jsonParse(def json) {
 }
 
 def nodeVersion = '4.7.3'
-def tiSDKVersion = '6.0.2.GA'
+// We need 6.0.3+ for module build fixes
+// FIXME Use 6.0.3.GA when available!
+def tiSDKVersion = '6.0.3.v20170317093820'
 def androidAPILevel = '23'
 
 /*
