@@ -2,6 +2,6 @@
 
 buildModule {
 	nodeVersion = '4.7.3'
-	sdkVersion = '6.1.0.v20170317104120'
+	sdkVersion = '6.0.3.v20170320120738'
 	androidAPILevel = '23'
 }
