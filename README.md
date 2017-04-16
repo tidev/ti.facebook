@@ -98,27 +98,26 @@ If you choose to enable it, you have to set the following keys and values in tia
 required capabilities automatically, so you don't need to curate your own entitlements file anymore, which will avoid possible issues 
 with concurring values. Please ensure to use both SDK and CLI 6.0.1 (or later).
 
-On the android platform, in tiapp.xml or AndroidManifest.xml you must declare the following inside the \<application\> node 
+On the android platform, in tiapp.xml or AndroidManifest.xml you must declare the following inside the `<application/>` node 
 ```xml
 <activity android:name="com.facebook.FacebookActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:label="YourAppName" android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" />
 ```
-You must also reference the string containing your Facebook app ID, inside the \<application\> node as well: 
+You must also reference the string containing your Facebook app ID, inside the `<application/>` node as well: 
 ```xml
 <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
 ```
-The app id goes into the the file /platform/android/res/values/strings.xml (or your custom theme), where you should define 
+The app id goes into the the file `/platform/android/res/values/strings.xml` (classic) or ``app/platform/android/res/values/strings.xml``, where you should define:
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-    <resources>
-        <!-- ... -->
-        <string name="app_id">1234567890123456</string>
-        <!-- ... -->
-    </resources>
-</xml>
+<resources>
+    <!-- ... -->
+    <string name="app_id">1234567890123456</string>
+    <!-- ... -->
+</resources>
 ```
 where the number is of course the app ID. The app ID is not set programmatically.
 
-Android Key Hash for Facebook developer profile
+Android Key Hash for Facebook Developer Profile
 ---
 
 Facebook requires you to add the Key Hash of the Android app in order for you to use the module. Steps to get the Key Hash as follows. Alternatively, if you do not have the correct Key Hash on the Android App, the App will give an error message when you login with the Key Hash of the App which you can then copy.
