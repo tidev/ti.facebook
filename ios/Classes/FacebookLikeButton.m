@@ -11,7 +11,7 @@
 @implementation FacebookLikeButton
 
 -(void)dealloc
-{
+{    
     RELEASE_TO_NIL(like);
     [super dealloc];
 }
@@ -20,9 +20,18 @@
 {
     if (like == nil) {
         like = [[FBSDKLikeControl alloc] init];
+        
+        [like addTarget:self action:@selector(likeChanged:)
+              forControlEvents:UIControlEventValueChanged];
+
         [self addSubview:like];
     }
     return like;
+}
+
+- (IBAction)likeChanged:(id)sender {
+    NSDictionary *e = [NSDictionary dictionary];
+    [self.proxy fireEvent:@"statuschanged" withObject:e];
 }
 
 -(void)frameSizeChanged:(CGRect)frame bounds:(CGRect)bounds
