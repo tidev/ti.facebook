@@ -574,17 +574,25 @@ MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE, FBSDKTooltipColorStyl
     TiThreadPerformOnMainThread(^{
         FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
         content.contentURL = [NSURL URLWithString:[params objectForKey:@"link"]];
-        content.contentDescription = [params objectForKey:@"description"];
-        if ([params objectForKey:@"name"] != nil) {
-            DEPRECATED_REPLACED_REMOVED(@"Facebook.presentShareDialog.name", @"5.0.0", @"5.0.0", @"Titanium.Facebook.presentShareDialog.title");
+        
+        NSString *description = [params objectForKey:@"description"];
+        NSString *title = [params objectForKey:@"title"];
+        NSString *picture = [params objectForKey:@"picture"];
+        
+        if (description != nil) {
+            NSLog(@"Ti.Facebook.presentShareDialog.description has been deprecated in Ti.Facebook 5.5.0 as of the Graph v2.9 changes.");
+            content.contentDescription = [params objectForKey:@"description"];
         }
-        if ([params objectForKey:@"title"] != nil){
-            content.contentTitle = [params objectForKey:@"title"];
+ 
+        if (title != nil) {
+            NSLog(@"Ti.Facebook.presentShareDialog.title has been deprecated in Ti.Facebook 5.5.0 as of the Graph v2.9 changes.");
+            content.contentTitle = title;
         }
-        if ([params objectForKey:@"caption"] != nil) {
-            DEPRECATED_REMOVED(@"Facebook.presentShareDialog.caption", @"5.0.0", @"5.0.0");
+        
+        if (picture != nil) {
+            NSLog(@"Ti.Facebook.presentShareDialog.picture has been deprecated in Ti.Facebook 5.5.0 as of the Graph v2.9 changes.");
+            content.imageURL = [NSURL URLWithString:picture];
         }
-        content.imageURL = [NSURL URLWithString:[params objectForKey:@"picture"]];
         
         FBSDKShareDialog *dialog = [FBSDKShareDialog new];
         [dialog setFromViewController:nil];
@@ -608,12 +616,29 @@ MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE, FBSDKTooltipColorStyl
    
     TiThreadPerformOnMainThread(^{
         FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
+        
+        NSString *description = [params objectForKey:@"description"];
+        NSString *title = [params objectForKey:@"title"];
+        NSString *picture = [params objectForKey:@"picture"];
+        
+        if (description != nil) {
+            NSLog(@"Ti.Facebook.presentMessengerDialog.description has been deprecated in Ti.Facebook 5.5.0 as of the Graph v2.9 changes.");
+            content.contentDescription = [params objectForKey:@"description"];
+        }
+        
+        if (title != nil) {
+            NSLog(@"Ti.Facebook.presentMessengerDialog.title has been deprecated in Ti.Facebook 5.5.0 as of the Graph v2.9 changes.");
+            content.contentTitle = title;
+        }
+        
+        if (picture != nil) {
+            NSLog(@"Ti.Facebook.presentMessengerDialog.picture has been deprecated in Ti.Facebook 5.5.0 as of the Graph v2.9 changes.");
+            content.imageURL = [NSURL URLWithString:picture];
+        }
+        
         [content setContentURL:[NSURL URLWithString:[params objectForKey:@"link"]]];
-        [content setContentDescription:[params objectForKey:@"description"]];
-        [content setContentTitle:[params objectForKey:@"title"]];
         [content setPlaceID:[params objectForKey:@"placeID"]];
         [content setRef:[params objectForKey:@"referal"]];
-        [content setImageURL:[NSURL URLWithString:[params objectForKey:@"picture"]]];
         
         id to = [params objectForKey:@"to"];
         ENSURE_TYPE_OR_NIL(to, NSArray);
