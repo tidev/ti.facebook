@@ -1024,18 +1024,6 @@ events:
 
 
 properties:
-  - name: AUDIENCE_NONE
-    summary: Invalid default audience.
-    description: |
-        Use to set the default audience with either [LoginButton.audience](Modules.Facebook.LoginButton.audience)
-        or <Modules.Facebook.requestNewPublishPermissions>.
-    type: Number
-    permission: read-only
-    since: 4.0.0
-    deprecated:
-        since: "5.0.0"
-        removed: "5.0.0"
-
   - name: AUDIENCE_ONLY_ME
     summary: Published content is only visible to the user.
     description: |
@@ -1913,36 +1901,37 @@ summary: |
 since: 4.0.0
 platforms: [android, iphone, ipad]
 properties:
-  - name: caption
-    summary: Caption for the link.
-    type: String
-    deprecated:
-        since: "5.0.0"
-        removed: "5.0.0"
-
   - name: description
     summary: Description associated with the link.
     type: String
+    deprecated:
+        since: "6.1.0"
+        notes: |
+            Facebook deprecated the "description" key in Graph v2.9, it will be
+            removed in the future.
 
   - name: link
     summary: URL to share.
     type: String
 
-  - name: name
-    summary: Name or title associated with the link.
-    type: String
-    deprecated:
-        since: "5.0.0"
-        removed: "5.0.0"
-
   - name: title
     summary: Title associated with the link.
     type: String
     since: "5.0.0"
+    deprecated:
+        since: "6.1.0"
+        notes: |
+            Facebook deprecated the "description" key in Graph v2.9, it will be
+            removed in the future.
 
   - name: picture
     summary: Link to a thumbnail to associate with the link.
     type: String
+    deprecated:
+        since: "6.1.0"
+        notes: |
+            Facebook deprecated the "description" key in Graph v2.9, it will be
+            removed in the future.
 
   - name: mode
     summary: The mode to select for presenting a share dialog.
@@ -2017,14 +2006,6 @@ properties:
     summary: Title of request.
     type: String
     optional: true
-
-  - name: to
-    summary: Array of pre-selected facebook ids.
-    type: Array
-    optional: true
-    deprecated:
-        since: "5.0.0"
-        removed: "5.0.0"
 
   - name: recipients
     summary: Array of pre-selected facebook ids.
