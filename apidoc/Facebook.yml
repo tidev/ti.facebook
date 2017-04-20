@@ -485,6 +485,7 @@ description: |
 extends: Titanium.Module
 since: "3.1.0"
 platforms: [android, iphone, ipad]
+
 methods:
   - name: authorize
     summary: |
@@ -911,7 +912,6 @@ methods:
         type: String
 
 events:
-
   - name: login
     summary: Fired at session login.
     properties:
@@ -1022,7 +1022,6 @@ events:
     summary: Fired when [refreshPermissionsFromServer](Modules.Facebook.refreshPermissionsFromServer) is completed.
     since: 4.0.0
 
-
 properties:
   - name: AUDIENCE_NONE
     summary: Invalid default audience.
@@ -1094,7 +1093,7 @@ properties:
     type: Number
     permission: read-only
     since: 5.0.0
-
+    
   - name: FILTER_NONE
     summary: No filter all friends can be displayed.
     description: |
@@ -1170,7 +1169,7 @@ properties:
     permission: read-only
     since: "5.4.0"
     platforms: [iphone, ipad]
-
+    
   - name: LOGIN_BEHAVIOR_WEB
     summary: |
         Opens login window through a modal browser window.
@@ -1348,7 +1347,7 @@ properties:
     deprecated:
         since: 5.0.0
         removed: 5.0.0
-
+        
   - name: expirationDate
     summary: Time at which the `accessToken` expires.
     type: Date
@@ -1428,7 +1427,7 @@ properties:
     permission: read-only
     since: "5.4.0"
     platforms: [iphone, ipad]
-
+    
   - name: loginBehavior
     summary: |
         Defines the behavior that the module will attempt to use for authorize().
@@ -1475,7 +1474,6 @@ properties:
     permission: read-only
 
 examples:
-
   - title: Alloy Example
     example: |
         Displays the Facebook Login and Like buttons in a window.
@@ -1501,7 +1499,6 @@ examples:
                 $.index.fbProxy = Alloy.Globals.Facebook.createActivityWorker({lifecycleContainer: $.index});
             }
             $.index.open();
-
   - title: Authorize
     example: |
 
@@ -1575,7 +1572,7 @@ examples:
             }));
 
             win.open()
-
+            
   - title: Simple Graph API Call
     example: |
 
@@ -1687,7 +1684,7 @@ examples:
         For more information on posting photos, see:
 
         * [Photo in the Facebook Graph API Reference](https://developers.facebook.com/docs/graph-api/reference/v2.2/photo)
-
+        
   - title: Show the Share Dialog
     example: |
 
@@ -1784,7 +1781,7 @@ examples:
         For more information on sharing media to the Facebook Messenger, see:
 
         * [Facebook Messenger Reference](https://developers.facebook.com/docs/messenger)
-
+        
   - title: Requesting additional permissions
     example: |
 
@@ -1828,6 +1825,7 @@ description: |
 platforms: [android, iphone, ipad]
 since: 4.0.0
 properties:
+
   - name: cancelled
     summary: Indicates if the user canceled the dialog.
     type: Boolean
