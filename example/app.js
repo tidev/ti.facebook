@@ -1,5 +1,5 @@
 // this sets the background color of the master UIView (when there are no windows/tab groups on it)
-Titanium.UI.setBackgroundColor('#000');
+Ti.UI.setBackgroundColor('#000');
 
 // create tab group
 var tabGroup = Titanium.UI.createTabGroup({backgroundColor:'#fff'});
@@ -13,6 +13,7 @@ tabGroup.addTab(Titanium.UI.createTab({
     title:'Login',
     window:require('facebook_login_logout').window()
 }));
+
 tabGroup.addTab(Titanium.UI.createTab({
     icon:'KS_nav_views.png',
     title:'Read',
@@ -31,11 +32,17 @@ tabGroup.addTab(Titanium.UI.createTab({
     window:require('facebook_photos').window()
 }));
 
-if (Ti.Platform.osname != 'android') {
+if (Ti.Platform.osname !== 'android') {
     tabGroup.addTab(Titanium.UI.createTab({
         icon:'KS_nav_views.png',
         title:'Messenger',
         window:require('facebook_messenger').window()
+    }));
+    
+    tabGroup.addTab(Titanium.UI.createTab({
+        icon:'KS_nav_views.png',
+        title:'Places',
+        window:require('facebook_places').window()
     }));
 }
 

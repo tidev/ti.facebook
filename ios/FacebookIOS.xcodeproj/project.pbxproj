@@ -46,6 +46,7 @@
 		DB8680D41DC6B6AA003535CB /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB8680CF1DC6B6AA003535CB /* FBSDKLoginKit.framework */; };
 		DB8680D51DC6B6AA003535CB /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB8680D01DC6B6AA003535CB /* FBSDKMessengerShareKit.framework */; };
 		DB8680D61DC6B6AA003535CB /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB8680D11DC6B6AA003535CB /* FBSDKShareKit.framework */; };
+		DB887F5A1EACC987009FAC19 /* FBSDKPlacesKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB887F591EACC987009FAC19 /* FBSDKPlacesKit.framework */; };
 		EAC238AA19F1280B00E8103C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC238A919F1280B00E8103C /* Social.framework */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +88,7 @@
 		DB8680CF1DC6B6AA003535CB /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = platform/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		DB8680D01DC6B6AA003535CB /* FBSDKMessengerShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKMessengerShareKit.framework; path = platform/FBSDKMessengerShareKit.framework; sourceTree = "<group>"; };
 		DB8680D11DC6B6AA003535CB /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = platform/FBSDKShareKit.framework; sourceTree = "<group>"; };
+		DB887F591EACC987009FAC19 /* FBSDKPlacesKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKPlacesKit.framework; path = platform/FBSDKPlacesKit.framework; sourceTree = "<group>"; };
 		EAC238A919F1280B00E8103C /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -101,6 +103,7 @@
 				DB8680D61DC6B6AA003535CB /* FBSDKShareKit.framework in Frameworks */,
 				EAC238AA19F1280B00E8103C /* Social.framework in Frameworks */,
 				DB8680D51DC6B6AA003535CB /* FBSDKMessengerShareKit.framework in Frameworks */,
+				DB887F5A1EACC987009FAC19 /* FBSDKPlacesKit.framework in Frameworks */,
 				AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -131,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				DB8680CD1DC6B6AA003535CB /* Bolts.framework */,
+				DB887F591EACC987009FAC19 /* FBSDKPlacesKit.framework */,
 				DB8680CE1DC6B6AA003535CB /* FBSDKCoreKit.framework */,
 				DB8680CF1DC6B6AA003535CB /* FBSDKLoginKit.framework */,
 				DB8680D01DC6B6AA003535CB /* FBSDKMessengerShareKit.framework */,
@@ -294,6 +298,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DSTROOT = /tmp/Facebook.dst;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -336,6 +341,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				DSTROOT = /tmp/Facebook.dst;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

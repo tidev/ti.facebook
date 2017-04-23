@@ -3,8 +3,8 @@ name: Modules.Facebook
 summary: |
     Add-on Facebook module.
 description: |
-    The Facebook module is used for connecting your application with
-    Facebook. This module supports the following features:
+    The Facebook module is used for connecting your application with Facebook. 
+    This module supports the following features:
 
     * Logging in to Facebook and authorizing your application with either the
       [Login button](Modules.Facebook.LoginButton) or programatically.
@@ -80,6 +80,9 @@ description: |
 
     * **LoginButton style property** -- Facebook redesigned its Login button and the
       style can no longer be changed.
+      
+    * **Places API** -- Fetch nearby places using the current location or a specified
+      search-tearm.
 
     ## Getting Started
 
@@ -481,6 +484,28 @@ description: |
         win.add(likeButton);
 
     For more information, see the [LikeButton API reference](Modules.Facebook.LikeButton).
+    
+    ### Fetch Places
+    
+    The Facebook SDK supports fetching places since Graph API v2.9. You are able to use the
+    official FBSDKPlacesKit API in Titanium SDK 6.1.0 and later to fetch places by 
+    the current user location or a specified search tearm. 
+    Example of using the current location:
+    
+        fb.fetchNearbyPlacesForCurrentLocation({
+            confidenceLevel: fb.PLACE_LOCATION_CONFIDENCE_NOT_APPLICABLE, // optional
+            fields: [''], // optional, see https://developers.facebook.com/docs/places/fields
+            success: function(e) {
+                alert('Successfully fetched places!');
+                Ti.API.info(e);
+            },
+            error: function(e) {
+                alert('Error fetching places!');
+                Ti.API.error(e);
+            }
+        }); 
+        
+    Check out the full example in examples/facebook_places.js.
 
 extends: Titanium.Module
 since: "3.1.0"
@@ -532,31 +557,6 @@ methods:
         type: Titanium.Proxy
     since: 4.0.0
     platforms: [android]
-
-  - name: dialog
-    summary: Opens a supported Facebook dialog.
-    deprecated:
-        since: 4.0.0
-        removed: 4.0.0
-    description: |
-        For a list of dialogs, parameters, and response formats, see the
-        [official documentation for Facebook Dialogs](https://developers.facebook.com/docs/javascript/reference/FB.ui).
-
-        The callback is invoked when the dialog is closed, either because the user
-        approved the action, or canceled the dialog.
-    parameters:
-      - name: action
-        summary: Specifies which dialog to show, such as "feed".
-        type: String
-
-      - name: params
-        summary: |
-            A dictionary object for pre-filling some of the dialog's fields.
-        type: Object
-
-      - name: callback
-        summary: Callback to invoke  when the user completes or cancels the dialog.
-        type: Callback<FacebookDialogResponse>
 
   - name: initialize
     summary: |
@@ -624,16 +624,6 @@ methods:
   - name: logout
     summary: Clears the OAuth `accessToken` and logs out the user.
 
-  - name: publishInstall
-    deprecated:
-        since: 4.0.0
-        removed: 4.0.0
-    summary: |
-        Manually publish an attributed install to the facebook graph.
-    description: |
-        Be sure to set your [appid](Modules.Facebook.appid) before calling `publishInstall`.
-    since: "3.4.1"
-
   - name: presentInviteDialog
     summary: |
         Opens a supported Facebook Invite dialog from the Facebook App.
@@ -684,24 +674,6 @@ methods:
     since: "5.4.0"
     platforms: [iphone, ipad]
 
-  - name: presentWebShareDialog
-    summary: |
-        Opens a web version of the Share dialog (Feed dialog). Does not depend on the Facebook app.
-    description: |
-        This is a fallback for when Share dialog is not available.
-
-        Listen for the <Modules.Facebook.shareCompleted> to be notified if the attempt was
-        successful or not.
-    parameters:
-      - name: params
-        summary: |
-            A dictionary object containing optional parameters.
-        type: ShareDialogParams
-    since: 4.0.0
-    deprecated:
-        since: 5.0.0
-        removed: 5.0.0
-
   - name: presentSendRequestDialog
     summary: |
         Opens an App Request dialog.
@@ -715,34 +687,6 @@ methods:
         type: RequestDialogParams
     since: 4.0.0
 
-  - name: reauthorize
-    summary: Makes a request to Facebook for additional permissions.
-    deprecated:
-        since: 4.0.0
-        removed: 4.0.0
-    description: |
-        iOS 6's facebook login forbids minimum authorization to include write permissions.
-        In order to make any write actions, the app must reauthorize asking for the additional
-        permissions. If the application already has these permissions, there will be no user
-        interaction.
-    platforms: [iphone, ipad]
-    parameters:
-      - name: permissions
-        summary: |
-            Array of additional permissions to request. For a complete list of permissions, see the
-            [official Facebook Permissions Reference](http://developers.facebook.com/docs/reference/api/permissions/)
-        type: Array<String>
-
-      - name: audience
-        summary: |
-            The extent of the visibility write permissions will have. 
-            The value of audience should be one of "me", "friends", or "everyone"
-        type: String
-
-      - name: callback
-        summary: Callback to invoke when the request completes.
-        type: Callback<FacebookReauthResponse>
-
   - name: refreshPermissionsFromServer
     summary: Makes a request to Facebook to get the latest permissions granted.
     description: |
@@ -752,32 +696,6 @@ methods:
         Listen for the <Modules.Facebook.tokenUpdated> event to be notified if the attempt was
         successful.
     since: 4.0.0
-
-  - name: request
-    summary: Makes a request to the legacy Facebook REST API.
-    deprecated:
-        since: 4.0.0
-        removed: 4.0.0
-        notes: |
-            As of April 30, 2014, Facebook no longer supports its version 1.0 REST API. Use the
-            <Modules.Facebook.requestWithGraphPath> method to make Facebook Graph API requests.
-    description: |
-        For details on API calls and responses, see the
-        [offical Facebook REST API documentation](http://developers.facebook.com/docs/reference/rest/).
-    parameters:
-
-      - name: method
-        summary: The REST API method to call.
-        type: String
-
-      - name: params
-        summary: |
-            A dictionary object for setting parameters required by the call, if any.
-        type: Object
-
-      - name: callback
-        summary: Callback to invoke  when the request completes.
-        type: Callback<FacebookRESTResponse>
 
   - name: requestWithGraphPath
     summary: Makes a Facebook Graph API request.
@@ -854,14 +772,95 @@ methods:
 
   - name: fetchDeferredAppLink
     summary: Fetch the deferred app link
-    description: Deferred deep linking allows you to send people to a custom view after they installed your app via the app store.
+    description: |
+        Deferred deep linking allows you to send people to a custom view after 
+        they installed your app via the app store.
     parameters:
-
       - name: callback
         summary: Callback to invoke when the request completes.
         type: Callback<FacebookDeferredAppLinkResponse>
-
     since: "5.4.0"
+    
+  - name: fetchNearbyPlacesForCurrentLocation
+    summary: Query for places the device is likely located in.
+    description: |
+        This is an asynchronous call, due to the need to fetch the current location 
+        from the device. Note that the results of the graph request are improved 
+        if the user has both Wi-Fi and Bluetooth enabled.
+        
+        **Note**: Remember to request the location permssions with <Titanium.Geolocation>
+        and include either the `NSLocationWhenInUseUsageDescription` or the
+        `NSLocationAlwaysUsageDescription` key in your plist before using this method.
+        The Facebook graph also requires the `FacebookClientToken` to be present in the 
+        plist, so check the Facebook Developer Portal > Apps > Your App > Settings > Advanced 
+        for your OAuth client-token.
+    parameters:
+      - name: confidenceLevel
+        summary: The Minimum Confidence level place estimate candidates must meet.
+        type: Number
+        constants: [Modules.Facebook.PLACE_LOCATION_CONFIDENCE_*]
+        default: Modules.Facebook.PLACE_LOCATION_CONFIDENCE_NOT_APPLICABLE
+        optional: true
+      - name: fields
+        summary: | 
+            A list of fields that you might want the request to return. 
+            See the [Facebook docs](https://developers.facebook.com/docs/places/fields) for all possible values.
+        type: Array<String>
+        optional: true
+      - name: success
+        summary: The callback triggered when places are successfully fetched.
+        type: Callback
+      - name: error
+        summary: The callback triggered when places could not be fetched.
+        type: Callback
+    since: "6.1.0"
+    platforms: [iphone, ipad]
+    
+  - name: fetchNearbyPlacesForSearchTearm
+    summary: Query for nearby places using the device's current location and search-term. 
+    description: |
+        This is an asynchronous call, due to the need to fetch the current location from the device.
+                   
+        **Note**: Remember to request the location permssions with <Titanium.Geolocation>
+        and include either the `NSLocationWhenInUseUsageDescription` or the
+        `NSLocationAlwaysUsageDescription` key in your plist before using this method.
+        The Facebook graph also requires the `FacebookClientToken` to be present in the 
+        plist, so check the Facebook Developer Portal > Apps > Your App > Settings > Advanced 
+        for your OAuth client-token.
+    parameters:
+      - name: searchTearm
+        summary: The term to search for in the Places Graph.
+        type: String
+      - name: categories
+        summary: |
+            The categories for the place. Each string in this array must be a 
+            category recognized by the SDK. See the [Facebook Docs](https://developers.facebook.com/docs/places/web/search#categories) for all 
+            possible values.
+        type: Array<String>
+        optional: true
+      - name: fields
+        summary: |
+            A list of fields that you might want the request to return. 
+            See the [Facebook docs](https://developers.facebook.com/docs/places/fields) for all possible values.
+        type: Array<String>
+        optional: true
+      - name: distance
+        summary: The search radius. For an unlimited radius, use 0.
+        default: 0
+        type: Number
+        optional: true
+      - name: cursor
+        summary: A pagination cursor.
+        type: String
+        optional: true
+      - name: success
+        summary: The callback triggered when places are successfully fetched.
+        type: Callback
+      - name: error
+        summary: The callback triggered when places could not be fetched.
+        type: Callback
+    since: "6.1.0"
+    platforms: [iphone, ipad]
 
   - name: shareMediaToMessenger
     summary: Call this method to open Messenger and share an image, animated GIF or video.
@@ -1126,6 +1125,34 @@ properties:
         removed: 4.0.0
     type: Number
     permission: read-only
+    
+  - name: PLACE_LOCATION_CONFIDENCE_NOT_APPLICABLE
+    summary: Used to indicate that any level is acceptable as a minimum threshold.
+    type: Number
+    permission: read-only
+    since: "6.1.0"
+    platforms: [iphone, ipad]
+  
+  - name: PLACE_LOCATION_CONFIDENCE_LOW
+    summary: Low confidence level.
+    type: Number
+    permission: read-only
+    since: "6.1.0"
+    platforms: [iphone, ipad]
+    
+  - name: PLACE_LOCATION_CONFIDENCE_MEDIUM
+    summary: Medium confidence level.
+    type: Number
+    permission: read-only
+    since: "6.1.0"
+    platforms: [iphone, ipad]
+    
+  - name: PLACE_LOCATION_CONFIDENCE_HIGH
+    summary: High confidence level.
+    type: Number
+    permission: read-only
+    since: "6.1.0"
+    platforms: [iphone, ipad]
 
   - name: LOGIN_BEHAVIOR_BROWSER
     summary: |
@@ -1980,7 +2007,7 @@ properties:
     summary: List of IDs for taggable people to tag with this content.
     description: |
         See Facebook documentation for Taggable Friends (https://developers.facebook.com/docs/graph-api/reference/user/taggable_friends)
-    type: Array
+    type: Array<String>
 
   - name: placeID
     summary: The ID for a place to tag with this content.
@@ -2009,13 +2036,13 @@ properties:
 
   - name: recipients
     summary: Array of pre-selected facebook ids.
-    type: Array
+    type: Array<String>
     optional: true
     since: "5.0.0"
 
   - name: recipientSuggestions
     summary: An array of user IDs that will be included in the dialog as the first suggested friends. Cannot be used together with filters.
-    type: Array
+    type: Array<String>
     optional: true
     since: "5.0.0"
 

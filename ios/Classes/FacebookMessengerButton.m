@@ -26,12 +26,7 @@
 
 -(UIButton*)messengerButton
 {
-    ENSURE_UI_THREAD_0_ARGS
-    
     if (messengerButton == nil) {
-        ENSURE_TYPE([[self messengerProxy] valueForKey:@"mode"], NSNumber);
-        ENSURE_TYPE([[self messengerProxy] valueForKey:@"style"], NSNumber);
-
         NSUInteger mode = [TiUtils intValue:[[self messengerProxy] valueForKey:@"mode"] def:TiFacebookShareButtonModeRectangular];
         NSUInteger style = [TiUtils intValue:[[self messengerProxy] valueForKey:@"style"] def:FBSDKMessengerShareButtonStyleBlue];
         
@@ -45,7 +40,6 @@
             }
         } else {
             [[self messengerProxy] throwException:@"No messenger button mode specified." subreason:@"Please specify the messenger button mode to either MESSENGER_BUTTON_MODE_RECTANGULAR or MESSENGER_BUTTON_MODE_CIRCULAR" location:CODELOCATION];
-            return;
         }
         
         [self setFrame:[messengerButton bounds]];

@@ -16,6 +16,7 @@
 #import "TiHost.h"
 #import "TiUtils.h"
 #import "TiApp.h"
+#import <FBSDKPlacesKit/FBSDKPlacesKit.h>
 
 NSDictionary *launchOptions = nil;
 
@@ -191,13 +192,13 @@ NSDictionary *launchOptions = nil;
 {
     ENSURE_TYPE(args, NSDictionary);
     
-    [FBSDKAccessToken setCurrentAccessToken:[[FBSDKAccessToken alloc] initWithTokenString:[TiUtils stringValue:@"accessToken" properties:args]
+    [FBSDKAccessToken setCurrentAccessToken:[[[FBSDKAccessToken alloc] initWithTokenString:[TiUtils stringValue:@"accessToken" properties:args]
                                                                               permissions:[args objectForKey:@"permissions"]
                                                                       declinedPermissions:[args objectForKey:@"declinedPermissions"]
                                                                                     appID:[TiUtils stringValue:@"appID" properties:args]
                                                                                    userID:[TiUtils stringValue:@"userID" properties:args]
                                                                            expirationDate:[args objectForKey:@"exipirationDate"]
-                                                                              refreshDate:[args objectForKey:@"refreshDate"]]];
+                                                                              refreshDate:[args objectForKey:@"refreshDate"]] autorelease]];
 }
 
 //deprecated and removed
@@ -316,6 +317,11 @@ MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE, FBSDKLoginButtonTooltipB
 
 MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY, FBSDKTooltipColorStyleNeutralGray);
 MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE, FBSDKTooltipColorStyleFriendlyBlue);
+
+MAKE_SYSTEM_PROP(PLACE_LOCATION_CONFIDENCE_NOT_APPLICABLE, FBSDKPlaceLocationConfidenceNotApplicable);
+MAKE_SYSTEM_PROP(PLACE_LOCATION_CONFIDENCE_LOW, FBSDKPlaceLocationConfidenceLow);
+MAKE_SYSTEM_PROP(PLACE_LOCATION_CONFIDENCE_MEDIUM, FBSDKPlaceLocationConfidenceMedium);
+MAKE_SYSTEM_PROP(PLACE_LOCATION_CONFIDENCE_HIGH, FBSDKPlaceLocationConfidenceHigh);
 
 /**
  * JS example:
@@ -995,6 +1001,109 @@ MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE, FBSDKTooltipColorStyl
     }, YES);
 }
 
+- (void)fetchNearbyPlacesForCurrentLocation:(id)args
+{
+    ENSURE_SINGLE_ARG(args, NSDictionary);
+    
+    FBSDKPlaceLocationConfidence confidenceLevel = [TiUtils intValue:[args objectForKey:@"confidenceLevel"] def:FBSDKPlaceLocationConfidenceNotApplicable];
+    NSArray *fields = [args objectForKey:@"fields"];
+    KrollCallback *successCallback = [args objectForKey:@"success"];
+    KrollCallback *errorCallback = [args objectForKey:@"error"];
+    
+    ENSURE_TYPE(successCallback, KrollCallback);
+    ENSURE_TYPE(errorCallback, KrollCallback);
+    
+    __block FBSDKPlacesManager *placesManager = [[FBSDKPlacesManager new] retain];
+    
+    [placesManager generateCurrentPlaceRequestWithMinimumConfidenceLevel:confidenceLevel
+                                                                  fields:fields
+                                                              completion:^(FBSDKGraphRequest * _Nullable graphRequest, NSError * _Nullable error) {
+                                                                  RELEASE_TO_NIL(placesManager);
+
+                                                                  if (graphRequest) {
+                                                                      [graphRequest startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *requestError) {
+
+                                                                          if (requestError != nil) {
+                                                                              NSDictionary *errorEvent = @{
+                                                                                  @"error": [requestError localizedDescription],
+                                                                                  @"success": @NO
+                                                                              };
+                                                                              [errorCallback call:@[errorEvent] thisObject:self];
+                                                                              return;
+                                                                          }
+                                                                          
+                                                                          NSDictionary *successEvent = @{
+                                                                              @"success": @YES,
+                                                                              @"places": result[FBSDKPlacesResponseKeyData]
+                                                                          };
+                                                                          [successCallback call:@[successEvent] thisObject:self];
+                                                                          
+                                                                      }];
+                                                                  } else {
+                                                                      NSDictionary *errorEvent = @{
+                                                                          @"error": [error localizedDescription],
+                                                                          @"success": @NO
+                                                                      };
+                                                                      [errorCallback call:@[errorEvent] thisObject:self];
+                                                                  }
+                                                              }];
+}
+
+
+- (void)fetchNearbyPlacesForSearchTearm:(id)args
+{
+    ENSURE_SINGLE_ARG(args, NSDictionary);
+    
+    NSString *searchTearm = [args objectForKey:@"searchTearm"];
+    NSArray *categories = [args objectForKey:@"categories"];
+    NSArray *fields = [args objectForKey:@"fields"];
+    CLLocationDistance distance = [TiUtils doubleValue:[args objectForKey:@"distance"] def:0];
+    NSString *cursor = [args objectForKey:@"cursor"];
+    
+    KrollCallback *successCallback = [args objectForKey:@"success"];
+    KrollCallback *errorCallback = [args objectForKey:@"error"];
+    
+    ENSURE_TYPE(successCallback, KrollCallback);
+    ENSURE_TYPE(errorCallback, KrollCallback);
+    
+    __block FBSDKPlacesManager *placesManager = [[FBSDKPlacesManager new] retain];
+    
+    [placesManager generatePlaceSearchRequestForSearchTerm:searchTearm
+                                                categories:categories
+                                                    fields:fields
+                                                  distance:distance
+                                                    cursor:cursor
+                                                completion:^(FBSDKGraphRequest * _Nullable graphRequest, CLLocation * _Nullable location, NSError * _Nullable error) {
+                                                    RELEASE_TO_NIL(placesManager);
+                                                    
+                                                    if (graphRequest) {
+                                                        [graphRequest startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *requestError) {
+                                                            
+                                                            if (requestError != nil) {
+                                                                NSDictionary *errorEvent = @{
+                                                                    @"error": [requestError localizedDescription],
+                                                                    @"success": @NO
+                                                                };
+                                                                [errorCallback call:@[errorEvent] thisObject:self];
+                                                                return;
+                                                            }
+                                                            
+                                                            NSDictionary *successEvent = @{
+                                                                @"success": @YES,
+                                                                @"places": result[FBSDKPlacesResponseKeyData],
+                                                                @"paging": [result objectForKey:@"paging"]
+                                                            };
+                                                            [successCallback call:@[successEvent] thisObject:self];
+                                                        }];
+                                                    } else {
+                                                        NSDictionary *errorEvent = @{
+                                                                                     @"error": [error localizedDescription],
+                                                                                     @"success": @NO
+                                                                                     };
+                                                        [errorCallback call:@[errorEvent] thisObject:self];
+                                                    }
+                                                }];
+}
 
 #pragma mark Listener work
 
