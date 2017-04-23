@@ -494,7 +494,7 @@ description: |
     
         fb.fetchNearbyPlacesForCurrentLocation({
             confidenceLevel: fb.PLACE_LOCATION_CONFIDENCE_NOT_APPLICABLE, // optional
-            fields: [''], // optional, see https://developers.facebook.com/docs/places/fields
+            fields: [], // optional, see https://developers.facebook.com/docs/places/fields
             success: function(e) {
                 alert('Successfully fetched places!');
                 Ti.API.info(e);
