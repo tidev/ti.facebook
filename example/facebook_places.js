@@ -3,7 +3,7 @@ exports.window = function(value) {
 	fb.initialize();
 
 	var win = Ti.UI.createWindow({
-		title: 'Facebook Places'
+		title: 'Facebook Places',
 	    backgroundColor: '#fff'
 	});
 
