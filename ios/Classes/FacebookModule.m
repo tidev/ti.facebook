@@ -578,34 +578,15 @@ MAKE_SYSTEM_PROP(PLACE_LOCATION_CONFIDENCE_HIGH, FBSDKPlaceLocationConfidenceHig
     ENSURE_SINGLE_ARG(params, NSDictionary);
         
     TiThreadPerformOnMainThread(^{
-        FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
-        content.contentURL = [NSURL URLWithString:[params objectForKey:@"link"]];
-        
-        NSString *description = [params objectForKey:@"description"];
-        NSString *title = [params objectForKey:@"title"];
-        NSString *picture = [params objectForKey:@"picture"];
-        
-        if (description != nil) {
-            NSLog(@"Ti.Facebook.presentShareDialog.description has been deprecated in Ti.Facebook 5.5.0 as of the Graph v2.9 changes.");
-            content.contentDescription = [params objectForKey:@"description"];
-        }
- 
-        if (title != nil) {
-            NSLog(@"Ti.Facebook.presentShareDialog.title has been deprecated in Ti.Facebook 5.5.0 as of the Graph v2.9 changes.");
-            content.contentTitle = title;
-        }
-        
-        if (picture != nil) {
-            NSLog(@"Ti.Facebook.presentShareDialog.picture has been deprecated in Ti.Facebook 5.5.0 as of the Graph v2.9 changes.");
-            content.imageURL = [NSURL URLWithString:picture];
-        }
+        FBSDKShareLinkContent *content = [FacebookModule shareLinkContentFromDictionary:params];
+        NSNumber *mode = [params objectForKey:@"mode"];
         
         FBSDKShareDialog *dialog = [FBSDKShareDialog new];
         [dialog setFromViewController:nil];
         [dialog setShareContent:content];
         [dialog setDelegate:self];
         
-        if ([params objectForKey:@"mode"] != nil){
+        if (mode != nil) {
             [dialog setMode:[TiUtils intValue:[params objectForKey:@"mode"]]];
         }
         
@@ -621,38 +602,7 @@ MAKE_SYSTEM_PROP(PLACE_LOCATION_CONFIDENCE_HIGH, FBSDKPlaceLocationConfidenceHig
     ENSURE_SINGLE_ARG(params, NSDictionary);
    
     TiThreadPerformOnMainThread(^{
-        FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
-        
-        NSString *description = [params objectForKey:@"description"];
-        NSString *title = [params objectForKey:@"title"];
-        NSString *picture = [params objectForKey:@"picture"];
-        
-        if (description != nil) {
-            NSLog(@"Ti.Facebook.presentMessengerDialog.description has been deprecated in Ti.Facebook 5.5.0 as of the Graph v2.9 changes.");
-            content.contentDescription = [params objectForKey:@"description"];
-        }
-        
-        if (title != nil) {
-            NSLog(@"Ti.Facebook.presentMessengerDialog.title has been deprecated in Ti.Facebook 5.5.0 as of the Graph v2.9 changes.");
-            content.contentTitle = title;
-        }
-        
-        if (picture != nil) {
-            NSLog(@"Ti.Facebook.presentMessengerDialog.picture has been deprecated in Ti.Facebook 5.5.0 as of the Graph v2.9 changes.");
-            content.imageURL = [NSURL URLWithString:picture];
-        }
-        
-        [content setContentURL:[NSURL URLWithString:[params objectForKey:@"link"]]];
-        [content setPlaceID:[params objectForKey:@"placeID"]];
-        [content setRef:[params objectForKey:@"referal"]];
-        
-        id to = [params objectForKey:@"to"];
-        ENSURE_TYPE_OR_NIL(to, NSArray);
-        
-        if (to != nil) {
-            [content setPeopleIDs:to];
-        }
-        
+        FBSDKShareLinkContent *content = [FacebookModule shareLinkContentFromDictionary:params];
         [FBSDKMessageDialog showWithContent:content delegate:self];
         RELEASE_TO_NIL(content);
     }, NO);
@@ -1267,4 +1217,49 @@ MAKE_SYSTEM_PROP(PLACE_LOCATION_CONFIDENCE_HIGH, FBSDKPlaceLocationConfidenceHig
     }
     return params;
 }
+
+#pragma mark Utilities
+
++ (FBSDKShareLinkContent * _Nonnull)shareLinkContentFromDictionary:(NSDictionary *)dictionary
+{
+    FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
+
+    // Deprecated
+    NSString *description = [dictionary objectForKey:@"description"];
+    NSString *title = [dictionary objectForKey:@"title"];
+    NSString *picture = [dictionary objectForKey:@"picture"];
+
+    NSString *hashtag = [dictionary objectForKey:@"hashtag"];
+    NSURL *url = [NSURL URLWithString:[dictionary objectForKey:@"link"]];
+    
+    if (description != nil) {
+        NSLog(@"[WARN] Setting the Ti.Facebook.presentShareDialog.description is no longer possible in Ti.Facebook 5.5.0 as part of the Graph v2.9 changes.");
+        NSLog(@"[WARN] It's information is scraped from the 'link' property instead, so setting it is no longer supported and will be ignored!");
+    }
+    
+    if (title != nil) {
+        NSLog(@"[WARN] Setting the Ti.Facebook.presentShareDialog.title is no longer possible in Ti.Facebook 5.5.0 as part of the Graph v2.9 changes.");
+        NSLog(@"[WARN] It's information is scraped from the 'title' property instead, so setting it is no longer supported and will be ignored!");
+    }
+    
+    if (picture != nil) {
+        NSLog(@"[WARN] Setting the Ti.Facebook.presentShareDialog.picture is no longer possible in Ti.Facebook 5.5.0 as part of the Graph v2.9 changes.");
+        NSLog(@"[WARN] It's information is scraped from the 'picture' property instead, so setting it is no longer supported and will be ignored!");
+    }
+    
+    if (url != nil) {
+        [content setContentURL:url];
+    }
+    
+    if (hashtag != nil) {
+        [content setHashtag:[FBSDKHashtag hashtagWithString:hashtag]];
+    }
+
+    [content setPeopleIDs:[dictionary objectForKey:@"to"]];
+    [content setPlaceID:[dictionary objectForKey:@"placeID"]];
+    [content setRef:[dictionary objectForKey:@"referal"]];
+    
+    return content;
+}
+
 @end

@@ -369,11 +369,11 @@ description: |
     call the [presentShareDialog()](Modules.Facebook.presentShareDialog) to present it, else call the
     [presentWebShareDialog()](Modules.Facebook.presentWebShareDialog) method to present the Feed dialog.
 
-    Pass either method parameters you want to add to the post, such as a link or picture, or to
+    Pass either method parameters you want to add to the post, such as a `link` or `hashtag`, or to
     share the user's status, do not pass any parameters to the methods.
 
     To monitor if the share request succeeded or not, listen to the <Modules.Facebook.shareCompleted>
-    event.
+    event. It uses the same arguments as `presentMessengerDialog`.
 
             fb.addEventListener('shareCompleted', function (e) {
                 if (e.success) {
@@ -385,9 +385,7 @@ description: |
 
             fb.presentShareDialog({
                 link: 'https://appcelerator.com/',
-                title: 'great product',
-                description: 'Titanium is a great product',
-                picture: 'http://www.appcelerator.com/wp-content/uploads/scale_triangle1.png'
+                hashtag: 'codestrong'
             });
 
 
@@ -438,12 +436,10 @@ description: |
     A messenger dialog allows a user to send content to the Facebook Messenger using your application.
 
     To send a message to a user, call the [presentMessengerDialog()](Modules.Facebook.presentMessengerDialog) method
-    and pass the method a dictionary with the optional values "title", "description", "link", "to", "placeID"
-    and "referal".
+    and pass the method a dictionary with the optional values "hashtag", "link", "to", "placeID"
+    and "referal". It uses the same arguments as `presentShareDialog`.
 
             fb.presentMessengerDialog({
-                title: "Appcelerator Titanium rocks!", // The title of the link
-                description: "Shared from my Titanium application", // The description of the link
                 link: "https://appcelerator.com", // The link you want to share
                 referal: "ti_app", // The referal to be added as a suffix to your link
                 placeID: "my_id", // The ID for a place to tag with this content
@@ -488,7 +484,7 @@ description: |
     ### Fetch Places
     
     The Facebook SDK supports fetching places since Graph API v2.9. You are able to use the
-    official FBSDKPlacesKit API in Titanium SDK 6.1.0 and later to fetch places by 
+    official FBSDKPlacesKit API in Titanium SDK 6.2.0 and later to fetch places by 
     the current user location or a specified search tearm. 
     Example of using the current location:
     
@@ -653,7 +649,7 @@ methods:
       - name: params
         summary: |
             A dictionary object containing optional parameters.
-        type: ShareDialogParams
+        type: ShareLinkContentParams
     since: 4.0.0
 
   - name: presentMessengerDialog
@@ -670,7 +666,7 @@ methods:
       - name: params
         summary: |
             A dictionary object containing optional parameters.
-        type: MessengerDialogParams
+        type: ShareLinkContentParams
     since: "5.4.0"
     platforms: [iphone, ipad]
 
@@ -813,7 +809,7 @@ methods:
       - name: error
         summary: The callback triggered when places could not be fetched.
         type: Callback
-    since: "6.1.0"
+    since: "6.2.0"
     platforms: [iphone, ipad]
     
   - name: fetchNearbyPlacesForSearchTearm
@@ -859,7 +855,7 @@ methods:
       - name: error
         summary: The callback triggered when places could not be fetched.
         type: Callback
-    since: "6.1.0"
+    since: "6.2.0"
     platforms: [iphone, ipad]
 
   - name: shareMediaToMessenger
@@ -883,7 +879,7 @@ methods:
             from not being updated although specified in the parameters. You can use 
             the <Modules.Facebook.appID> setter to change the appID inside your app.
         type: CurrentAccessTokenParams
-    since: "6.1.0"
+    since: "6.2.0"
     platforms: [iphone, ipad]
 
   - name: logPushNotificationOpen
@@ -1021,7 +1017,6 @@ events:
     summary: Fired when [refreshPermissionsFromServer](Modules.Facebook.refreshPermissionsFromServer) is completed.
     since: 4.0.0
 
-
 properties:
   - name: AUDIENCE_ONLY_ME
     summary: Published content is only visible to the user.
@@ -1130,28 +1125,28 @@ properties:
     summary: Used to indicate that any level is acceptable as a minimum threshold.
     type: Number
     permission: read-only
-    since: "6.1.0"
+    since: "6.2.0"
     platforms: [iphone, ipad]
   
   - name: PLACE_LOCATION_CONFIDENCE_LOW
     summary: Low confidence level.
     type: Number
     permission: read-only
-    since: "6.1.0"
+    since: "6.2.0"
     platforms: [iphone, ipad]
     
   - name: PLACE_LOCATION_CONFIDENCE_MEDIUM
     summary: Medium confidence level.
     type: Number
     permission: read-only
-    since: "6.1.0"
+    since: "6.2.0"
     platforms: [iphone, ipad]
     
   - name: PLACE_LOCATION_CONFIDENCE_HIGH
     summary: High confidence level.
     type: Number
     permission: read-only
-    since: "6.1.0"
+    since: "6.2.0"
     platforms: [iphone, ipad]
 
   - name: LOGIN_BEHAVIOR_BROWSER
@@ -1344,7 +1339,7 @@ properties:
         If not explicitly set, the default will be read from the application's 
         plist (FacebookAppID) which is the recommended way. 
         
-        Since 6.1.0, this property also has a getter to return the currently set appID.
+        Since Titanium SDK 6.2.0, this property also has a getter to return the currently set appID.
     type: String
 
   - name: canPresentOpenGraphActionDialog
@@ -1920,87 +1915,16 @@ properties:
     type: String
 
 ---
-name: ShareDialogParams
+name: ShareLinkContentParams
 summary: |
     Optional parameters to pass to either the
     [presentShareDialog()](Modules.Facebook.presentShareDialog) or
-    [presentWebShareDialog()](Modules.Facebook.presentWebShareDialog) methods.
+    [presentWebShareDialog()](Modules.Facebook.presentMessengerDialog) methods.
 since: 4.0.0
 platforms: [android, iphone, ipad]
 properties:
-  - name: description
-    summary: Description associated with the link.
-    type: String
-    deprecated:
-        since: "6.1.0"
-        notes: |
-            Facebook deprecated the "description" key in Graph v2.9, it will be
-            removed in the future.
-
   - name: link
     summary: URL to share.
-    type: String
-
-  - name: title
-    summary: Title associated with the link.
-    type: String
-    since: "5.0.0"
-    deprecated:
-        since: "6.1.0"
-        notes: |
-            Facebook deprecated the "description" key in Graph v2.9, it will be
-            removed in the future.
-
-  - name: picture
-    summary: Link to a thumbnail to associate with the link.
-    type: String
-    deprecated:
-        since: "6.1.0"
-        notes: |
-            Facebook deprecated the "description" key in Graph v2.9, it will be
-            removed in the future.
-
-  - name: mode
-    summary: The mode to select for presenting a share dialog.
-    description: |
-        The automatic mode will progressively check the availability of different modes and 
-        open the most appropriate mode for the dialog that is available.
-    type: Number
-    optional: true
-    default: Modules.Facebook.SHARE_DIALOG_MODE_AUTOMATIC
-    constants: Modules.Facebook.SHARE_DIALOG_MODE_*
-    since: "6.0.0"
-
----
-name: MessengerDialogParams
-summary: |
-    Optional parameters to pass to either the
-    [presentMessengerDialog()](Modules.Facebook.presentMessengerDialog) method.
-since: "5.4.0"
-platforms: [iphone, ipad]
-properties:
-  - name: title
-    summary: The title to display for this link.
-    description: |
-        This value may be discarded for specially handled links (ex: iTunes URLs).
-    type: String
-
-  - name: description
-    summary: The description of the link.
-    description: |
-        If not specified, this field is automatically populated by information scraped from the contentURL,
-        typically the title of the page. This value may be discarded for specially handled links (ex: iTunes URLs).
-    type: String
-
-  - name: link
-    summary: URL for the content being shared.
-    description: |
-        This URL will be checked for all link meta tags for linking in platform specific ways.
-        See Facebook documentation for App Links (https://developers.facebook.com/docs/applinks/).
-    type: String
-
-  - name: picture
-    summary: Link to a thumbnail to associate with the link.
     type: String
 
   - name: to
@@ -2016,6 +1940,57 @@ properties:
   - name: referal
     summary: A value to be added to the referrer URL when a person follows a link from this shared content on feed.
     type: String
+
+  - name: hashtag
+    summary: Hashtag for the content being shared.
+    type: String
+
+  - name: mode
+    summary: The mode to select for presenting a share dialog. Only used in `presentShareDialog`.
+    description: |
+        The automatic mode will progressively check the availability of different modes and 
+        open the most appropriate mode for the dialog that is available.
+    type: Number
+    optional: true
+    default: Modules.Facebook.SHARE_DIALOG_MODE_AUTOMATIC
+    constants: Modules.Facebook.SHARE_DIALOG_MODE_*
+    since: "6.0.0"
+
+  - name: title
+    summary: Title associated with the link.
+    type: String
+    since: "5.0.0"
+    deprecated:
+    deprecated:
+        since: "6.2.0"
+        removed: "6.2.0"
+        notes: |
+            Facebook deprecated the "title" key in Graph v2.9, making it
+            read-only. Information about the title will instead of scraped
+            from the `link` property.
+
+  - name: picture
+    summary: Link to a thumbnail to associate with the link.
+    type: String
+    deprecated:
+    deprecated:
+        since: "6.2.0"
+        removed: "6.2.0"
+        notes: |
+            Facebook deprecated the "picture" key in Graph v2.9, making it
+            read-only. Information about the picture will instead of scraped
+            from the `link` property.
+
+  - name: description
+    summary: Description associated with the link.
+    type: String
+    deprecated:
+        since: "6.2.0"
+        removed: "6.2.0"
+        notes: |
+            Facebook deprecated the "description" key in Graph v2.9, making it
+            read-only. Information about the description will instead of scraped
+            from the `link` property.
 
 ---
 name: RequestDialogParams
@@ -2132,7 +2107,7 @@ properties:
 name: CurrentAccessTokenParams
 summary: Dictionary of parameter passed to [setAccessToken()](Modules.Facebook.setAccessToken).
 platforms: [iphone, ipad]
-since: "6.1.0"
+since: "6.2.0"
 properties:
   - name: accessToken
     summary: The opaque token string.
