@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2016 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-present by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  */
@@ -10,13 +10,13 @@
 
 @implementation FacebookLikeButton
 
--(void)dealloc
+- (void)dealloc
 {
     RELEASE_TO_NIL(like);
     [super dealloc];
 }
 
--(FBSDKLikeControl*)like
+- (FBSDKLikeControl *)like
 {
     if (like == nil) {
         like = [[FBSDKLikeControl alloc] init];
@@ -25,17 +25,17 @@
     return like;
 }
 
--(void)frameSizeChanged:(CGRect)frame bounds:(CGRect)bounds
+- (void)frameSizeChanged:(CGRect)frame bounds:(CGRect)bounds
 {
     [TiUtils setView:[self like] positionRect:bounds];
 }
 
--(void)setObjectId_:(id)idString
+- (void)setObjectId_:(id)idString
 {
     DEPRECATED_REPLACED_REMOVED(@"Facebook.likeButton.objectId", @"5.0.0", @"5.0.0", @"Titanium.Facebook.likeButton.objectID");
 }
 
--(void)setObjectID_:(id)idString
+- (void)setObjectID_:(id)idString
 {
     ENSURE_SINGLE_ARG(idString, NSString);
     FBSDKLikeControl *btn = [self like];
@@ -43,7 +43,7 @@
     btn.objectID = objectID;
 }
 
--(void)setForegroundColor_:(id)colorVal
+- (void)setForegroundColor_:(id)colorVal
 {
     ENSURE_SINGLE_ARG(colorVal, NSObject);
     FBSDKLikeControl *btn = [self like];
@@ -51,7 +51,7 @@
     btn.foregroundColor = c;
 }
 
--(void)setLikeViewStyle_:(id)styleStr
+- (void)setLikeViewStyle_:(id)styleStr
 {
     ENSURE_SINGLE_ARG(styleStr, NSString);
     FBSDKLikeControl *btn = [self like];
@@ -66,7 +66,7 @@
     }
 }
 
--(void)setAuxiliaryViewPosition_:(id)positionStr
+- (void)setAuxiliaryViewPosition_:(id)positionStr
 {
     ENSURE_SINGLE_ARG(positionStr, NSString);
     FBSDKLikeControl *btn = [self like];
@@ -80,7 +80,7 @@
     }
 }
 
--(void)setHorizontalAlignment_:(id)alignStr
+- (void)setHorizontalAlignment_:(id)alignStr
 {
     ENSURE_SINGLE_ARG(alignStr, NSString);
     FBSDKLikeControl *btn = [self like];
@@ -94,13 +94,13 @@
     }
 }
 
--(void)setObjectType_:(id)typeStr
+- (void)setObjectType_:(id)typeStr
 {
     ENSURE_SINGLE_ARG(typeStr, NSString);
     DEPRECATED_REMOVED(@"Facebook.likeButton.objectType", @"5.0.0", @"5.0.0");
 }
 
--(void)setSoundEnabled_:(id)sound
+- (void)setSoundEnabled_:(id)sound
 {
     ENSURE_SINGLE_ARG(sound, NSNumber);
     FBSDKLikeControl *btn = [self like];

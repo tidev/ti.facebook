@@ -5,7 +5,7 @@
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  *
- * Copyright (c) 2009-2016 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-present by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  */
@@ -23,17 +23,23 @@ typedef NS_ENUM(NSUInteger, TiFacebookShareButtonMode) {
  @abstract
  Used to fire share-events from fb.presentShareDialog()
  */
-extern NSString* const TiFacebookEventTypeShareCompleted;
+extern NSString * const TiFacebookEventTypeShareCompleted;
 
 
 /*!
  @abstract
  Used to fire invite-events from fb.presentInviteDialog()
  */
-extern NSString* const TiFacebookEventTypeInviteCompleted;
+extern NSString * const TiFacebookEventTypeInviteCompleted;
 
 /*!
  @abstract
  Used to fire game-request-events from fb.presentSendRequestDialog()
  */
-extern NSString* const TiFacebookEventTypeRequestDialogCompleted;
+extern NSString * const TiFacebookEventTypeRequestDialogCompleted;
+
+/*!
+ @abstract
+ Error message used to indicate a login-error caused by keychain-issues.
+ */
+extern NSString * const TiFacebookErrorMessageKeychainAccess;

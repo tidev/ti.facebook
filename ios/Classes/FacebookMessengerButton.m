@@ -1,6 +1,6 @@
 /**
  * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2016 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-present by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  */
@@ -11,7 +11,7 @@
 
 @implementation FacebookMessengerButton
 
--(void)dealloc
+- (void)dealloc
 {
     [messengerButton removeTarget:self action:@selector(didTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
     RELEASE_TO_NIL(messengerButton);
@@ -19,12 +19,12 @@
     [super dealloc];
 }
 
--(FacebookMessengerButtonProxy*)messengerProxy
+- (FacebookMessengerButtonProxy *)messengerProxy
 {
-    return (FacebookMessengerButtonProxy*)[self proxy];
+    return (FacebookMessengerButtonProxy *)[self proxy];
 }
 
--(UIButton*)messengerButton
+- (UIButton *)messengerButton
 {
     if (messengerButton == nil) {
         NSUInteger mode = [TiUtils intValue:[[self messengerProxy] valueForKey:@"mode"] def:TiFacebookShareButtonModeRectangular];
@@ -51,7 +51,7 @@
     return messengerButton;
 }
 
--(void)frameSizeChanged:(CGRect)frame bounds:(CGRect)bounds
+- (void)frameSizeChanged:(CGRect)frame bounds:(CGRect)bounds
 {
     [TiUtils setView:[self messengerButton] positionRect:bounds];
 }
@@ -63,17 +63,17 @@
     }
 }
 
--(BOOL)hasTouchableListener
+- (BOOL)hasTouchableListener
 {
     return YES;
 }
 
--(CGFloat)verifyWidth:(CGFloat)suggestedWidth
+- (CGFloat)verifyWidth:(CGFloat)suggestedWidth
 {
     return [self sizeThatFits:CGSizeZero].width;
 }
 
--(CGFloat)verifyHeight:(CGFloat)suggestedHeight
+- (CGFloat)verifyHeight:(CGFloat)suggestedHeight
 {
     return [self sizeThatFits:CGSizeZero].height;
 }

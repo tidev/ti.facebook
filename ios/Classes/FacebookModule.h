@@ -5,7 +5,7 @@
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  *
- * Copyright (c) 2009-2016 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2009-present by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  */
@@ -24,7 +24,7 @@
     FBSDKLoginBehavior loginBehavior;
 }
 
--(void)authorize:(id)args;
--(void)logout:(id)args;
+- (void)authorize:(id)args;
+- (void)logout:(id)args;
 
 @end
