@@ -10,6 +10,8 @@
 
 @implementation FacebookLikeButton
 
+#pragma mark Internal
+
 - (FBSDKLikeControl *)likeButton
 {
     if (_likeButton == nil) {
@@ -24,6 +26,8 @@
 {
     [TiUtils setView:[self likeButton] positionRect:bounds];
 }
+
+#pragma mark Public API's
 
 - (void)setObjectId_:(id _Nullable)unused
 {
@@ -91,7 +95,7 @@
     DEPRECATED_REMOVED(@"Facebook.likeButton.objectType", @"5.0.0", @"5.0.0");
 }
 
-- (void)setSoundEnabled_:(NSNumber *)soundEnabled
+- (void)setSoundEnabled_:(NSNumber * _Nonnull)soundEnabled
 {
     [[self likeButton] setSoundEnabled:[TiUtils boolValue:soundEnabled]];
 }

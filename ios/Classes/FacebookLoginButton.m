@@ -10,6 +10,8 @@
 
 @implementation FacebookLoginButton
 
+#pragma mark Internal
+
 - (FBSDKLoginButton *)loginButton
 {
     if (_loginButton == nil) {
@@ -24,6 +26,8 @@
 {
     [TiUtils setView:[self loginButton] positionRect:bounds];
 }
+
+#pragma mark Public API's
 
 // Requested permissions when logging in. If set, do not set read permissions
 // The audience defaults to AUDIENCE_ONLY_ME if not specifically set.

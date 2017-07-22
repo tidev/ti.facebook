@@ -23,9 +23,6 @@
     [(FacebookMessengerButton *)[self view] messengerButton];
 }
 
-USE_VIEW_FOR_VERIFY_HEIGHT
-USE_VIEW_FOR_VERIFY_WIDTH
-
 - (TiDimension)defaultAutoWidthBehavior:(id)unused
 {
     return TiDimensionAutoSize;
@@ -35,5 +32,9 @@ USE_VIEW_FOR_VERIFY_WIDTH
 {
     return TiDimensionAutoSize;
 }
+
+USE_VIEW_FOR_VERIFY_HEIGHT
+
+USE_VIEW_FOR_VERIFY_WIDTH
 
 @end
