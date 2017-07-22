@@ -7,8 +7,6 @@
 
 #import "TiViewProxy.h"
 
-@interface FacebookMessengerButtonProxy : TiViewProxy {
-
-}
+@interface FacebookMessengerButtonProxy : TiViewProxy
 
 @end

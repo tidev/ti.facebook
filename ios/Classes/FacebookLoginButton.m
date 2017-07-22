@@ -27,64 +27,59 @@
 
 // Requested permissions when logging in. If set, do not set read permissions
 // The audience defaults to AUDIENCE_ONLY_ME if not specifically set.
-- (void)setPublishPermissions_:(id)args
+- (void)setPublishPermissions_:(NSArray<NSString *> * _Nonnull)publishPermissions
 {
-    ENSURE_ARRAY(args);
-    [[self loginButton] setPublishPermissions:args];
+    [[self loginButton] setPublishPermissions:publishPermissions];
 }
 
-- (NSArray *)publishPermissions
+- (NSArray * _Nullable)publishPermissions
 {
     return [[self loginButton] publishPermissions];
 }
 
 // Requested permissions when logging in. If set, do not set publish permissions
-- (void)setReadPermissions_:(id)args
+- (void)setReadPermissions_:(NSArray<NSString *> * _Nullable)readPermissions
 {
-    ENSURE_ARRAY(args);
-    [[self loginButton] setReadPermissions:args];
+    [[self loginButton] setReadPermissions:readPermissions];
 }
 
-- (NSArray *)readPermissions
+- (NSArray * _Nullable)readPermissions
 {
     return [[self loginButton] readPermissions];
 }
 
 // The default is AUDIENCE_ONLY_ME, only applicable to publish permissions
-- (void)setAudience_:(id)value
+- (void)setAudience_:(NSNumber * _Nonnull)audience
 {
-    ENSURE_SINGLE_ARG(value, NSNumber);
-    [[self loginButton] setDefaultAudience:[TiUtils intValue:value]];
+    [[self loginButton] setDefaultAudience:[TiUtils intValue:audience]];
 }
 
 // The default audience to use, if publish permissions are requested at login time.
-- (NSNumber *)audience
+- (NSNumber * _Nonnull)audience
 {
     return NUMUINTEGER([[self loginButton] defaultAudience]);
 }
 
 // Sets the desired tooltip behavior
-- (void)setTooltipBehavior_:(id)value
+- (void)setTooltipBehavior_:(NSNumber * _Nonnull)tooltipBehavior
 {
-    ENSURE_SINGLE_ARG(value, NSNumber);
-    [[self loginButton] setTooltipBehavior:[TiUtils intValue:value]];
+    [[self loginButton] setTooltipBehavior:[TiUtils intValue:tooltipBehavior]];
 }
 
 // Gets the desired tooltip behavior
-- (NSNumber *)tooltipBehavior
+- (NSNumber * _Nonnull)tooltipBehavior
 {
     return NUMUINTEGER([[self loginButton] tooltipBehavior]);
 }
 
 // Sets the desired tooltip color style
-- (void)setTooltipColorStyle_:(id)value
+- (void)setTooltipColorStyle_:(NSNumber * _Nonnull)tooltipColorStyle
 {
-    ENSURE_SINGLE_ARG(value, NSNumber);
-    [[self loginButton] setTooltipColorStyle:[TiUtils intValue:value]];
+    [[self loginButton] setTooltipColorStyle:[TiUtils intValue:tooltipColorStyle]];
 }
 
 // Gets the desired tooltip color style
-- (NSNumber *)tooltipColorStyle
+- (NSNumber * _Nonnull)tooltipColorStyle
 {
     return NUMUINTEGER([[self loginButton] tooltipColorStyle]);
 }

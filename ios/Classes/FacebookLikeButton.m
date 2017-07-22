@@ -10,7 +10,7 @@
 
 @implementation FacebookLikeButton
 
-- (FBSDKLikeControl *)like
+- (FBSDKLikeControl *)likeButton
 {
     if (_likeButton == nil) {
         _likeButton = [[FBSDKLikeControl alloc] init];
@@ -22,83 +22,78 @@
 
 - (void)frameSizeChanged:(CGRect)frame bounds:(CGRect)bounds
 {
-    [TiUtils setView:[self like] positionRect:bounds];
+    [TiUtils setView:[self likeButton] positionRect:bounds];
 }
 
-- (void)setObjectId_:(id)idString
+- (void)setObjectId_:(id _Nullable)unused
 {
     DEPRECATED_REPLACED_REMOVED(@"Facebook.likeButton.objectId", @"5.0.0", @"5.0.0", @"Titanium.Facebook.likeButton.objectID");
 }
 
-- (void)setObjectID_:(id)idString
+- (void)setObjectID_:(NSString * _Nonnull)objectID
 {
-    ENSURE_SINGLE_ARG(idString, NSString);
-    [[self like] setObjectID:[TiUtils stringValue:idString]];
+    [[self likeButton] setObjectID:objectID];
 }
 
-- (void)setForegroundColor_:(id)colorVal
+- (void)setForegroundColor_:(NSString * _Nonnull)foregroundColor
 {
-    ENSURE_SINGLE_ARG(colorVal, NSObject);
-    [[self like] setForegroundColor:[[TiUtils colorValue:colorVal] color]];
+    [[self likeButton] setForegroundColor:[[TiUtils colorValue:foregroundColor] color]];
 }
 
-- (void)setLikeViewStyle_:(id)styleStr
+- (void)setLikeViewStyle_:(NSString * _Nonnull)likeViewStyle
 {
-    ENSURE_SINGLE_ARG(styleStr, NSString);
-    FBSDKLikeControl *btn = [self like];
-    NSString *style = [TiUtils stringValue:styleStr];
+    FBSDKLikeControl *btn = [self likeButton];
 
-    if ([style isEqualToString:@"box_count"]) {
+    if ([likeViewStyle isEqualToString:@"box_count"]) {
         btn.likeControlStyle = FBSDKLikeControlStyleBoxCount;
-    } else if ([style isEqualToString:@"button"]) {
+        return;
+    }
+    
+    if ([likeViewStyle isEqualToString:@"button"]) {
         DEPRECATED_REMOVED(@"Facebook.likeButton.likeViewStyle.button", @"5.0.0", @"5.0.0");
-        btn.likeControlStyle = FBSDKLikeControlStyleStandard;
-    } else {
-        btn.likeControlStyle = FBSDKLikeControlStyleStandard;
     }
+
+    btn.likeControlStyle = FBSDKLikeControlStyleStandard;
 }
 
-- (void)setAuxiliaryViewPosition_:(id)positionStr
+- (void)setAuxiliaryViewPosition_:(NSString * _Nonnull)auxiliaryViewPosition
 {
-    ENSURE_SINGLE_ARG(positionStr, NSString);
-    FBSDKLikeControl *btn = [self like];
-    NSString *position = [TiUtils stringValue:positionStr];
+    FBSDKLikeControl *btn = [self likeButton];
 
-    if ([position isEqualToString:@"bottom"]) {
+    if ([auxiliaryViewPosition isEqualToString:@"bottom"]) {
         btn.likeControlAuxiliaryPosition = FBSDKLikeControlAuxiliaryPositionBottom;
-    } else if ([position isEqualToString:@"inline"]) {
+    } else if ([auxiliaryViewPosition isEqualToString:@"inline"]) {
         btn.likeControlAuxiliaryPosition = FBSDKLikeControlAuxiliaryPositionInline;
-    } else if ([position isEqualToString:@"top"]) {
+    } else if ([auxiliaryViewPosition isEqualToString:@"top"]) {
         btn.likeControlAuxiliaryPosition = FBSDKLikeControlAuxiliaryPositionTop;
+    } else {
+        NSLog(@"[ERROR] Unknown LikeButton value for \"auxiliaryViewPosition\" provided: %@", auxiliaryViewPosition);
     }
 }
 
-- (void)setHorizontalAlignment_:(id)alignStr
+- (void)setHorizontalAlignment_:(NSString * _Nonnull)horizontalAlignment
 {
-    ENSURE_SINGLE_ARG(alignStr, NSString);
-    FBSDKLikeControl *btn = [self like];
-    NSString *align = [TiUtils stringValue:alignStr];
+    FBSDKLikeControl *btn = [self likeButton];
 
-    if ([align isEqualToString:@"center"]) {
+    if ([horizontalAlignment isEqualToString:@"center"]) {
         btn.likeControlHorizontalAlignment = FBSDKLikeControlHorizontalAlignmentCenter;
-    } else if ([align isEqualToString:@"left"]) {
+    } else if ([horizontalAlignment isEqualToString:@"left"]) {
         btn.likeControlHorizontalAlignment = FBSDKLikeControlHorizontalAlignmentLeft;
-    } else if ([align isEqualToString:@"right"]) {
+    } else if ([horizontalAlignment isEqualToString:@"right"]) {
         btn.likeControlHorizontalAlignment = FBSDKLikeControlHorizontalAlignmentRight;
+    } else {
+        NSLog(@"[ERROR] Unknown LikeButton value for \"horizontalAlignment\" provided: %@", horizontalAlignment);
     }
 }
 
-- (void)setObjectType_:(id)typeStr
+- (void)setObjectType_:(id _Nullable)unused
 {
-    ENSURE_SINGLE_ARG(typeStr, NSString);
     DEPRECATED_REMOVED(@"Facebook.likeButton.objectType", @"5.0.0", @"5.0.0");
 }
 
-- (void)setSoundEnabled_:(id)sound
+- (void)setSoundEnabled_:(NSNumber *)soundEnabled
 {
-    ENSURE_SINGLE_ARG(sound, NSNumber);
-    FBSDKLikeControl *btn = [self like];
-    btn.soundEnabled = [TiUtils boolValue:sound];
+    [[self likeButton] setSoundEnabled:[TiUtils boolValue:soundEnabled]];
 }
 
 @end
