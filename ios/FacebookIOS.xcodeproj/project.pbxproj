@@ -148,24 +148,10 @@
 		08FB77AEFE84172EC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				BBA44FD81A93097B00D4C043 /* FacebookLoginButtonProxy.m */,
-				BBA44FD91A93097B00D4C043 /* FacebookLoginButtonProxy.h */,
-				BBA44FDA1A93097B00D4C043 /* FacebookLoginButton.m */,
-				BBA44FDB1A93097B00D4C043 /* FacebookLoginButton.h */,
-				BBA44FDC1A93097B00D4C043 /* FacebookModuleAssets.m */,
-				BBA44FDD1A93097B00D4C043 /* FacebookModuleAssets.h */,
-				BBA44FDE1A93097B00D4C043 /* FacebookModule.m */,
-				BBA44FDF1A93097B00D4C043 /* FacebookModule.h */,
-				BBA44FE01A93097B00D4C043 /* FacebookLikeButtonProxy.m */,
-				BBA44FE11A93097B00D4C043 /* FacebookLikeButtonProxy.h */,
-				BBA44FE21A93097B00D4C043 /* FacebookLikeButton.h */,
-				BBA44FE31A93097B00D4C043 /* FacebookLikeButton.m */,
-				3A03CECC1C6142C3003A9ADF /* FacebookMessengerButtonProxy.h */,
-				3A03CECD1C6142C3003A9ADF /* FacebookMessengerButtonProxy.m */,
-				3A03CED01C6142D4003A9ADF /* FacebookMessengerButton.h */,
-				3A03CED11C6142D4003A9ADF /* FacebookMessengerButton.m */,
-				3A03CED41C6147C9003A9ADF /* FacebookConstants.h */,
-				3A8CA5471D58B6DC00E6DADF /* FacebookConstants.m */,
+				DB5F459C1F22A5E5008031C4 /* Module */,
+				DB5F459E1F22A5F3008031C4 /* Messenger Button */,
+				DB5F459B1F22A5DD008031C4 /* Login Button */,
+				DB5F459D1F22A5EB008031C4 /* Like Button */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -177,6 +163,52 @@
 				24DD6D1B1134B66800162E58 /* titanium.xcconfig */,
 			);
 			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		DB5F459B1F22A5DD008031C4 /* Login Button */ = {
+			isa = PBXGroup;
+			children = (
+				BBA44FD91A93097B00D4C043 /* FacebookLoginButtonProxy.h */,
+				BBA44FD81A93097B00D4C043 /* FacebookLoginButtonProxy.m */,
+				BBA44FDB1A93097B00D4C043 /* FacebookLoginButton.h */,
+				BBA44FDA1A93097B00D4C043 /* FacebookLoginButton.m */,
+			);
+			name = "Login Button";
+			sourceTree = "<group>";
+		};
+		DB5F459C1F22A5E5008031C4 /* Module */ = {
+			isa = PBXGroup;
+			children = (
+				3A03CED41C6147C9003A9ADF /* FacebookConstants.h */,
+				3A8CA5471D58B6DC00E6DADF /* FacebookConstants.m */,
+				BBA44FDD1A93097B00D4C043 /* FacebookModuleAssets.h */,
+				BBA44FDC1A93097B00D4C043 /* FacebookModuleAssets.m */,
+				BBA44FDF1A93097B00D4C043 /* FacebookModule.h */,
+				BBA44FDE1A93097B00D4C043 /* FacebookModule.m */,
+			);
+			name = Module;
+			sourceTree = "<group>";
+		};
+		DB5F459D1F22A5EB008031C4 /* Like Button */ = {
+			isa = PBXGroup;
+			children = (
+				BBA44FE11A93097B00D4C043 /* FacebookLikeButtonProxy.h */,
+				BBA44FE01A93097B00D4C043 /* FacebookLikeButtonProxy.m */,
+				BBA44FE21A93097B00D4C043 /* FacebookLikeButton.h */,
+				BBA44FE31A93097B00D4C043 /* FacebookLikeButton.m */,
+			);
+			name = "Like Button";
+			sourceTree = "<group>";
+		};
+		DB5F459E1F22A5F3008031C4 /* Messenger Button */ = {
+			isa = PBXGroup;
+			children = (
+				3A03CECC1C6142C3003A9ADF /* FacebookMessengerButtonProxy.h */,
+				3A03CECD1C6142C3003A9ADF /* FacebookMessengerButtonProxy.m */,
+				3A03CED01C6142D4003A9ADF /* FacebookMessengerButton.h */,
+				3A03CED11C6142D4003A9ADF /* FacebookMessengerButton.m */,
+			);
+			name = "Messenger Button";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
