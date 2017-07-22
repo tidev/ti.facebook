@@ -4,11 +4,14 @@
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  */
+
 #import "TiUIView.h"
+
 #import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 
 @interface FacebookMessengerButton : TiUIView {
-    UIButton *messengerButton;
+    @private
+    UIButton *_messengerButton;
 }
 
 - (UIButton *)messengerButton;

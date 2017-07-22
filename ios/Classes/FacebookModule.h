@@ -11,7 +11,9 @@
  */
 
 #import "TiModule.h"
+
 #import <Social/Social.h>
+
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
@@ -19,9 +21,9 @@
 
 @interface FacebookModule : TiModule <FBSDKSharingDelegate, FBSDKGameRequestDialogDelegate, FBSDKAppInviteDialogDelegate>
 {
-    NSString *uid;
-    NSArray *permissions;
-    FBSDKLoginBehavior loginBehavior;
+    NSString *_userID;
+    NSArray *_permissions;
+    FBSDKLoginBehavior _loginBehavior;
 }
 
 - (void)authorize:(id)args;

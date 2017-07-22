@@ -10,19 +10,14 @@
 
 @implementation FacebookLoginButton
 
-- (void)dealloc
-{
-    RELEASE_TO_NIL(login);
-    [super dealloc];
-}
-
 - (FBSDKLoginButton *)loginButton
 {
-    if (login == nil) {
-        login = [FBSDKLoginButton new];
-        [self addSubview:login];
+    if (_loginButton == nil) {
+        _loginButton = [[FBSDKLoginButton alloc] init];
+        [self addSubview:_loginButton];
     }
-    return login;
+
+    return _loginButton;
 }
 
 - (void)frameSizeChanged:(CGRect)frame bounds:(CGRect)bounds

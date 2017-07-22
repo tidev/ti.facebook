@@ -10,19 +10,14 @@
 
 @implementation FacebookLikeButton
 
-- (void)dealloc
-{
-    RELEASE_TO_NIL(like);
-    [super dealloc];
-}
-
 - (FBSDKLikeControl *)like
 {
-    if (like == nil) {
-        like = [[FBSDKLikeControl alloc] init];
-        [self addSubview:like];
+    if (_likeButton == nil) {
+        _likeButton = [[FBSDKLikeControl alloc] init];
+        [self addSubview:_likeButton];
     }
-    return like;
+
+    return _likeButton;
 }
 
 - (void)frameSizeChanged:(CGRect)frame bounds:(CGRect)bounds
@@ -38,24 +33,21 @@
 - (void)setObjectID_:(id)idString
 {
     ENSURE_SINGLE_ARG(idString, NSString);
-    FBSDKLikeControl *btn = [self like];
-    NSString* objectID = [TiUtils stringValue:idString];
-    btn.objectID = objectID;
+    [[self like] setObjectID:[TiUtils stringValue:idString]];
 }
 
 - (void)setForegroundColor_:(id)colorVal
 {
     ENSURE_SINGLE_ARG(colorVal, NSObject);
-    FBSDKLikeControl *btn = [self like];
-    UIColor *c = [[TiUtils colorValue:colorVal] color];
-    btn.foregroundColor = c;
+    [[self like] setForegroundColor:[[TiUtils colorValue:colorVal] color]];
 }
 
 - (void)setLikeViewStyle_:(id)styleStr
 {
     ENSURE_SINGLE_ARG(styleStr, NSString);
     FBSDKLikeControl *btn = [self like];
-    NSString* style = [TiUtils stringValue:styleStr];
+    NSString *style = [TiUtils stringValue:styleStr];
+
     if ([style isEqualToString:@"box_count"]) {
         btn.likeControlStyle = FBSDKLikeControlStyleBoxCount;
     } else if ([style isEqualToString:@"button"]) {
@@ -70,7 +62,8 @@
 {
     ENSURE_SINGLE_ARG(positionStr, NSString);
     FBSDKLikeControl *btn = [self like];
-    NSString* position = [TiUtils stringValue:positionStr];
+    NSString *position = [TiUtils stringValue:positionStr];
+
     if ([position isEqualToString:@"bottom"]) {
         btn.likeControlAuxiliaryPosition = FBSDKLikeControlAuxiliaryPositionBottom;
     } else if ([position isEqualToString:@"inline"]) {
@@ -84,7 +77,8 @@
 {
     ENSURE_SINGLE_ARG(alignStr, NSString);
     FBSDKLikeControl *btn = [self like];
-    NSString* align = [TiUtils stringValue:alignStr];
+    NSString *align = [TiUtils stringValue:alignStr];
+
     if ([align isEqualToString:@"center"]) {
         btn.likeControlHorizontalAlignment = FBSDKLikeControlHorizontalAlignmentCenter;
     } else if ([align isEqualToString:@"left"]) {

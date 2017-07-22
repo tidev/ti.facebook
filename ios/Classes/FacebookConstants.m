@@ -6,8 +6,9 @@
 //
 //
 
-#import <Foundation/Foundation.h>
 #import "FacebookConstants.h"
+
+#import <Foundation/Foundation.h>
 
 NSString * const TiFacebookEventTypeShareCompleted = @"shareCompleted";
 

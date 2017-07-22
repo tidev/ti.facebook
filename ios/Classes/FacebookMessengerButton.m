@@ -11,14 +11,6 @@
 
 @implementation FacebookMessengerButton
 
-- (void)dealloc
-{
-    [messengerButton removeTarget:self action:@selector(didTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
-    RELEASE_TO_NIL(messengerButton);
-    
-    [super dealloc];
-}
-
 - (FacebookMessengerButtonProxy *)messengerProxy
 {
     return (FacebookMessengerButtonProxy *)[self proxy];
@@ -26,29 +18,29 @@
 
 - (UIButton *)messengerButton
 {
-    if (messengerButton == nil) {
+    if (_messengerButton == nil) {
         NSUInteger mode = [TiUtils intValue:[[self messengerProxy] valueForKey:@"mode"] def:TiFacebookShareButtonModeRectangular];
         NSUInteger style = [TiUtils intValue:[[self messengerProxy] valueForKey:@"style"] def:FBSDKMessengerShareButtonStyleBlue];
         
         if (mode == TiFacebookShareButtonModeRectangular) {
-            messengerButton = [FBSDKMessengerShareButton rectangularButtonWithStyle:style];
+            _messengerButton = [FBSDKMessengerShareButton rectangularButtonWithStyle:style];
         } else if (mode == TiFacebookShareButtonModeCircular) {
             if ([[self messengerProxy] valueForKey:@"width"]) {
-                messengerButton = [FBSDKMessengerShareButton circularButtonWithStyle:style width:[TiUtils floatValue:[[self messengerProxy] valueForKey:@"width"]]];
+                _messengerButton = [FBSDKMessengerShareButton circularButtonWithStyle:style width:[TiUtils floatValue:[[self messengerProxy] valueForKey:@"width"]]];
             } else {
-                messengerButton = [FBSDKMessengerShareButton circularButtonWithStyle:style];
+                _messengerButton = [FBSDKMessengerShareButton circularButtonWithStyle:style];
             }
         } else {
             [[self messengerProxy] throwException:@"No messenger button mode specified." subreason:@"Please specify the messenger button mode to either MESSENGER_BUTTON_MODE_RECTANGULAR or MESSENGER_BUTTON_MODE_CIRCULAR" location:CODELOCATION];
         }
         
-        [self setFrame:[messengerButton bounds]];
-        [self addSubview:messengerButton];
+        [self setFrame:[_messengerButton bounds]];
+        [self addSubview:_messengerButton];
         
-        [messengerButton addTarget:self action:@selector(didTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+        [_messengerButton addTarget:self action:@selector(didTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
 
     }
-    return messengerButton;
+    return _messengerButton;
 }
 
 - (void)frameSizeChanged:(CGRect)frame bounds:(CGRect)bounds
