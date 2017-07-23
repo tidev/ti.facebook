@@ -9,6 +9,8 @@
 #import "FacebookMessengerButton.h"
 #import "TiUtils.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation FacebookMessengerButtonProxy
 
 #pragma mark Layout Helper
@@ -38,3 +40,5 @@ USE_VIEW_FOR_VERIFY_HEIGHT
 USE_VIEW_FOR_VERIFY_WIDTH
 
 @end
+
+NS_ASSUME_NONNULL_END

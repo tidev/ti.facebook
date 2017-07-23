@@ -9,6 +9,8 @@
 
 #import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface FacebookMessengerButton : TiUIView {
     @private
     UIButton *_messengerButton;
@@ -17,3 +19,5 @@
 - (UIButton *)messengerButton;
 
 @end
+
+NS_ASSUME_NONNULL_END

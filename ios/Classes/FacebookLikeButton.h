@@ -9,11 +9,13 @@
 
 #import <FBSDKShareKit/FBSDKShareKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface FacebookLikeButton : TiUIView {
     FBSDKLikeControl *_likeButton;
 }
 
-- (void)setObjectId_:(id _Nullable)unused;
+- (void)setObjectId_:(__unused id)unused;
 
 - (void)setObjectID_:(NSString * _Nonnull)objectID;
 
@@ -25,8 +27,10 @@
 
 - (void)setHorizontalAlignment_:(NSString * _Nonnull)horizontalAlignment;
 
-- (void)setObjectType_:(id _Nullable)unused;
+- (void)setObjectType_:(__unused id)unused;
 
 - (void)setSoundEnabled_:(NSNumber * _Nonnull)soundEnabled;
 
 @end
+
+NS_ASSUME_NONNULL_END

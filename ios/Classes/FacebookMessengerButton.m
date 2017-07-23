@@ -9,6 +9,8 @@
 #import "FacebookMessengerButtonProxy.h"
 #import "FacebookConstants.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation FacebookMessengerButton
 
 - (FacebookMessengerButtonProxy *)messengerProxy
@@ -48,7 +50,7 @@
     [TiUtils setView:[self messengerButton] positionRect:bounds];
 }
 
-- (IBAction)didTouchUpInside:(id)sender
+- (void)didTouchUpInside:(id)sender
 {
     if ([[self messengerProxy] _hasListeners:@"click"]) {
         [[self messengerProxy] fireEvent:@"click" withObject:nil];
@@ -71,3 +73,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -21,6 +21,8 @@
 
 NSDictionary *launchOptions = nil;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation FacebookModule
 
 #pragma mark Internal
@@ -39,7 +41,7 @@ NSDictionary *launchOptions = nil;
 
 #pragma mark Lifecycle
 
-- (void)handleRelaunch:(NSNotification *)notification
+- (void)handleRelaunch:(NSNotification * _Nullable)notification
 {
     launchOptions = [[TiApp app] launchOptions];
     NSString *urlString = [launchOptions objectForKey:@"url"];
@@ -63,7 +65,7 @@ NSDictionary *launchOptions = nil;
     [FBSDKAppEvents activateApp];
 }
 
-- (void)activateApp:(NSNotification *)notification
+- (void)activateApp:(NSNotification * _Nullable)notification
 {
 	[[FBSDKApplicationDelegate sharedInstance] application:[UIApplication sharedApplication] didFinishLaunchingWithOptions:[notification userInfo]];
 }
@@ -91,9 +93,9 @@ NSDictionary *launchOptions = nil;
     return [FBSDKSettings appID];
 }
 
-- (void)setAppID:(NSString * _Nonnull)value
+- (void)setAppID:(NSString * _Nonnull)appID
 {
-    [FBSDKSettings setAppID:[TiUtils stringValue:value]];
+    [FBSDKSettings setAppID:[TiUtils stringValue:appID]];
 }
 
 - (NSArray<NSString *> * _Nullable)permissions
@@ -198,7 +200,7 @@ NSDictionary *launchOptions = nil;
     _loginBehavior = [loginBehavior unsignedIntegerValue];
 }
 
-- (void)authorize:(id _Nullable)unused
+- (void)authorize:(__unused id)unused
 {
     __block FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
     [loginManager setLoginBehavior:_loginBehavior];
@@ -222,7 +224,7 @@ NSDictionary *launchOptions = nil;
     }, YES);
 }
 
-- (void)initialize:(id _Nullable)unused
+- (void)initialize:(__unused id)unused
 {
     TiThreadPerformOnMainThread(^{
         [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
@@ -246,7 +248,7 @@ NSDictionary *launchOptions = nil;
     }, YES);
 }
 
-- (void)logout:(id _Nullable)unused
+- (void)logout:(__unused id)unused
 {
     TiThreadPerformOnMainThread(^{
         FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
@@ -362,7 +364,7 @@ NSDictionary *launchOptions = nil;
     }, NO);
 }
 
-- (void)refreshPermissionsFromServer:(id _Nullable)unused
+- (void)refreshPermissionsFromServer:(__unused id)unused
 {
     TiThreadPerformOnMainThread(^{
         [FBSDKAccessToken refreshCurrentAccessToken:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
@@ -388,14 +390,14 @@ NSDictionary *launchOptions = nil;
             NSString * errorString = nil;
             NSInteger code = 0;
 
-            if (error) {
+            if (error != nil) {
                 code = [error code];
                 errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
                 if (errorString == nil) {
                     errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
                     
                     if (errorString == nil) {
-                        if ([error code] == 308) {
+                        if (code == 308) {
                             errorString = TiFacebookErrorMessageKeychainAccess;
                         } else {
                             errorString = [error localizedDescription];
@@ -409,8 +411,8 @@ NSDictionary *launchOptions = nil;
             }
 
             NSDictionary * propertiesDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                             [NSNumber numberWithBool:success], @"success",
-                                             [NSNumber numberWithBool:cancelled], @"cancelled",
+                                             NUMBOOL(success), @"success",
+                                             NUMBOOL(cancelled), @"cancelled",
                                              NUMINTEGER(code), @"code",
                                              errorString, @"error", nil];
 
@@ -439,7 +441,7 @@ NSDictionary *launchOptions = nil;
         [loginManager logInWithPublishPermissions:writePermissions fromViewController:nil handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
             BOOL success = NO;
             BOOL cancelled = NO;
-            NSString * errorString = nil;
+            NSString *errorString = nil;
             NSInteger code = 0;
 
             if (error != nil) {
@@ -449,7 +451,7 @@ NSDictionary *launchOptions = nil;
                     errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
                     
                     if (errorString == nil) {
-                        if ([error code] == 308) {
+                        if (code == 308) {
                             errorString = TiFacebookErrorMessageKeychainAccess;
                         } else {
                             errorString = [error localizedDescription];
@@ -463,8 +465,8 @@ NSDictionary *launchOptions = nil;
             }
 
             NSDictionary *propertiesDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                            [NSNumber numberWithBool:success], @"success",
-                                            [NSNumber numberWithBool:cancelled], @"cancelled",
+                                            NUMBOOL(success), @"success",
+                                            NUMBOOL(cancelled), @"cancelled",
                                             NUMINTEGER(code), @"code",
                                             errorString, @"error", nil];
 
@@ -548,7 +550,7 @@ NSDictionary *launchOptions = nil;
         [FBSDKAppLinkUtility fetchDeferredAppLink:^(NSURL *url, NSError *error) {
             NSDictionary *returnedObject;
 
-            if (url) {
+            if (url != nil) {
                 returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys:[url absoluteURL],@"url", NUMBOOL(YES),@"success", nil];
             } else {
                 NSString *errorString = @"An error occurred. Please try again.";
@@ -678,7 +680,7 @@ NSDictionary *launchOptions = nil;
 
 #pragma mark Event Listeners
 
-- (void)fireLogin:(id)result cancelled:(BOOL)cancelled withError:(NSError *)error
+- (void)fireLogin:(id _Nullable)result cancelled:(BOOL)cancelled withError:(NSError * _Nullable)error
 {
     BOOL success = (result != nil);
     NSInteger code = [error code];
@@ -755,60 +757,64 @@ NSDictionary *launchOptions = nil;
 
 - (void)sharer: (id<FBSDKSharing>)sharer didCompleteWithResults: (NSDictionary *)results
 {
-    [self fireDialogEventWithName:TiFacebookEventTypeShareCompleted success:YES andError:nil cancelled:NO];
+    [self fireDialogEventWithName:TiFacebookEventTypeShareCompleted andSuccess:YES error:nil cancelled:NO];
 }
 
 - (void)sharer:(id<FBSDKSharing>)sharer didFailWithError:(NSError *)error
 {
-    [self fireDialogEventWithName:TiFacebookEventTypeShareCompleted success:NO andError:error cancelled:NO];
+    [self fireDialogEventWithName:TiFacebookEventTypeShareCompleted andSuccess:NO error:error cancelled:NO];
 }
 
 - (void)sharerDidCancel:(id<FBSDKSharing>)sharer
 {
-    [self fireDialogEventWithName:TiFacebookEventTypeShareCompleted success:NO andError:nil cancelled:YES];
+    [self fireDialogEventWithName:TiFacebookEventTypeShareCompleted andSuccess:NO error:nil cancelled:YES];
 }
 
 #pragma Game request delegates
 
 - (void)gameRequestDialog:(FBSDKGameRequestDialog *)gameRequestDialog didCompleteWithResults:(NSDictionary *)results
 {
-    [self fireDialogEventWithName:TiFacebookEventTypeRequestDialogCompleted success:YES andError:nil cancelled:NO];
+    [self fireDialogEventWithName:TiFacebookEventTypeRequestDialogCompleted andSuccess:YES error:nil cancelled:NO];
 }
 
 - (void)gameRequestDialog:(FBSDKGameRequestDialog *)gameRequestDialog didFailWithError:(NSError *)error
 {
-    [self fireDialogEventWithName:TiFacebookEventTypeRequestDialogCompleted success:NO andError:error cancelled:NO];
+    [self fireDialogEventWithName:TiFacebookEventTypeRequestDialogCompleted andSuccess:NO error:error cancelled:NO];
 }
 
 - (void)gameRequestDialogDidCancel:(FBSDKGameRequestDialog *)gameRequestDialog
 {
-    [self fireDialogEventWithName:TiFacebookEventTypeRequestDialogCompleted success:NO andError:nil cancelled:YES];
+    [self fireDialogEventWithName:TiFacebookEventTypeRequestDialogCompleted andSuccess:NO error:nil cancelled:YES];
 }
 
 #pragma mark Invite dialog delegates
 
 - (void)appInviteDialog:(FBSDKAppInviteDialog *)appInviteDialog didFailWithError:(NSError *)error
 {
-    [self fireDialogEventWithName:TiFacebookEventTypeInviteCompleted success:YES andError:error cancelled:NO];
+    [self fireDialogEventWithName:TiFacebookEventTypeInviteCompleted andSuccess:YES error:error cancelled:NO];
 }
 
 - (void)appInviteDialog:(FBSDKAppInviteDialog *)appInviteDialog didCompleteWithResults:(NSDictionary *)results
 {
     BOOL cancelled = NO;
-    if (results) {
+    if (results != nil) {
         cancelled = [[results valueForKey:@"completionGesture"] isEqualToString:@"cancel"];
     }
-    [self fireDialogEventWithName:TiFacebookEventTypeInviteCompleted success:!cancelled andError:nil cancelled:cancelled];
+    [self fireDialogEventWithName:TiFacebookEventTypeInviteCompleted andSuccess:!cancelled error:nil cancelled:cancelled];
 }
 
-- (void)fireDialogEventWithName:(NSString *)name success:(BOOL)success andError:(NSError *)error cancelled:(BOOL)cancelled
+- (void)fireDialogEventWithName:(NSString * _Nonnull)name andSuccess:(BOOL)success error:(NSError * _Nullable)error cancelled:(BOOL)cancelled
 {
+    if (![self _hasListeners:name]) {
+        return;
+    }
+
     NSMutableDictionary *event = [NSMutableDictionary dictionaryWithDictionary:@{
         @"cancelled": NUMBOOL(cancelled),
         @"success": NUMBOOL(success)}
     ];
     
-    if (error) {
+    if (error != nil) {
         NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
         if (errorString == nil) {
             errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
@@ -824,13 +830,12 @@ NSDictionary *launchOptions = nil;
         [event setValue:errorString forKey:@"error"];
     }
     
-    if ([self _hasListeners:name]) {
-        [self fireEvent:name withObject:event];
-    }
+    [self fireEvent:name withObject:event];
 }
 
 // A function for parsing URL parameters returned by the Feed Dialog.
-- (NSDictionary *)parseURLParams:(NSString *)query {
+- (NSDictionary *)parseURLParams:(NSString *)query
+{
     NSArray *pairs = [query componentsSeparatedByString:@"&"];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     NSCharacterSet *charSet = [NSCharacterSet characterSetWithCharactersInString:@"[]"];
@@ -970,3 +975,5 @@ MAKE_SYSTEM_PROP(PLACE_LOCATION_CONFIDENCE_MEDIUM, FBSDKPlaceLocationConfidenceM
 MAKE_SYSTEM_PROP(PLACE_LOCATION_CONFIDENCE_HIGH, FBSDKPlaceLocationConfidenceHigh);
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -8,6 +8,10 @@
 #import "FacebookLoginButtonProxy.h"
 #import "TiUtils.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation FacebookLoginButtonProxy
 
 @end
+
+NS_ASSUME_NONNULL_END

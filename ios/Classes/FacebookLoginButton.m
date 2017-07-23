@@ -8,6 +8,8 @@
 #import "FacebookLoginButton.h"
 #import "TiUtils.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation FacebookLoginButton
 
 #pragma mark Internal
@@ -87,5 +89,7 @@
 {
     return NUMUINTEGER([[self loginButton] tooltipColorStyle]);
 }
+
+NS_ASSUME_NONNULL_END
 
 @end

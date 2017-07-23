@@ -8,6 +8,8 @@
 #import "FacebookLikeButton.h"
 #import "TiUtils.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation FacebookLikeButton
 
 #pragma mark Internal
@@ -29,7 +31,7 @@
 
 #pragma mark Public API's
 
-- (void)setObjectId_:(id _Nullable)unused
+- (void)setObjectId_:(__unused id)unused
 {
     DEPRECATED_REPLACED_REMOVED(@"Facebook.likeButton.objectId", @"5.0.0", @"5.0.0", @"Titanium.Facebook.likeButton.objectID");
 }
@@ -54,7 +56,7 @@
     }
     
     if ([likeViewStyle isEqualToString:@"button"]) {
-        DEPRECATED_REMOVED(@"Facebook.likeButton.likeViewStyle.button", @"5.0.0", @"5.0.0");
+        DEPRECATED_REMOVED(@"Facebook.likeButton.likeViewStyle = \"button\"", @"5.0.0", @"5.0.0");
     }
 
     btn.likeControlStyle = FBSDKLikeControlStyleStandard;
@@ -90,7 +92,7 @@
     }
 }
 
-- (void)setObjectType_:(id _Nullable)unused
+- (void)setObjectType_:(__unused id)unused
 {
     DEPRECATED_REMOVED(@"Facebook.likeButton.objectType", @"5.0.0", @"5.0.0");
 }
@@ -101,3 +103,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

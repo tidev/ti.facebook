@@ -7,6 +7,10 @@
 
 #import "TiViewProxy.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface FacebookMessengerButtonProxy : TiViewProxy
 
 @end
+
+NS_ASSUME_NONNULL_END

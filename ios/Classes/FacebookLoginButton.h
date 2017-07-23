@@ -10,6 +10,8 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface FacebookLoginButton : TiUIView {
     FBSDKLoginButton *_loginButton;
 }
@@ -46,3 +48,5 @@
 - (NSNumber * _Nonnull)tooltipColorStyle;
 
 @end
+
+NS_ASSUME_NONNULL_END
