@@ -25,12 +25,10 @@ exports.window = function(value){
      	if (e.success) {
  			alert('login from uid: '+e.uid+', name: '+JSON.parse(e.data).name);
  			label.text = 'Logged In = ' + fb.loggedIn;
-     	}
-     	else if (e.cancelled) {
+     	} else if (e.cancelled) {
        		// user cancelled 
        		alert('cancelled');
-     	}
-     	else {
+     	} else {
        		alert(e.error);   		
      	}
   	});
@@ -68,7 +66,7 @@ exports.window = function(value){
   		}
 	});
 	
-		var logoutButton = Ti.UI.createButton({
+	var logoutButton = Ti.UI.createButton({
 		title:'Custom Logout',
 		top:100,
 		width:160,
@@ -96,10 +94,8 @@ exports.window = function(value){
 	fb.addEventListener('tokenUpdated', function() {
 		var list = fb.getPermissions();
 		var text = 'Permissions granted:' + '\n';
-		for (var v in list)
-		{
-			if (v!==null)
-			{
+		for (var v in list) {
+			if (v !== null) {
 				text += list[v] + '\n';
 			}
 		}

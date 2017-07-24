@@ -1,25 +1,25 @@
-exports.window = function(value){
+exports.window = function(value) {
 	var win = Titanium.UI.createWindow({title:'Publish Stream'});
 	var fb = require('facebook');
 	function showRequestResult(e) {
 		var s = '';
 		if (e.success) {
-			s = "SUCCESS";
+			s = 'SUCCESS';
 			if (e.result) {
-				s += "; " + e.result;
+				s += '; ' + e.result;
 			}
 			if (e.data) {
-				s += "; " + e.data;
+				s += '; ' + e.data;
 			}
 			if (!e.result && !e.data) {
-				s = '"success", but no data from FB.  I am guessing you cancelled the dialog.';
+				s = ''success', but no data from FB.  I am guessing you cancelled the dialog.';
 			}
 		} else if (e.cancelled) {
-			s = "CANCELLED";
+			s = 'CANCELLED';
 		} else {
-			s = "FAIL";
+			s = 'FAIL';
 			if (e.error) {
-				s += "; " + e.error;
+				s += '; ' + e.error;
 			}
 		}
 		alert(s);
@@ -43,7 +43,7 @@ exports.window = function(value){
 		}
 	});
 	
-	fb.addEventListener('logout', function(e){
+	fb.addEventListener('logout', function(e) {
 		Ti.API.info('logout event');
 		actionsView.hide();
 	});
@@ -60,7 +60,7 @@ exports.window = function(value){
 			Titanium.UI.createButton({systemButton:Titanium.UI.iPhone.SystemButton.FLEXIBLE_SPACE}),
 			blurField],
 	});
-	blurField.addEventListener('click',function(e){
+	blurField.addEventListener('click',function(e) {
 		statusText.blur();
 	});
 	actionsView.add(statusText);
@@ -71,22 +71,20 @@ exports.window = function(value){
 	statusBtn.addEventListener('click', function() {
 		var text = statusText.value;
 		Ti.API.info('text value::'+text+';');
-		if( (text === '')){
+		if (text === '') {
 			Ti.UI.createAlertDialog({ tile:'ERROR', message:'No text to Publish !! '}).show(); 	
-		}
-		else
-		{
+		} else {
 			//If publish_actions permission is not granted, request it
-			if(fb.permissions.indexOf('publish_actions') < 0) {
-				fb.requestNewPublishPermissions(['publish_actions'],fb.AUDIENCE_FRIENDS,function(e){
-					if(e.success){
-						fb.requestWithGraphPath('me/feed', {message: text}, "POST", showRequestResult);
+			if (fb.permissions.indexOf('publish_actions') < 0) {
+				fb.requestNewPublishPermissions(['publish_actions'],fb.AUDIENCE_FRIENDS,function(e) {
+					if (e.success) {
+						fb.requestWithGraphPath('me/feed', {message: text}, 'POST', showRequestResult);
 					} else {
 						Ti.API.debug('Failed authorization due to: ' + e.error);
 					}
 				});
 			} else {
-				fb.requestWithGraphPath('me/feed', {message: text}, "POST", showRequestResult);
+				fb.requestWithGraphPath('me/feed', {message: text}, 'POST', showRequestResult);
 			} 	
 		}
 		
@@ -99,13 +97,13 @@ exports.window = function(value){
 	});
 	wall.addEventListener('click', function() {
 		var data = {
-			link: "https://developer.mozilla.org/en/JavaScript",
-			message: "Use Mozilla's online Javascript reference",
+			link: 'https://developer.mozilla.org/en/JavaScript',
+			message: 'Use Mozilla\'s online Javascript reference'
 		};
 		//If publish_actions permission is not granted, request it
-		if(fb.permissions.indexOf('publish_actions') < 0) {
-			fb.requestNewPublishPermissions(['publish_actions'],fb.AUDIENCE_FRIENDS,function(e){
-				if(e.success){
+		if (fb.permissions.indexOf('publish_actions') < 0) {
+			fb.requestNewPublishPermissions(['publish_actions'],fb.AUDIENCE_FRIENDS,function(e) {
+				if (e.success) {
 					fb.requestWithGraphPath('me/feed', data, 'POST', showRequestResult);
 				} else {
 					Ti.API.debug('Failed authorization due to: ' + e.error);
@@ -131,14 +129,12 @@ exports.window = function(value){
 		});
 	});
 	
-	fb.addEventListener('shareCompleted', function(e){
+	fb.addEventListener('shareCompleted', function(e) {
      	if (e.success) {
  			alert('Share completed');
-     	}
-     	else if (e.cancelled) {
+     	} else if (e.cancelled) {
        		alert('Share cancelled');
-     	}
-     	else {
+     	} else {
        		alert('error ' + e.errorDesciption +'. code: ' + e.code );   		
      	}
 	});
@@ -153,8 +149,8 @@ exports.window = function(value){
 		fb.presentSendRequestDialog( 
 			{message: 'Go to https://appcelerator.com/'}, 
 			{data:
-	        "{\"badge_of_awesomeness\":\"1\"," +
-	        "\"social_karma\":\"5\"}"});
+	        '{\'badge_of_awesomeness\':\'1\',' +
+	        '\'social_karma\':\'5\'}'});
 	});
 
 	fb.addEventListener('requestDialogCompleted', function(e) {
@@ -174,17 +170,17 @@ exports.window = function(value){
 
 	var likeButton = fb.createLikeButton({
 		    top: 230,
-		    height: "50%", // Note: on iOS setting Ti.UI.SIZE dimensions prevented the button click
-		    width: "50%",
-		    objectID: "https://www.facebook.com/appcelerator", // URL or Facebook ID
-		    foregroundColor: "white", // A color in Titanium format - see Facebook docs
+		    height: '50%', // Note: on iOS setting Ti.UI.SIZE dimensions prevented the button click
+		    width: '50%',
+		    objectID: 'https://www.facebook.com/appcelerator', // URL or Facebook ID
+		    foregroundColor: 'white', // A color in Titanium format - see Facebook docs
 		    likeViewStyle: 'box_count', // standard, button, box_count - see FB docs
 		    auxiliaryViewPosition: 'inline', // bottom, inline, top - see FB docs
 		    horizontalAlignment: 'left', // center, left, right - see FB docs,
 		    soundEnabled: true // boolean, iOS only
 		});
 	
-	if (Ti.Platform.osname == 'android') {
+	if (Ti.Platform.osname === 'android') {
 		likeButton.height = Ti.UI.SIZE;
 		likeButton.width = Ti.UI.SIZE;
 	} 
