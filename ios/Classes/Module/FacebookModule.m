@@ -19,8 +19,6 @@
 
 #import <FBSDKPlacesKit/FBSDKPlacesKit.h>
 
-NSDictionary *launchOptions = nil;
-
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation FacebookModule
@@ -43,19 +41,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)handleRelaunch:(NSNotification * _Nullable)notification
 {
-    launchOptions = [[TiApp app] launchOptions];
-    NSString *urlString = [launchOptions objectForKey:@"url"];
-    NSString *sourceApplication = [launchOptions objectForKey:@"source"];
+    _launchOptions = [[TiApp app] launchOptions];
+    NSString *urlString = [_launchOptions objectForKey:@"url"];
+    NSString *sourceApplication = [_launchOptions objectForKey:@"source"];
     id annotation = nil;
     
-    if ([TiUtils isIOS9OrGreater]) {
 #ifdef __IPHONE_9_0
-        annotation = [launchOptions objectForKey:UIApplicationOpenURLOptionsAnnotationKey];
-#endif
+    if ([TiUtils isIOS9OrGreater]) {
+        annotation = [_launchOptions objectForKey:UIApplicationOpenURLOptionsAnnotationKey];
     }
+#endif
     
     if (urlString != nil) {
-        [[FBSDKApplicationDelegate sharedInstance] application:[UIApplication sharedApplication] openURL: [NSURL URLWithString:urlString] sourceApplication:sourceApplication annotation:annotation];
+        [[FBSDKApplicationDelegate sharedInstance] application:[UIApplication sharedApplication]
+                                                       openURL: [NSURL URLWithString:urlString]
+                                             sourceApplication:sourceApplication
+                                                    annotation:annotation];
     }
 }
 
@@ -67,7 +68,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)activateApp:(NSNotification * _Nullable)notification
 {
-	[[FBSDKApplicationDelegate sharedInstance] application:[UIApplication sharedApplication] didFinishLaunchingWithOptions:[notification userInfo]];
+	[[FBSDKApplicationDelegate sharedInstance] application:[UIApplication sharedApplication]
+                             didFinishLaunchingWithOptions:[notification userInfo]];
 }
 
 - (void)shutdown:(id)sender
@@ -262,17 +264,13 @@ NS_ASSUME_NONNULL_BEGIN
         
     TiThreadPerformOnMainThread(^{
         FBSDKShareLinkContent *content = [FacebookModule shareLinkContentFromDictionary:params];
-        NSNumber *mode = [params objectForKey:@"mode"];
-        
         FBSDKShareDialog *dialog = [[FBSDKShareDialog alloc] init];
+
+        [dialog setMode:[TiUtils intValue:[params objectForKey:@"mode"] def:FBSDKShareDialogModeAutomatic]];
         [dialog setFromViewController:nil];
         [dialog setShareContent:content];
         [dialog setDelegate:self];
-        
-        if (mode != nil) {
-            [dialog setMode:[TiUtils intValue:[params objectForKey:@"mode"]]];
-        }
-        
+
         [dialog show];
     }, NO);
 }
@@ -913,17 +911,19 @@ NS_ASSUME_NONNULL_BEGIN
 // http://stackoverflow.com/a/41555957/5537752
 + (NSData *)dataFromHexString:(NSString *)string
 {
-  NSMutableData *stringData = [[NSMutableData alloc] init];
-  unsigned char whole_byte;
-  char byte_chars[3] = {'\0','\0','\0'};
-  int i;
-  for (i = 0; i < [string length] / 2; i++) {
-    byte_chars[0] = [string characterAtIndex:i * 2];
-    byte_chars[1] = [string characterAtIndex:i * 2 + 1];
-    whole_byte = strtol(byte_chars, NULL, 16);
-    [stringData appendBytes:&whole_byte length:1];
-  }
-  return stringData;
+    NSMutableData *stringData = [[NSMutableData alloc] init];
+    unsigned char whole_byte;
+    char byte_chars[3] = {'\0','\0','\0'};
+    int i;
+
+    for (i = 0; i < [string length] / 2; i++) {
+        byte_chars[0] = [string characterAtIndex:i * 2];
+        byte_chars[1] = [string characterAtIndex:i * 2 + 1];
+        whole_byte = strtol(byte_chars, NULL, 16);
+        [stringData appendBytes:&whole_byte length:1];
+    }
+
+    return stringData;
 }
 
 #pragma mark Constants

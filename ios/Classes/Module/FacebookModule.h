@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *_userID;
     NSArray *_permissions;
     FBSDKLoginBehavior _loginBehavior;
+    NSDictionary *_launchOptions;
 }
 
 /*!
