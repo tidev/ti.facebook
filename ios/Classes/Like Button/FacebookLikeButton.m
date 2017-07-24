@@ -1,6 +1,6 @@
 /**
- * Appcelerator Titanium Mobile
- * Copyright (c) 2009-present by Appcelerator, Inc. All Rights Reserved.
+ * Ti.Facebook
+ * Copyright (c) 2009-present by Axway Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  */
@@ -30,6 +30,11 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark Public API's
+
+- (void)setObjectType_:(__unused id)unused
+{
+    DEPRECATED_REMOVED(@"Facebook.likeButton.objectType", @"5.0.0", @"5.0.0");
+}
 
 - (void)setObjectId_:(__unused id)unused
 {
@@ -90,11 +95,6 @@ NS_ASSUME_NONNULL_BEGIN
     } else {
         NSLog(@"[ERROR] Unknown LikeButton value for \"horizontalAlignment\" provided: %@", horizontalAlignment);
     }
-}
-
-- (void)setObjectType_:(__unused id)unused
-{
-    DEPRECATED_REMOVED(@"Facebook.likeButton.objectType", @"5.0.0", @"5.0.0");
 }
 
 - (void)setSoundEnabled_:(NSNumber * _Nonnull)soundEnabled
