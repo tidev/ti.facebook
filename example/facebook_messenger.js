@@ -1,6 +1,6 @@
 exports.window = function(value) {
-	if (Ti.Platform.osname == "android") {
-		Ti.API.warn("This feature is currently iOS-only.");
+	if (Ti.Platform.osname == 'android') {
+		Ti.API.warn('This feature is currently iOS-only.');
 		return;
 	}
 	
@@ -9,7 +9,7 @@ exports.window = function(value) {
 	var win = Ti.UI.createWindow({
 		title: 'Login/Logout',
 		backgroundColor:'#fff',
-		layout: "vertical"
+		layout: 'vertical'
 	});
 
 	addButtonWithModeAndStyle(fb.MESSENGER_BUTTON_MODE_CIRCULAR,fb.MESSENGER_BUTTON_STYLE_BLUE);
@@ -27,19 +27,19 @@ exports.window = function(value) {
 	      style: style
 	    });
 
-	    btn.addEventListener("click", shareOnMessenger);
+	    btn.addEventListener('click', shareOnMessenger);
 	    win.add(btn);
 	}
 
 	function shareOnMessenger() {
-	    if (!Ti.Platform.canOpenURL("fb-messenger-api://")) {
-	        alert("No facebook messenger installed");
+	    if (!Ti.Platform.canOpenURL('fb-messenger-api://')) {
+	        alert('No facebook messenger installed');
 	        return;
 	    }
 	    fb.presentMessengerDialog({
-	        title: "Appcelerator Titanium rocks!",
-	        description: "Sent using Ti.Facebook",
-	        link: "https://appcelerator.com",
+	        title: 'Appcelerator Titanium rocks!',
+	        description: 'Sent using Ti.Facebook',
+	        link: 'https://appcelerator.com',
 	        to: []
 	    });
 	}

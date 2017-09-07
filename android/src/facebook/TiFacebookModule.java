@@ -540,7 +540,19 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			String picture = (String) args.get("picture");
 			String placeId = (String) args.get("placeId");
 			String ref = (String) args.get("ref");
-            
+
+			if (title != null) {
+				Log.w(TAG, "Ti.Facebook.presentShareDialog.title has been deprecated as of the Graph v2.9 changes.");
+			}
+
+			if (description != null) {
+				Log.w(TAG, "Ti.Facebook.presentShareDialog.description has been deprecated as of the Graph v2.9 changes.");
+			}
+
+			if (picture != null) {
+				Log.w(TAG, "Ti.Facebook.presentShareDialog.picture has been deprecated as of the Graph v2.9 changes.");
+			}
+
 			switch(TiConvert.toInt(args.get("mode"), TiFacebookModule.SHARE_DIALOG_MODE_AUTOMATIC)) {
 				case TiFacebookModule.SHARE_DIALOG_MODE_NATIVE:
 					mode = Mode.NATIVE;

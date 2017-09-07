@@ -3,8 +3,8 @@ name: Modules.Facebook
 summary: |
     Add-on Facebook module.
 description: |
-    The Facebook module is used for connecting your application with
-    Facebook. This module supports the following features:
+    The Facebook module is used for connecting your application with Facebook. 
+    This module supports the following features:
 
     * Logging in to Facebook and authorizing your application with either the
       [Login button](Modules.Facebook.LoginButton) or programatically.
@@ -80,6 +80,9 @@ description: |
 
     * **LoginButton style property** -- Facebook redesigned its Login button and the
       style can no longer be changed.
+      
+    * **Places API** -- Fetch nearby places using the current location or a specified
+      search-tearm.
 
     ## Getting Started
 
@@ -366,11 +369,11 @@ description: |
     call the [presentShareDialog()](Modules.Facebook.presentShareDialog) to present it, else call the
     [presentWebShareDialog()](Modules.Facebook.presentWebShareDialog) method to present the Feed dialog.
 
-    Pass either method parameters you want to add to the post, such as a link or picture, or to
+    Pass either method parameters you want to add to the post, such as a `link` or `hashtag`, or to
     share the user's status, do not pass any parameters to the methods.
 
     To monitor if the share request succeeded or not, listen to the <Modules.Facebook.shareCompleted>
-    event.
+    event. It uses the same arguments as `presentMessengerDialog`.
 
             fb.addEventListener('shareCompleted', function (e) {
                 if (e.success) {
@@ -382,9 +385,7 @@ description: |
 
             fb.presentShareDialog({
                 link: 'https://appcelerator.com/',
-                title: 'great product',
-                description: 'Titanium is a great product',
-                picture: 'http://www.appcelerator.com/wp-content/uploads/scale_triangle1.png'
+                hashtag: 'codestrong'
             });
 
 
@@ -435,12 +436,10 @@ description: |
     A messenger dialog allows a user to send content to the Facebook Messenger using your application.
 
     To send a message to a user, call the [presentMessengerDialog()](Modules.Facebook.presentMessengerDialog) method
-    and pass the method a dictionary with the optional values "title", "description", "link", "to", "placeID"
-    and "referal".
+    and pass the method a dictionary with the optional values "hashtag", "link", "to", "placeID"
+    and "referal". It uses the same arguments as `presentShareDialog`.
 
             fb.presentMessengerDialog({
-                title: "Appcelerator Titanium rocks!", // The title of the link
-                description: "Shared from my Titanium application", // The description of the link
                 link: "https://appcelerator.com", // The link you want to share
                 referal: "ti_app", // The referal to be added as a suffix to your link
                 placeID: "my_id", // The ID for a place to tag with this content
@@ -481,6 +480,28 @@ description: |
         win.add(likeButton);
 
     For more information, see the [LikeButton API reference](Modules.Facebook.LikeButton).
+    
+    ### Fetch Places
+    
+    The Facebook SDK supports fetching places since Graph API v2.9. You are able to use the
+    official FBSDKPlacesKit API in Titanium SDK 6.2.0 and later to fetch places by 
+    the current user location or a specified search tearm. 
+    Example of using the current location:
+    
+        fb.fetchNearbyPlacesForCurrentLocation({
+            confidenceLevel: fb.PLACE_LOCATION_CONFIDENCE_NOT_APPLICABLE, // optional
+            fields: [], // optional, see https://developers.facebook.com/docs/places/fields
+            success: function(e) {
+                alert('Successfully fetched places!');
+                Ti.API.info(e);
+            },
+            error: function(e) {
+                alert('Error fetching places!');
+                Ti.API.error(e);
+            }
+        }); 
+        
+    Check out the full example in examples/facebook_places.js.
 
 extends: Titanium.Module
 since: "3.1.0"
@@ -532,31 +553,6 @@ methods:
         type: Titanium.Proxy
     since: 4.0.0
     platforms: [android]
-
-  - name: dialog
-    summary: Opens a supported Facebook dialog.
-    deprecated:
-        since: 4.0.0
-        removed: 4.0.0
-    description: |
-        For a list of dialogs, parameters, and response formats, see the
-        [official documentation for Facebook Dialogs](https://developers.facebook.com/docs/javascript/reference/FB.ui).
-
-        The callback is invoked when the dialog is closed, either because the user
-        approved the action, or canceled the dialog.
-    parameters:
-      - name: action
-        summary: Specifies which dialog to show, such as "feed".
-        type: String
-
-      - name: params
-        summary: |
-            A dictionary object for pre-filling some of the dialog's fields.
-        type: Object
-
-      - name: callback
-        summary: Callback to invoke  when the user completes or cancels the dialog.
-        type: Callback<FacebookDialogResponse>
 
   - name: initialize
     summary: |
@@ -624,16 +620,6 @@ methods:
   - name: logout
     summary: Clears the OAuth `accessToken` and logs out the user.
 
-  - name: publishInstall
-    deprecated:
-        since: 4.0.0
-        removed: 4.0.0
-    summary: |
-        Manually publish an attributed install to the facebook graph.
-    description: |
-        Be sure to set your [appid](Modules.Facebook.appid) before calling `publishInstall`.
-    since: "3.4.1"
-
   - name: presentInviteDialog
     summary: |
         Opens a supported Facebook Invite dialog from the Facebook App.
@@ -663,7 +649,7 @@ methods:
       - name: params
         summary: |
             A dictionary object containing optional parameters.
-        type: ShareDialogParams
+        type: ShareLinkContentParams
     since: 4.0.0
 
   - name: presentMessengerDialog
@@ -680,27 +666,9 @@ methods:
       - name: params
         summary: |
             A dictionary object containing optional parameters.
-        type: MessengerDialogParams
+        type: ShareLinkContentParams
     since: "5.4.0"
     platforms: [iphone, ipad]
-
-  - name: presentWebShareDialog
-    summary: |
-        Opens a web version of the Share dialog (Feed dialog). Does not depend on the Facebook app.
-    description: |
-        This is a fallback for when Share dialog is not available.
-
-        Listen for the <Modules.Facebook.shareCompleted> to be notified if the attempt was
-        successful or not.
-    parameters:
-      - name: params
-        summary: |
-            A dictionary object containing optional parameters.
-        type: ShareDialogParams
-    since: 4.0.0
-    deprecated:
-        since: 5.0.0
-        removed: 5.0.0
 
   - name: presentSendRequestDialog
     summary: |
@@ -715,34 +683,6 @@ methods:
         type: RequestDialogParams
     since: 4.0.0
 
-  - name: reauthorize
-    summary: Makes a request to Facebook for additional permissions.
-    deprecated:
-        since: 4.0.0
-        removed: 4.0.0
-    description: |
-        iOS 6's facebook login forbids minimum authorization to include write permissions.
-        In order to make any write actions, the app must reauthorize asking for the additional
-        permissions. If the application already has these permissions, there will be no user
-        interaction.
-    platforms: [iphone, ipad]
-    parameters:
-      - name: permissions
-        summary: |
-            Array of additional permissions to request. For a complete list of permissions, see the
-            [official Facebook Permissions Reference](http://developers.facebook.com/docs/reference/api/permissions/)
-        type: Array<String>
-
-      - name: audience
-        summary: |
-            The extent of the visibility write permissions will have. 
-            The value of audience should be one of "me", "friends", or "everyone"
-        type: String
-
-      - name: callback
-        summary: Callback to invoke when the request completes.
-        type: Callback<FacebookReauthResponse>
-
   - name: refreshPermissionsFromServer
     summary: Makes a request to Facebook to get the latest permissions granted.
     description: |
@@ -752,32 +692,6 @@ methods:
         Listen for the <Modules.Facebook.tokenUpdated> event to be notified if the attempt was
         successful.
     since: 4.0.0
-
-  - name: request
-    summary: Makes a request to the legacy Facebook REST API.
-    deprecated:
-        since: 4.0.0
-        removed: 4.0.0
-        notes: |
-            As of April 30, 2014, Facebook no longer supports its version 1.0 REST API. Use the
-            <Modules.Facebook.requestWithGraphPath> method to make Facebook Graph API requests.
-    description: |
-        For details on API calls and responses, see the
-        [offical Facebook REST API documentation](http://developers.facebook.com/docs/reference/rest/).
-    parameters:
-
-      - name: method
-        summary: The REST API method to call.
-        type: String
-
-      - name: params
-        summary: |
-            A dictionary object for setting parameters required by the call, if any.
-        type: Object
-
-      - name: callback
-        summary: Callback to invoke  when the request completes.
-        type: Callback<FacebookRESTResponse>
 
   - name: requestWithGraphPath
     summary: Makes a Facebook Graph API request.
@@ -854,14 +768,95 @@ methods:
 
   - name: fetchDeferredAppLink
     summary: Fetch the deferred app link
-    description: Deferred deep linking allows you to send people to a custom view after they installed your app via the app store.
+    description: |
+        Deferred deep linking allows you to send people to a custom view after 
+        they installed your app via the app store.
     parameters:
-
       - name: callback
         summary: Callback to invoke when the request completes.
         type: Callback<FacebookDeferredAppLinkResponse>
-
     since: "5.4.0"
+    
+  - name: fetchNearbyPlacesForCurrentLocation
+    summary: Query for places the device is likely located in.
+    description: |
+        This is an asynchronous call, due to the need to fetch the current location 
+        from the device. Note that the results of the graph request are improved 
+        if the user has both Wi-Fi and Bluetooth enabled.
+        
+        **Note**: Remember to request the location permssions with <Titanium.Geolocation>
+        and include either the `NSLocationWhenInUseUsageDescription` or the
+        `NSLocationAlwaysUsageDescription` key in your plist before using this method.
+        The Facebook graph also requires the `FacebookClientToken` to be present in the 
+        plist, so check the Facebook Developer Portal > Apps > Your App > Settings > Advanced 
+        for your OAuth client-token.
+    parameters:
+      - name: confidenceLevel
+        summary: The Minimum Confidence level place estimate candidates must meet.
+        type: Number
+        constants: [Modules.Facebook.PLACE_LOCATION_CONFIDENCE_*]
+        default: Modules.Facebook.PLACE_LOCATION_CONFIDENCE_NOT_APPLICABLE
+        optional: true
+      - name: fields
+        summary: | 
+            A list of fields that you might want the request to return. 
+            See the [Facebook docs](https://developers.facebook.com/docs/places/fields) for all possible values.
+        type: Array<String>
+        optional: true
+      - name: success
+        summary: The callback triggered when places are successfully fetched.
+        type: Callback
+      - name: error
+        summary: The callback triggered when places could not be fetched.
+        type: Callback
+    since: "6.2.0"
+    platforms: [iphone, ipad]
+    
+  - name: fetchNearbyPlacesForSearchTearm
+    summary: Query for nearby places using the device's current location and search-term. 
+    description: |
+        This is an asynchronous call, due to the need to fetch the current location from the device.
+                   
+        **Note**: Remember to request the location permssions with <Titanium.Geolocation>
+        and include either the `NSLocationWhenInUseUsageDescription` or the
+        `NSLocationAlwaysUsageDescription` key in your plist before using this method.
+        The Facebook graph also requires the `FacebookClientToken` to be present in the 
+        plist, so check the Facebook Developer Portal > Apps > Your App > Settings > Advanced 
+        for your OAuth client-token.
+    parameters:
+      - name: searchTearm
+        summary: The term to search for in the Places Graph.
+        type: String
+      - name: categories
+        summary: |
+            The categories for the place. Each string in this array must be a 
+            category recognized by the SDK. See the [Facebook Docs](https://developers.facebook.com/docs/places/web/search#categories) for all 
+            possible values.
+        type: Array<String>
+        optional: true
+      - name: fields
+        summary: |
+            A list of fields that you might want the request to return. 
+            See the [Facebook docs](https://developers.facebook.com/docs/places/fields) for all possible values.
+        type: Array<String>
+        optional: true
+      - name: distance
+        summary: The search radius. For an unlimited radius, use 0.
+        default: 0
+        type: Number
+        optional: true
+      - name: cursor
+        summary: A pagination cursor.
+        type: String
+        optional: true
+      - name: success
+        summary: The callback triggered when places are successfully fetched.
+        type: Callback
+      - name: error
+        summary: The callback triggered when places could not be fetched.
+        type: Callback
+    since: "6.2.0"
+    platforms: [iphone, ipad]
 
   - name: shareMediaToMessenger
     summary: Call this method to open Messenger and share an image, animated GIF or video.
@@ -884,7 +879,7 @@ methods:
             from not being updated although specified in the parameters. You can use 
             the <Modules.Facebook.appID> setter to change the appID inside your app.
         type: CurrentAccessTokenParams
-    since: "6.1.0"
+    since: "6.2.0"
     platforms: [iphone, ipad]
 
   - name: logPushNotificationOpen
@@ -1022,20 +1017,7 @@ events:
     summary: Fired when [refreshPermissionsFromServer](Modules.Facebook.refreshPermissionsFromServer) is completed.
     since: 4.0.0
 
-
 properties:
-  - name: AUDIENCE_NONE
-    summary: Invalid default audience.
-    description: |
-        Use to set the default audience with either [LoginButton.audience](Modules.Facebook.LoginButton.audience)
-        or <Modules.Facebook.requestNewPublishPermissions>.
-    type: Number
-    permission: read-only
-    since: 4.0.0
-    deprecated:
-        since: "5.0.0"
-        removed: "5.0.0"
-
   - name: AUDIENCE_ONLY_ME
     summary: Published content is only visible to the user.
     description: |
@@ -1138,6 +1120,34 @@ properties:
         removed: 4.0.0
     type: Number
     permission: read-only
+    
+  - name: PLACE_LOCATION_CONFIDENCE_NOT_APPLICABLE
+    summary: Used to indicate that any level is acceptable as a minimum threshold.
+    type: Number
+    permission: read-only
+    since: "6.2.0"
+    platforms: [iphone, ipad]
+  
+  - name: PLACE_LOCATION_CONFIDENCE_LOW
+    summary: Low confidence level.
+    type: Number
+    permission: read-only
+    since: "6.2.0"
+    platforms: [iphone, ipad]
+    
+  - name: PLACE_LOCATION_CONFIDENCE_MEDIUM
+    summary: Medium confidence level.
+    type: Number
+    permission: read-only
+    since: "6.2.0"
+    platforms: [iphone, ipad]
+    
+  - name: PLACE_LOCATION_CONFIDENCE_HIGH
+    summary: High confidence level.
+    type: Number
+    permission: read-only
+    since: "6.2.0"
+    platforms: [iphone, ipad]
 
   - name: LOGIN_BEHAVIOR_BROWSER
     summary: |
@@ -1329,7 +1339,7 @@ properties:
         If not explicitly set, the default will be read from the application's 
         plist (FacebookAppID) which is the recommended way. 
         
-        Since 6.1.0, this property also has a getter to return the currently set appID.
+        Since Titanium SDK 6.2.0, this property also has a getter to return the currently set appID.
     type: String
 
   - name: canPresentOpenGraphActionDialog
@@ -1905,47 +1915,38 @@ properties:
     type: String
 
 ---
-name: ShareDialogParams
+name: ShareLinkContentParams
 summary: |
     Optional parameters to pass to either the
     [presentShareDialog()](Modules.Facebook.presentShareDialog) or
-    [presentWebShareDialog()](Modules.Facebook.presentWebShareDialog) methods.
+    [presentWebShareDialog()](Modules.Facebook.presentMessengerDialog) methods.
 since: 4.0.0
 platforms: [android, iphone, ipad]
 properties:
-  - name: caption
-    summary: Caption for the link.
-    type: String
-    deprecated:
-        since: "5.0.0"
-        removed: "5.0.0"
-
-  - name: description
-    summary: Description associated with the link.
-    type: String
-
   - name: link
     summary: URL to share.
     type: String
 
-  - name: name
-    summary: Name or title associated with the link.
-    type: String
-    deprecated:
-        since: "5.0.0"
-        removed: "5.0.0"
+  - name: to
+    summary: List of IDs for taggable people to tag with this content.
+    description: |
+        See Facebook documentation for Taggable Friends (https://developers.facebook.com/docs/graph-api/reference/user/taggable_friends)
+    type: Array<String>
 
-  - name: title
-    summary: Title associated with the link.
+  - name: placeID
+    summary: The ID for a place to tag with this content.
     type: String
-    since: "5.0.0"
 
-  - name: picture
-    summary: Link to a thumbnail to associate with the link.
+  - name: referal
+    summary: A value to be added to the referrer URL when a person follows a link from this shared content on feed.
+    type: String
+
+  - name: hashtag
+    summary: Hashtag for the content being shared.
     type: String
 
   - name: mode
-    summary: The mode to select for presenting a share dialog.
+    summary: The mode to select for presenting a share dialog. Only used in `presentShareDialog`.
     description: |
         The automatic mode will progressively check the availability of different modes and 
         open the most appropriate mode for the dialog that is available.
@@ -1955,51 +1956,41 @@ properties:
     constants: Modules.Facebook.SHARE_DIALOG_MODE_*
     since: "6.0.0"
 
----
-name: MessengerDialogParams
-summary: |
-    Optional parameters to pass to either the
-    [presentMessengerDialog()](Modules.Facebook.presentMessengerDialog) method.
-since: "5.4.0"
-platforms: [iphone, ipad]
-properties:
   - name: title
-    summary: The title to display for this link.
-    description: |
-        This value may be discarded for specially handled links (ex: iTunes URLs).
+    summary: Title associated with the link.
     type: String
-
-  - name: description
-    summary: The description of the link.
-    description: |
-        If not specified, this field is automatically populated by information scraped from the contentURL,
-        typically the title of the page. This value may be discarded for specially handled links (ex: iTunes URLs).
-    type: String
-
-  - name: link
-    summary: URL for the content being shared.
-    description: |
-        This URL will be checked for all link meta tags for linking in platform specific ways.
-        See Facebook documentation for App Links (https://developers.facebook.com/docs/applinks/).
-    type: String
+    since: "5.0.0"
+    deprecated:
+    deprecated:
+        since: "6.2.0"
+        removed: "6.2.0"
+        notes: |
+            Facebook deprecated the "title" key in Graph v2.9, making it
+            read-only. Information about the title will instead of scraped
+            from the `link` property.
 
   - name: picture
     summary: Link to a thumbnail to associate with the link.
     type: String
+    deprecated:
+    deprecated:
+        since: "6.2.0"
+        removed: "6.2.0"
+        notes: |
+            Facebook deprecated the "picture" key in Graph v2.9, making it
+            read-only. Information about the picture will instead of scraped
+            from the `link` property.
 
-  - name: to
-    summary: List of IDs for taggable people to tag with this content.
-    description: |
-        See Facebook documentation for Taggable Friends (https://developers.facebook.com/docs/graph-api/reference/user/taggable_friends)
-    type: Array
-
-  - name: placeID
-    summary: The ID for a place to tag with this content.
+  - name: description
+    summary: Description associated with the link.
     type: String
-
-  - name: referal
-    summary: A value to be added to the referrer URL when a person follows a link from this shared content on feed.
-    type: String
+    deprecated:
+        since: "6.2.0"
+        removed: "6.2.0"
+        notes: |
+            Facebook deprecated the "description" key in Graph v2.9, making it
+            read-only. Information about the description will instead of scraped
+            from the `link` property.
 
 ---
 name: RequestDialogParams
@@ -2018,23 +2009,15 @@ properties:
     type: String
     optional: true
 
-  - name: to
-    summary: Array of pre-selected facebook ids.
-    type: Array
-    optional: true
-    deprecated:
-        since: "5.0.0"
-        removed: "5.0.0"
-
   - name: recipients
     summary: Array of pre-selected facebook ids.
-    type: Array
+    type: Array<String>
     optional: true
     since: "5.0.0"
 
   - name: recipientSuggestions
     summary: An array of user IDs that will be included in the dialog as the first suggested friends. Cannot be used together with filters.
-    type: Array
+    type: Array<String>
     optional: true
     since: "5.0.0"
 
@@ -2124,7 +2107,7 @@ properties:
 name: CurrentAccessTokenParams
 summary: Dictionary of parameter passed to [setAccessToken()](Modules.Facebook.setAccessToken).
 platforms: [iphone, ipad]
-since: "6.1.0"
+since: "6.2.0"
 properties:
   - name: accessToken
     summary: The opaque token string.

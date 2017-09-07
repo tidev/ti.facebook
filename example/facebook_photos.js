@@ -25,12 +25,12 @@ exports.window = function(value){
 		if (e.success) {
 			s = 'SUCCESS';
 			if (e.result) {
-				s += "; " + e.result;
+				s += '; ' + e.result;
 			}
 		} else {
 			s = 'FAIL';
 			if (e.error) {
-				s += "; " + e.error;
+				s += '; ' + e.error;
 			}
 		}
 		b1.title = B1_TITLE;
@@ -45,12 +45,12 @@ exports.window = function(value){
 	actionsView.add(b2);
 	
 	fb.addEventListener('login', function(e) {
-		if (e.success) {
-			actionsView.show();
-		}
 		if (e.error) {
 			alert(e.error);
+			return;
 		}
+
+		actionsView.show();
 	});
 	
 	fb.addEventListener('logout', function(e){
@@ -60,34 +60,33 @@ exports.window = function(value){
 	
 	b1.addEventListener('click', function() {
 		Titanium.Media.openPhotoGallery({
-			success:function(event)
-			{
+			success:function(event) {
 				b1.title = 'Uploading Photo...';
-				var data = {picture: event.media};
-				//If publish_actions permission is not granted, request it
-				if(fb.permissions.indexOf('publish_actions') < 0) {
+				
+				var data = { picture: event.media };
+				
+				// If publish_actions permission is not granted, request it
+				if (fb.permissions.indexOf('publish_actions') < 0) {
 					fb.requestNewPublishPermissions(['publish_actions'],fb.AUDIENCE_FRIENDS,function(e){
-						if(e.success) {
-							Ti.API.info('Permissions:'+fb.permissions);
-							fb.requestWithGraphPath('me/photos', data, "POST", showRequestResult);
-						}
-						if(e.error) {
+						if (e.error) {
 							Ti.API.info('Publish permission error');
+							return;
 						}
-						if(e.cancelled) {
+
+						if (e.cancelled) {
 							Ti.API.info('Publish permission cancelled');
+							return;
 						}
+	
+						Ti.API.info('Permissions:' + fb.permissions);
+						fb.requestWithGraphPath('me/photos', data, 'POST', showRequestResult);
 					});
 				} else {
-					fb.requestWithGraphPath('me/photos', data, "POST", showRequestResult);
+					fb.requestWithGraphPath('me/photos', data, 'POST', showRequestResult);
 				}
 			},
-			cancel:function()
-			{
-			},
-			error:function(error)
-			{
-			},
+			cancel: function() {},
+			error: function(error) {},
 			allowEditing:true
 		});
 	});
@@ -95,28 +94,32 @@ exports.window = function(value){
 	
 	b2.addEventListener('click', function() {
 		b2.title = 'Uploading Photo...';
+		
 		var f = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, 'images', 'flower.jpg');
 		var blob = f.read();
 		var data = {
 			caption: 'behold, a flower',
 			picture: blob
 		};
-		//If publish_actions permission is not granted, request it
-		if(fb.permissions.indexOf('publish_actions') < 0) {
+		
+		// If publish_actions permission is not granted, request it
+		if (fb.permissions.indexOf('publish_actions') < 0) {
 			fb.requestNewPublishPermissions(['publish_actions'],fb.AUDIENCE_FRIENDS,function(e){
-				if(e.success) {
-					Ti.API.info('Permissions:'+fb.permissions);
-					fb.requestWithGraphPath('me/photos', data, "POST", showRequestResult);
-				}
-				if(e.error) {
+				if (e.error) {
 					Ti.API.info('Publish permission error');
+					return;
 				}
-				if(e.cancelled) {
+				
+				if (e.cancelled) {
 					Ti.API.info('Publish permission cancelled');
+					return;
 				}
+				
+				Ti.API.info('Permissions:'+fb.permissions);
+				fb.requestWithGraphPath('me/photos', data, 'POST', showRequestResult);
 			});
 		} else {
-			fb.requestWithGraphPath('me/photos', data, "POST", showRequestResult);
+			fb.requestWithGraphPath('me/photos', data, 'POST', showRequestResult);
 		}
 	});
 	
