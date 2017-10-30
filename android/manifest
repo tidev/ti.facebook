@@ -4,7 +4,7 @@
 #
 version: 7.0.0
 apiversion: 4
-architectures: armeabi-v7a x86
+architectures: arm64-v8a armeabi-v7a x86
 description: facebook
 author: Mark Mokryn and Ashraf A. S. (Appcelerator)
 license: Apache License Version 2.0
