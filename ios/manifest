@@ -2,7 +2,7 @@
 # this is your module manifest and used by Titanium
 # during compilation, packaging, distribution, etc.
 #
-version: 5.6.1
+version: 5.7.0
 apiversion: 2
 description: Use the native Facebook iOS SDK in Axway Titanium.
 author: Mark Mokryn, Ng Chee Kiat and Hans Knoechel
