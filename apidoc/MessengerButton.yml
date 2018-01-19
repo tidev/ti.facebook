@@ -2,13 +2,13 @@
 name: Modules.Facebook.MessengerButton
 summary: A Facebook Messenger button.
 description: |
-    Use the [createMessengerButton()](Modules.Facebook. createMessengerButton) method to create a Messenger button.
+    Use the [createMessengerButton()](Modules.Facebook.createMessengerButton) method to create a Messenger button.
     You must set the <Modules.Facebook.MessengerButton.mode> and <Modules.Facebook.MessengerButton.style> 
     before the button is rendered.
 
     The messenger button differences between a rectangular and a circular button mode. In addition, you can set
-    different styles by using the constants <Modules.Facebook.MESSENGER_BUTTON_STYLE_BLUE>, <Modules.Facebook.MESSENGER_BUTTON_STYLE_WHITE> 
-    or <Modules.Facebook.MESSENGER_BUTTON_STYLE_WHITE_BORDERED>) to personalize the button. Note: The mode and style property can only be set
+    different styles by using the constants <Modules.Facebook.MESSENGER_BUTTON_STYLE_BLUE>, <Modules.Facebook.MESSENGER_BUTTON_STYLE_WHITE>, 
+    or <Modules.Facebook.MESSENGER_BUTTON_STYLE_WHITE_BORDERED> to personalize the button. Note: The mode and style property can only be set
     on creation. The title of the button can be localized by setting a localization for the key "Send".
 
     The messenger button has a click event to interact with the Facebook messenger. This can for example be done by 
