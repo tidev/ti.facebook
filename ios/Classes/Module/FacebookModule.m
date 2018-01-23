@@ -880,10 +880,6 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *placeID = [dictionary objectForKey:@"placeID"];
     NSString *referal = [dictionary objectForKey:@"referal"];
 
-    if (url == nil) {
-        NSLog(@"[ERROR] The \"link\" parameter is required when using share-dialogs!");
-    }
-    
     if (description != nil) {
         NSLog(@"[WARN] Setting the \"description\" is no longer possible in Ti.Facebook 5.5.0 as part of the Graph v2.9 changes.");
         NSLog(@"[WARN] It's information is scraped from the 'link' property instead, so setting it is no longer supported and will be ignored!");
