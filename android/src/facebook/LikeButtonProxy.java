@@ -36,7 +36,8 @@ public class LikeButtonProxy extends TiViewProxy
 		defaultValues.put("likeViewStyle", "standard");
 		defaultValues.put("auxiliaryViewPosition", "bottom");
 		defaultValues.put("horizontalAlignment", "center");
-		Log.d(TAG, "[VIEWPROXY LIFECYCLE EVENT] init");
+    		Log.d(TAG, "[VIEWPROXY LIFECYCLE EVENT] init");
+    		Log.w(TAG, "The LikeButton API has been deprecated by the Facebook SDK 4.29.0 and will be removed in the future");
 	}
 	
 	@Override

@@ -600,6 +600,8 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
     @Kroll.method
     public void presentInviteDialog(@Kroll.argument(optional = true) final KrollDict args)
     {
+        Log.w(TAG, "The method presentWebShareDialog has been deprecated by the Facebook SDK 4.29.0 and will be removed in the future.");
+
         AppInviteDialog appInviteDialog = new AppInviteDialog(TiApplication.getInstance().getCurrentActivity());
         
         appInviteDialog.registerCallback(callbackManager, new FacebookCallback<AppInviteDialog.Result>() {
