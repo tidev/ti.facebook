@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (FBSDKLikeControl *)likeButton
 {
     if (_likeButton == nil) {
+        DebugLog(@"[WARN] The LikeButton API was deprecated by Facebook in SDK 4.28.0 and later. The Ti.Facebook control will be removed in Ti.Facebook 6.0.0");
         _likeButton = [[FBSDKLikeControl alloc] init];
         [self addSubview:_likeButton];
     }

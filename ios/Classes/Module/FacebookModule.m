@@ -317,6 +317,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)presentInviteDialog:(NSArray<NSDictionary<NSString *, id> *> *)args
 {
+    DEPRECATED_REMOVED(@"Facebook.presentInviteDialog", @"5.7.0", @"5.7.0");
+    DebugLog(@"Facebook removed the InviteDialog API in SDK 4.28.0");
+
     NSDictionary * _Nonnull params = [args objectAtIndex:0];
 
     TiThreadPerformOnMainThread(^{
@@ -871,12 +874,12 @@ NS_ASSUME_NONNULL_BEGIN
 
     NSString *hashtag = [dictionary objectForKey:@"hashtag"];
     NSString *quote = [dictionary objectForKey:@"quote"];
+    NSArray *to = [dictionary objectForKey:@"to"];
+    NSURL *contentURL = [NSURL URLWithString:[dictionary objectForKey:@"contentURL"]];
     NSURL *url = [NSURL URLWithString:[dictionary objectForKey:@"link"]];
+    NSString *placeID = [dictionary objectForKey:@"placeID"];
+    NSString *referal = [dictionary objectForKey:@"referal"];
 
-    if (url == nil) {
-        NSLog(@"[ERROR] The \"link\" parameter is required when using share-dialogs!");
-    }
-    
     if (description != nil) {
         NSLog(@"[WARN] Setting the \"description\" is no longer possible in Ti.Facebook 5.5.0 as part of the Graph v2.9 changes.");
         NSLog(@"[WARN] It's information is scraped from the 'link' property instead, so setting it is no longer supported and will be ignored!");
@@ -900,10 +903,21 @@ NS_ASSUME_NONNULL_BEGIN
         [content setQuote:quote];
     }
 
-    [content setContentURL:url];
-    [content setPeopleIDs:[dictionary objectForKey:@"to"]];
-    [content setPlaceID:[dictionary objectForKey:@"placeID"]];
-    [content setRef:[dictionary objectForKey:@"referal"]];
+    if (contentURL != nil) {
+        [content setContentURL:contentURL];
+    }
+
+    if (to != nil) {
+        [content setPeopleIDs:to];
+    }
+  
+    if (placeID != nil) {
+        [content setPlaceID:placeID];
+    }
+  
+    if (referal != nil) {
+        [content setRef:referal];
+    }
 
     return content;
 }
