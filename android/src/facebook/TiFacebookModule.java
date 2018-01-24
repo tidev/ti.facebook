@@ -4,7 +4,7 @@
  * Please see the LICENSE included with this distribution for details.
  *
  * Appcelerator Titanium Mobile
- * Copyright (c) 2015 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2015-Present by Appcelerator, Inc. All Rights Reserved.
  * Licensed under the terms of the Apache Public License
  * Please see the LICENSE included with this distribution for details.
  *
@@ -86,41 +86,40 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	public static final String EVENT_INVITE_COMPLETE = "inviteCompleted";
 	public static final String EVENT_REQUEST_DIALOG_COMPLETE = "requestDialogCompleted";
 	
-    @Kroll.constant public static final int AUDIENCE_NONE = 0;
-    @Kroll.constant public static final int AUDIENCE_ONLY_ME = 1;
-    @Kroll.constant public static final int AUDIENCE_FRIENDS = 2;
-    @Kroll.constant public static final int AUDIENCE_EVERYONE = 3;
+    	@Kroll.constant public static final int AUDIENCE_NONE = 0;
+    	@Kroll.constant public static final int AUDIENCE_ONLY_ME = 1;
+    	@Kroll.constant public static final int AUDIENCE_FRIENDS = 2;
+    	@Kroll.constant public static final int AUDIENCE_EVERYONE = 3;
     
-    @Kroll.constant public static final int ACTION_TYPE_NONE = 0;
-    @Kroll.constant public static final int ACTION_TYPE_SEND = 1;
-    @Kroll.constant public static final int ACTION_TYPE_ASK_FOR = 2;
-    @Kroll.constant public static final int ACTION_TYPE_TURN = 3;
+    	@Kroll.constant public static final int ACTION_TYPE_NONE = 0;
+    	@Kroll.constant public static final int ACTION_TYPE_SEND = 1;
+    	@Kroll.constant public static final int ACTION_TYPE_ASK_FOR = 2;
+    	@Kroll.constant public static final int ACTION_TYPE_TURN = 3;
     
-    @Kroll.constant public static final int FILTER_NONE = 0;
-    @Kroll.constant public static final int FILTER_APP_USERS = 1;
-    @Kroll.constant public static final int FILTER_APP_NON_USERS = 2;
+    	@Kroll.constant public static final int FILTER_NONE = 0;
+    	@Kroll.constant public static final int FILTER_APP_USERS = 1;
+    	@Kroll.constant public static final int FILTER_APP_NON_USERS = 2;
     
-    @Kroll.constant public static final String LOGIN_BEHAVIOR_BROWSER = "WEB_ONLY";
-    @Kroll.constant public static final String LOGIN_BEHAVIOR_NATIVE = "NATIVE_ONLY";
-    @Kroll.constant public static final String LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK = "NATIVE_WITH_FALLBACK";
-    @Kroll.constant public static final String LOGIN_BEHAVIOR_DEVICE_AUTH = "DEVICE_AUTH";
+    	@Kroll.constant public static final String LOGIN_BEHAVIOR_BROWSER = "WEB_ONLY";
+    	@Kroll.constant public static final String LOGIN_BEHAVIOR_NATIVE = "NATIVE_ONLY";
+    	@Kroll.constant public static final String LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK = "NATIVE_WITH_FALLBACK";
+    	@Kroll.constant public static final String LOGIN_BEHAVIOR_DEVICE_AUTH = "DEVICE_AUTH";
 
-    @Kroll.constant public static final int LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC = 0;
-    @Kroll.constant public static final int LOGIN_BUTTON_TOOLTIP_BEHAVIOR_FORCE_DISPLAY = 1;
-    @Kroll.constant public static final int LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE = 2;
+    	@Kroll.constant public static final int LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC = 0;
+    	@Kroll.constant public static final int LOGIN_BUTTON_TOOLTIP_BEHAVIOR_FORCE_DISPLAY = 1;
+    	@Kroll.constant public static final int LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE = 2;
 
-    @Kroll.constant public static final String LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY = "NEUTRAL_GRAY";
-    @Kroll.constant public static final String LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE = "FRIENDLY_BLUE";
+    	@Kroll.constant public static final String LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY = "NEUTRAL_GRAY";
+    	@Kroll.constant public static final String LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE = "FRIENDLY_BLUE";
 
-    @Kroll.constant public static final int SHARE_DIALOG_MODE_AUTOMATIC = 0;
-    @Kroll.constant public static final int SHARE_DIALOG_MODE_NATIVE = 1;
-    @Kroll.constant public static final int SHARE_DIALOG_MODE_WEB = 2;
-    @Kroll.constant public static final int SHARE_DIALOG_MODE_FEED_WEB = 6; // For iOS-parity
-
+    	@Kroll.constant public static final int SHARE_DIALOG_MODE_AUTOMATIC = 0;
+    	@Kroll.constant public static final int SHARE_DIALOG_MODE_NATIVE = 1;
+    	@Kroll.constant public static final int SHARE_DIALOG_MODE_WEB = 2;
+    	@Kroll.constant public static final int SHARE_DIALOG_MODE_FEED_WEB = 6; // For iOS-parity
 
 	private static TiFacebookModule module;
 	private static String[] permissions = new String[]{};
-    private String loginBehavior;
+    	private String loginBehavior;
 
 	private KrollFunction permissionCallback = null;
 
@@ -144,19 +143,19 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		return module;
 	}
     
-    @Override
-    public void onResume(Activity activity) {
-        super.onResume(activity);
-        Log.d(TAG, "Calling activateApp");
-        AppEventsLogger.activateApp(activity);
-    }
+    	@Override
+    	public void onResume(Activity activity) {
+    	    super.onResume(activity);
+        	Log.d(TAG, "Calling activateApp");
+        	AppEventsLogger.activateApp(activity);
+    	}
     
-    @Override
-    public void onPause(Activity activity) {
-        super.onPause(activity);
-        Log.d(TAG, "Calling deactivateApp");
-        AppEventsLogger.deactivateApp(activity);
-    }
+    	@Override
+    	public void onPause(Activity activity) {
+        	super.onPause(activity);
+        	Log.d(TAG, "Calling deactivateApp");
+        	AppEventsLogger.deactivateApp(activity);
+    	}
 
 	public CallbackManager getCallbackManager() {
 		return callbackManager;
@@ -243,7 +242,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	}
 
 	@Kroll.method
-	public void requestWithGraphPath(String path, KrollDict params, String httpMethod, final KrollFunction callback){
+	public void requestWithGraphPath(String path, KrollDict params, String httpMethod, final KrollFunction callback) {
 		HttpMethod method = null;
 		if (httpMethod == null || httpMethod.length() == 0 || httpMethod.equalsIgnoreCase("get")) {
 			method = HttpMethod.GET;
@@ -359,15 +358,15 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		return null;	
 	}
     
-    @Kroll.setProperty @Kroll.method
-    public void setLoginBehavior(String behaviorConstant) {
-        loginBehavior = behaviorConstant;
-    }
+    	@Kroll.setProperty @Kroll.method
+    	public void setLoginBehavior(String behaviorConstant) {
+        	loginBehavior = behaviorConstant;
+    	}
     
-    @Kroll.getProperty @Kroll.method
-    public String getLoginBehavior() {
-        return loginBehavior;
-    }
+    	@Kroll.getProperty @Kroll.method
+    	public String getLoginBehavior() {
+        	return loginBehavior;
+    	}
 
 	@Kroll.method
 	public void requestNewReadPermissions(String[] permissions, final KrollFunction callback) {
@@ -464,12 +463,11 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	@Kroll.method
 	public void authorize() {
 		Activity activity = TiApplication.getInstance().getCurrentActivity();
-		Log.d(TAG, "authorize called, permissions length: " + TiFacebookModule.permissions.length);
-		for (int i=0; i < TiFacebookModule.permissions.length; i++){
+		for (int i = 0; i < TiFacebookModule.permissions.length; i++){
 			Log.d(TAG, "authorizing permission: " + TiFacebookModule.permissions[i]);
 		}
-        if(loginBehavior != null) {
-            setLoginManagerLoginBehavior();
+        if (loginBehavior != null) {
+        	setLoginManagerLoginBehavior();
         }
 		LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList(TiFacebookModule.permissions));
 	}
@@ -569,27 +567,15 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 					break;
 			}
 
-			Uri uriLink = null;
-			Uri uriPicture = null;
-			
 			if (link != null) {
-				uriLink = Uri.parse(link);
-			}
-			
-			if (picture != null) {
-				uriPicture = Uri.parse(picture);
-			}
-			
-			if (link != null) {
-				shareContent = new ShareLinkContent.Builder()
-				.setContentUrl(uriLink)
-				.setContentTitle(title)
-				.setContentDescription(description)
-				.setImageUrl(uriPicture)
-				.setPlaceId(placeId)
-				.setRef(ref)
-		        .build();
-			}
+        			shareContent = new ShareLinkContent.Builder()
+			        .setContentUrl(Uri.parse(link))
+      				.setPlaceId(placeId)
+			        .setRef(ref)
+				        .build();
+      			} else {
+        			Log.e(TAG, "The \"link\" property is required when showing a share dialog.");
+      			}
 		}
 		
 		if (shareDialog != null && shareDialog.canShow(shareContent, mode)) {
@@ -597,57 +583,57 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		}
 	}
     
-    @Kroll.method
-    public void presentInviteDialog(@Kroll.argument(optional = true) final KrollDict args)
-    {
-        Log.w(TAG, "The method presentWebShareDialog has been deprecated by the Facebook SDK 4.29.0 and will be removed in the future.");
+    	@Kroll.method
+    	public void presentInviteDialog(@Kroll.argument(optional = true) final KrollDict args)
+    	{
+        	Log.w(TAG, "The method presentInviteDialog has been deprecated by the Facebook SDK 4.29.0 and will be removed in the future.");
 
-        AppInviteDialog appInviteDialog = new AppInviteDialog(TiApplication.getInstance().getCurrentActivity());
+        	AppInviteDialog appInviteDialog = new AppInviteDialog(TiApplication.getInstance().getCurrentActivity());
         
-        appInviteDialog.registerCallback(callbackManager, new FacebookCallback<AppInviteDialog.Result>() {
-            KrollDict event = new KrollDict();
-            @Override
-            public void onCancel() {
-                event.put(PROPERTY_SUCCESS, false);
-                event.put(PROPERTY_CANCELLED, true);
-                fireEvent(EVENT_INVITE_COMPLETE, event);
-            }
+        	appInviteDialog.registerCallback(callbackManager, new FacebookCallback<AppInviteDialog.Result>() {
+            		KrollDict event = new KrollDict();
+            		@Override
+            		public void onCancel() {
+                		event.put(PROPERTY_SUCCESS, false);
+                		event.put(PROPERTY_CANCELLED, true);
+                		fireEvent(EVENT_INVITE_COMPLETE, event);
+            		}
             
-            @Override
-            public void onError(FacebookException error) {
-                event.put(PROPERTY_SUCCESS, false);
-                event.put(PROPERTY_CANCELLED, false);
-                event.put(PROPERTY_ERROR, "Error inviting people");
-                fireEvent(EVENT_INVITE_COMPLETE, event);
-            }
+            		@Override
+            		public void onError(FacebookException error) {
+                		event.put(PROPERTY_SUCCESS, false);
+                		event.put(PROPERTY_CANCELLED, false);
+                		event.put(PROPERTY_ERROR, "Error inviting people");
+                		fireEvent(EVENT_INVITE_COMPLETE, event);
+            		}
             
-            @Override
-            public void onSuccess(AppInviteDialog.Result results) {
-                event.put(PROPERTY_SUCCESS, true);
-                event.put(PROPERTY_CANCELLED, false);
-                fireEvent(EVENT_INVITE_COMPLETE, event);
-            }
-        });
+            		@Override
+            		public void onSuccess(AppInviteDialog.Result results) {
+                		event.put(PROPERTY_SUCCESS, true);
+            		    	event.put(PROPERTY_CANCELLED, false);
+                		fireEvent(EVENT_INVITE_COMPLETE, event);
+            		}
+        	});
         
-        if (!appInviteDialog.canShow()) {
-            KrollDict errorEvent = new KrollDict();
+        	if (!appInviteDialog.canShow()) {
+            		KrollDict errorEvent = new KrollDict();
 
-            errorEvent.put(PROPERTY_SUCCESS, false);
-            errorEvent.put(PROPERTY_CANCELLED, false);
-            errorEvent.put(PROPERTY_ERROR, "Could not show invite dialog");
-            fireEvent(EVENT_INVITE_COMPLETE, errorEvent);
-        } else {
-            String appLink = (String) args.get("appLink");
-            String appPreviewImageLink = (String) args.get("appPreviewImageLink");
+            		errorEvent.put(PROPERTY_SUCCESS, false);
+            		errorEvent.put(PROPERTY_CANCELLED, false);
+            		errorEvent.put(PROPERTY_ERROR, "Could not show invite dialog");
+            		fireEvent(EVENT_INVITE_COMPLETE, errorEvent);
+        	} else {
+            		String appLink = (String) args.get("appLink");
+            		String appPreviewImageLink = (String) args.get("appPreviewImageLink");
             
-            AppInviteContent content = new AppInviteContent.Builder()
-            .setApplinkUrl(appLink)
-            .setPreviewImageUrl(appPreviewImageLink)
-            .build();
+            		AppInviteContent content = new AppInviteContent.Builder()
+            		.setApplinkUrl(appLink)
+            		.setPreviewImageUrl(appPreviewImageLink)
+            		.build();
             
-            appInviteDialog.show(content);
-        }
-    }
+            		appInviteDialog.show(content);
+        	}
+    	}
 	
 	@Kroll.method
 	public void presentWebShareDialog(@Kroll.argument(optional = true) final KrollDict args)
@@ -788,9 +774,9 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		});
 	}
     
-    private void setLoginManagerLoginBehavior() {
-        LoginManager.getInstance().setLoginBehavior(LoginBehavior.valueOf(loginBehavior));
-    }
+    	private void setLoginManagerLoginBehavior() {
+        	LoginManager.getInstance().setLoginBehavior(LoginBehavior.valueOf(loginBehavior));
+    	}
 }
 
 
