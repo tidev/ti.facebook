@@ -6,8 +6,8 @@
  */
 
 #import "FacebookMessengerButton.h"
-#import "FacebookMessengerButtonProxy.h"
 #import "FacebookConstants.h"
+#import "FacebookMessengerButtonProxy.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,61 +15,60 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (FacebookMessengerButtonProxy *)messengerProxy
 {
-    return (FacebookMessengerButtonProxy *)[self proxy];
+  return (FacebookMessengerButtonProxy *)[self proxy];
 }
 
 - (UIButton *)messengerButton
 {
-    if (_messengerButton == nil) {
-        NSUInteger mode = [TiUtils intValue:[[self messengerProxy] valueForKey:@"mode"] def:TiFacebookShareButtonModeRectangular];
-        NSUInteger style = [TiUtils intValue:[[self messengerProxy] valueForKey:@"style"] def:FBSDKMessengerShareButtonStyleBlue];
-        
-        if (mode == TiFacebookShareButtonModeRectangular) {
-            _messengerButton = [FBSDKMessengerShareButton rectangularButtonWithStyle:style];
-        } else if (mode == TiFacebookShareButtonModeCircular) {
-            if ([[self messengerProxy] valueForKey:@"width"]) {
-                _messengerButton = [FBSDKMessengerShareButton circularButtonWithStyle:style width:[TiUtils floatValue:[[self messengerProxy] valueForKey:@"width"]]];
-            } else {
-                _messengerButton = [FBSDKMessengerShareButton circularButtonWithStyle:style];
-            }
-        } else {
-            [[self messengerProxy] throwException:@"No messenger button mode specified." subreason:@"Please specify the messenger button mode to either MESSENGER_BUTTON_MODE_RECTANGULAR or MESSENGER_BUTTON_MODE_CIRCULAR" location:CODELOCATION];
-        }
-        
-        [self setFrame:[_messengerButton bounds]];
-        [self addSubview:_messengerButton];
-        
-        [_messengerButton addTarget:self action:@selector(didTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+  if (_messengerButton == nil) {
+    NSUInteger mode = [TiUtils intValue:[[self messengerProxy] valueForKey:@"mode"] def:TiFacebookShareButtonModeRectangular];
+    NSUInteger style = [TiUtils intValue:[[self messengerProxy] valueForKey:@"style"] def:FBSDKMessengerShareButtonStyleBlue];
 
+    if (mode == TiFacebookShareButtonModeRectangular) {
+      _messengerButton = [FBSDKMessengerShareButton rectangularButtonWithStyle:style];
+    } else if (mode == TiFacebookShareButtonModeCircular) {
+      if ([[self messengerProxy] valueForKey:@"width"]) {
+        _messengerButton = [FBSDKMessengerShareButton circularButtonWithStyle:style width:[TiUtils floatValue:[[self messengerProxy] valueForKey:@"width"]]];
+      } else {
+        _messengerButton = [FBSDKMessengerShareButton circularButtonWithStyle:style];
+      }
+    } else {
+      [[self messengerProxy] throwException:@"No messenger button mode specified." subreason:@"Please specify the messenger button mode to either MESSENGER_BUTTON_MODE_RECTANGULAR or MESSENGER_BUTTON_MODE_CIRCULAR" location:CODELOCATION];
     }
-    return _messengerButton;
+
+    [self setFrame:[_messengerButton bounds]];
+    [self addSubview:_messengerButton];
+
+    [_messengerButton addTarget:self action:@selector(didTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+  }
+  return _messengerButton;
 }
 
 - (void)frameSizeChanged:(CGRect)frame bounds:(CGRect)bounds
 {
-    [TiUtils setView:[self messengerButton] positionRect:bounds];
+  [TiUtils setView:[self messengerButton] positionRect:bounds];
 }
 
 - (void)didTouchUpInside:(id)sender
 {
-    if ([[self messengerProxy] _hasListeners:@"click"]) {
-        [[self messengerProxy] fireEvent:@"click" withObject:nil];
-    }
+  if ([[self messengerProxy] _hasListeners:@"click"]) {
+    [[self messengerProxy] fireEvent:@"click" withObject:nil];
+  }
 }
 
 - (BOOL)hasTouchableListener
 {
-    return YES;
+  return YES;
 }
 
 - (CGFloat)verifyWidth:(CGFloat)suggestedWidth
 {
-    return [self sizeThatFits:CGSizeZero].width;
+  return [self sizeThatFits:CGSizeZero].width;
 }
 
 - (CGFloat)verifyHeight:(CGFloat)suggestedHeight
 {
-    return [self sizeThatFits:CGSizeZero].height;
+  return [self sizeThatFits:CGSizeZero].height;
 }
 
 @end

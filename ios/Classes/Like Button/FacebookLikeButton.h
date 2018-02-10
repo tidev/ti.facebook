@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
  @brief A Facebook like button.
  */
 @interface FacebookLikeButton : TiUIView {
-    FBSDKLikeControl *_likeButton;
+  FBSDKLikeControl *_likeButton;
 }
 
 /*!
@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
  fb.objectID = '<generic-object-id>';
  @endcode
  */
-- (void)setObjectID_:(NSString * _Nonnull)objectID;
+- (void)setObjectID_:(NSString *_Nonnull)objectID;
 
 /*!
  @brief The foreground color to use for the content of the receiver.
@@ -57,7 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
  fb.foregroundColor = 'red';
  @endcode
  */
-- (void)setForegroundColor_:(NSString * _Nonnull)foregroundColor;
+- (void)setForegroundColor_:(NSString *_Nonnull)foregroundColor;
 
 /*!
  @brief The style to use for the receiver.
@@ -70,7 +70,7 @@ NS_ASSUME_NONNULL_BEGIN
  fb.likeViewStyle = 'box_count';
  @endcode
  */
-- (void)setLikeViewStyle_:(NSString * _Nonnull)likeViewStyle;
+- (void)setLikeViewStyle_:(NSString *_Nonnull)likeViewStyle;
 
 /*!
  @brief The position for the auxiliary view for the receiver.
@@ -83,7 +83,7 @@ NS_ASSUME_NONNULL_BEGIN
  fb.auxiliaryViewPosition = 'inline';
  @endcode
  */
-- (void)setAuxiliaryViewPosition_:(NSString * _Nonnull)auxiliaryViewPosition;
+- (void)setAuxiliaryViewPosition_:(NSString *_Nonnull)auxiliaryViewPosition;
 
 /*!
  @brief The text alignment of the social sentence.
@@ -96,7 +96,7 @@ NS_ASSUME_NONNULL_BEGIN
  fb.horizontalAlignment = 'center';
  @endcode
  */
-- (void)setHorizontalAlignment_:(NSString * _Nonnull)horizontalAlignment;
+- (void)setHorizontalAlignment_:(NSString *_Nonnull)horizontalAlignment;
 
 /*!
  @brief Set the sound of the like button. If enabled, a sound is played when the receiver is toggled.
@@ -109,7 +109,7 @@ NS_ASSUME_NONNULL_BEGIN
  fb.soundEnabled = true;
  @endcode
  */
-- (void)setSoundEnabled_:(NSNumber * _Nonnull)soundEnabled;
+- (void)setSoundEnabled_:(NSNumber *_Nonnull)soundEnabled;
 
 @end
 
