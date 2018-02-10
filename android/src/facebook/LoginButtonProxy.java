@@ -14,29 +14,28 @@ import org.appcelerator.titanium.view.TiUIView;
 
 import android.app.Activity;
 
-@Kroll.proxy(creatableInModule = TiFacebookModule.class, propertyAccessors={
-	"audience",
-	"publishPermissions",
-	"readPermissions"
- })
-public class LoginButtonProxy extends TiViewProxy {
+@Kroll.proxy(creatableInModule = TiFacebookModule.class,
+			 propertyAccessors = { "audience", "publishPermissions", "readPermissions" })
+public class LoginButtonProxy extends TiViewProxy
+{
 	// Standard Debugging variables
 	private static final String TAG = "LoginButtonProxy";
 
-	public LoginButtonProxy() {
+	public LoginButtonProxy()
+	{
 		super();
 		Log.d(TAG, "[VIEWPROXY LIFECYCLE EVENT] init");
 	}
-			
+
 	@Override
-	public TiUIView createView(Activity activity) 
+	public TiUIView createView(Activity activity)
 	{
 		return new LoginButtonView(this);
 	}
 
 	// Handle creation options
 	@Override
-	public void handleCreationDict(KrollDict options) 
+	public void handleCreationDict(KrollDict options)
 	{
 		// This method is called from handleCreationArgs if there is at least
 		// argument specified for the proxy creation call and the first argument

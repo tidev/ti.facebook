@@ -18,31 +18,28 @@ import org.appcelerator.kroll.common.Log;
 import org.appcelerator.titanium.view.TiUIView;
 import org.appcelerator.titanium.proxy.TiViewProxy;
 
-
 import android.app.Activity;
 
-@Kroll.proxy(creatableInModule = TiFacebookModule.class, propertyAccessors={
-	"foregroundColor",
-	"likeViewStyle",
-	"auxiliaryViewPosition",
-	"objectID",
-	"horizontalAlignment"
- })
-public class LikeButtonProxy extends TiViewProxy 
+@Kroll.proxy(creatableInModule = TiFacebookModule.class,
+			 propertyAccessors = { "foregroundColor", "likeViewStyle", "auxiliaryViewPosition", "objectID",
+								   "horizontalAlignment" })
+public class LikeButtonProxy extends TiViewProxy
 {
 	private static final String TAG = "LikeButtonProxy";
-	public LikeButtonProxy() {
+	public LikeButtonProxy()
+	{
 		super();
 		defaultValues.put("likeViewStyle", "standard");
 		defaultValues.put("auxiliaryViewPosition", "bottom");
 		defaultValues.put("horizontalAlignment", "center");
-    		Log.d(TAG, "[VIEWPROXY LIFECYCLE EVENT] init");
-    		Log.w(TAG, "The LikeButton API has been deprecated by the Facebook SDK 4.29.0 and will be removed in the future");
+		Log.d(TAG, "[VIEWPROXY LIFECYCLE EVENT] init");
+		Log.w(TAG,
+			  "The LikeButton API has been deprecated by the Facebook SDK 4.29.0 and will be removed in the future");
 	}
-	
+
 	@Override
-	public TiUIView createView(Activity activity) 
-	{	
+	public TiUIView createView(Activity activity)
+	{
 		LikeButtonView view = new LikeButtonView(this);
 		view.getLayoutParams().autoFillsHeight = true;
 		view.getLayoutParams().autoFillsWidth = true;
@@ -50,7 +47,7 @@ public class LikeButtonProxy extends TiViewProxy
 	}
 
 	@Override
-	public void handleCreationDict(KrollDict options) 
+	public void handleCreationDict(KrollDict options)
 	{
 		Log.d(TAG, "VIEWPROXY LIFECYCLE EVENT] handleCreationDict " + options);
 		super.handleCreationDict(options);

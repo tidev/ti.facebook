@@ -16,20 +16,19 @@
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
-#import <FBSDKShareKit/FBSDKShareKit.h>
 #import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 /*!
  @brief The root-namespace for the Facebook module
  */
-@interface FacebookModule : TiModule <FBSDKSharingDelegate, FBSDKGameRequestDialogDelegate, FBSDKAppInviteDialogDelegate>
-{
-    NSString *_userID;
-    NSArray *_permissions;
-    FBSDKLoginBehavior _loginBehavior;
-    NSDictionary *_launchOptions;
+@interface FacebookModule : TiModule <FBSDKSharingDelegate, FBSDKGameRequestDialogDelegate, FBSDKAppInviteDialogDelegate> {
+  NSString *_userID;
+  NSArray *_permissions;
+  FBSDKLoginBehavior _loginBehavior;
+  NSDictionary *_launchOptions;
 }
 
 /*!
@@ -43,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @return NSString The user-id.
  */
-- (NSString * _Nullable)uid;
+- (NSString *_Nullable)uid;
 
 /*!
  @brief A flag indicating if the user is currently logged in.
@@ -58,7 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @return NSNumber Indicating whether or not the user is currently logged in.
  */
-- (NSNumber * _Nonnull)loggedIn;
+- (NSNumber *_Nonnull)loggedIn;
 
 /*!
  @brief The Facebook app-id returned either from the global settings or the tiapp.xml (fallback).
@@ -71,7 +70,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @return NSString The Facebook app-id.
  */
-- (NSString * _Nonnull)appID;
+- (NSString *_Nonnull)appID;
 
 /*!
  @brief Sets a new Facebook App-ID.
@@ -84,7 +83,7 @@ NS_ASSUME_NONNULL_BEGIN
  fb.setAppID('<new-fb-app-id>')
  @endcode
  */
-- (void)setAppID:(NSString * _Nonnull)appID;
+- (void)setAppID:(NSString *_Nonnull)appID;
 
 /*!
  @brief Returns the known granted permissions.
@@ -98,7 +97,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @return NSArray The granted permissions.
  */
-- (NSArray<NSString *> * _Nullable)permissions;
+- (NSArray<NSString *> *_Nullable)permissions;
 
 /*!
  @brief Returns the "global" access token that represents the currently logged in user.
@@ -111,7 +110,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @return NSString The current access-token.
  */
-- (NSString * _Nullable)accessToken;
+- (NSString *_Nullable)accessToken;
 
 /*!
  @brief Sets the "global" access token that represents the currently logged in user.
@@ -125,7 +124,7 @@ NS_ASSUME_NONNULL_BEGIN
  alert('Current Access-Token: \n\n' + fb.accessToken);
  @endcode
  */
-- (void)setCurrentAccessToken:(NSDictionary * _Nonnull)currentAccessToken;
+- (void)setCurrentAccessToken:(NSDictionary *_Nonnull)currentAccessToken;
 
 /*!
  @brief Returns the expiration date.
@@ -138,7 +137,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @return NSDate The expiration-date of the access-token.
  */
-- (NSDate * _Nullable)expirationDate;
+- (NSDate *_Nullable)expirationDate;
 
 /*!
  @brief Sets the new permissions used to authenticate with Facebook.
@@ -152,7 +151,7 @@ NS_ASSUME_NONNULL_BEGIN
  fb.authorize();
  @endcode
  */
-- (void)setPermissions:(NSArray<NSString *> * _Nullable)permissions;
+- (void)setPermissions:(NSArray<NSString *> *_Nullable)permissions;
 
 /*!
  @brief Log a purchase of the specified amount, in the specified currency.
@@ -165,7 +164,7 @@ NS_ASSUME_NONNULL_BEGIN
  fb.logPurchase(13.37, 'USD');
  @endcode
  */
-- (void)logPurchase:(NSArray<id> * _Nonnull)purchase;
+- (void)logPurchase:(NSArray<id> *_Nonnull)purchase;
 
 /*!
  @brief Log an event with an eventName, a numeric value and a set of key/value pairs in the parameters object.
@@ -178,7 +177,7 @@ NS_ASSUME_NONNULL_BEGIN
  fb.logCustomEvent('clappedHands', 54.23, {"CONTENT TYPE": "shoes", "CONTENT ID": "HDFU-8452"});
  @endcode
  */
-- (void)logCustomEvent:(NSArray<id> * _Nonnull)customEvent;
+- (void)logCustomEvent:(NSArray<id> *_Nonnull)customEvent;
 
 /*!
  @brief Log an app event that tracks that a custom action was taken from a push notification.
@@ -193,7 +192,7 @@ NS_ASSUME_NONNULL_BEGIN
  });
  @endcode
  */
-- (void)logPushNotificationOpen:(NSArray<id> * _Nonnull)pushNotification;
+- (void)logPushNotificationOpen:(NSArray<id> *_Nonnull)pushNotification;
 
 /*!
  @brief Sets and sends a device token from `TiBlob` representation 
@@ -213,7 +212,7 @@ NS_ASSUME_NONNULL_BEGIN
  });
  @endcode
  */
-- (void)setPushNotificationsDeviceToken:(NSString * _Nonnull)deviceToken;
+- (void)setPushNotificationsDeviceToken:(NSString *_Nonnull)deviceToken;
 
 /*!
  @brief The login-behavior used when calling the "authorize" method.
@@ -226,7 +225,7 @@ NS_ASSUME_NONNULL_BEGIN
  fb.loginBehavior = fb.LOGIN_BEHAVIOR_NATIVE;
  @endcode
  */
-- (void)setLoginBehavior:(NSNumber * _Nonnull)loginBehavior;
+- (void)setLoginBehavior:(NSNumber *_Nonnull)loginBehavior;
 
 /*!
  @brief Logs the user in or authorizes additional permissions.
@@ -301,7 +300,7 @@ NS_ASSUME_NONNULL_BEGIN
  });
  @endcode
  */
-- (void)presentShareDialog:(NSArray<NSDictionary<NSString *, id> *> * _Nonnull)args;
+- (void)presentShareDialog:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args;
 
 /*!
  @brief Present a messenger-dialog. Currently only possible to use when Messenger is installed.
@@ -317,7 +316,7 @@ NS_ASSUME_NONNULL_BEGIN
  });
  @endcode
  */
-- (void)presentMessengerDialog:(NSArray<NSDictionary<NSString *, id> *> * _Nonnull)args;
+- (void)presentMessengerDialog:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args;
 
 /*!
  @brief Share images, GIFs and videos to the messenger.
@@ -338,7 +337,7 @@ NS_ASSUME_NONNULL_BEGIN
  });
  @endcode
  */
-- (void)shareMediaToMessenger:(NSArray<NSDictionary<NSString *, id> *> * _Nonnull)args;
+- (void)shareMediaToMessenger:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args;
 
 /*!
  @brief Present a share dialog using web dialog. Removed in Ti.Facebook 5.0.0 and later, use "presentShareDialog" instead.
@@ -360,7 +359,7 @@ NS_ASSUME_NONNULL_BEGIN
  });
  @endcode
  */
-- (void)presentInviteDialog:(NSArray<NSDictionary<NSString *, id> *> * _Nonnull)args;
+- (void)presentInviteDialog:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args;
 
 /*!
  @brief Build up and present a game request.
@@ -376,7 +375,7 @@ NS_ASSUME_NONNULL_BEGIN
  });
  @endcode
  */
-- (void)presentSendRequestDialog:(NSArray<NSDictionary<NSString *, id> *> * _Nonnull)args;
+- (void)presentSendRequestDialog:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args;
 
 /*!
  @brief Refresh the current access token's permission state and extend the token's expiration date, if possible.
@@ -404,7 +403,7 @@ NS_ASSUME_NONNULL_BEGIN
  });
  @endcode
  */
-- (void)requestNewReadPermissions:(NSArray<id> * _Nonnull)args;
+- (void)requestNewReadPermissions:(NSArray<id> *_Nonnull)args;
 
 /*!
  @brief Authorize the user for additional public-permissions.
@@ -419,7 +418,7 @@ NS_ASSUME_NONNULL_BEGIN
  });
  @endcode
  */
-- (void)requestNewPublishPermissions:(NSArray<id> * _Nonnull)args;
+- (void)requestNewPublishPermissions:(NSArray<id> *_Nonnull)args;
 
 /*!
  @brief Represents a request to the Facebook Graph API.
@@ -443,7 +442,7 @@ NS_ASSUME_NONNULL_BEGIN
  });
  @endcode
  */
-- (void)requestWithGraphPath:(NSArray<id> * _Nonnull)args;
+- (void)requestWithGraphPath:(NSArray<id> *_Nonnull)args;
 
 /*!
  @brief Fetch deferred applink data if you use Mobile App Engagement Ads.
@@ -463,7 +462,7 @@ NS_ASSUME_NONNULL_BEGIN
  });
  @endcode
  */
-- (void)fetchDeferredAppLink:(NSArray<KrollCallback *> * _Nonnull)args;
+- (void)fetchDeferredAppLink:(NSArray<KrollCallback *> *_Nonnull)args;
 
 /*!
  @brief Method to query for places the device is likely located in.
@@ -485,7 +484,7 @@ NS_ASSUME_NONNULL_BEGIN
  });
  @endcode
  */
-- (void)fetchNearbyPlacesForCurrentLocation:(NSArray<NSDictionary<NSString *, id> *> * _Nonnull)args;
+- (void)fetchNearbyPlacesForCurrentLocation:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args;
 
 /*!
  @brief Method to query for places based on the search-term.
@@ -510,7 +509,7 @@ NS_ASSUME_NONNULL_BEGIN
  });
  @endcode
  */
-- (void)fetchNearbyPlacesForSearchTearm:(NSArray<NSDictionary<NSString *, id> *> * _Nonnull)args;
+- (void)fetchNearbyPlacesForSearchTearm:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args;
 
 @end
 

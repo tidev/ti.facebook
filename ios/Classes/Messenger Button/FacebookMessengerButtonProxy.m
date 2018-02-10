@@ -17,22 +17,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (UIViewAutoresizing)verifyAutoresizing:(UIViewAutoresizing)suggestedResizing
 {
-    return suggestedResizing & ~(UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth);
+  return suggestedResizing & ~(UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth);
 }
 
 - (void)viewDidAttach
 {
-    [(FacebookMessengerButton *)[self view] messengerButton];
+  [(FacebookMessengerButton *)[self view] messengerButton];
 }
 
 - (TiDimension)defaultAutoWidthBehavior:(id)unused
 {
-    return TiDimensionAutoSize;
+  return TiDimensionAutoSize;
 }
 
 - (TiDimension)defaultAutoHeightBehavior:(id)unused
 {
-    return TiDimensionAutoSize;
+  return TiDimensionAutoSize;
 }
 
 USE_VIEW_FOR_VERIFY_HEIGHT
