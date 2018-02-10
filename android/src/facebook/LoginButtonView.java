@@ -23,14 +23,16 @@ import com.facebook.login.widget.LoginButton;
 import com.facebook.login.widget.ToolTipPopup;
 import com.facebook.login.widget.LoginButton.ToolTipMode;
 
-public class LoginButtonView extends TiUIView {
+public class LoginButtonView extends TiUIView
+{
 
 	private static final String TAG = "LoginButtonView";
 	private LoginButton loginButton;
 	CallbackManager callbackManager;
 	private TiFacebookModule module;
 
-	public LoginButtonView(TiViewProxy proxy) {
+	public LoginButtonView(TiViewProxy proxy)
+	{
 		super(proxy);
 		module = TiFacebookModule.getFacebookModule();
 		final Activity mActivity = proxy.getActivity();
@@ -38,16 +40,15 @@ public class LoginButtonView extends TiUIView {
 		loginButton = new LoginButton(mActivity);
 		// Callback registration
 		callbackManager = module.getCallbackManager();
-	    loginButton.registerCallback(callbackManager, module.getFacebookCallback());  
+		loginButton.registerCallback(callbackManager, module.getFacebookCallback());
 		setNativeView(loginButton);
 	}
 
-		
 	@Override
-	public void processProperties(KrollDict props) 
+	public void processProperties(KrollDict props)
 	{
 		super.processProperties(props);
-		Log.d(TAG,"[VIEW LIFECYCLE EVENT] processProperties " + props);
+		Log.d(TAG, "[VIEW LIFECYCLE EVENT] processProperties " + props);
 		if (props.containsKey("publishPermissions")) {
 			Object value = props.get("publishPermissions");
 			if (value instanceof Object[]) {
@@ -61,11 +62,11 @@ public class LoginButtonView extends TiUIView {
 				String[] readPermissions = TiConvert.toStringArray((Object[]) value);
 				loginButton.setReadPermissions(Arrays.asList(readPermissions));
 			}
-		} 
+		}
 		if (props.containsKey("audience")) {
 			Object value = props.get("audience");
 			int audience = TiConvert.toInt(value, TiFacebookModule.AUDIENCE_NONE);
-			switch(audience){
+			switch (audience) {
 				case TiFacebookModule.AUDIENCE_NONE:
 					loginButton.setDefaultAudience(DefaultAudience.NONE);
 					break;
@@ -83,7 +84,7 @@ public class LoginButtonView extends TiUIView {
 		if (props.containsKey("tooltipBehavior")) {
 			Object value = props.get("tooltipBehavior");
 			int tooltipBehavior = TiConvert.toInt(value, TiFacebookModule.LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC);
-            
+
 			switch (tooltipBehavior) {
 				case TiFacebookModule.LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC:
 					loginButton.setToolTipMode(ToolTipMode.AUTOMATIC);
@@ -93,12 +94,13 @@ public class LoginButtonView extends TiUIView {
 					break;
 				case TiFacebookModule.LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE:
 					loginButton.setToolTipMode(ToolTipMode.NEVER_DISPLAY);
-				break;
+					break;
 			}
 		}
 		if (props.containsKey("tooltipColorStyle")) {
 			Object value = props.get("tooltipColorStyle");
-			String tooltipColorStyle = TiConvert.toString(value, TiFacebookModule.LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY);
+			String tooltipColorStyle =
+				TiConvert.toString(value, TiFacebookModule.LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY);
 
 			if (tooltipColorStyle.equals(TiFacebookModule.LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY)) {
 				loginButton.setToolTipStyle(ToolTipPopup.Style.BLACK);
@@ -107,11 +109,11 @@ public class LoginButtonView extends TiUIView {
 			}
 		}
 	}
-	
+
 	@Override
 	public void propertyChanged(String key, Object oldValue, Object newValue, KrollProxy proxy)
 	{
-		// This method is called whenever a proxy property value is updated. Note that this 
+		// This method is called whenever a proxy property value is updated. Note that this
 		// method is only called if the new value is different than the current value.
 		if (key.equals("publishPermissions")) {
 			if (newValue instanceof Object[]) {
@@ -120,10 +122,10 @@ public class LoginButtonView extends TiUIView {
 			}
 		} else if (key.equals("readPermissions")) {
 			if (newValue instanceof Object[]) {
-				String[] readPermissions = TiConvert.toStringArray((Object[]) newValue);				
+				String[] readPermissions = TiConvert.toStringArray((Object[]) newValue);
 				loginButton.setReadPermissions(Arrays.asList(readPermissions));
 			}
-			
+
 		} else if (key.equals("audience")) {
 			int audience = TiConvert.toInt(newValue, TiFacebookModule.AUDIENCE_NONE);
 			switch (audience) {
@@ -143,9 +145,7 @@ public class LoginButtonView extends TiUIView {
 		} else {
 			super.propertyChanged(key, oldValue, newValue, proxy);
 		}
-		
-		Log.d(TAG,"[VIEW LIFECYCLE EVENT] propertyChanged: " + key + ' ' + oldValue + ' ' + newValue);
-	}
-	
 
+		Log.d(TAG, "[VIEW LIFECYCLE EVENT] propertyChanged: " + key + ' ' + oldValue + ' ' + newValue);
+	}
 }
