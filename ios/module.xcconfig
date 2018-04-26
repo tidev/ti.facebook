@@ -1,6 +1,6 @@
 
 // Add the framework-search paths
-FRAMEWORK_SEARCH_PATHS=$(SRCROOT)/../../modules/iphone/facebook/5.6.1/platform ~/Library/Application\ Support/Titanium/modules/iphone/facebook/5.6.1/platform
+FRAMEWORK_SEARCH_PATHS=$(SRCROOT)/../../modules/iphone/facebook/$(TI_MODULE_VERSION)/platform ~/Library/Application\ Support/Titanium/modules/iphone/facebook/$(TI_MODULE_VERSION)/platform
 
 // Link the Facebook SDK's to the app-target
 OTHER_LDFLAGS=$(inherited) -framework Social -framework FBSDKCoreKit -framework FBSDKLoginKit -framework FBSDKShareKit -framework FBSDKPlacesKit -framework FBSDKMessengerShareKit -framework Bolts
