@@ -1961,7 +1961,6 @@ properties:
     type: String
     since: "5.0.0"
     deprecated:
-    deprecated:
         since: "6.2.0"
         removed: "6.2.0"
         notes: |
@@ -1972,7 +1971,6 @@ properties:
   - name: picture
     summary: Link to a thumbnail to associate with the link.
     type: String
-    deprecated:
     deprecated:
         since: "6.2.0"
         removed: "6.2.0"
