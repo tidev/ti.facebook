@@ -113,6 +113,19 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *_Nullable)accessToken;
 
 /*!
+ @brief Return a boolean based on whether or not the access token is a nil value
+
+ @code
+ const fb = require('facebook');
+
+ alert('Access-Token active state is: \n\n' + fb.accessToken);
+ @endcode
+
+ @return BOOL The status of the token
+ */
+- (BOOL)accessTokenIsActive;
+
+/*!
  @brief Sets the "global" access token that represents the currently logged in user.
  
  @param currentAccessToken The new access-token used for the user.

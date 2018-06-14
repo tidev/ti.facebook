@@ -115,6 +115,16 @@ NS_ASSUME_NONNULL_BEGIN
   return token;
 }
 
+- (BOOL)accessTokenIsActive
+{
+  __block NSString *token;
+  TiThreadPerformOnMainThread(^{
+    active = [FBSDKAccessToken currentAccessTokenIsActive];
+  },
+      YES);
+  return active;
+}
+
 - (void)setCurrentAccessToken:(NSDictionary *_Nonnull)currentAccessToken
 {
   [FBSDKAccessToken setCurrentAccessToken:[[FBSDKAccessToken alloc] initWithTokenString:[TiUtils stringValue:@"accessToken" properties:currentAccessToken]
