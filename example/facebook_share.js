@@ -59,8 +59,7 @@ exports.window = function (value) {
 		Titanium.Media.openPhotoGallery({
 			success: function (event) {
 				fb.presentPhotoShareDialog({
-					image: event.media,
-					caption: 'B-e-a-utiful!'
+					image: event.media
 				});
 			},
 			cancel: function () {},
