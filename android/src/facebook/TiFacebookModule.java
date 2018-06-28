@@ -383,12 +383,21 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	@Kroll
 		.getProperty
 		@Kroll.method
+		public boolean getIsExpired()
+	{
+		if (AccessToken.getCurrentAccessToken() != null) {
+			return AccessToken.getCurrentAccessToken().isExpired();
+		}
+		return false;
+	}
+	
+	@Kroll.method
 		public boolean getAccessTokenIsActive()
 	{
 		if (AccessToken.getCurrentAccessToken() != null) {
 			return AccessToken.isCurrentAccessTokenActive();
 		}
-		return "";
+		return false;
 	}
 
 	@Kroll

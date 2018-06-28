@@ -115,11 +115,21 @@ NS_ASSUME_NONNULL_BEGIN
   return token;
 }
 
-- (BOOL)accessTokenIsActive
+- (BOOL)isExpired
 {
-  __block NSString *token;
+  __block BOOL expired;
   TiThreadPerformOnMainThread(^{
-    active = [FBSDKAccessToken currentAccessTokenIsActive];
+    expired = [[FBSDKAccessToken currentAccessToken] isExpired];
+  },
+      YES);
+  return expired;
+}
+
+- (BOOL)accessTokenIsActive:(id)unused
+{
+  __block BOOL active;
+  TiThreadPerformOnMainThread(^{
+      active = [FBSDKAccessToken currentAccessTokenIsActive];
   },
       YES);
   return active;
@@ -281,6 +291,24 @@ NS_ASSUME_NONNULL_BEGIN
 
   TiThreadPerformOnMainThread(^{
     FBSDKShareLinkContent *content = [FacebookModule shareLinkContentFromDictionary:params];
+    FBSDKShareDialog *dialog = [[FBSDKShareDialog alloc] init];
+
+    [dialog setMode:[TiUtils intValue:[params objectForKey:@"mode"] def:FBSDKShareDialogModeAutomatic]];
+    [dialog setFromViewController:nil];
+    [dialog setShareContent:content];
+    [dialog setDelegate:self];
+
+    [dialog show];
+  },
+      NO);
+}
+
+- (void)presentPhotoShareDialog:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args
+{
+  NSDictionary *_Nonnull params = [args objectAtIndex:0];
+
+  TiThreadPerformOnMainThread(^{
+    FBSDKSharePhotoContent *content = [FacebookModule sharePhotoContentFromDictionary:params];
     FBSDKShareDialog *dialog = [[FBSDKShareDialog alloc] init];
 
     [dialog setMode:[TiUtils intValue:[params objectForKey:@"mode"] def:FBSDKShareDialogModeAutomatic]];
@@ -949,6 +977,29 @@ NS_ASSUME_NONNULL_BEGIN
   if (referal != nil) {
     [content setRef:referal];
   }
+
+  return content;
+}
+
++ (FBSDKSharePhotoContent *_Nonnull)sharePhotoContentFromDictionary:(NSDictionary *)dictionary
+{  
+  FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
+  
+  FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
+
+  TiBlob *blob = [dictionary objectForKey:@"image"];
+  UIImage *image = blob.image;
+  NSString *caption = [dictionary objectForKey:@"caption"];
+
+  if (image != nil) {
+    [photo setImage:image];
+  }
+    
+  if (caption != nil) {
+    [photo setCaption:caption];
+  }
+  
+  content.photos = @[photo];
 
   return content;
 }
