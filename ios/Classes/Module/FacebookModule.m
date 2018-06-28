@@ -332,7 +332,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)presentWebShareDialog:(id _Nullable)unused
 {
-  DEPRECATED_REPLACED_REMOVED(@"Facebook.presentWebShareDialog", @"5.0.0", @"5.0.0", @"Titanium.Facebook.presentShareDialog");
+  DEPRECATED_REPLACED_REMOVED(@"Facebook.presentWebShareDialog", @"5.0.0", @"5.0.0", @"Facebook.presentShareDialog");
   DebugLog(@"[WARN] Facebook removed the ShareDialog API via Web in SDK 4.28.0");
 }
 
@@ -896,8 +896,7 @@ NS_ASSUME_NONNULL_BEGIN
   NSString *hashtag = [dictionary objectForKey:@"hashtag"];
   NSString *quote = [dictionary objectForKey:@"quote"];
   NSArray *to = [dictionary objectForKey:@"to"];
-  NSURL *contentURL = [NSURL URLWithString:[dictionary objectForKey:@"contentURL"]];
-  NSURL *url = [NSURL URLWithString:[dictionary objectForKey:@"link"]];
+  NSURL *link = [NSURL URLWithString:[dictionary objectForKey:@"link"]];
   NSString *placeID = [dictionary objectForKey:@"placeID"];
   NSString *referal = [dictionary objectForKey:@"referal"];
 
@@ -915,6 +914,12 @@ NS_ASSUME_NONNULL_BEGIN
     NSLog(@"[WARN] Setting the \"picture\" is no longer possible in Ti.Facebook 5.5.0 as part of the Graph v2.9 changes.");
     NSLog(@"[WARN] It's information is scraped from the 'link' property instead, so setting it is no longer supported and will be ignored!");
   }
+  
+  if (link == nil) {
+    NSLog(@"[ERROR] Missing required parameter \"link\"!");
+  }
+  
+  [content setContentURL:link];
 
   if (hashtag != nil) {
     [content setHashtag:[FBSDKHashtag hashtagWithString:hashtag]];
@@ -922,10 +927,6 @@ NS_ASSUME_NONNULL_BEGIN
 
   if (quote != nil) {
     [content setQuote:quote];
-  }
-
-  if (contentURL != nil) {
-    [content setContentURL:contentURL];
   }
 
   if (to != nil) {

@@ -302,7 +302,8 @@ description: |
     constants when presenting it.
 
     Pass either method parameters you want to add to the post, such as a `link` or `hashtag`, or to
-    share the user's status, do not pass any parameters to the methods.
+    share the user's status, do not pass any parameters to the methods. Note: The `link` parameter is
+    **required** by the Facebook SDK.
 
     To monitor if the share request succeeded or not, listen to the <Modules.Facebook.shareCompleted>
     event. It uses the same arguments as `presentMessengerDialog`.
@@ -362,7 +363,8 @@ description: |
 
     To send a message to a user, call the [presentMessengerDialog()](Modules.Facebook.presentMessengerDialog) method
     and pass the method a dictionary with the optional values "hashtag", "link", "to", "placeID"
-    and "referal". It uses the same arguments as `presentShareDialog`.
+    and "referal". It uses the same arguments as `presentShareDialog`. Note: The "link" parameter is
+    **required** by the Facebook SDK.
 
             fb.presentMessengerDialog({
                 link: "https://appcelerator.com", // The link you want to share
@@ -558,6 +560,12 @@ methods:
         type: InviteDialogParams
     since: "5.4.0"
     platforms: [iphone, ipad, android]
+    deprecated:
+        since: "7.0.0"
+        removed: "7.0.0"
+        notes: |
+            The API was removed by the Facebook SDK. Please use the
+            <Modules.Facebook.presentShareDialog> method instead.
 
   - name: presentShareDialog
     summary: Opens a supported Facebook Share dialog.
@@ -565,7 +573,7 @@ methods:
         The Facebook SDK automatically determines the best way to present the share dialog, e.g. if the Facebook
         app is not installed. If you want to control the way the dialog is presented, set the `mode` property
         of the [presentShareDialog()](Modules.Facebook.presentShareDialog) method to one of the `LOGIN_BEHAVIOR_*`
-        constants when presenting it.
+        constants when presenting it. Note: The `link` parameter is **required** by the Facebook SDK.
 
         Listen for the <Modules.Facebook.shareCompleted> to be notified if the attempt was
         successful or not.
