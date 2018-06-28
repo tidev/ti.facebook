@@ -117,12 +117,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)accessTokenIsActive
 {
-  __block NSString *token;
+  __block BOOL isActive = NO;
   TiThreadPerformOnMainThread(^{
-    active = [FBSDKAccessToken currentAccessTokenIsActive];
+    isActive = [FBSDKAccessToken currentAccessTokenIsActive];
   },
       YES);
-  return active;
+  return isActive;
 }
 
 - (void)setCurrentAccessToken:(NSDictionary *_Nonnull)currentAccessToken
@@ -333,23 +333,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)presentWebShareDialog:(id _Nullable)unused
 {
   DEPRECATED_REPLACED_REMOVED(@"Facebook.presentWebShareDialog", @"5.0.0", @"5.0.0", @"Titanium.Facebook.presentShareDialog");
+  DebugLog(@"[WARN] Facebook removed the ShareDialog API via Web in SDK 4.28.0");
 }
 
 - (void)presentInviteDialog:(NSArray<NSDictionary<NSString *, id> *> *)args
 {
   DEPRECATED_REMOVED(@"Facebook.presentInviteDialog", @"5.7.0", @"5.7.0");
-  DebugLog(@"Facebook removed the InviteDialog API in SDK 4.28.0");
-
-  NSDictionary *_Nonnull params = [args objectAtIndex:0];
-
-  TiThreadPerformOnMainThread(^{
-    FBSDKAppInviteContent *content = [[FBSDKAppInviteContent alloc] init];
-    [content setAppLinkURL:[NSURL URLWithString:[params objectForKey:@"appLink"]]];
-    [content setAppInvitePreviewImageURL:[NSURL URLWithString:[params objectForKey:@"appPreviewImageLink"]]];
-
-    [FBSDKAppInviteDialog showFromViewController:nil withContent:content delegate:self];
-  },
-      NO);
+  DebugLog(@"[WARN] Facebook removed the InviteDialog API in SDK 4.28.0");
 }
 
 - (void)presentSendRequestDialog:(NSArray<NSDictionary<NSString *, id> *> *)args
