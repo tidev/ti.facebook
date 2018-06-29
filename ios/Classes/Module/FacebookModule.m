@@ -127,9 +127,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)accessTokenIsActive:(id)unused
 {
-  __block BOOL active;
+  __block BOOL isActive;
   TiThreadPerformOnMainThread(^{
-      active = [FBSDKAccessToken currentAccessTokenIsActive];
+      isActive = [FBSDKAccessToken currentAccessTokenIsActive];
   },
       YES);
   return isActive;
