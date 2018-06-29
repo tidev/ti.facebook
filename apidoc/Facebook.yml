@@ -568,21 +568,38 @@ methods:
             <Modules.Facebook.presentShareDialog> method instead.
 
   - name: presentShareDialog
-    summary: Opens a supported Facebook Share dialog.
+    summary: Opens a Facebook link share dialog.
     description: |
         The Facebook SDK automatically determines the best way to present the share dialog, e.g. if the Facebook
         app is not installed. If you want to control the way the dialog is presented, set the `mode` property
-        of the [presentShareDialog()](Modules.Facebook.presentShareDialog) method to one of the `LOGIN_BEHAVIOR_*`
-        constants when presenting it. Note: The `link` parameter is **required** by the Facebook SDK.
+        of this method to one of the `LOGIN_BEHAVIOR_*` constants when presenting it. 
+        
+        Note: The `link` parameter is **required** by the Facebook SDK.
 
         Listen for the <Modules.Facebook.shareCompleted> to be notified if the attempt was
         successful or not.
     parameters:
       - name: params
-        summary: |
-            A dictionary object containing optional parameters.
+        summary: A dictionary object containing the required and optional parameters.
         type: ShareLinkContentParams
-    since: 4.0.0
+    since: "4.0.0"
+
+  - name: presentPhotoShareDialog
+    summary: Opens a Facebook photo share dialog.
+    description: |
+        The Facebook SDK automatically determines the best way to present the share dialog, e.g. if the Facebook
+        app is not installed. If you want to control the way the dialog is presented, set the `mode` property
+        of this method to one of the `LOGIN_BEHAVIOR_*` constants when presenting it.
+        
+        Note: The `images` parameter is **required** by the Facebook SDK.
+
+        Listen for the <Modules.Facebook.shareCompleted> to be notified if the attempt was
+        successful or not.
+    parameters:
+      - name: params
+        summary: A dictionary object containing the required and optional parameters.
+        type: SharePhotoContentParams
+    since: "7.4.0"
 
   - name: presentMessengerDialog
     summary: |
@@ -1798,11 +1815,50 @@ properties:
     type: String
 
 ---
+name: SharePhotoContentParams
+summary: |
+    Parameters to pass to the the [presentPhotoShareDialog()](Modules.Facebook.presentPhotoShareDialog) method.
+since: 7.4.0
+properties:
+  - name: photos
+    summary: |
+        An array of photos that is represented by an object of `photo`, `caption` and `userGenerated`
+        parameters.
+    type: Array<SharePhotoContentPhotoParams>
+  - name: mode
+    summary: The mode to select for presenting a share dialog.
+    description: |
+        The automatic mode will progressively check the availability of different modes and 
+        open the most appropriate mode for the dialog that is available.
+    type: Number
+    optional: true
+    default: Modules.Facebook.SHARE_DIALOG_MODE_AUTOMATIC
+    constants: Modules.Facebook.SHARE_DIALOG_MODE_*
+
+---
+name: SharePhotoContentPhotoParams
+summary: |
+    Parameters to pass to the `images` property of the [presentPhotoShareDialog()](Modules.Facebook.presentPhotoShareDialog)
+    method.
+properties:
+  - name: photo
+    summary: |
+        The (required) photo. Can either be a file on the local disk (represented as a <Titanium.Blob>)
+        or a photo URL (represented as a String).
+    type: [Titanium.Blob, String]
+    optional: false
+  - name: caption
+    summary: |
+        The user generated caption for the photo. Note that the 'caption' must come from
+        the user, as pre-filled content is forbidden by the Platform Policies (2.3).
+    type: String
+
+---
 name: ShareLinkContentParams
 summary: |
     Optional parameters to pass to either the
     [presentShareDialog()](Modules.Facebook.presentShareDialog) or
-    [presentWebShareDialog()](Modules.Facebook.presentMessengerDialog) methods.
+    [presentMessengerDialog()](Modules.Facebook.presentMessengerDialog) methods.
 since: 4.0.0
 platforms: [android, iphone, ipad]
 properties:
@@ -1963,6 +2019,26 @@ properties:
     type: Boolean
     default: false
     optional: true
+
+---
+name: InviteDialogParams
+summary: |
+    Parameters to pass to [presentInviteDialog()](Modules.Facebook.presentInviteDialog) method.
+since: "5.4.0"
+platforms: [iphone, ipad, android]
+properties:
+  - name: appLink
+    summary: An app link target that will be used as a target when the user accept the invite.
+    description: |
+        This is a requirement. You can find out more about app links [here](https://developers.facebook.com/docs/applinks).
+    type: String
+    optional: false
+
+  - name: appPreviewImageLink
+    summary: A URL to a preview image that will be displayed with the app invite
+    description: This is optional. If you don't include it a fallback image will be used.
+    type: String
+    optional: true 
 
 ---
 name: CurrentAccessTokenParams

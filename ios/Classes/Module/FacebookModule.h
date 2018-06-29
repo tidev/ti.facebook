@@ -123,7 +123,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @return BOOL The expiration status of the token
  */
-- (BOOL)isExpired;
+- (NSNumber *)accessTokenIsExpired:(id)unused;
 
 /*!
  @brief Return a boolean based on whether or not the access token is a nil value
@@ -136,7 +136,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @return BOOL The status of the token
  */
-- (BOOL)accessTokenIsActive:(id)unused;
+- (NSNumber *)accessTokenIsActive:(id)unused;
 
 /*!
  @brief Sets the "global" access token that represents the currently logged in user.
@@ -339,8 +339,7 @@ NS_ASSUME_NONNULL_BEGIN
  Titanium.Media.openPhotoGallery({
 			success: function (event) {
 				fb.presentPhotoShareDialog({
-					image: event.media,
-					caption: 'B-e-a-utiful!'
+            photos: [{ photo: event.media, caption: 'B-e-a-utiful!' }] // An array of photos and optional captions
 				});
 			}
   });

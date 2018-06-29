@@ -115,24 +115,14 @@ NS_ASSUME_NONNULL_BEGIN
   return token;
 }
 
-- (BOOL)isExpired
+- (NSNumber *)accessTokenIsExpired:(id)unused
 {
-  __block BOOL expired;
-  TiThreadPerformOnMainThread(^{
-    expired = [[FBSDKAccessToken currentAccessToken] isExpired];
-  },
-      YES);
-  return expired;
+  return @([[FBSDKAccessToken currentAccessToken] isExpired]);
 }
 
-- (BOOL)accessTokenIsActive:(id)unused
+- (NSNumber *)accessTokenIsActive:(id)unused
 {
-  __block BOOL isActive;
-  TiThreadPerformOnMainThread(^{
-      isActive = [FBSDKAccessToken currentAccessTokenIsActive];
-  },
-      YES);
-  return isActive;
+  return @([FBSDKAccessToken currentAccessTokenIsActive]);
 }
 
 - (void)setCurrentAccessToken:(NSDictionary *_Nonnull)currentAccessToken
@@ -469,8 +459,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)requestNewPublishPermissions:(NSArray<id> *_Nonnull)args
 {
-  NSArray<NSString *> *writePermissions = [args objectAtIndex:0];
-  ENSURE_ARRAY(writePermissions);
+  NSArray<NSString *> *publishPermissions = [args objectAtIndex:0];
+  ENSURE_ARRAY(publishPermissions);
 
   NSNumber *_defaultAudience = [args objectAtIndex:1];
   ENSURE_TYPE(_defaultAudience, NSNumber);
@@ -483,7 +473,7 @@ NS_ASSUME_NONNULL_BEGIN
   loginManager.defaultAudience = defaultAudience;
 
   TiThreadPerformOnMainThread(^{
-    [loginManager logInWithPublishPermissions:writePermissions
+    [loginManager logInWithPublishPermissions:publishPermissions
                            fromViewController:nil
                                       handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
                                         BOOL success = NO;
@@ -517,7 +507,8 @@ NS_ASSUME_NONNULL_BEGIN
                                                                                              NUMINTEGER(code), @"code",
                                                                                              errorString, @"error", nil];
 
-                                        KrollEvent *invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:propertiesDict thisObject:self];
+                                        KrollEvent *invocationEvent = [[KrollEvent alloc] initWithCallback:callback
+                                                                                               eventObject:propertiesDict thisObject:self];
                                         [[callback context] enqueue:invocationEvent];
                                       }];
   },
@@ -975,22 +966,35 @@ NS_ASSUME_NONNULL_BEGIN
 + (FBSDKSharePhotoContent *_Nonnull)sharePhotoContentFromDictionary:(NSDictionary *)dictionary
 {  
   FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
-  
-  FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
 
-  TiBlob *blob = [dictionary objectForKey:@"image"];
-  UIImage *image = blob.image;
-  NSString *caption = [dictionary objectForKey:@"caption"];
-
-  if (image != nil) {
-    [photo setImage:image];
-  }
-    
-  if (caption != nil) {
-    [photo setCaption:caption];
-  }
+  NSArray<NSDictionary<NSString *, id> *> *photos = [dictionary objectForKey:@"photos"];
+  NSMutableArray<FBSDKSharePhoto *> *nativePhotos = [NSMutableArray arrayWithCapacity:photos.count];
   
-  content.photos = @[photo];
+  for (NSDictionary<NSString *, id> *photoDictionary in photos) {
+    id photo = photoDictionary[@"photo"];
+    NSString *caption = photoDictionary[@"caption"];
+    FBSDKSharePhoto *nativePhoto = [FBSDKSharePhoto new];
+    BOOL userGenerated = [TiUtils boolValue:photoDictionary[@"userGenerated"]];
+  
+    // A photo can either be a Blob or String
+    if ([photo isKindOfClass:[TiBlob class]]) {
+      nativePhoto.image = [(TiBlob *)photo image];
+    } else if ([photo isKindOfClass:[NSString class]]) {
+      nativePhoto.imageURL = [NSURL URLWithString:(NSString *)photo];
+    } else {
+      NSLog(@"[ERROR] Required \"photo\" not found or of unknown type: %@", NSStringFromClass([photo class]));
+    }
+
+    // An optional caption
+    if (caption != nil) {
+      nativePhoto.caption = caption;
+    }
+
+    // An optional flag indicating if the photo was user generated
+    nativePhoto.userGenerated = userGenerated;
+  }
+
+  content.photos = nativePhotos;
 
   return content;
 }
