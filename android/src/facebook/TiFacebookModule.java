@@ -171,7 +171,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	public void onResume(Activity activity)
 	{
 		super.onResume(activity);
-		Log.d(TAG, "Calling activateApp");
 		AppEventsLogger.activateApp(activity);
 	}
 
@@ -179,7 +178,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	public void onPause(Activity activity)
 	{
 		super.onPause(activity);
-		Log.d(TAG, "Calling deactivateApp");
 		AppEventsLogger.deactivateApp(activity);
 	}
 
@@ -208,21 +206,16 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 							KrollDict data = new KrollDict();
 
 							if (user != null) {
-								Log.d(TAG, "user is not null");
-
 								data.put(TiFacebookModule.PROPERTY_CANCELLED, false);
 								data.put(TiFacebookModule.PROPERTY_SUCCESS, true);
 								data.put(TiFacebookModule.PROPERTY_UID, user.optString("id"));
 								data.put(TiFacebookModule.PROPERTY_DATA, user.toString());
 								data.put(TiFacebookModule.PROPERTY_CODE, 0);
-								Log.d(TAG, "firing login event from module");
 								fireEvent(TiFacebookModule.EVENT_LOGIN, data);
 							}
 
 							if (err != null) {
 								String errorString = TiFacebookModule.handleError(err);
-								Log.e(TAG, "me request callback error");
-								Log.e(TAG, "error message: " + err.getErrorMessage());
 								data.put(TiFacebookModule.PROPERTY_ERROR, errorString);
 								fireEvent(TiFacebookModule.EVENT_LOGIN, data);
 							}
@@ -376,7 +369,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	public String getAccessToken()
 	// clang-format on
 	{
-		Log.d(TAG, "get accessToken");
 		if (AccessToken.getCurrentAccessToken() != null) {
 			return AccessToken.getCurrentAccessToken().getToken();
 		}
@@ -386,7 +378,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	// clang-format off
 	@Kroll.getProperty
 	@Kroll.method
-	public boolean getIsExpired()
+	public boolean getAccessTokenExpired()
 	// clang-format on
 	{
 		if (AccessToken.getCurrentAccessToken() != null) {
@@ -395,8 +387,11 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		return false;
 	}
 
+	// clang-format off
+	@Kroll.getProperty
 	@Kroll.method
-	public boolean getAccessTokenIsActive()
+	public boolean getAccessTokenActive()
+	// clang-format on
 	{
 		if (AccessToken.getCurrentAccessToken() != null) {
 			return AccessToken.isCurrentAccessTokenActive();
@@ -532,7 +527,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			@Override
 			public void onCancel()
 			{
-				Log.d(TAG, "FacebookCallback cancelled");
 				data.put(PROPERTY_CANCELLED, true);
 				data.put(PROPERTY_SUCCESS, false);
 				fireEvent(TiFacebookModule.EVENT_LOGIN, data);
@@ -563,9 +557,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	public void authorize()
 	{
 		Activity activity = TiApplication.getInstance().getCurrentActivity();
-		for (int i = 0; i < TiFacebookModule.permissions.length; i++) {
-			Log.d(TAG, "authorizing permission: " + TiFacebookModule.permissions[i]);
-		}
 		if (loginBehavior != null) {
 			setLoginManagerLoginBehavior();
 		}
@@ -592,7 +583,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	@Kroll.method
 	public void logout()
 	{
-		Log.d(TAG, "logout in facebook proxy");
 		LoginManager.getInstance().logOut();
 	}
 
