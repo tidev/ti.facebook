@@ -68,7 +68,6 @@ import android.os.Looper;
 @Kroll.module(name = "Facebook", id = "facebook")
 public class TiFacebookModule extends KrollModule implements OnActivityResultEvent
 {
-
 	private static final String TAG = "TiFacebookModule";
 	public static final String EVENT_LOGIN = "login";
 	public static final String EVENT_LOGOUT = "logout";
@@ -256,19 +255,21 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		return errorMessage;
 	}
 
-	@Kroll
-		.getProperty
-		@Kroll.method
-		public boolean getCanPresentShareDialog()
+	// clang-format off
+	@Kroll.getProperty
+	@Kroll.method
+	public boolean getCanPresentShareDialog()
+	// clang-format on
 	{
 		Log.w(TAG, "The getCanPresentShareDialog property is deprecated. This always returns true.");
 		return true;
 	}
 
-	@Kroll
-		.getProperty
-		@Kroll.method
-		public boolean getCanPresentOpenGraphActionDialog()
+	// clang-format off
+	@Kroll.getProperty
+	@Kroll.method
+	public boolean getCanPresentOpenGraphActionDialog()
+	// clang-format on
 	{
 		Log.w(TAG, "The getCanPresentOpenGraphActionDialog property is deprecated. This always returns true.");
 		return true;
@@ -357,10 +358,11 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		}
 	}
 
-	@Kroll
-		.getProperty
-		@Kroll.method
-		public String getUid()
+	// clang-format off
+	@Kroll.getProperty
+	@Kroll.method
+	public String getUid()
+	// clang-format on
 	{
 		if (AccessToken.getCurrentAccessToken() != null) {
 			return AccessToken.getCurrentAccessToken().getUserId();
@@ -368,10 +370,11 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		return "";
 	}
 
-	@Kroll
-		.getProperty
-		@Kroll.method
-		public String getAccessToken()
+	// clang-format off
+	@Kroll.getProperty
+	@Kroll.method
+	public String getAccessToken()
+	// clang-format on
 	{
 		Log.d(TAG, "get accessToken");
 		if (AccessToken.getCurrentAccessToken() != null) {
@@ -379,20 +382,21 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		}
 		return "";
 	}
-	
-	@Kroll
-		.getProperty
-		@Kroll.method
-		public boolean getIsExpired()
+
+	// clang-format off
+	@Kroll.getProperty
+	@Kroll.method
+	public boolean getIsExpired()
+	// clang-format on
 	{
 		if (AccessToken.getCurrentAccessToken() != null) {
 			return AccessToken.getCurrentAccessToken().isExpired();
 		}
 		return false;
 	}
-	
+
 	@Kroll.method
-		public boolean getAccessTokenIsActive()
+	public boolean getAccessTokenIsActive()
 	{
 		if (AccessToken.getCurrentAccessToken() != null) {
 			return AccessToken.isCurrentAccessTokenActive();
@@ -400,10 +404,11 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		return false;
 	}
 
-	@Kroll
-		.getProperty
-		@Kroll.method
-		public Date getExpirationDate()
+	// clang-format off
+	@Kroll.getProperty
+	@Kroll.method
+	public Date getExpirationDate()
+	// clang-format on
 	{
 		if (AccessToken.getCurrentAccessToken() != null) {
 			return AccessToken.getCurrentAccessToken().getExpires();
@@ -411,18 +416,20 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		return null;
 	}
 
-	@Kroll
-		.getProperty
-		@Kroll.method
-		public boolean getLoggedIn()
+	// clang-format off
+	@Kroll.getProperty
+	@Kroll.method
+	public boolean getLoggedIn()
+	// clang-format on
 	{
 		return (AccessToken.getCurrentAccessToken() != null);
 	}
 
-	@Kroll
-		.getProperty
-		@Kroll.method
-		public String[] getPermissions()
+	// clang-format off
+	@Kroll.getProperty
+	@Kroll.method
+	public String[] getPermissions()
+	// clang-format on
 	{
 		AccessToken currentAccessToken = AccessToken.getCurrentAccessToken();
 		if (currentAccessToken != null) {
@@ -433,19 +440,22 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		return null;
 	}
 
-	@Kroll
-		.setProperty
-		@Kroll.method
-		public void setLoginBehavior(String behaviorConstant)
+	// clang-format off
+	@Kroll.setProperty
+	@Kroll.method
+	public void setLoginBehavior(String behaviorConstant)
+	// clang-format on
 	{
 		loginBehavior = behaviorConstant;
 	}
 
-	@Kroll
-		.getProperty
-		@Kroll.method
-		public String getLoginBehavior()
+	// clang-format off
+	@Kroll.getProperty
+	@Kroll.method
+	public String getLoginBehavior()
+	// clang-format on
 	{
+
 		return loginBehavior;
 	}
 
@@ -484,10 +494,11 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		LoginManager.getInstance().logInWithPublishPermissions(activity, Arrays.asList(permissions));
 	}
 
-	@Kroll
-		.setProperty
-		@Kroll.method
-		public void setPermissions(Object[] permissions)
+	// clang-format off
+	@Kroll.setProperty
+	@Kroll.method
+	public void setPermissions(Object[] permissions)
+	// clang-format on
 	{
 		TiFacebookModule.permissions = Arrays.copyOf(permissions, permissions.length, String[].class);
 	}
@@ -544,7 +555,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 					permissionCallback = null;
 				}
 			}
-
 		};
 		LoginManager.getInstance().registerCallback(getCallbackManager(), getFacebookCallback());
 	}

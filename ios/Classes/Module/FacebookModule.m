@@ -508,7 +508,8 @@ NS_ASSUME_NONNULL_BEGIN
                                                                                              errorString, @"error", nil];
 
                                         KrollEvent *invocationEvent = [[KrollEvent alloc] initWithCallback:callback
-                                                                                               eventObject:propertiesDict thisObject:self];
+                                                                                               eventObject:propertiesDict
+                                                                                                thisObject:self];
                                         [[callback context] enqueue:invocationEvent];
                                       }];
   },
@@ -635,10 +636,8 @@ NS_ASSUME_NONNULL_BEGIN
   [placesManager generateCurrentPlaceRequestWithMinimumConfidenceLevel:confidenceLevel
                                                                 fields:fields
                                                             completion:^(FBSDKGraphRequest *_Nullable graphRequest, NSError *_Nullable error) {
-
                                                               if (graphRequest) {
                                                                 [graphRequest startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *requestError) {
-
                                                                   if (requestError != nil) {
                                                                     NSDictionary *errorEvent = @{
                                                                       @"error" : [requestError localizedDescription],
@@ -688,10 +687,8 @@ NS_ASSUME_NONNULL_BEGIN
                                                 distance:distance
                                                   cursor:cursor
                                               completion:^(FBSDKGraphRequest *_Nullable graphRequest, CLLocation *_Nullable location, NSError *_Nullable error) {
-
                                                 if (graphRequest) {
                                                   [graphRequest startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *requestError) {
-
                                                     if (requestError != nil) {
                                                       NSDictionary *errorEvent = @{
                                                         @"error" : [requestError localizedDescription],
@@ -933,11 +930,11 @@ NS_ASSUME_NONNULL_BEGIN
     NSLog(@"[WARN] Setting the \"picture\" is no longer possible in Ti.Facebook 5.5.0 as part of the Graph v2.9 changes.");
     NSLog(@"[WARN] It's information is scraped from the 'link' property instead, so setting it is no longer supported and will be ignored!");
   }
-  
+
   if (link == nil) {
     NSLog(@"[ERROR] Missing required parameter \"link\"!");
   }
-  
+
   [content setContentURL:link];
 
   if (hashtag != nil) {
@@ -964,18 +961,18 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 + (FBSDKSharePhotoContent *_Nonnull)sharePhotoContentFromDictionary:(NSDictionary *)dictionary
-{  
+{
   FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
 
   NSArray<NSDictionary<NSString *, id> *> *photos = [dictionary objectForKey:@"photos"];
   NSMutableArray<FBSDKSharePhoto *> *nativePhotos = [NSMutableArray arrayWithCapacity:photos.count];
-  
+
   for (NSDictionary<NSString *, id> *photoDictionary in photos) {
     id photo = photoDictionary[@"photo"];
     NSString *caption = photoDictionary[@"caption"];
     FBSDKSharePhoto *nativePhoto = [FBSDKSharePhoto new];
     BOOL userGenerated = [TiUtils boolValue:photoDictionary[@"userGenerated"]];
-  
+
     // A photo can either be a Blob or String
     if ([photo isKindOfClass:[TiBlob class]]) {
       nativePhoto.image = [(TiBlob *)photo image];
