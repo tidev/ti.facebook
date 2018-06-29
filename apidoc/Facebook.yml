@@ -1283,6 +1283,18 @@ properties:
     type: String
     permission: read-only
 
+  - name: accessTokenExpired
+    summary: Returns whether the <Modules.Facebook.accessToken> is expired by checking its <Modules.Facebook.expirationDate> property.
+    type: Boolean
+    permission: read-only
+    since: "7.4.0"
+
+  - name: accessTokenActive
+    summary: Returns `true` if the <Modules.Facebook.accessToken> is not `null` AND not expired.
+    type: Boolean
+    permission: read-only
+    since: "7.4.0"
+
   - name: appID
     summary: |
         If not explicitly set, the default will be read from the application's 

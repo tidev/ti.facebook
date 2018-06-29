@@ -113,30 +113,30 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *_Nullable)accessToken;
 
 /*!
- @brief Return a boolean based on whether or not the access token is expired
+ @brief Returns whether the access token is expired by checking its `expirationDate` property.
 
  @code
  const fb = require('facebook');
 
- alert('Access-Token expiration status is: \n\n' + fb.isExpired);
+ alert('Access-Token expiration status is: \n\n' + fb.accessTokenExpired);
  @endcode
 
- @return BOOL The expiration status of the token
+ @return BOOL The expiration status of the token.
  */
-- (NSNumber *)accessTokenIsExpired:(id)unused;
+- (NSNumber *)accessTokenExpired;
 
 /*!
- @brief Return a boolean based on whether or not the access token is a nil value
+ @brief Returns `true` if the `accessToken` is not null AND not expired.
 
  @code
  const fb = require('facebook');
 
- alert('Access-Token active state is: \n\n' + fb.accessTokenIsActive);
+ alert('Access-Token active state is: \n\n' + fb.accessTokenActive);
  @endcode
 
- @return BOOL The status of the token
+ @return BOOL The status of the token.
  */
-- (NSNumber *)accessTokenIsActive:(id)unused;
+- (NSNumber *)accessTokenActive;
 
 /*!
  @brief Sets the "global" access token that represents the currently logged in user.

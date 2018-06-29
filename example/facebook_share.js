@@ -21,12 +21,12 @@ exports.window = function (value) {
 	}));
 
 	fb.addEventListener('login', function (e) {
-		if(e.success) {
-			actionsView.show();
-		}
-		if(e.error) {
+		if (!e.success) {
 			alert(e.error);
+			return;
 		}
+
+		actionsView.show();
 	});
 
 	fb.addEventListener('logout', function (e) {
@@ -35,14 +35,14 @@ exports.window = function (value) {
 	});
 
 	var shareURL = Ti.UI.createButton({
-		title: 'Share URL with share dialog',
+		title: 'Share link with share dialog',
 		top: '10%',
 		center: true,
 	});
 
 	shareURL.addEventListener('click', function () {
 		fb.presentShareDialog({
-			contentURL: 'https://www.appcelerator.com',
+			link: 'https://www.appcelerator.com',
 			hashtag: '#codestrong'
 		});
 	});
@@ -50,7 +50,7 @@ exports.window = function (value) {
 	actionsView.add(shareURL);
 
 	var shareImage = Ti.UI.createButton({
-		title: 'Share Image with share dialog',
+		title: 'Share image with share dialog',
 		top: '10%',
 		center: true,
 	});
@@ -59,7 +59,13 @@ exports.window = function (value) {
 		Titanium.Media.openPhotoGallery({
 			success: function (event) {
 				fb.presentPhotoShareDialog({
-					image: event.media
+					photos: [
+						{
+							image: event.media, // Required Ti.Blob or String URL
+							caption: 'Great photo!' // Optional caption
+
+						}
+					]
 				});
 			},
 			cancel: function () {},
@@ -81,7 +87,7 @@ exports.window = function (value) {
 	});
 
 	var requestDialog = Ti.UI.createButton({
-		title: 'Request Dialog',
+		title: 'Game Request Dialog',
 		top: '10%',
 		center: true
 	});
@@ -121,7 +127,7 @@ exports.window = function (value) {
 		soundEnabled: true // boolean, iOS only
 	});
 
-	if(Ti.Platform.osname === 'android') {
+	if (Ti.Platform.osname === 'android') {
 		likeButton.height = Ti.UI.SIZE;
 		likeButton.width = Ti.UI.SIZE;
 	}

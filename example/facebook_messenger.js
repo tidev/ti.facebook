@@ -1,5 +1,5 @@
 exports.window = function (value) {
-	if(Ti.Platform.osname == 'android') {
+	if (Ti.Platform.osname === 'android') {
 		Ti.API.warn('This feature is currently iOS-only.');
 		return;
 	}
@@ -32,14 +32,14 @@ exports.window = function (value) {
 	}
 
 	function shareOnMessenger() {
-		if(!Ti.Platform.canOpenURL('fb-messenger-api://')) {
-			alert('No facebook messenger installed');
+		if (!Ti.Platform.canOpenURL('fb-messenger-api://')) {
+			alert('No Facebook Messenger installed');
 			return;
 		}
 		fb.presentMessengerDialog({
-			title: 'Appcelerator Titanium rocks!',
+			title: 'Titanium rocks!',
 			description: 'Sent using Ti.Facebook',
-			contentURL: 'https://appcelerator.com',
+			link: 'https://appcelerator.com',
 			to: []
 		});
 	}

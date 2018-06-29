@@ -115,12 +115,12 @@ NS_ASSUME_NONNULL_BEGIN
   return token;
 }
 
-- (NSNumber *)accessTokenIsExpired:(id)unused
+- (NSNumber *)accessTokenExpired
 {
   return @([[FBSDKAccessToken currentAccessToken] isExpired]);
 }
 
-- (NSNumber *)accessTokenIsActive:(id)unused
+- (NSNumber *)accessTokenActive
 {
   return @([FBSDKAccessToken currentAccessTokenIsActive]);
 }
