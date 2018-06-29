@@ -26,6 +26,7 @@ import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.titanium.TiApplication;
+import org.appcelerator.titanium.TiBlob;
 import org.appcelerator.titanium.TiLifecycle.OnActivityResultEvent;
 import org.appcelerator.titanium.util.TiConvert;
 import org.json.JSONArray;
@@ -52,6 +53,8 @@ import com.facebook.share.model.GameRequestContent;
 import com.facebook.share.model.GameRequestContent.ActionType;
 import com.facebook.share.model.GameRequestContent.Filters;
 import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.model.SharePhoto;
 import com.facebook.share.model.AppInviteContent;
 import com.facebook.share.widget.GameRequestDialog;
 import com.facebook.share.widget.ShareDialog;
@@ -587,7 +590,104 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	}
 
 	@Kroll.method
-	public void presentShareDialog(@Kroll.argument(optional = true) final KrollDict args)
+	public void presentPhotoShareDialog(@Kroll.argument final KrollDict args)
+	{
+		ShareDialog shareDialog = new ShareDialog(TiApplication.getInstance().getCurrentActivity());
+
+		shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+			KrollDict data = new KrollDict();
+			@Override
+			public void onCancel()
+			{
+				data.put(PROPERTY_SUCCESS, false);
+				data.put(PROPERTY_CANCELLED, true);
+				fireEvent(EVENT_SHARE_COMPLETE, data);
+			}
+
+			@Override
+			public void onError(FacebookException error)
+			{
+				data.put(PROPERTY_SUCCESS, false);
+				data.put(PROPERTY_CANCELLED, false);
+				data.put(PROPERTY_ERROR, "Error posting story");
+				fireEvent(EVENT_SHARE_COMPLETE, data);
+			}
+
+			@Override
+			public void onSuccess(Sharer.Result results)
+			{
+				final String postId = results.getPostId();
+				data.put(PROPERTY_SUCCESS, true);
+				data.put(PROPERTY_CANCELLED, false);
+				data.put(PROPERTY_RESULT, postId);
+				fireEvent(EVENT_SHARE_COMPLETE, data);
+			}
+		});
+
+		Mode mode = Mode.AUTOMATIC;
+		Object[] proxyPhotos = (Object[]) args.get("photos");
+
+		KrollDict[] photos = Arrays.copyOf(proxyPhotos, proxyPhotos.length, KrollDict[].class);
+		SharePhotoContent shareContent = null;
+
+		switch (TiConvert.toInt(args.get("mode"), TiFacebookModule.SHARE_DIALOG_MODE_AUTOMATIC)) {
+			case TiFacebookModule.SHARE_DIALOG_MODE_NATIVE:
+				mode = Mode.NATIVE;
+				break;
+			case TiFacebookModule.SHARE_DIALOG_MODE_WEB:
+				mode = Mode.WEB;
+				break;
+			case TiFacebookModule.SHARE_DIALOG_MODE_FEED_WEB:
+				mode = Mode.FEED;
+				break;
+			default:
+			case TiFacebookModule.SHARE_DIALOG_MODE_AUTOMATIC:
+				mode = Mode.AUTOMATIC;
+				break;
+		}
+
+		SharePhotoContent.Builder shareContentBuilder = new SharePhotoContent.Builder();
+
+		for (KrollDict proxyPhoto : photos) {
+			SharePhoto.Builder photoBuilder = new SharePhoto.Builder();
+
+			Object photo = proxyPhoto.get("photo");
+			String caption = (String) proxyPhoto.get("caption");
+			boolean userGenerated = proxyPhoto.optBoolean("userGenerated", false);
+
+			// A photo can either be a Blob or String
+			if (photo instanceof TiBlob) {
+				photoBuilder = photoBuilder.setBitmap(((TiBlob) photo).getImage());
+			} else if (photo instanceof String) {
+				photoBuilder = photoBuilder.setImageUrl(Uri.parse((String) photo));
+			} else {
+				Log.e(TAG, "Required \"photo\" not found or of unknown type: " + photo.getClass().getSimpleName());
+			}
+
+			// An optional caption
+			if (caption != null) {
+				photoBuilder = photoBuilder.setCaption(caption);
+			}
+
+			// An optional flag indicating if the photo was user generated
+			photoBuilder = photoBuilder.setUserGenerated(userGenerated);
+
+			shareContentBuilder = shareContentBuilder.addPhoto(photoBuilder.build());
+		}
+
+		if (photos != null) {
+			shareContent = shareContentBuilder.build();
+		} else {
+			Log.e(TAG, "The \"photos\" property is required when showing a photo share dialog.");
+		}
+
+		if (shareDialog != null && shareDialog.canShow(shareContent, mode)) {
+			shareDialog.show(shareContent, mode);
+		}
+	}
+
+	@Kroll.method
+	public void presentShareDialog(@Kroll.argument final KrollDict args)
 	{
 		ShareDialog shareDialog = new ShareDialog(TiApplication.getInstance().getCurrentActivity());
 
@@ -623,54 +723,47 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 
 		ShareLinkContent shareContent = null;
 		Mode mode = Mode.AUTOMATIC;
-		if (args == null || args.isEmpty()) {
-			shareContent = new ShareLinkContent.Builder().build();
+
+		String link = (String) args.get("link");
+		String title = (String) args.get("title");
+		String description = (String) args.get("description");
+		String picture = (String) args.get("picture");
+		String placeId = (String) args.get("placeId");
+		String ref = (String) args.get("ref");
+
+		if (title != null) {
+			Log.w(TAG, "Ti.Facebook.presentShareDialog.title has been deprecated as of the Graph v2.9 changes.");
+		}
+
+		if (description != null) {
+			Log.w(TAG, "Ti.Facebook.presentShareDialog.description has been deprecated as of the Graph v2.9 changes.");
+		}
+
+		if (picture != null) {
+			Log.w(TAG, "Ti.Facebook.presentShareDialog.picture has been deprecated as of the Graph v2.9 changes.");
+		}
+
+		switch (TiConvert.toInt(args.get("mode"), TiFacebookModule.SHARE_DIALOG_MODE_AUTOMATIC)) {
+			case TiFacebookModule.SHARE_DIALOG_MODE_NATIVE:
+				mode = Mode.NATIVE;
+				break;
+			case TiFacebookModule.SHARE_DIALOG_MODE_WEB:
+				mode = Mode.WEB;
+				break;
+			case TiFacebookModule.SHARE_DIALOG_MODE_FEED_WEB:
+				mode = Mode.FEED;
+				break;
+			default:
+			case TiFacebookModule.SHARE_DIALOG_MODE_AUTOMATIC:
+				mode = Mode.AUTOMATIC;
+				break;
+		}
+
+		if (link != null) {
+			shareContent =
+				new ShareLinkContent.Builder().setContentUrl(Uri.parse(link)).setPlaceId(placeId).setRef(ref).build();
 		} else {
-			String link = (String) args.get("link");
-			String title = (String) args.get("title");
-			String description = (String) args.get("description");
-			String picture = (String) args.get("picture");
-			String placeId = (String) args.get("placeId");
-			String ref = (String) args.get("ref");
-
-			if (title != null) {
-				Log.w(TAG, "Ti.Facebook.presentShareDialog.title has been deprecated as of the Graph v2.9 changes.");
-			}
-
-			if (description != null) {
-				Log.w(TAG,
-					  "Ti.Facebook.presentShareDialog.description has been deprecated as of the Graph v2.9 changes.");
-			}
-
-			if (picture != null) {
-				Log.w(TAG, "Ti.Facebook.presentShareDialog.picture has been deprecated as of the Graph v2.9 changes.");
-			}
-
-			switch (TiConvert.toInt(args.get("mode"), TiFacebookModule.SHARE_DIALOG_MODE_AUTOMATIC)) {
-				case TiFacebookModule.SHARE_DIALOG_MODE_NATIVE:
-					mode = Mode.NATIVE;
-					break;
-				case TiFacebookModule.SHARE_DIALOG_MODE_WEB:
-					mode = Mode.WEB;
-					break;
-				case TiFacebookModule.SHARE_DIALOG_MODE_FEED_WEB:
-					mode = Mode.FEED;
-					break;
-				default:
-				case TiFacebookModule.SHARE_DIALOG_MODE_AUTOMATIC:
-					mode = Mode.AUTOMATIC;
-					break;
-			}
-
-			if (link != null) {
-				shareContent = new ShareLinkContent.Builder()
-								   .setContentUrl(Uri.parse(link))
-								   .setPlaceId(placeId)
-								   .setRef(ref)
-								   .build();
-			} else {
-				Log.e(TAG, "The \"link\" property is required when showing a share dialog.");
-			}
+			Log.e(TAG, "The \"link\" property is required when showing a share dialog.");
 		}
 
 		if (shareDialog != null && shareDialog.canShow(shareContent, mode)) {
