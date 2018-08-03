@@ -92,12 +92,14 @@ properties:
 
   - name: tooltipBehavior
     summary: Gets or sets the desired tooltip behavior.
+    type: Number
     constants: [Modules.Facebook.LOGIN_BUTTON_TOOLTIP_BEHAVIOR_*]
     since: "6.1.0"
     platforms: [iphone, ipad, android]
 
   - name: tooltipColorStyle
     summary: Gets or sets the desired tooltip color style.
+    type: Number
     constants: [Modules.Facebook.LOGIN_BUTTON_TOOLTIP_STYLE_*]
     since: "6.1.0"
     platforms: [iphone, ipad, android]

@@ -26,6 +26,7 @@ import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.titanium.TiApplication;
+import org.appcelerator.titanium.TiBlob;
 import org.appcelerator.titanium.TiLifecycle.OnActivityResultEvent;
 import org.appcelerator.titanium.util.TiConvert;
 import org.json.JSONArray;
@@ -52,6 +53,8 @@ import com.facebook.share.model.GameRequestContent;
 import com.facebook.share.model.GameRequestContent.ActionType;
 import com.facebook.share.model.GameRequestContent.Filters;
 import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.model.SharePhoto;
 import com.facebook.share.model.AppInviteContent;
 import com.facebook.share.widget.GameRequestDialog;
 import com.facebook.share.widget.ShareDialog;
@@ -68,7 +71,6 @@ import android.os.Looper;
 @Kroll.module(name = "Facebook", id = "facebook")
 public class TiFacebookModule extends KrollModule implements OnActivityResultEvent
 {
-
 	private static final String TAG = "TiFacebookModule";
 	public static final String EVENT_LOGIN = "login";
 	public static final String EVENT_LOGOUT = "logout";
@@ -172,7 +174,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	public void onResume(Activity activity)
 	{
 		super.onResume(activity);
-		Log.d(TAG, "Calling activateApp");
 		AppEventsLogger.activateApp(activity);
 	}
 
@@ -180,7 +181,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	public void onPause(Activity activity)
 	{
 		super.onPause(activity);
-		Log.d(TAG, "Calling deactivateApp");
 		AppEventsLogger.deactivateApp(activity);
 	}
 
@@ -209,21 +209,16 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 							KrollDict data = new KrollDict();
 
 							if (user != null) {
-								Log.d(TAG, "user is not null");
-
 								data.put(TiFacebookModule.PROPERTY_CANCELLED, false);
 								data.put(TiFacebookModule.PROPERTY_SUCCESS, true);
 								data.put(TiFacebookModule.PROPERTY_UID, user.optString("id"));
 								data.put(TiFacebookModule.PROPERTY_DATA, user.toString());
 								data.put(TiFacebookModule.PROPERTY_CODE, 0);
-								Log.d(TAG, "firing login event from module");
 								fireEvent(TiFacebookModule.EVENT_LOGIN, data);
 							}
 
 							if (err != null) {
 								String errorString = TiFacebookModule.handleError(err);
-								Log.e(TAG, "me request callback error");
-								Log.e(TAG, "error message: " + err.getErrorMessage());
 								data.put(TiFacebookModule.PROPERTY_ERROR, errorString);
 								fireEvent(TiFacebookModule.EVENT_LOGIN, data);
 							}
@@ -256,19 +251,21 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		return errorMessage;
 	}
 
-	@Kroll
-		.getProperty
-		@Kroll.method
-		public boolean getCanPresentShareDialog()
+	// clang-format off
+	@Kroll.getProperty
+	@Kroll.method
+	public boolean getCanPresentShareDialog()
+	// clang-format on
 	{
 		Log.w(TAG, "The getCanPresentShareDialog property is deprecated. This always returns true.");
 		return true;
 	}
 
-	@Kroll
-		.getProperty
-		@Kroll.method
-		public boolean getCanPresentOpenGraphActionDialog()
+	// clang-format off
+	@Kroll.getProperty
+	@Kroll.method
+	public boolean getCanPresentOpenGraphActionDialog()
+	// clang-format on
 	{
 		Log.w(TAG, "The getCanPresentOpenGraphActionDialog property is deprecated. This always returns true.");
 		return true;
@@ -357,10 +354,11 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		}
 	}
 
-	@Kroll
-		.getProperty
-		@Kroll.method
-		public String getUid()
+	// clang-format off
+	@Kroll.getProperty
+	@Kroll.method
+	public String getUid()
+	// clang-format on
 	{
 		if (AccessToken.getCurrentAccessToken() != null) {
 			return AccessToken.getCurrentAccessToken().getUserId();
@@ -368,22 +366,47 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		return "";
 	}
 
-	@Kroll
-		.getProperty
-		@Kroll.method
-		public String getAccessToken()
+	// clang-format off
+	@Kroll.getProperty
+	@Kroll.method
+	public String getAccessToken()
+	// clang-format on
 	{
-		Log.d(TAG, "get accessToken");
 		if (AccessToken.getCurrentAccessToken() != null) {
 			return AccessToken.getCurrentAccessToken().getToken();
 		}
 		return "";
 	}
 
-	@Kroll
-		.getProperty
-		@Kroll.method
-		public Date getExpirationDate()
+	// clang-format off
+	@Kroll.getProperty
+	@Kroll.method
+	public boolean getAccessTokenExpired()
+	// clang-format on
+	{
+		if (AccessToken.getCurrentAccessToken() != null) {
+			return AccessToken.getCurrentAccessToken().isExpired();
+		}
+		return false;
+	}
+
+	// clang-format off
+	@Kroll.getProperty
+	@Kroll.method
+	public boolean getAccessTokenActive()
+	// clang-format on
+	{
+		if (AccessToken.getCurrentAccessToken() != null) {
+			return AccessToken.isCurrentAccessTokenActive();
+		}
+		return false;
+	}
+
+	// clang-format off
+	@Kroll.getProperty
+	@Kroll.method
+	public Date getExpirationDate()
+	// clang-format on
 	{
 		if (AccessToken.getCurrentAccessToken() != null) {
 			return AccessToken.getCurrentAccessToken().getExpires();
@@ -391,18 +414,20 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		return null;
 	}
 
-	@Kroll
-		.getProperty
-		@Kroll.method
-		public boolean getLoggedIn()
+	// clang-format off
+	@Kroll.getProperty
+	@Kroll.method
+	public boolean getLoggedIn()
+	// clang-format on
 	{
 		return (AccessToken.getCurrentAccessToken() != null);
 	}
 
-	@Kroll
-		.getProperty
-		@Kroll.method
-		public String[] getPermissions()
+	// clang-format off
+	@Kroll.getProperty
+	@Kroll.method
+	public String[] getPermissions()
+	// clang-format on
 	{
 		AccessToken currentAccessToken = AccessToken.getCurrentAccessToken();
 		if (currentAccessToken != null) {
@@ -413,19 +438,22 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		return null;
 	}
 
-	@Kroll
-		.setProperty
-		@Kroll.method
-		public void setLoginBehavior(String behaviorConstant)
+	// clang-format off
+	@Kroll.setProperty
+	@Kroll.method
+	public void setLoginBehavior(String behaviorConstant)
+	// clang-format on
 	{
 		loginBehavior = behaviorConstant;
 	}
 
-	@Kroll
-		.getProperty
-		@Kroll.method
-		public String getLoginBehavior()
+	// clang-format off
+	@Kroll.getProperty
+	@Kroll.method
+	public String getLoginBehavior()
+	// clang-format on
 	{
+
 		return loginBehavior;
 	}
 
@@ -464,10 +492,11 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		LoginManager.getInstance().logInWithPublishPermissions(activity, Arrays.asList(permissions));
 	}
 
-	@Kroll
-		.setProperty
-		@Kroll.method
-		public void setPermissions(Object[] permissions)
+	// clang-format off
+	@Kroll.setProperty
+	@Kroll.method
+	public void setPermissions(Object[] permissions)
+	// clang-format on
 	{
 		TiFacebookModule.permissions = Arrays.copyOf(permissions, permissions.length, String[].class);
 	}
@@ -501,7 +530,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			@Override
 			public void onCancel()
 			{
-				Log.d(TAG, "FacebookCallback cancelled");
 				data.put(PROPERTY_CANCELLED, true);
 				data.put(PROPERTY_SUCCESS, false);
 				fireEvent(TiFacebookModule.EVENT_LOGIN, data);
@@ -524,7 +552,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 					permissionCallback = null;
 				}
 			}
-
 		};
 		LoginManager.getInstance().registerCallback(getCallbackManager(), getFacebookCallback());
 	}
@@ -533,9 +560,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	public void authorize()
 	{
 		Activity activity = TiApplication.getInstance().getCurrentActivity();
-		for (int i = 0; i < TiFacebookModule.permissions.length; i++) {
-			Log.d(TAG, "authorizing permission: " + TiFacebookModule.permissions[i]);
-		}
 		if (loginBehavior != null) {
 			setLoginManagerLoginBehavior();
 		}
@@ -562,12 +586,108 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	@Kroll.method
 	public void logout()
 	{
-		Log.d(TAG, "logout in facebook proxy");
 		LoginManager.getInstance().logOut();
 	}
 
 	@Kroll.method
-	public void presentShareDialog(@Kroll.argument(optional = true) final KrollDict args)
+	public void presentPhotoShareDialog(@Kroll.argument final KrollDict args)
+	{
+		ShareDialog shareDialog = new ShareDialog(TiApplication.getInstance().getCurrentActivity());
+
+		shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+			KrollDict data = new KrollDict();
+			@Override
+			public void onCancel()
+			{
+				data.put(PROPERTY_SUCCESS, false);
+				data.put(PROPERTY_CANCELLED, true);
+				fireEvent(EVENT_SHARE_COMPLETE, data);
+			}
+
+			@Override
+			public void onError(FacebookException error)
+			{
+				data.put(PROPERTY_SUCCESS, false);
+				data.put(PROPERTY_CANCELLED, false);
+				data.put(PROPERTY_ERROR, "Error posting story");
+				fireEvent(EVENT_SHARE_COMPLETE, data);
+			}
+
+			@Override
+			public void onSuccess(Sharer.Result results)
+			{
+				final String postId = results.getPostId();
+				data.put(PROPERTY_SUCCESS, true);
+				data.put(PROPERTY_CANCELLED, false);
+				data.put(PROPERTY_RESULT, postId);
+				fireEvent(EVENT_SHARE_COMPLETE, data);
+			}
+		});
+
+		Mode mode = Mode.AUTOMATIC;
+		Object[] proxyPhotos = (Object[]) args.get("photos");
+
+		KrollDict[] photos = Arrays.copyOf(proxyPhotos, proxyPhotos.length, KrollDict[].class);
+		SharePhotoContent shareContent = null;
+
+		switch (TiConvert.toInt(args.get("mode"), TiFacebookModule.SHARE_DIALOG_MODE_AUTOMATIC)) {
+			case TiFacebookModule.SHARE_DIALOG_MODE_NATIVE:
+				mode = Mode.NATIVE;
+				break;
+			case TiFacebookModule.SHARE_DIALOG_MODE_WEB:
+				mode = Mode.WEB;
+				break;
+			case TiFacebookModule.SHARE_DIALOG_MODE_FEED_WEB:
+				mode = Mode.FEED;
+				break;
+			default:
+			case TiFacebookModule.SHARE_DIALOG_MODE_AUTOMATIC:
+				mode = Mode.AUTOMATIC;
+				break;
+		}
+
+		SharePhotoContent.Builder shareContentBuilder = new SharePhotoContent.Builder();
+
+		for (KrollDict proxyPhoto : photos) {
+			SharePhoto.Builder photoBuilder = new SharePhoto.Builder();
+
+			Object photo = proxyPhoto.get("photo");
+			String caption = (String) proxyPhoto.get("caption");
+			boolean userGenerated = proxyPhoto.optBoolean("userGenerated", false);
+
+			// A photo can either be a Blob or String
+			if (photo instanceof TiBlob) {
+				photoBuilder = photoBuilder.setBitmap(((TiBlob) photo).getImage());
+			} else if (photo instanceof String) {
+				photoBuilder = photoBuilder.setImageUrl(Uri.parse((String) photo));
+			} else {
+				Log.e(TAG, "Required \"photo\" not found or of unknown type: " + photo.getClass().getSimpleName());
+			}
+
+			// An optional caption
+			if (caption != null) {
+				photoBuilder = photoBuilder.setCaption(caption);
+			}
+
+			// An optional flag indicating if the photo was user generated
+			photoBuilder = photoBuilder.setUserGenerated(userGenerated);
+
+			shareContentBuilder = shareContentBuilder.addPhoto(photoBuilder.build());
+		}
+
+		if (photos != null) {
+			shareContent = shareContentBuilder.build();
+		} else {
+			Log.e(TAG, "The \"photos\" property is required when showing a photo share dialog.");
+		}
+
+		if (shareDialog != null && shareDialog.canShow(shareContent, mode)) {
+			shareDialog.show(shareContent, mode);
+		}
+	}
+
+	@Kroll.method
+	public void presentShareDialog(@Kroll.argument final KrollDict args)
 	{
 		ShareDialog shareDialog = new ShareDialog(TiApplication.getInstance().getCurrentActivity());
 
@@ -603,54 +723,47 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 
 		ShareLinkContent shareContent = null;
 		Mode mode = Mode.AUTOMATIC;
-		if (args == null || args.isEmpty()) {
-			shareContent = new ShareLinkContent.Builder().build();
+
+		String link = (String) args.get("link");
+		String title = (String) args.get("title");
+		String description = (String) args.get("description");
+		String picture = (String) args.get("picture");
+		String placeId = (String) args.get("placeId");
+		String ref = (String) args.get("ref");
+
+		if (title != null) {
+			Log.w(TAG, "Ti.Facebook.presentShareDialog.title has been deprecated as of the Graph v2.9 changes.");
+		}
+
+		if (description != null) {
+			Log.w(TAG, "Ti.Facebook.presentShareDialog.description has been deprecated as of the Graph v2.9 changes.");
+		}
+
+		if (picture != null) {
+			Log.w(TAG, "Ti.Facebook.presentShareDialog.picture has been deprecated as of the Graph v2.9 changes.");
+		}
+
+		switch (TiConvert.toInt(args.get("mode"), TiFacebookModule.SHARE_DIALOG_MODE_AUTOMATIC)) {
+			case TiFacebookModule.SHARE_DIALOG_MODE_NATIVE:
+				mode = Mode.NATIVE;
+				break;
+			case TiFacebookModule.SHARE_DIALOG_MODE_WEB:
+				mode = Mode.WEB;
+				break;
+			case TiFacebookModule.SHARE_DIALOG_MODE_FEED_WEB:
+				mode = Mode.FEED;
+				break;
+			default:
+			case TiFacebookModule.SHARE_DIALOG_MODE_AUTOMATIC:
+				mode = Mode.AUTOMATIC;
+				break;
+		}
+
+		if (link != null) {
+			shareContent =
+				new ShareLinkContent.Builder().setContentUrl(Uri.parse(link)).setPlaceId(placeId).setRef(ref).build();
 		} else {
-			String link = (String) args.get("link");
-			String title = (String) args.get("title");
-			String description = (String) args.get("description");
-			String picture = (String) args.get("picture");
-			String placeId = (String) args.get("placeId");
-			String ref = (String) args.get("ref");
-
-			if (title != null) {
-				Log.w(TAG, "Ti.Facebook.presentShareDialog.title has been deprecated as of the Graph v2.9 changes.");
-			}
-
-			if (description != null) {
-				Log.w(TAG,
-					  "Ti.Facebook.presentShareDialog.description has been deprecated as of the Graph v2.9 changes.");
-			}
-
-			if (picture != null) {
-				Log.w(TAG, "Ti.Facebook.presentShareDialog.picture has been deprecated as of the Graph v2.9 changes.");
-			}
-
-			switch (TiConvert.toInt(args.get("mode"), TiFacebookModule.SHARE_DIALOG_MODE_AUTOMATIC)) {
-				case TiFacebookModule.SHARE_DIALOG_MODE_NATIVE:
-					mode = Mode.NATIVE;
-					break;
-				case TiFacebookModule.SHARE_DIALOG_MODE_WEB:
-					mode = Mode.WEB;
-					break;
-				case TiFacebookModule.SHARE_DIALOG_MODE_FEED_WEB:
-					mode = Mode.FEED;
-					break;
-				default:
-				case TiFacebookModule.SHARE_DIALOG_MODE_AUTOMATIC:
-					mode = Mode.AUTOMATIC;
-					break;
-			}
-
-			if (link != null) {
-				shareContent = new ShareLinkContent.Builder()
-								   .setContentUrl(Uri.parse(link))
-								   .setPlaceId(placeId)
-								   .setRef(ref)
-								   .build();
-			} else {
-				Log.e(TAG, "The \"link\" property is required when showing a share dialog.");
-			}
+			Log.e(TAG, "The \"link\" property is required when showing a share dialog.");
 		}
 
 		if (shareDialog != null && shareDialog.canShow(shareContent, mode)) {

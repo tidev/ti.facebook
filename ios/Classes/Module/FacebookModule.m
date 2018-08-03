@@ -115,6 +115,16 @@ NS_ASSUME_NONNULL_BEGIN
   return token;
 }
 
+- (NSNumber *)accessTokenExpired
+{
+  return @([[FBSDKAccessToken currentAccessToken] isExpired]);
+}
+
+- (NSNumber *)accessTokenActive
+{
+  return @([FBSDKAccessToken currentAccessTokenIsActive]);
+}
+
 - (void)setCurrentAccessToken:(NSDictionary *_Nonnull)currentAccessToken
 {
   [FBSDKAccessToken setCurrentAccessToken:[[FBSDKAccessToken alloc] initWithTokenString:[TiUtils stringValue:@"accessToken" properties:currentAccessToken]
@@ -283,6 +293,24 @@ NS_ASSUME_NONNULL_BEGIN
       NO);
 }
 
+- (void)presentPhotoShareDialog:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args
+{
+  NSDictionary *_Nonnull params = [args objectAtIndex:0];
+
+  TiThreadPerformOnMainThread(^{
+    FBSDKSharePhotoContent *content = [FacebookModule sharePhotoContentFromDictionary:params];
+    FBSDKShareDialog *dialog = [[FBSDKShareDialog alloc] init];
+
+    [dialog setMode:[TiUtils intValue:[params objectForKey:@"mode"] def:FBSDKShareDialogModeAutomatic]];
+    [dialog setFromViewController:nil];
+    [dialog setShareContent:content];
+    [dialog setDelegate:self];
+
+    [dialog show];
+  },
+      NO);
+}
+
 - (void)presentMessengerDialog:(NSArray<NSDictionary<NSString *, id> *> *)args
 {
   NSDictionary *_Nonnull params = [args objectAtIndex:0];
@@ -322,24 +350,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)presentWebShareDialog:(id _Nullable)unused
 {
-  DEPRECATED_REPLACED_REMOVED(@"Facebook.presentWebShareDialog", @"5.0.0", @"5.0.0", @"Titanium.Facebook.presentShareDialog");
+  DEPRECATED_REPLACED_REMOVED(@"Facebook.presentWebShareDialog", @"5.0.0", @"5.0.0", @"Facebook.presentShareDialog");
+  DebugLog(@"[WARN] Facebook removed the ShareDialog API via Web in SDK 4.28.0");
 }
 
 - (void)presentInviteDialog:(NSArray<NSDictionary<NSString *, id> *> *)args
 {
   DEPRECATED_REMOVED(@"Facebook.presentInviteDialog", @"5.7.0", @"5.7.0");
-  DebugLog(@"Facebook removed the InviteDialog API in SDK 4.28.0");
-
-  NSDictionary *_Nonnull params = [args objectAtIndex:0];
-
-  TiThreadPerformOnMainThread(^{
-    FBSDKAppInviteContent *content = [[FBSDKAppInviteContent alloc] init];
-    [content setAppLinkURL:[NSURL URLWithString:[params objectForKey:@"appLink"]]];
-    [content setAppInvitePreviewImageURL:[NSURL URLWithString:[params objectForKey:@"appPreviewImageLink"]]];
-
-    [FBSDKAppInviteDialog showFromViewController:nil withContent:content delegate:self];
-  },
-      NO);
+  DebugLog(@"[WARN] Facebook removed the InviteDialog API in SDK 4.28.0");
 }
 
 - (void)presentSendRequestDialog:(NSArray<NSDictionary<NSString *, id> *> *)args
@@ -441,8 +459,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)requestNewPublishPermissions:(NSArray<id> *_Nonnull)args
 {
-  NSArray<NSString *> *writePermissions = [args objectAtIndex:0];
-  ENSURE_ARRAY(writePermissions);
+  NSArray<NSString *> *publishPermissions = [args objectAtIndex:0];
+  ENSURE_ARRAY(publishPermissions);
 
   NSNumber *_defaultAudience = [args objectAtIndex:1];
   ENSURE_TYPE(_defaultAudience, NSNumber);
@@ -455,7 +473,7 @@ NS_ASSUME_NONNULL_BEGIN
   loginManager.defaultAudience = defaultAudience;
 
   TiThreadPerformOnMainThread(^{
-    [loginManager logInWithPublishPermissions:writePermissions
+    [loginManager logInWithPublishPermissions:publishPermissions
                            fromViewController:nil
                                       handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
                                         BOOL success = NO;
@@ -489,7 +507,9 @@ NS_ASSUME_NONNULL_BEGIN
                                                                                              NUMINTEGER(code), @"code",
                                                                                              errorString, @"error", nil];
 
-                                        KrollEvent *invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:propertiesDict thisObject:self];
+                                        KrollEvent *invocationEvent = [[KrollEvent alloc] initWithCallback:callback
+                                                                                               eventObject:propertiesDict
+                                                                                                thisObject:self];
                                         [[callback context] enqueue:invocationEvent];
                                       }];
   },
@@ -616,10 +636,8 @@ NS_ASSUME_NONNULL_BEGIN
   [placesManager generateCurrentPlaceRequestWithMinimumConfidenceLevel:confidenceLevel
                                                                 fields:fields
                                                             completion:^(FBSDKGraphRequest *_Nullable graphRequest, NSError *_Nullable error) {
-
                                                               if (graphRequest) {
                                                                 [graphRequest startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *requestError) {
-
                                                                   if (requestError != nil) {
                                                                     NSDictionary *errorEvent = @{
                                                                       @"error" : [requestError localizedDescription],
@@ -669,10 +687,8 @@ NS_ASSUME_NONNULL_BEGIN
                                                 distance:distance
                                                   cursor:cursor
                                               completion:^(FBSDKGraphRequest *_Nullable graphRequest, CLLocation *_Nullable location, NSError *_Nullable error) {
-
                                                 if (graphRequest) {
                                                   [graphRequest startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *requestError) {
-
                                                     if (requestError != nil) {
                                                       NSDictionary *errorEvent = @{
                                                         @"error" : [requestError localizedDescription],
@@ -896,8 +912,7 @@ NS_ASSUME_NONNULL_BEGIN
   NSString *hashtag = [dictionary objectForKey:@"hashtag"];
   NSString *quote = [dictionary objectForKey:@"quote"];
   NSArray *to = [dictionary objectForKey:@"to"];
-  NSURL *contentURL = [NSURL URLWithString:[dictionary objectForKey:@"contentURL"]];
-  NSURL *url = [NSURL URLWithString:[dictionary objectForKey:@"link"]];
+  NSURL *link = [NSURL URLWithString:[dictionary objectForKey:@"link"]];
   NSString *placeID = [dictionary objectForKey:@"placeID"];
   NSString *referal = [dictionary objectForKey:@"referal"];
 
@@ -916,16 +931,18 @@ NS_ASSUME_NONNULL_BEGIN
     NSLog(@"[WARN] It's information is scraped from the 'link' property instead, so setting it is no longer supported and will be ignored!");
   }
 
+  if (link == nil) {
+    NSLog(@"[ERROR] Missing required parameter \"link\"!");
+  }
+
+  [content setContentURL:link];
+
   if (hashtag != nil) {
     [content setHashtag:[FBSDKHashtag hashtagWithString:hashtag]];
   }
 
   if (quote != nil) {
     [content setQuote:quote];
-  }
-
-  if (contentURL != nil) {
-    [content setContentURL:contentURL];
   }
 
   if (to != nil) {
@@ -939,6 +956,42 @@ NS_ASSUME_NONNULL_BEGIN
   if (referal != nil) {
     [content setRef:referal];
   }
+
+  return content;
+}
+
++ (FBSDKSharePhotoContent *_Nonnull)sharePhotoContentFromDictionary:(NSDictionary *)dictionary
+{
+  FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
+
+  NSArray<NSDictionary<NSString *, id> *> *photos = [dictionary objectForKey:@"photos"];
+  NSMutableArray<FBSDKSharePhoto *> *nativePhotos = [NSMutableArray arrayWithCapacity:photos.count];
+
+  for (NSDictionary<NSString *, id> *photoDictionary in photos) {
+    id photo = photoDictionary[@"photo"];
+    NSString *caption = photoDictionary[@"caption"];
+    FBSDKSharePhoto *nativePhoto = [FBSDKSharePhoto new];
+    BOOL userGenerated = [TiUtils boolValue:photoDictionary[@"userGenerated"]];
+
+    // A photo can either be a Blob or String
+    if ([photo isKindOfClass:[TiBlob class]]) {
+      nativePhoto.image = [(TiBlob *)photo image];
+    } else if ([photo isKindOfClass:[NSString class]]) {
+      nativePhoto.imageURL = [NSURL URLWithString:(NSString *)photo];
+    } else {
+      NSLog(@"[ERROR] Required \"photo\" not found or of unknown type: %@", NSStringFromClass([photo class]));
+    }
+
+    // An optional caption
+    if (caption != nil) {
+      nativePhoto.caption = caption;
+    }
+
+    // An optional flag indicating if the photo was user generated
+    nativePhoto.userGenerated = userGenerated;
+  }
+
+  content.photos = nativePhotos;
 
   return content;
 }

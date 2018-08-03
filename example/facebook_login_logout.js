@@ -20,7 +20,7 @@ exports.window = function(value){
 	win.add(label);
 		
 	fb.addEventListener('login',function(e) {
-		// You *will* get this event if loggedIn == false below
+		// You *will* get this event if loggedIn === false below
      	// Make sure to handle all possible cases of this event
      	if (e.success) {
  			alert('login from uid: '+e.uid+', name: '+JSON.parse(e.data).name);
@@ -43,7 +43,7 @@ exports.window = function(value){
 	});
 	
 	//Android's LoginButton width shouldn't be fixed
-	if (Ti.Platform.osname != 'android') {
+	if (Ti.Platform.osname !== 'android') {
 		loginButton.width = 200;
 	} 
 	

@@ -113,6 +113,32 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *_Nullable)accessToken;
 
 /*!
+ @brief Returns whether the access token is expired by checking its `expirationDate` property.
+
+ @code
+ const fb = require('facebook');
+
+ alert('Access-Token expiration status is: \n\n' + fb.accessTokenExpired);
+ @endcode
+
+ @return BOOL The expiration status of the token.
+ */
+- (NSNumber *)accessTokenExpired;
+
+/*!
+ @brief Returns `true` if the `accessToken` is not null AND not expired.
+
+ @code
+ const fb = require('facebook');
+
+ alert('Access-Token active state is: \n\n' + fb.accessTokenActive);
+ @endcode
+
+ @return BOOL The status of the token.
+ */
+- (NSNumber *)accessTokenActive;
+
+/*!
  @brief Sets the "global" access token that represents the currently logged in user.
  
  @param currentAccessToken The new access-token used for the user.
@@ -301,6 +327,25 @@ NS_ASSUME_NONNULL_BEGIN
  @endcode
  */
 - (void)presentShareDialog:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args;
+
+/*!
+ @brief Present a photo share-dialog.
+ 
+ @param args The arguments passed to the share-dialog.
+ 
+ @code
+ const fb = require('facebook');
+ 
+ Titanium.Media.openPhotoGallery({
+			success: function (event) {
+				fb.presentPhotoShareDialog({
+            photos: [{ photo: event.media, caption: 'B-e-a-utiful!' }] // An array of photos and optional captions
+				});
+			}
+  });
+ @endcode
+ */
+- (void)presentPhotoShareDialog:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args;
 
 /*!
  @brief Present a messenger-dialog. Currently only possible to use when Messenger is installed.
