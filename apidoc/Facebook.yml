@@ -184,6 +184,27 @@ description: |
         <resources>
             <string name="facebook_app_id">FACEBOOK_APP_ID</string>
         </resources>
+        
+    **Generate the Key Hashes**
+
+    Facebook requires you to add the Key Hash of the Android app in order for you to use the module. 
+    Steps to get the Key Hash as follows. Alternatively, if you do not have the correct Key Hash on 
+    the Android App, the App will give an error message when you login with the Key Hash of the App 
+    which you can then copy.
+
+    Use the following command to generate and receive the key-hashpath of your app. To do do, 
+    replace <sdk-version> with your SDK-version and run:
+
+        keytool -exportcert -alias androiddebugkey -keystore ~/Library/Application\ Support/Titanium/mobilesdk/osx/<sdk-version>/dev_keystore | openssl sha1 -binary | openssl base64
+    
+    You would also require, to fill up the Google Play Package Name which is the Application ID 
+    and the Class Name which is the Application ID followed by the Application Name concatenated 
+    with the word Activity. Example, an App called Kitchensink with Application ID of 
+    "com.appcelerator.kitchensink" will have the Class Name as "com.appcelerator.kitchensink.KitchensinkActivity".
+    Alternatively, you can check the Class Name in "<project>/build/android/AndroidManifest.xml" which is 
+    generated when you build the project. The launcher activity is the Class Name of the Application.
+
+    For more info, please see https://developers.facebook.com/docs/android/getting-started
 
     **Create a Facebook Proxy**
 
