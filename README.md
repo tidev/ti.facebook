@@ -132,8 +132,10 @@ Facebook requires you to add the Key Hash of the Android app in order for you to
 Use the following command to generate and receive the key-hashpath of your app. 
 To do do, replace `<sdk-version>` with your SDK-version and run:
 ```
-keytool -exportcert -alias androiddebugkey -keystore ~/Library/Application\ Support/Titanium/mobilesdk/osx/<sdk-version>/dev_keystore | openssl sha1 -binary | openssl base64
+keytool -exportcert -alias tidev -storepass tirocks -keystore ~/Library/Application\ Support/Titanium/mobilesdk/osx/<sdk-version>/android/dev_keystore | openssl sha1 -binary | openssl base64
 ```
+
+If you use your own keystore, update the alias, password and name of your keystore file of course.
 
 You would also require, to fill up the `Google Play Package Name` which is the Application ID and the `Class Name` which is the Application ID followed by the Application Name concatenated with the word `Activity`. Example, an App called `Kitchensink` with Application ID of `com.appcelerator.kitchensink` will have the Class Name as `com.appcelerator.kitchensink.KitchensinkActivity`. Alternatively, you can check the Class Name in `/build/android/AndroidManifest.xml` which is generated when you build the project. The launcher activity is the Class Name of the Application.
 
