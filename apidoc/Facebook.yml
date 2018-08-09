@@ -166,6 +166,10 @@ description: |
                                   android:label="YourAppName" 
                                   android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" />
                         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+
+                        <provider android:name="com.facebook.FacebookContentProvider"
+                                  android:authorities="com.facebook.app.FacebookContentProvider<YOUR_APP_ID>"
+                                  android:exported="true" />
                     </application>
                 </manifest>
             </android>
@@ -592,6 +596,13 @@ methods:
         of this method to one of the `LOGIN_BEHAVIOR_*` constants when presenting it.
         
         Note: The `images` parameter is **required** by the Facebook SDK.
+
+        Android Note: In order to share images on Android, the Facebook app needs to be installed and the
+        "content provider" settings in your Android manifest needs to be configured:
+            
+            <provider android:name="com.facebook.FacebookContentProvider"
+                      android:authorities="com.facebook.app.FacebookContentProvider<YOUR_APP_ID>"
+                      android:exported="true" />
 
         Listen for the <Modules.Facebook.shareCompleted> to be notified if the attempt was
         successful or not.
