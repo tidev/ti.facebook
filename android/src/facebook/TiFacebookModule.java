@@ -27,6 +27,7 @@ import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.titanium.TiApplication;
 import org.appcelerator.titanium.TiBlob;
+import org.appcelerator.titanium.TiFileProxy;
 import org.appcelerator.titanium.TiLifecycle.OnActivityResultEvent;
 import org.appcelerator.titanium.util.TiConvert;
 import org.json.JSONArray;
@@ -626,9 +627,25 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 
 		Mode mode = Mode.AUTOMATIC;
 		Object[] proxyPhotos = (Object[]) args.get("photos");
-
-		KrollDict[] photos = Arrays.copyOf(proxyPhotos, proxyPhotos.length, KrollDict[].class);
+		KrollDict[] photos = new KrollDict[proxyPhotos.length];
 		SharePhotoContent shareContent = null;
+
+		for (int i = 0; i < proxyPhotos.length; i++) {
+			HashMap obj = (HashMap) proxyPhotos[i];
+			KrollDict dict = new KrollDict();
+
+			dict.put("photo", obj.get("photo"));
+
+			if (obj.containsKey("caption")) {
+				dict.put("caption", (String) obj.get("caption"));
+			}
+
+			if (obj.containsKey("userGenerated")) {
+				dict.put("userGenerated", (boolean) obj.get("userGenerated"));
+			}
+
+			photos[i] = dict;
+		}
 
 		switch (TiConvert.toInt(args.get("mode"), TiFacebookModule.SHARE_DIALOG_MODE_AUTOMATIC)) {
 			case TiFacebookModule.SHARE_DIALOG_MODE_NATIVE:
@@ -656,12 +673,15 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			boolean userGenerated = proxyPhoto.optBoolean("userGenerated", false);
 
 			// A photo can either be a Blob or String
-			if (photo instanceof TiBlob) {
+			if ((photo instanceof TiBlob) || (photo instanceof TiFileProxy)) {
+				if (photo instanceof TiFileProxy) {
+					photo = TiBlob.blobFromFile(((TiFileProxy) photo).getBaseFile());
+				}
 				photoBuilder = photoBuilder.setBitmap(((TiBlob) photo).getImage());
 			} else if (photo instanceof String) {
 				photoBuilder = photoBuilder.setImageUrl(Uri.parse((String) photo));
 			} else {
-				Log.e(TAG, "Required \"photo\" not found or of unknown type: " + photo.getClass().getSimpleName());
+				Log.e(TAG, "Required \"photo\" not found or of unknown type: " + photo.getClass().getName());
 			}
 
 			// An optional caption
@@ -681,8 +701,10 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			Log.e(TAG, "The \"photos\" property is required when showing a photo share dialog.");
 		}
 
-		if (shareDialog != null && shareDialog.canShow(shareContent, mode)) {
-			shareDialog.show(shareContent, mode);
+		if (shareDialog != null && shareDialog.canShow(SharePhotoContent.class)) {
+			shareDialog.show(shareContent);
+		} else {
+			Log.e(TAG, "Cannot show image share dialog due to unsupported device or configuration!");
 		}
 	}
 

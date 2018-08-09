@@ -117,6 +117,13 @@ The app id goes into the the file `/platform/android/res/values/strings.xml` (cl
 ```
 where the number is of course the app ID. The app ID is not set programmatically.
 
+Finally, if using sharing capabilities, you should add the content provider settings as well:
+```xml
+<provider android:name="com.facebook.FacebookContentProvider"
+          android:authorities="com.facebook.app.FacebookContentProvider<YOUR_APP_ID>"
+          android:exported="true" />
+```
+
 Android Key Hash for Facebook Developer Profile
 ---
 
