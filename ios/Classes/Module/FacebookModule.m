@@ -989,6 +989,8 @@ NS_ASSUME_NONNULL_BEGIN
 
     // An optional flag indicating if the photo was user generated
     nativePhoto.userGenerated = userGenerated;
+
+    [nativePhotos addObject:nativePhoto];
   }
 
   content.photos = nativePhotos;
