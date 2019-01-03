@@ -116,7 +116,7 @@ typedef void (^FBSDKGraphRequestHandler)(FBSDKGraphRequestConnection *connection
 
  The byte count arguments refer to the aggregated <FBSDKGraphRequest> objects, not a particular <FBSDKGraphRequest>.
 
- Like `NSURLConnection`, the values may change in unexpected ways if data needs to be resent.
+ Like `NSURLSession`, the values may change in unexpected ways if data needs to be resent.
 
  @param connection                The request connection transmitting data to a remote host
  @param bytesWritten              The number of bytes sent in the last transmission
@@ -221,8 +221,13 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite;
  to allow for using the request's response in a subsequent request.
  */
 - (void)addRequest:(FBSDKGraphRequest *)request
+    batchEntryName:(NSString *)name
+ completionHandler:(FBSDKGraphRequestHandler)handler;
+
+- (void)addRequest:(FBSDKGraphRequest *)request
  completionHandler:(FBSDKGraphRequestHandler)handler
-    batchEntryName:(NSString *)name;
+    batchEntryName:(NSString *)name
+DEPRECATED_MSG_ATTRIBUTE("Renamed `addRequest:batchEntryName:completionHandler:`");
 
 /**
  @method
@@ -244,8 +249,13 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite;
  to allow for using the request's response in a subsequent request.
  */
 - (void)addRequest:(FBSDKGraphRequest *)request
+   batchParameters:(NSDictionary<NSString *, id> *)batchParameters
+ completionHandler:(FBSDKGraphRequestHandler)handler;
+
+- (void)addRequest:(FBSDKGraphRequest *)request
  completionHandler:(FBSDKGraphRequestHandler)handler
-   batchParameters:(NSDictionary *)batchParameters;
+   batchParameters:(NSDictionary *)batchParameters
+DEPRECATED_MSG_ATTRIBUTE("Renamed `addRequest:batchParameters:completionHandler:`");
 
 /**
  @methodgroup Instance methods
@@ -287,8 +297,6 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite;
 
  By default, a connection is scheduled on the current thread in the default mode when it is created.
  You cannot reschedule a connection after it has started.
-
- This is very similar to `[NSURLConnection setDelegateQueue:]`.
  */
 - (void)setDelegateQueue:(NSOperationQueue *)queue;
 
@@ -305,7 +313,10 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite;
 
  @param version   This is a string in the form @"v2.0" which will be used for the version part of an API path
  */
-- (void)overrideVersionPartWith:(NSString *)version;
+- (void)overrideGraphAPIVersion:(NSString *)version;
+
+- (void)overrideVersionPartWith:(NSString *)version
+DEPRECATED_MSG_ATTRIBUTE("Renamed `overrideGraphAPIVersion`");
 
 @end
 
