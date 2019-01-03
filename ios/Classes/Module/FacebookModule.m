@@ -220,7 +220,7 @@ NS_ASSUME_NONNULL_BEGIN
   [loginManager setLoginBehavior:_loginBehavior];
 
   TiThreadPerformOnMainThread(^{
-    [loginManager logInWithReadPermissions:_permissions
+    [loginManager logInWithReadPermissions:self->_permissions
                         fromViewController:nil
                                    handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
                                      // Handle error
@@ -245,7 +245,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
   TiThreadPerformOnMainThread(^{
     [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
-    _loginBehavior = FBSDKLoginBehaviorBrowser;
+    self->_loginBehavior = FBSDKLoginBehaviorBrowser;
 
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(logEvents:) name:UIApplicationDidBecomeActiveNotification object:nil];
@@ -891,7 +891,7 @@ NS_ASSUME_NONNULL_BEGIN
   TiThreadPerformOnMainThread(^{
     if ([FBSDKAccessToken currentAccessToken] != nil) {
       FBSDKProfile *user = [FBSDKProfile currentProfile];
-      _userID = [user userID];
+      self->_userID = [user userID];
       [self fireLogin:user cancelled:NO withError:nil];
     } else {
       [self fireLogin:nil cancelled:NO withError:nil];
