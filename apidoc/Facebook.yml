@@ -12,15 +12,6 @@ description: |
     * Making requests through the Facebook Graph API v3 using the
       [requestWithGraphPath()](Modules.Facebook.requestWithGraphPath) method.
 
-    * Sharing content using Facebook dialogs or the [Like button](Modules.Facebook.LikeButton).
-
-    **Using Ti.Facebook with iOS 10 and Xcode 8**
-    
-    The paragraph about custom capabilities was only necessary between Titanium SDK 5.5.0 and 6.0.0. 
-    Since 6.0.1.GA, we add the required capabilities automatically, so you don't need to curate your 
-    own entitlements file anymore, which will avoid possible issues with concurring values. Please 
-    ensure to use both SDK and CLI 6.0.1 (or later).
-
     ## Getting Started
 
     To use the Facebook module, you need a Facebook application. To create a Facebook App,
@@ -416,22 +407,6 @@ description: |
         win.add(messengerButton);
 
     For more information, see the [MessengerButton API reference](Modules.Facebook.MessengerButton).
-
-    ### Like Button
-
-    The Like button provides a quick mechanism for users to share content. A click on the button
-    will share the content on the user's Facebook page.
-
-    To create a Like button, call the [createLikeButton()](Modules.Facebook.createLikeButton) method
-    and pass it a dictionary with the `objectID` assigned to either a URL or Open Graph object ID
-    you want to share. Add the button instance to a view to display it.
-
-        var likeButton = fb.createLikeButton({
-            objectID: "https://www.facebook.com/appcelerator"
-        });
-        win.add(likeButton);
-
-    For more information, see the [LikeButton API reference](Modules.Facebook.LikeButton).
     
     ### Fetch Places
     
@@ -1477,32 +1452,6 @@ properties:
     permission: read-only
 
 examples:
-
-  - title: Alloy Example
-    example: |
-        Displays the Facebook Login and Like buttons in a window.
-
-        `app/alloy.js`:
-
-            // Make API calls to Alloy.Globals.Facebook
-            Alloy.Globals.Facebook = require('facebook');
-
-        `app/views/index.xml`:
-
-            <Alloy>
-                <Window backgroundColor="white">
-                    <LoginButton id="fbLogin" module="facebook" top="25" />
-                    <LikeButton id="fbLike" module="facebook" top="100" />
-                </Window>
-            </Alloy>
-
-        `app/controllers/index.js`:
-
-            $.fbLike.objectID = "http://www.facebook.com/appcelerator";
-            if (OS_ANDROID) {
-                $.index.fbProxy = Alloy.Globals.Facebook.createActivityWorker({lifecycleContainer: $.index});
-            }
-            $.index.open();
 
   - title: Authorize
     example: |
