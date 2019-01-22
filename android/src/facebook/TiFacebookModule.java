@@ -45,6 +45,7 @@ import com.facebook.GraphRequest.Callback;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.appevents.AppEventsConstants;
 import com.facebook.login.DefaultAudience;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginBehavior;
@@ -88,6 +89,32 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	public static final String EVENT_SHARE_COMPLETE = "shareCompleted";
 	public static final String EVENT_INVITE_COMPLETE = "inviteCompleted";
 	public static final String EVENT_REQUEST_DIALOG_COMPLETE = "requestDialogCompleted";
+
+	@Kroll.constant
+	public static final String EVENT_NAME_COMPLETED_REGISTRATION = AppEventsConstants.EVENT_NAME_COMPLETED_REGISTRATION;
+	@Kroll.constant
+	public static final String EVENT_NAME_VIEWED_CONTENT = AppEventsConstants.EVENT_NAME_VIEWED_CONTENT;
+	@Kroll.constant
+	public static final String EVENT_NAME_ADDED_TO_CART = AppEventsConstants.EVENT_NAME_ADDED_TO_CART;
+	@Kroll.constant
+	public static final String EVENT_NAME_INITIATED_CHECKOUT = AppEventsConstants.EVENT_NAME_INITIATED_CHECKOUT;
+	@Kroll.constant
+	public static final String EVENT_NAME_ADDED_PAYMENT_INFO = AppEventsConstants.EVENT_NAME_ADDED_PAYMENT_INFO;
+	@Kroll.constant
+	public static final String EVENT_NAME_PURCHASED = AppEventsConstants.EVENT_NAME_PURCHASED;
+
+	@Kroll.constant
+	public static final String EVENT_PARAM_CONTENT = AppEventsConstants.EVENT_PARAM_CONTENT;
+	@Kroll.constant
+	public static final String EVENT_PARAM_CONTENT_ID = AppEventsConstants.EVENT_PARAM_CONTENT_ID;
+	@Kroll.constant
+	public static final String EVENT_PARAM_CONTENT_TYPE = AppEventsConstants.EVENT_PARAM_CONTENT_TYPE;
+	@Kroll.constant
+	public static final String EVENT_PARAM_CURRENCY = AppEventsConstants.EVENT_PARAM_CURRENCY;
+	@Kroll.constant
+	public static final String EVENT_PARAM_NUM_ITEMS = AppEventsConstants.EVENT_PARAM_NUM_ITEMS;
+	@Kroll.constant
+	public static final String EVENT_PARAM_PAYMENT_INFO_AVAILABLE = AppEventsConstants.EVENT_PARAM_PAYMENT_INFO_AVAILABLE;
 
 	@Kroll.constant
 	public static final int AUDIENCE_NONE = 0;
@@ -345,13 +372,28 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		}
 	}
 
+    @Kroll.method
+    public void logRegistrationCompleted(String registrationMethod)
+    {
+        Activity activity = TiApplication.getInstance().getCurrentActivity();
+        AppEventsLogger logger = AppEventsLogger.newLogger(activity);
+        Bundle paramBundle = new Bundle();
+        paramBundle.putString(AppEventsConstants.EVENT_PARAM_REGISTRATION_METHOD, registrationMethod);
+
+        if (logger != null) {
+            logger.logEvent(AppEventsConstants.EVENT_NAME_COMPLETED_REGISTRATION, paramBundle);
+        }
+    }
+
 	@Kroll.method
-	public void logPurchase(double amount, String currency)
+	public void logPurchase(double amount, String currency,
+                            @Kroll.argument(optional = true) KrollDict parameters)
 	{
 		Activity activity = TiApplication.getInstance().getCurrentActivity();
 		AppEventsLogger logger = AppEventsLogger.newLogger(activity);
+        Bundle paramBundle = parameters != null ? Utils.mapToBundle(parameters) : null;
 		if (logger != null) {
-			logger.logPurchase(BigDecimal.valueOf(amount), Currency.getInstance(currency));
+			logger.logPurchase(BigDecimal.valueOf(amount), Currency.getInstance(currency), paramBundle);
 		}
 	}
 
@@ -564,6 +606,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		if (loginBehavior != null) {
 			setLoginManagerLoginBehavior();
 		}
+
 		LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList(TiFacebookModule.permissions));
 	}
 
