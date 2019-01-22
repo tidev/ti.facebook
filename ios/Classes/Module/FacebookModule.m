@@ -157,11 +157,21 @@ NS_ASSUME_NONNULL_BEGIN
 {
   ENSURE_TYPE([purchase objectAtIndex:0], NSNumber);
   ENSURE_TYPE([purchase objectAtIndex:1], NSString);
+  ENSURE_TYPE([purchase objectAtIndex:2], NSDictionary);
 
   NSNumber *amount = [purchase objectAtIndex:0];
   NSString *currency = [TiUtils stringValue:[purchase objectAtIndex:1]];
+  NSDictionary *parameters = [purchase objectAtIndex:2];
 
-  [FBSDKAppEvents logPurchase:[amount doubleValue] currency:currency];
+  // [FBSDKAppEvents logPurchase:[amount doubleValue] currency:currency];
+  [FBSDKAppEvents logPurchase:[amount doubleValue] currency:currency parameters:parameters];
+}
+
+- (void)logRegistrationCompleted:(NSString *_Nonnull)registrationMethod
+{
+    NSDictionary *params = @{FBSDKAppEventParameterNameRegistrationMethod: registrationMethod};
+    
+    [FBSDKAppEvents logEvent:FBSDKAppEventNameCompletedRegistration parameters:params];
 }
 
 - (void)logCustomEvent:(NSArray<id> *_Nonnull)customEvent
@@ -1063,6 +1073,19 @@ MAKE_SYSTEM_PROP(PLACE_LOCATION_CONFIDENCE_NOT_APPLICABLE, FBSDKPlaceLocationCon
 MAKE_SYSTEM_PROP(PLACE_LOCATION_CONFIDENCE_LOW, FBSDKPlaceLocationConfidenceLow);
 MAKE_SYSTEM_PROP(PLACE_LOCATION_CONFIDENCE_MEDIUM, FBSDKPlaceLocationConfidenceMedium);
 MAKE_SYSTEM_PROP(PLACE_LOCATION_CONFIDENCE_HIGH, FBSDKPlaceLocationConfidenceHigh);
+
+MAKE_SYSTEM_STR(EVENT_NAME_COMPLETED_REGISTRATION, FBSDKAppEventNameCompletedRegistration);
+MAKE_SYSTEM_STR(EVENT_NAME_VIEWED_CONTENT, FBSDKAppEventNameViewedContent);
+MAKE_SYSTEM_STR(EVENT_NAME_ADDED_TO_CART, FBSDKAppEventNameAddedToCart);
+MAKE_SYSTEM_STR(EVENT_NAME_INITIATED_CHECKOUT, FBSDKAppEventNameInitiatedCheckout);
+MAKE_SYSTEM_STR(EVENT_NAME_ADDED_PAYMENT_INFO, FBSDKAppEventNameAddedPaymentInfo);
+
+MAKE_SYSTEM_STR(EVENT_PARAM_CONTENT, FBSDKAppEventParameterNameContent);
+MAKE_SYSTEM_STR(EVENT_PARAM_CONTENT_ID, FBSDKAppEventParameterNameContentID);
+MAKE_SYSTEM_STR(EVENT_PARAM_CONTENT_TYPE, FBSDKAppEventParameterNameContentType);
+MAKE_SYSTEM_STR(EVENT_PARAM_CURRENCY, FBSDKAppEventParameterNameCurrency);
+MAKE_SYSTEM_STR(EVENT_PARAM_NUM_ITEMS, FBSDKAppEventParameterNameNumItems);
+MAKE_SYSTEM_STR(EVENT_PARAM_PAYMENT_INFO_AVAILABLE, FBSDKAppEventParameterNamePaymentInfoAvailable);
 
 @end
 
