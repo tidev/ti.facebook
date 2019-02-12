@@ -21,8 +21,8 @@ description: |
     on iOS or Android, don't collect or use any information from it.
     </blockquote>
 
-    See the [official Facebook Like Button documentation for Android](https://developers.facebook.com/docs/android/like-button)
-    or the [official Facebook Like Button documentation for iOS](https://developers.facebook.com/docs/ios/like-button)
+    See the [official Facebook Sharing documentation for Android](https://developers.facebook.com/docs/sharing/android)
+    or the [official Facebook Sharing documentation for iOS](https://developers.facebook.com/docs/sharing/ios)
     for more information.
 
     #### Android Platform Notes
