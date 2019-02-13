@@ -8,7 +8,6 @@ The Facebook module is used for connecting your application with Facebook. This 
 * Making requests through the Facebook Graph API using the requestWithGraphPath method
 * Posting web and native share dialogs
 * Posting send request dialogs
-* Like button
 
 Getting Started
 ------
