@@ -63,6 +63,10 @@ examples:
         win.add(likeButton);
 
 since: "4.0.0"
+deprecated:
+    since: "6.0.0"
+    removed: "6.0.0"
+    notes: The API was removed by the Facebook SDK 4.x and up.
 platforms: [android, iphone, ipad]
 extends: Titanium.UI.View
 properties:
