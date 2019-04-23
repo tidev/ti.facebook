@@ -6,13 +6,13 @@ const ANDROID = (Ti.Platform.osname === 'android');
 describe('ti.facebook', function () {
 
 	it('can be required', () => {
-		Facebook = require('ti.facebook');
+		Facebook = require('facebook');
 		expect(Facebook).toBeDefined();
 	});
 
-	it('.apiName', () => {
-		expect(Facebook.apiName).toBe('Ti.Facebook');
-	});
+	// it('.apiName', () => {
+	// 	expect(Facebook.apiName).toBe('Ti.Facebook');
+	// });
 
 	// describe('constants', () => {
 
