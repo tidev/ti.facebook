@@ -12,6 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation FacebookLoginButtonProxy
 
+- (NSString *)apiName
+{
+  return @"Ti.Facebook.LoginButton";
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

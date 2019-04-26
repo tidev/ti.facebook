@@ -13,6 +13,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation FacebookMessengerButtonProxy
 
+- (NSString *)apiName
+{
+  return @"Ti.Facebook.MessengerButton";
+}
+
 #pragma mark Layout Helper
 
 - (UIViewAutoresizing)verifyAutoresizing:(UIViewAutoresizing)suggestedResizing
