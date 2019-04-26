@@ -160,6 +160,12 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		module = this;
 	}
 
+	@Override
+	public String getApiName()
+	{
+		return "Ti.Facebook";
+	}
+
 	@Kroll.onAppCreate
 	public static void onAppCreate(TiApplication app)
 	{
