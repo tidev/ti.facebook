@@ -49,3 +49,5 @@ ios/titanium-facebook.xcodeproj/project.xcworkspace/xcuserdata/
 TESTS-*.xml
 
 node_modules/
+
+.vscode/
