@@ -62,17 +62,6 @@ describe('ti.facebook', function () {
 			});
 		});
 
-		// Removed in 4.0.0?
-		// describe('BUTTON_STYLE_*', () => {
-		// 	it('BUTTON_STYLE_NORMAL', () => {
-		// 		expect(Facebook.BUTTON_STYLE_NORMAL).toEqual(jasmine.any(Number));
-		// 	});
-
-		// 	it('BUTTON_STYLE_WIDE', () => {
-		// 		expect(Facebook.BUTTON_STYLE_WIDE).toEqual(jasmine.any(Number));
-		// 	});
-		// });
-
 		if (IOS) { // iOS-specific constants
 			describe('PLACE_LOCATION_CONFIDENCE_*', () => {
 				it('PLACE_LOCATION_CONFIDENCE_NOT_APPLICABLE', () => {
@@ -103,13 +92,15 @@ describe('ti.facebook', function () {
 				expect(Facebook.LOGIN_BEHAVIOR_NATIVE).toEqual(jasmine.any(Number));
 			});
 
-			it('LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK', () => {
-				expect(Facebook.LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK).toEqual(jasmine.any(Number));
-			});
+			if (ANDROID) {
+				it('LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK', () => {
+					expect(Facebook.LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK).toEqual(jasmine.any(Number));
+				});
 
-			it('LOGIN_BEHAVIOR_DEVICE_AUTH', () => {
-				expect(Facebook.LOGIN_BEHAVIOR_DEVICE_AUTH).toEqual(jasmine.any(Number));
-			});
+				it('LOGIN_BEHAVIOR_DEVICE_AUTH', () => {
+					expect(Facebook.LOGIN_BEHAVIOR_DEVICE_AUTH).toEqual(jasmine.any(Number));
+				});
+			}
 
 			if (IOS) {
 				it('LOGIN_BEHAVIOR_SYSTEM_ACCOUNT', () => {
@@ -120,23 +111,6 @@ describe('ti.facebook', function () {
 					expect(Facebook.LOGIN_BEHAVIOR_WEB).toEqual(jasmine.any(Number));
 				});
 			}
-		});
-
-		// FIXME: How does this interact with LOGIN_BEHAVIOR_* constants?
-		// FIXME: This points to a LoginButton.sessionLoginBehavior property not documented!
-		// FIXME: These are android only and do not appear to be around any more? Update docs?
-		describe('SSO_*', () => {
-			it('SSO_WITH_FALLBACK', () => {
-				expect(Facebook.SSO_WITH_FALLBACK).toEqual(jasmine.any(Number));
-			});
-
-			it('SUPPRESS_SSO', () => {
-				expect(Facebook.SUPPRESS_SSO).toEqual(jasmine.any(Number));
-			});
-
-			it('SSO_ONLY', () => {
-				expect(Facebook.SSO_ONLY).toEqual(jasmine.any(Number));
-			});
 		});
 
 		describe('SHARE_DIALOG_MODE_*', () => {
