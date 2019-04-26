@@ -15,7 +15,7 @@ import org.appcelerator.titanium.view.TiUIView;
 import android.app.Activity;
 
 @Kroll.proxy(creatableInModule = TiFacebookModule.class,
-			 propertyAccessors = { "audience", "publishPermissions", "readPermissions" })
+			 propertyAccessors = { "audience", "publishPermissions", "readPermissions", "tooltipBehavior", "tooltipColorStyle" })
 public class LoginButtonProxy extends TiViewProxy
 {
 	// Standard Debugging variables
@@ -25,6 +25,15 @@ public class LoginButtonProxy extends TiViewProxy
 	{
 		super();
 		Log.d(TAG, "[VIEWPROXY LIFECYCLE EVENT] init");
+		defaultValues.put("audience", TiFacebookModule.AUDIENCE_ONLY_ME);
+		defaultValues.put("tooltipBehavior", TiFacebookModule.LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC);
+		defaultValues.put("tooltipColorStyle", TiFacebookModule.LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE);
+	}
+
+	@Override
+	public String getApiName()
+	{
+		return "Ti.Facebook.LoginButton";
 	}
 
 	@Override
