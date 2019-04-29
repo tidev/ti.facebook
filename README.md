@@ -8,7 +8,6 @@ The Facebook module is used for connecting your application with Facebook. This 
 * Making requests through the Facebook Graph API using the requestWithGraphPath method
 * Posting web and native share dialogs
 * Posting send request dialogs
-* Like button
 
 Getting Started
 ------
@@ -388,24 +387,6 @@ See official Facebook Dialogs documentation for more details.
             social_karma: '5'
         }
     });
-```
-
-Like Button
----
-
-We can create a Like button just like any other view, with specific parameters documented in Facebook docs. Note there is no completion callback or event, and Facebook policies state "If you use the Like button on iOS or Android, don’t collect or use any information from it."
-
-```javascript
-    var fb = require('facebook');
-    var likeButton = fb.createLikeButton({
-        objectId: "https://www.facebook.com/appcelerator", // URL or Facebook ID
-        foregroundColor: "white", // A color in Titanium format - see Facebook docs
-        likeViewStyle: 'box_count', // standard, button, box_count - see FB docs
-        auxiliaryViewPosition: 'inline', // bottom, inline, top - see FB docs
-        horizontalAlignment: 'left', // center, left, right - see FB docs,
-        soundEnabled: true // boolean, iOS only
-    });
-    win.add(likeButton);
 ```
 
 Messenger Button

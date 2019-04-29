@@ -198,20 +198,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		return module;
 	}
 
-	@Override
-	public void onResume(Activity activity)
-	{
-		super.onResume(activity);
-		AppEventsLogger.activateApp(activity);
-	}
-
-	@Override
-	public void onPause(Activity activity)
-	{
-		super.onPause(activity);
-		AppEventsLogger.deactivateApp(activity);
-	}
-
 	public CallbackManager getCallbackManager()
 	{
 		return callbackManager;
