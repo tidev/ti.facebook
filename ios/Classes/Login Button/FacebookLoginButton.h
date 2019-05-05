@@ -39,6 +39,16 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSArray *_Nullable)readPermissions;
 
+/*!
+ @brief The permissions to request.
+ */
+- (void)setPermissions_:(NSArray<NSString *> *_Nullable)permissions;
+
+/*!
+ @brief The permissions to request.
+ */
+- (NSArray *_Nullable)permissions;
+
 /*! 
  @brief The default is AUDIENCE_ONLY_ME, only applicable to publish permissions.
  */

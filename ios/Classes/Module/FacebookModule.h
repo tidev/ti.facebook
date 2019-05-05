@@ -16,7 +16,6 @@
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
-#import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -24,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  @brief The root-namespace for the Facebook module
  */
-@interface FacebookModule : TiModule <FBSDKSharingDelegate, FBSDKGameRequestDialogDelegate, FBSDKAppInviteDialogDelegate> {
+@interface FacebookModule : TiModule <FBSDKSharingDelegate, FBSDKGameRequestDialogDelegate> {
   NSString *_userID;
   NSArray *_permissions;
   FBSDKLoginBehavior _loginBehavior;
