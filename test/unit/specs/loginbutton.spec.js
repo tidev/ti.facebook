@@ -18,10 +18,15 @@ describe('ti.facebook', () => {
 
 		describe('properties', () => {
 			describe('.audience', () => {
-				it('defaults to AUDIENCE_ONLY_ME', () => {
-					expect(button.audience).toEqual(Facebook.AUDIENCE_ONLY_ME);
+				it('defaults to AUDIENCE_FRIENDS', () => {
+					expect(button.audience).toEqual(Facebook.AUDIENCE_FRIENDS);
 				});
-				// TODO: change the value, verify it updates? try invalid values
+
+				it('can be changed to AUDIENCE_EVERYONE', () => {
+					button.audience = AUDIENCE_EVERYONE;
+					expect(button.audience).toEqual(Facebook.AUDIENCE_EVERYONE);
+				});
+				// TODO: try invalid values
 			});
 
 			if (ANDROID) {
@@ -45,7 +50,12 @@ describe('ti.facebook', () => {
 				it('defaults to LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC', () => {
 					expect(button.tooltipBehavior).toEqual(Facebook.LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC);
 				});
-				// TODO: change the value, verify it updates? try invalid values
+
+				it('can be changed to LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE', () => {
+					button.tooltipBehavior = LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE;
+					expect(button.tooltipBehavior).toEqual(Facebook.LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE);
+				});
+				// TODO: try invalid values
 			});
 
 			describe('.tooltipColorStyle', () => {
@@ -55,7 +65,12 @@ describe('ti.facebook', () => {
 				it('defaults to LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE', () => {
 					expect(button.tooltipColorStyle).toEqual(Facebook.LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE);
 				});
-				// TODO: change the value, verify it updates? try invalid values
+
+				it('can be changed to LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY', () => {
+					button.tooltipColorStyle = LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY;
+					expect(button.tooltipColorStyle).toEqual(Facebook.LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY);
+				});
+				// TODO: ctry invalid values
 			});
 		});
 	});

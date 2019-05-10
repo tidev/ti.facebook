@@ -25,7 +25,7 @@ public class LoginButtonProxy extends TiViewProxy
 	{
 		super();
 		Log.d(TAG, "[VIEWPROXY LIFECYCLE EVENT] init");
-		defaultValues.put("audience", TiFacebookModule.AUDIENCE_ONLY_ME);
+		defaultValues.put("audience", TiFacebookModule.AUDIENCE_FRIENDS);
 		defaultValues.put("tooltipBehavior", TiFacebookModule.LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC);
 		defaultValues.put("tooltipColorStyle", TiFacebookModule.LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE);
 	}
