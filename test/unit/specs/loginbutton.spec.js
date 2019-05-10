@@ -23,7 +23,7 @@ describe('ti.facebook', () => {
 				});
 
 				it('can be changed to AUDIENCE_EVERYONE', () => {
-					button.audience = AUDIENCE_EVERYONE;
+					button.audience = Facebook.AUDIENCE_EVERYONE;
 					expect(button.audience).toEqual(Facebook.AUDIENCE_EVERYONE);
 				});
 				// TODO: try invalid values
@@ -52,7 +52,7 @@ describe('ti.facebook', () => {
 				});
 
 				it('can be changed to LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE', () => {
-					button.tooltipBehavior = LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE;
+					button.tooltipBehavior = Facebook.LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE;
 					expect(button.tooltipBehavior).toEqual(Facebook.LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE);
 				});
 				// TODO: try invalid values
@@ -67,7 +67,7 @@ describe('ti.facebook', () => {
 				});
 
 				it('can be changed to LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY', () => {
-					button.tooltipColorStyle = LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY;
+					button.tooltipColorStyle = Facebook.LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY;
 					expect(button.tooltipColorStyle).toEqual(Facebook.LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY);
 				});
 				// TODO: ctry invalid values
