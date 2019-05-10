@@ -18,6 +18,16 @@ NS_ASSUME_NONNULL_BEGIN
   return @"Ti.Facebook.MessengerButton";
 }
 
+- (NSNumber *_Nonnull)mode
+{
+  return ((FacebookMessengerButton *)self.view).mode;
+}
+
+- (NSNumber *_Nonnull)style
+{
+  return ((FacebookMessengerButton *)self.view).style;
+}
+
 #pragma mark Layout Helper
 
 - (UIViewAutoresizing)verifyAutoresizing:(UIViewAutoresizing)suggestedResizing

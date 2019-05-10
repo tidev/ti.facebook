@@ -17,6 +17,21 @@ NS_ASSUME_NONNULL_BEGIN
   return @"Ti.Facebook.LoginButton";
 }
 
+- (NSNumber *_Nonnull)audience
+{
+  return ((FacebookLoginButton *)self.view).audience;
+}
+
+- (NSNumber *_Nonnull)tooltipBehavior
+{
+  return ((FacebookLoginButton *)self.view).tooltipBehavior;
+}
+
+- (NSNumber *_Nonnull)tooltipColorStyle
+{
+  return ((FacebookLoginButton *)self.view).tooltipColorStyle;
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
