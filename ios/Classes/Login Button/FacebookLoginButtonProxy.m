@@ -6,6 +6,7 @@
  */
 
 #import "FacebookLoginButtonProxy.h"
+#import "FacebookLoginButton.h"
 #import "TiUtils.h"
 
 NS_ASSUME_NONNULL_BEGIN

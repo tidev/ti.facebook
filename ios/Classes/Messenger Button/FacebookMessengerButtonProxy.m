@@ -20,12 +20,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSNumber *_Nonnull)mode
 {
-  return ((FacebookMessengerButton *)self.view).mode;
+  return NUMUINTEGER([(FacebookMessengerButton *)[self view] mode]);
 }
 
 - (NSNumber *_Nonnull)style
 {
-  return ((FacebookMessengerButton *)self.view).style;
+  return NUMUINTEGER([(FacebookMessengerButton *)[self view] style]);
 }
 
 #pragma mark Layout Helper
