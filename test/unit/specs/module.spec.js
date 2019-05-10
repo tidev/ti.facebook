@@ -86,7 +86,6 @@ describe('ti.facebook', () => {
 			}
 
 			describe('LOGIN_BEHAVIOR_*', () => {
-				// FIXME: On Android these are Strings, but in docs/iOS they're numbers!
 				it('LOGIN_BEHAVIOR_BROWSER', () => {
 					expect(Facebook.LOGIN_BEHAVIOR_BROWSER).toEqual(jasmine.any(Number));
 				});
