@@ -14,8 +14,12 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FacebookMessengerButton : TiUIView {
   @private
   UIButton *_messengerButton;
+  NSUInteger _mode;
+  NSUInteger _style;
 }
 
+- (NSUInteger)mode;
+- (NSUInteger)style;
 - (UIButton *)messengerButton;
 
 @end

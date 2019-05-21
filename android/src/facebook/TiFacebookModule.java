@@ -142,13 +142,16 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	public static final int FILTER_APP_NON_USERS = 2;
 
 	@Kroll.constant
-	public static final String LOGIN_BEHAVIOR_BROWSER = "WEB_ONLY";
+	public static final int LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK = 0;
 	@Kroll.constant
-	public static final String LOGIN_BEHAVIOR_NATIVE = "NATIVE_ONLY";
+	public static final int LOGIN_BEHAVIOR_BROWSER = 1;
 	@Kroll.constant
-	public static final String LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK = "NATIVE_WITH_FALLBACK";
+	public static final int LOGIN_BEHAVIOR_DEVICE_AUTH = 2;
 	@Kroll.constant
-	public static final String LOGIN_BEHAVIOR_DEVICE_AUTH = "DEVICE_AUTH";
+	public static final int LOGIN_BEHAVIOR_WEB = 3;
+	@Kroll.constant
+	public static final int LOGIN_BEHAVIOR_NATIVE = 4;
+	// TODO: Expose DIALOG_ONLY and KATANA_ONLY?
 
 	@Kroll.constant
 	public static final int LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC = 0;
@@ -158,9 +161,9 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	public static final int LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE = 2;
 
 	@Kroll.constant
-	public static final String LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY = "NEUTRAL_GRAY";
+	public static final int LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY = 0;
 	@Kroll.constant
-	public static final String LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE = "FRIENDLY_BLUE";
+	public static final int LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE = 1;
 
 	@Kroll.constant
 	public static final int SHARE_DIALOG_MODE_AUTOMATIC = 0;
@@ -173,7 +176,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 
 	private static TiFacebookModule module;
 	private static String[] permissions = new String[] {};
-	private String loginBehavior;
+	private LoginBehavior loginBehavior;
 
 	private KrollFunction permissionCallback = null;
 
@@ -185,6 +188,12 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	{
 		super();
 		module = this;
+	}
+
+	@Override
+	public String getApiName()
+	{
+		return "Ti.Facebook";
 	}
 
 	@Kroll.onAppCreate
@@ -470,20 +479,48 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	// clang-format off
 	@Kroll.setProperty
 	@Kroll.method
-	public void setLoginBehavior(String behaviorConstant)
+	public void setLoginBehavior(int behaviorConstant)
 	// clang-format on
 	{
-		loginBehavior = behaviorConstant;
+		switch (behaviorConstant) {
+			case LOGIN_BEHAVIOR_BROWSER:
+				loginBehavior = LoginBehavior.WEB_ONLY;
+				break;
+			case LOGIN_BEHAVIOR_WEB:
+				loginBehavior = LoginBehavior.WEB_VIEW_ONLY;
+				break;
+			case LOGIN_BEHAVIOR_DEVICE_AUTH:
+				loginBehavior = LoginBehavior.DEVICE_AUTH;
+				break;
+			case LOGIN_BEHAVIOR_NATIVE:
+				loginBehavior = LoginBehavior.NATIVE_ONLY;
+				break;
+			default:
+			case LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK:
+				loginBehavior = LoginBehavior.NATIVE_WITH_FALLBACK;
+				break;
+		}
 	}
 
 	// clang-format off
 	@Kroll.getProperty
 	@Kroll.method
-	public String getLoginBehavior()
+	public int getLoginBehavior()
 	// clang-format on
 	{
-
-		return loginBehavior;
+		switch (loginBehavior) {
+			case WEB_ONLY:
+				return LOGIN_BEHAVIOR_BROWSER;
+			case WEB_VIEW_ONLY:
+				return LOGIN_BEHAVIOR_WEB;
+			case DEVICE_AUTH:
+				return LOGIN_BEHAVIOR_DEVICE_AUTH;
+			case NATIVE_ONLY:
+				return LOGIN_BEHAVIOR_NATIVE;
+			default:
+			case NATIVE_WITH_FALLBACK:
+				return LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK;
+		}
 	}
 
 	@Kroll.method
@@ -1023,6 +1060,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 
 	private void setLoginManagerLoginBehavior()
 	{
-		LoginManager.getInstance().setLoginBehavior(LoginBehavior.valueOf(loginBehavior));
+		LoginManager.getInstance().setLoginBehavior(loginBehavior);
 	}
 }

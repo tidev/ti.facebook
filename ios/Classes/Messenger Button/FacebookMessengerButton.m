@@ -21,16 +21,16 @@ NS_ASSUME_NONNULL_BEGIN
 - (UIButton *)messengerButton
 {
   if (_messengerButton == nil) {
-    NSUInteger mode = [TiUtils intValue:[[self messengerProxy] valueForKey:@"mode"] def:TiFacebookShareButtonModeRectangular];
-    NSUInteger style = [TiUtils intValue:[[self messengerProxy] valueForKey:@"style"] def:FBSDKMessengerShareButtonStyleBlue];
+    _mode = [TiUtils intValue:[[self messengerProxy] valueForKey:@"mode"] def:TiFacebookShareButtonModeRectangular];
+    _style = [TiUtils intValue:[[self messengerProxy] valueForKey:@"style"] def:FBSDKMessengerShareButtonStyleBlue];
 
-    if (mode == TiFacebookShareButtonModeRectangular) {
-      _messengerButton = [FBSDKMessengerShareButton rectangularButtonWithStyle:style];
-    } else if (mode == TiFacebookShareButtonModeCircular) {
+    if (_mode == TiFacebookShareButtonModeRectangular) {
+      _messengerButton = [FBSDKMessengerShareButton rectangularButtonWithStyle:_style];
+    } else if (_mode == TiFacebookShareButtonModeCircular) {
       if ([[self messengerProxy] valueForKey:@"width"]) {
-        _messengerButton = [FBSDKMessengerShareButton circularButtonWithStyle:style width:[TiUtils floatValue:[[self messengerProxy] valueForKey:@"width"]]];
+        _messengerButton = [FBSDKMessengerShareButton circularButtonWithStyle:_style width:[TiUtils floatValue:[[self messengerProxy] valueForKey:@"width"]]];
       } else {
-        _messengerButton = [FBSDKMessengerShareButton circularButtonWithStyle:style];
+        _messengerButton = [FBSDKMessengerShareButton circularButtonWithStyle:_style];
       }
     } else {
       [[self messengerProxy] throwException:@"No messenger button mode specified." subreason:@"Please specify the messenger button mode to either MESSENGER_BUTTON_MODE_RECTANGULAR or MESSENGER_BUTTON_MODE_CIRCULAR" location:CODELOCATION];
@@ -42,6 +42,16 @@ NS_ASSUME_NONNULL_BEGIN
     [_messengerButton addTarget:self action:@selector(didTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
   }
   return _messengerButton;
+}
+
+- (NSUInteger)mode
+{
+  return _mode;
+}
+
+- (NSUInteger)style
+{
+  return _style;
 }
 
 - (void)frameSizeChanged:(CGRect)frame bounds:(CGRect)bounds

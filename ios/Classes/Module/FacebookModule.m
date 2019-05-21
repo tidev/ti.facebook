@@ -37,6 +37,11 @@ NS_ASSUME_NONNULL_BEGIN
   return @"facebook";
 }
 
+- (NSString *)apiName
+{
+  return @"Ti.Facebook";
+}
+
 #pragma mark Lifecycle
 
 - (void)handleRelaunch:(NSNotification *_Nullable)notification
