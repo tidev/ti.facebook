@@ -18,21 +18,33 @@ NS_ASSUME_NONNULL_BEGIN
   return @"Ti.Facebook.LoginButton";
 }
 
+- (NSArray *_Nullable)publishPermissions
+{
+  return [[(FacebookLoginButton *)self.view loginButton] publishPermissions];
+}
+
+- (NSArray *_Nullable)readPermissions
+{
+  return [[(FacebookLoginButton *)self.view loginButton] readPermissions];
+}
+
+// The default audience to use, if publish permissions are requested at login time.
 - (NSNumber *_Nonnull)audience
 {
-  return ((FacebookLoginButton *)self.view).audience;
+  return NUMUINTEGER([[(FacebookLoginButton *)self.view loginButton] defaultAudience]);
 }
 
+// Gets the desired tooltip behavior
 - (NSNumber *_Nonnull)tooltipBehavior
 {
-  return ((FacebookLoginButton *)self.view).tooltipBehavior;
+  return NUMUINTEGER([[(FacebookLoginButton *)self.view loginButton] tooltipBehavior]);
 }
 
+// Gets the desired tooltip color style
 - (NSNumber *_Nonnull)tooltipColorStyle
 {
-  return ((FacebookLoginButton *)self.view).tooltipColorStyle;
+  return NUMUINTEGER([[(FacebookLoginButton *)self.view loginButton] tooltipColorStyle]);
 }
-
 @end
 
 NS_ASSUME_NONNULL_END

@@ -38,20 +38,10 @@ NS_ASSUME_NONNULL_BEGIN
   [[self loginButton] setPublishPermissions:publishPermissions];
 }
 
-- (NSArray *_Nullable)publishPermissions
-{
-  return [[self loginButton] publishPermissions];
-}
-
 // Requested permissions when logging in. If set, do not set publish permissions
 - (void)setReadPermissions_:(NSArray<NSString *> *_Nullable)readPermissions
 {
   [[self loginButton] setReadPermissions:readPermissions];
-}
-
-- (NSArray *_Nullable)readPermissions
-{
-  return [[self loginButton] readPermissions];
 }
 
 // The default is AUDIENCE_ONLY_ME, only applicable to publish permissions
@@ -60,34 +50,16 @@ NS_ASSUME_NONNULL_BEGIN
   [[self loginButton] setDefaultAudience:[TiUtils intValue:audience]];
 }
 
-// The default audience to use, if publish permissions are requested at login time.
-- (NSNumber *_Nonnull)audience
-{
-  return NUMUINTEGER([[self loginButton] defaultAudience]);
-}
-
 // Sets the desired tooltip behavior
 - (void)setTooltipBehavior_:(NSNumber *_Nonnull)tooltipBehavior
 {
   [[self loginButton] setTooltipBehavior:[TiUtils intValue:tooltipBehavior]];
 }
 
-// Gets the desired tooltip behavior
-- (NSNumber *_Nonnull)tooltipBehavior
-{
-  return NUMUINTEGER([[self loginButton] tooltipBehavior]);
-}
-
 // Sets the desired tooltip color style
 - (void)setTooltipColorStyle_:(NSNumber *_Nonnull)tooltipColorStyle
 {
   [[self loginButton] setTooltipColorStyle:[TiUtils intValue:tooltipColorStyle]];
-}
-
-// Gets the desired tooltip color style
-- (NSNumber *_Nonnull)tooltipColorStyle
-{
-  return NUMUINTEGER([[self loginButton] tooltipColorStyle]);
 }
 
 NS_ASSUME_NONNULL_END
