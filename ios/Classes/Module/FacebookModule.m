@@ -160,23 +160,26 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)logPurchase:(NSArray<id> *_Nonnull)purchase
 {
-  ENSURE_TYPE([purchase objectAtIndex:0], NSNumber);
-  ENSURE_TYPE([purchase objectAtIndex:1], NSString);
-  ENSURE_TYPE([purchase objectAtIndex:2], NSDictionary);
-
   NSNumber *amount = [purchase objectAtIndex:0];
   NSString *currency = [TiUtils stringValue:[purchase objectAtIndex:1]];
-  NSDictionary *parameters = [purchase objectAtIndex:2];
+  ENSURE_TYPE(amount, NSNumber);
+  ENSURE_TYPE(currency, NSString);
 
-  // [FBSDKAppEvents logPurchase:[amount doubleValue] currency:currency];
-  [FBSDKAppEvents logPurchase:[amount doubleValue] currency:currency parameters:parameters];
+  if (purchase.count > 2) {
+    NSDictionary *parameters = [purchase objectAtIndex:2];
+    ENSURE_TYPE(parameters, NSDictionary);
+
+    [FBSDKAppEvents logPurchase:[amount doubleValue] currency:currency parameters:parameters];
+  } else {
+    [FBSDKAppEvents logPurchase:[amount doubleValue] currency:currency];
+  }
 }
 
 - (void)logRegistrationCompleted:(NSString *_Nonnull)registrationMethod
 {
-    NSDictionary *params = @{FBSDKAppEventParameterNameRegistrationMethod: registrationMethod};
-    
-    [FBSDKAppEvents logEvent:FBSDKAppEventNameCompletedRegistration parameters:params];
+  NSDictionary *params = @{ FBSDKAppEventParameterNameRegistrationMethod : registrationMethod };
+
+  [FBSDKAppEvents logEvent:FBSDKAppEventNameCompletedRegistration parameters:params];
 }
 
 - (void)logCustomEvent:(NSArray<id> *_Nonnull)customEvent
