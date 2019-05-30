@@ -542,6 +542,11 @@ methods:
         summary: |
             Currency, is denoted as, e.g. "USD", "EUR", "GBP".  See ISO-4217 for specific values.
         type: String
+      - name: parameters
+        summary: |
+            A dictionary object containing optional parameters (since 8.1.0).
+        type: Object
+        optional: true
     since: "5.2.0"
 
   - name: logout
