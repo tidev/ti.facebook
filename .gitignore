@@ -45,3 +45,9 @@ ios/titanium-facebook.xcodeproj/project.xcworkspace/xcuserdata/
 /android/java-sources.txt
 /ios/metadata.json
 /ios/facebook-iphone-*.zip
+
+TESTS-*.xml
+
+node_modules/
+
+.vscode/

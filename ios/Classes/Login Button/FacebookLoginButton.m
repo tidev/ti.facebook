@@ -36,26 +36,26 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setPublishPermissions_:(NSArray<NSString *> *_Nonnull)publishPermissions
 {
   DEPRECATED_REPLACED(@"Facebook.LoginButton.publishPermissions", @"7.0.0", @"Facebook.LoginButton.permissions");
-  [[self loginButton] setPublishPermissions:publishPermissions];
+  [[self loginButton] setPermissions:publishPermissions];
 }
 
 - (NSArray *_Nullable)publishPermissions
 {
   DEPRECATED_REPLACED(@"Facebook.LoginButton.publishPermissions", @"7.0.0", @"Facebook.LoginButton.permissions");
-  return [[self loginButton] publishPermissions];
+  return [[self loginButton] permissions];
 }
 
 // Requested permissions when logging in. If set, do not set publish permissions
 - (void)setReadPermissions_:(NSArray<NSString *> *_Nullable)readPermissions
 {
   DEPRECATED_REPLACED(@"Facebook.LoginButton.readPermissions", @"7.0.0", @"Facebook.LoginButton.permissions");
-  [[self loginButton] setReadPermissions:readPermissions];
+  [[self loginButton] setPermissions:readPermissions];
 }
 
 - (NSArray *_Nullable)readPermissions
 {
   DEPRECATED_REPLACED(@"Facebook.LoginButton.readPermissions", @"7.0.0", @"Facebook.LoginButton.permissions");
-  return [[self loginButton] readPermissions];
+  return [[self loginButton] permissions];
 }
 
 // Requested permissions when logging in

@@ -1143,7 +1143,7 @@ properties:
     type: Number
     permission: read-only
     since: "5.4.0"
-    platforms: [iphone, ipad]
+    platforms: [android, iphone, ipad]
 
   - name: LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK
     summary: |
@@ -1170,6 +1170,9 @@ properties:
     type: Number
     permission: read-only
     since: 4.0.0
+    deprecated:
+        since: 4.1.0
+        removed: 4.1.0
     platforms: [android]
 
   - name: LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC
@@ -1218,6 +1221,9 @@ properties:
     type: Number
     permission: read-only
     since: 4.0.0
+    deprecated:
+        since: 4.1.0
+        removed: 4.1.0
     platforms: [android]
 
   - name: SUPPRESS_SSO
@@ -1227,6 +1233,9 @@ properties:
     type: Number
     permission: read-only
     since: 4.0.0
+    deprecated:
+        since: 4.1.0
+        removed: 4.1.0
     platforms: [android]
 
   - name: SHARE_DIALOG_MODE_AUTOMATIC

@@ -45,6 +45,7 @@ import com.facebook.GraphRequest.Callback;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.appevents.AppEventsConstants;
 import com.facebook.login.DefaultAudience;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginBehavior;
@@ -90,6 +91,32 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	public static final String EVENT_REQUEST_DIALOG_COMPLETE = "requestDialogCompleted";
 
 	@Kroll.constant
+	public static final String EVENT_NAME_COMPLETED_REGISTRATION = AppEventsConstants.EVENT_NAME_COMPLETED_REGISTRATION;
+	@Kroll.constant
+	public static final String EVENT_NAME_VIEWED_CONTENT = AppEventsConstants.EVENT_NAME_VIEWED_CONTENT;
+	@Kroll.constant
+	public static final String EVENT_NAME_ADDED_TO_CART = AppEventsConstants.EVENT_NAME_ADDED_TO_CART;
+	@Kroll.constant
+	public static final String EVENT_NAME_INITIATED_CHECKOUT = AppEventsConstants.EVENT_NAME_INITIATED_CHECKOUT;
+	@Kroll.constant
+	public static final String EVENT_NAME_ADDED_PAYMENT_INFO = AppEventsConstants.EVENT_NAME_ADDED_PAYMENT_INFO;
+	@Kroll.constant
+	public static final String EVENT_NAME_PURCHASED = AppEventsConstants.EVENT_NAME_PURCHASED;
+
+	@Kroll.constant
+	public static final String EVENT_PARAM_CONTENT = AppEventsConstants.EVENT_PARAM_CONTENT;
+	@Kroll.constant
+	public static final String EVENT_PARAM_CONTENT_ID = AppEventsConstants.EVENT_PARAM_CONTENT_ID;
+	@Kroll.constant
+	public static final String EVENT_PARAM_CONTENT_TYPE = AppEventsConstants.EVENT_PARAM_CONTENT_TYPE;
+	@Kroll.constant
+	public static final String EVENT_PARAM_CURRENCY = AppEventsConstants.EVENT_PARAM_CURRENCY;
+	@Kroll.constant
+	public static final String EVENT_PARAM_NUM_ITEMS = AppEventsConstants.EVENT_PARAM_NUM_ITEMS;
+	@Kroll.constant
+	public static final String EVENT_PARAM_PAYMENT_INFO_AVAILABLE = AppEventsConstants.EVENT_PARAM_PAYMENT_INFO_AVAILABLE;
+
+	@Kroll.constant
 	public static final int AUDIENCE_NONE = 0;
 	@Kroll.constant
 	public static final int AUDIENCE_ONLY_ME = 1;
@@ -115,13 +142,16 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	public static final int FILTER_APP_NON_USERS = 2;
 
 	@Kroll.constant
-	public static final String LOGIN_BEHAVIOR_BROWSER = "WEB_ONLY";
+	public static final int LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK = 0;
 	@Kroll.constant
-	public static final String LOGIN_BEHAVIOR_NATIVE = "NATIVE_ONLY";
+	public static final int LOGIN_BEHAVIOR_BROWSER = 1;
 	@Kroll.constant
-	public static final String LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK = "NATIVE_WITH_FALLBACK";
+	public static final int LOGIN_BEHAVIOR_DEVICE_AUTH = 2;
 	@Kroll.constant
-	public static final String LOGIN_BEHAVIOR_DEVICE_AUTH = "DEVICE_AUTH";
+	public static final int LOGIN_BEHAVIOR_WEB = 3;
+	@Kroll.constant
+	public static final int LOGIN_BEHAVIOR_NATIVE = 4;
+	// TODO: Expose DIALOG_ONLY and KATANA_ONLY?
 
 	@Kroll.constant
 	public static final int LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC = 0;
@@ -131,9 +161,9 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	public static final int LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE = 2;
 
 	@Kroll.constant
-	public static final String LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY = "NEUTRAL_GRAY";
+	public static final int LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY = 0;
 	@Kroll.constant
-	public static final String LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE = "FRIENDLY_BLUE";
+	public static final int LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE = 1;
 
 	@Kroll.constant
 	public static final int SHARE_DIALOG_MODE_AUTOMATIC = 0;
@@ -146,7 +176,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 
 	private static TiFacebookModule module;
 	private static String[] permissions = new String[] {};
-	private String loginBehavior;
+	private LoginBehavior loginBehavior;
 
 	private KrollFunction permissionCallback = null;
 
@@ -158,6 +188,12 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	{
 		super();
 		module = this;
+	}
+
+	@Override
+	public String getApiName()
+	{
+		return "Ti.Facebook";
 	}
 
 	@Kroll.onAppCreate
@@ -331,13 +367,28 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		}
 	}
 
+    @Kroll.method
+    public void logRegistrationCompleted(String registrationMethod)
+    {
+        Activity activity = TiApplication.getInstance().getCurrentActivity();
+        AppEventsLogger logger = AppEventsLogger.newLogger(activity);
+        Bundle paramBundle = new Bundle();
+        paramBundle.putString(AppEventsConstants.EVENT_PARAM_REGISTRATION_METHOD, registrationMethod);
+
+        if (logger != null) {
+            logger.logEvent(AppEventsConstants.EVENT_NAME_COMPLETED_REGISTRATION, paramBundle);
+        }
+    }
+
 	@Kroll.method
-	public void logPurchase(double amount, String currency)
+	public void logPurchase(double amount, String currency,
+                            @Kroll.argument(optional = true) KrollDict parameters)
 	{
 		Activity activity = TiApplication.getInstance().getCurrentActivity();
 		AppEventsLogger logger = AppEventsLogger.newLogger(activity);
+        Bundle paramBundle = parameters != null ? Utils.mapToBundle(parameters) : null;
 		if (logger != null) {
-			logger.logPurchase(BigDecimal.valueOf(amount), Currency.getInstance(currency));
+			logger.logPurchase(BigDecimal.valueOf(amount), Currency.getInstance(currency), paramBundle);
 		}
 	}
 
@@ -428,20 +479,48 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	// clang-format off
 	@Kroll.setProperty
 	@Kroll.method
-	public void setLoginBehavior(String behaviorConstant)
+	public void setLoginBehavior(int behaviorConstant)
 	// clang-format on
 	{
-		loginBehavior = behaviorConstant;
+		switch (behaviorConstant) {
+			case LOGIN_BEHAVIOR_BROWSER:
+				loginBehavior = LoginBehavior.WEB_ONLY;
+				break;
+			case LOGIN_BEHAVIOR_WEB:
+				loginBehavior = LoginBehavior.WEB_VIEW_ONLY;
+				break;
+			case LOGIN_BEHAVIOR_DEVICE_AUTH:
+				loginBehavior = LoginBehavior.DEVICE_AUTH;
+				break;
+			case LOGIN_BEHAVIOR_NATIVE:
+				loginBehavior = LoginBehavior.NATIVE_ONLY;
+				break;
+			default:
+			case LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK:
+				loginBehavior = LoginBehavior.NATIVE_WITH_FALLBACK;
+				break;
+		}
 	}
 
 	// clang-format off
 	@Kroll.getProperty
 	@Kroll.method
-	public String getLoginBehavior()
+	public int getLoginBehavior()
 	// clang-format on
 	{
-
-		return loginBehavior;
+		switch (loginBehavior) {
+			case WEB_ONLY:
+				return LOGIN_BEHAVIOR_BROWSER;
+			case WEB_VIEW_ONLY:
+				return LOGIN_BEHAVIOR_WEB;
+			case DEVICE_AUTH:
+				return LOGIN_BEHAVIOR_DEVICE_AUTH;
+			case NATIVE_ONLY:
+				return LOGIN_BEHAVIOR_NATIVE;
+			default:
+			case NATIVE_WITH_FALLBACK:
+				return LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK;
+		}
 	}
 
 	@Kroll.method
@@ -550,6 +629,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		if (loginBehavior != null) {
 			setLoginManagerLoginBehavior();
 		}
+
 		LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList(TiFacebookModule.permissions));
 	}
 
@@ -980,6 +1060,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 
 	private void setLoginManagerLoginBehavior()
 	{
-		LoginManager.getInstance().setLoginBehavior(LoginBehavior.valueOf(loginBehavior));
+		LoginManager.getInstance().setLoginBehavior(loginBehavior);
 	}
 }

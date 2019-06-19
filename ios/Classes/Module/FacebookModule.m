@@ -37,6 +37,11 @@ NS_ASSUME_NONNULL_BEGIN
   return @"facebook";
 }
 
+- (NSString *)apiName
+{
+  return @"Ti.Facebook";
+}
+
 #pragma mark Lifecycle
 
 - (void)handleRelaunch:(NSNotification *_Nullable)notification
@@ -157,13 +162,26 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)logPurchase:(NSArray<id> *_Nonnull)purchase
 {
-  ENSURE_TYPE([purchase objectAtIndex:0], NSNumber);
-  ENSURE_TYPE([purchase objectAtIndex:1], NSString);
-
   NSNumber *amount = [purchase objectAtIndex:0];
   NSString *currency = [TiUtils stringValue:[purchase objectAtIndex:1]];
+  ENSURE_TYPE(amount, NSNumber);
+  ENSURE_TYPE(currency, NSString);
 
-  [FBSDKAppEvents logPurchase:[amount doubleValue] currency:currency];
+  if (purchase.count > 2) {
+    NSDictionary *parameters = [purchase objectAtIndex:2];
+    ENSURE_TYPE(parameters, NSDictionary);
+
+    [FBSDKAppEvents logPurchase:[amount doubleValue] currency:currency parameters:parameters];
+  } else {
+    [FBSDKAppEvents logPurchase:[amount doubleValue] currency:currency];
+  }
+}
+
+- (void)logRegistrationCompleted:(NSString *_Nonnull)registrationMethod
+{
+  NSDictionary *params = @{ FBSDKAppEventParameterNameRegistrationMethod : registrationMethod };
+
+  [FBSDKAppEvents logEvent:FBSDKAppEventNameCompletedRegistration parameters:params];
 }
 
 - (void)logCustomEvent:(NSArray<id> *_Nonnull)customEvent
@@ -400,7 +418,7 @@ NS_ASSUME_NONNULL_BEGIN
   FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
 
   TiThreadPerformOnMainThread(^{
-    [loginManager logInWithReadPermissions:readPermissions
+    [loginManager logInWithPermissions:readPermissions
                         fromViewController:nil
                                    handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
                                      BOOL success = NO;
@@ -459,7 +477,7 @@ NS_ASSUME_NONNULL_BEGIN
   loginManager.defaultAudience = defaultAudience;
 
   TiThreadPerformOnMainThread(^{
-    [loginManager logInWithPublishPermissions:publishPermissions
+    [loginManager logInWithPermissions:publishPermissions
                            fromViewController:nil
                                       handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
                                         BOOL success = NO;
@@ -1035,6 +1053,19 @@ MAKE_SYSTEM_PROP(PLACE_LOCATION_CONFIDENCE_NOT_APPLICABLE, FBSDKPlaceLocationCon
 MAKE_SYSTEM_PROP(PLACE_LOCATION_CONFIDENCE_LOW, FBSDKPlaceLocationConfidenceLow);
 MAKE_SYSTEM_PROP(PLACE_LOCATION_CONFIDENCE_MEDIUM, FBSDKPlaceLocationConfidenceMedium);
 MAKE_SYSTEM_PROP(PLACE_LOCATION_CONFIDENCE_HIGH, FBSDKPlaceLocationConfidenceHigh);
+
+MAKE_SYSTEM_STR(EVENT_NAME_COMPLETED_REGISTRATION, FBSDKAppEventNameCompletedRegistration);
+MAKE_SYSTEM_STR(EVENT_NAME_VIEWED_CONTENT, FBSDKAppEventNameViewedContent);
+MAKE_SYSTEM_STR(EVENT_NAME_ADDED_TO_CART, FBSDKAppEventNameAddedToCart);
+MAKE_SYSTEM_STR(EVENT_NAME_INITIATED_CHECKOUT, FBSDKAppEventNameInitiatedCheckout);
+MAKE_SYSTEM_STR(EVENT_NAME_ADDED_PAYMENT_INFO, FBSDKAppEventNameAddedPaymentInfo);
+
+MAKE_SYSTEM_STR(EVENT_PARAM_CONTENT, FBSDKAppEventParameterNameContent);
+MAKE_SYSTEM_STR(EVENT_PARAM_CONTENT_ID, FBSDKAppEventParameterNameContentID);
+MAKE_SYSTEM_STR(EVENT_PARAM_CONTENT_TYPE, FBSDKAppEventParameterNameContentType);
+MAKE_SYSTEM_STR(EVENT_PARAM_CURRENCY, FBSDKAppEventParameterNameCurrency);
+MAKE_SYSTEM_STR(EVENT_PARAM_NUM_ITEMS, FBSDKAppEventParameterNameNumItems);
+MAKE_SYSTEM_STR(EVENT_PARAM_PAYMENT_INFO_AVAILABLE, FBSDKAppEventParameterNamePaymentInfoAvailable);
 
 @end
 
