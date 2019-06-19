@@ -40,6 +40,10 @@ examples:
 since: "5.4.0"
 platforms: [iphone, ipad]
 extends: Titanium.UI.View
+deprecated:
+  since: "8.2.0"
+  removed: "8.2.0"
+  notes: This API was removed to align with the removal of the Facebook SDK 5+.
 properties:
   - name: mode
     summary: |

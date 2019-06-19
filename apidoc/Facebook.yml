@@ -219,17 +219,9 @@ description: |
     To use Facebook, a user must logged into Facebook and explicitly authorize the application to
     perform certain actions, such as accessing profile information or posting status messages.
 
-    There are two ways to initiate the login process:
-
-    * Call [authorize](Modules.Facebook.authorize) to prompt the user to login and authorize
-      the application. Before calling this method, set the <Modules.Facebook.permissions> property
-      if additional permissions are needed.
-
-    * Create a Facebook [LoginButton](Modules.Facebook.LoginButton) to allow the user to
-      log in if desired. You can add either read permissions or write permissions,
-      otherwise the default is to request for the `public_profile` permission.
-      Note that Facebook does not support setting both `readPermissions` and `publishPermissions`
-      properties at the same time when using the LoginButton.
+    Call [authorize](Modules.Facebook.authorize) to prompt the user to login and authorize
+    the application. Before calling this method, set the <Modules.Facebook.permissions> property
+    if additional permissions are needed.
 
     Which approach you take depends on your UI and how central Facebook is to your
     application.
@@ -241,13 +233,8 @@ description: |
     request permissions on the fly.
 
     Before the user logs in and authorizes the application, you can request permissions for the
-    application to use by either:
-
-      * Setting the <Modules.Facebook.permissions> property if you are using `authorize()` method to
-        have the user login and authorize the application.
-      * Setting either the [readPermissions](Modules.Facebook.LoginButton.readPermissions) or
-        [publishPermissions](Modules.Facebook.LoginButton.publishPermissions) on an instance of a LoginButton.
-        Do not set both properties or the application will throw an error.
+    application to use by either: Setting the <Modules.Facebook.permissions> property if you are using `authorize()` 
+    method to have the user login and authorize the application.
 
     For a complete list of permissions, see the [official Facebook Permissions Reference](https://developers.facebook.com/docs/facebook-login/permissions/)
 
@@ -264,47 +251,6 @@ description: |
             Ti.API.info('Updated permissions: ' + JSON.stringify(fb.permissions));
         });
         fb.refreshPermissionsFromServer();
-
-
-    **Request Additional Read Permissions**
-
-    To request additional read permissions once the user authorizes your application, use the
-    [requestNewReadPermissions()](Modules.Facebook.requestNewReadPermissions) method.
-
-    Check the <Modules.Facebook.permissions> property to make sure the user accepted the request for
-    additional permissions.
-
-        var fb = require('facebook');
-        fb.requestNewReadPermissions(['read_stream', 'user_hometown'], function (e) {
-            if (e.success) {
-                fb.requestWithGraphPath(...);
-            } else if (e.cancelled) {
-                ....
-            } else {
-                Ti.API.debug('Failed authorization due to: ' + e.error);
-            }
-        });
-
-    **Request Additional Write Permissions**
-
-    To request additional write permissions once the user authorizes your application, use the
-    [requestNewPublishPermissions()](Modules.Facebook.requestNewPublishPermissions) method.
-    Note that in addition to passing the permissions to request, you need to also pass an `AUDIENCE_*`
-    constant to indicate the default audience when positing content.
-
-    Check the <Modules.Facebook.permissions> property to make sure the user accepted the request for
-    additional permissions.
-
-        var fb = require('facebook');
-        fb.requestNewPublishPermissions(['read_stream', 'user_hometown'], fb.AUDIENCE_FRIENDS, function (e) {
-            if (e.success) {
-                fb.requestWithGraphPath(...);
-            } else if (e.cancelled) {
-            ....
-            } else {
-                Ti.API.debug('Failed authorization due to: ' + e.error);
-            }
-        });
 
     ### Share Dialogs
 
@@ -686,7 +632,6 @@ methods:
         Note that it is not an error for the user to 'Skip' your requested permissions,
         so you should check the module's `permissions` property following the call.
     parameters:
-
       - name: permissions
         summary: |
             Array of additional permissions to request. For a complete list of permissions, see the
@@ -697,6 +642,9 @@ methods:
         summary: Callback to invoke when the request completes.
         type: Callback<FacebookPermissionResponse>
     since: 4.0.0
+    deprecated:
+      since: "8.2.0"
+      notes: Request all permissions via the `permissions` property before calling `authorize`.
 
   - name: requestNewPublishPermissions
     summary: Makes a request to Facebook for additional write permissions.
@@ -704,7 +652,6 @@ methods:
         Note that it is not an error for the user to 'Skip' your requested permissions,
         so you should check the module's `permissions` property following the call.
     parameters:
-
       - name: permissions
         summary: |
             Array of additional permissions to request. For a complete list of permissions, see the
@@ -721,6 +668,9 @@ methods:
         summary: Callback to invoke when the request completes.
         type: Callback<FacebookPermissionResponse>
     since: 4.0.0
+    deprecated:
+      since: "8.2.0"
+      notes: Request all permissions via the `permissions` property before calling `authorize`.
 
   - name: fetchDeferredAppLink
     summary: Fetch the deferred app link
@@ -1865,7 +1815,7 @@ since: 4.0.0
 platforms: [android, iphone, ipad]
 properties:
   - name: link
-    summary: URL to share.
+    summary: URL to share (required for any link of sharing).
     type: String
 
   - name: to
