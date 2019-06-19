@@ -923,6 +923,7 @@ NS_ASSUME_NONNULL_BEGIN
 
   if (link == nil) {
     NSLog(@"[ERROR] Missing required parameter \"link\"!");
+    return content;
   }
 
   [content setContentURL:link];
