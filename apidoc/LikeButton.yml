@@ -119,8 +119,8 @@ properties:
         This property must be set before rendering the button.
     type: String
     deprecated:
-        since: 5.0.0
-        removed: 5.0.0
+        since: "5.0.0"
+        removed: "5.0.0"
 
   - name: objectID
     summary: |
@@ -128,7 +128,7 @@ properties:
     description: |
         This property must be set before rendering the button.
     type: String
-    since: 5.0.0
+    since: "5.0.0"
 
   - name: objectType
     summary: |
