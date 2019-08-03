@@ -7,13 +7,13 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.facebook.android:facebook-core:[5,6)'
-    implementation 'com.facebook.android:facebook-common:[5,6)'
-    implementation 'com.facebook.android:facebook-login:[5,6)'
-    implementation 'com.facebook.android:facebook-share:[5,6)'
-    implementation 'com.facebook.android:facebook-places:[5,6)'
-    implementation 'com.facebook.android:facebook-messenger:[5,6)'
-    implementation 'com.facebook.android:facebook-applinks:[5,6)'
+    implementation 'com.facebook.android:facebook-core:5.+'
+    implementation 'com.facebook.android:facebook-common:5.+'
+    implementation 'com.facebook.android:facebook-login:5.+'
+    implementation 'com.facebook.android:facebook-share:5.+'
+    implementation 'com.facebook.android:facebook-places:5.+'
+    implementation 'com.facebook.android:facebook-messenger:5.+'
+    implementation 'com.facebook.android:facebook-applinks:5.+'
 }
 
 configurations.all {
