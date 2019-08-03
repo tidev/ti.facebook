@@ -424,7 +424,7 @@ methods:
         type: Dictionary<Titanium.Proxy>
     returns:
         type: Titanium.Proxy
-    since: 4.0.0
+    since: "4.0.0"
     platforms: [android]
 
   - name: initialize
@@ -439,7 +439,7 @@ methods:
         any response.
         
         The `timeout` parameter was deprecated in version 5.0.0 of Ti.Facebook and is not used anymore. 
-    since: 4.0.0
+    since: "4.0.0"
 
   - name: logCustomEvent
     summary: Logs a custom event to Facebook.
@@ -511,7 +511,7 @@ methods:
         removed: "7.0.0"
         notes: |
             The API was removed by the Facebook SDK. Please use the
-            <Modules.Facebook.presentShareDialog> method instead.
+            [Modules.Facebook.presentShareDialog](Modules.Facebook.presentShareDialog) method instead.
 
   - name: presentShareDialog
     summary: Opens a Facebook link share dialog.
@@ -583,7 +583,7 @@ methods:
         summary: |
             A dictionary object containing parameters.
         type: RequestDialogParams
-    since: 4.0.0
+    since: "4.0.0"
 
   - name: refreshPermissionsFromServer
     summary: Makes a request to Facebook to get the latest permissions granted.
@@ -593,7 +593,7 @@ methods:
 
         Listen for the <Modules.Facebook.tokenUpdated> event to be notified if the attempt was
         successful.
-    since: 4.0.0
+    since: "4.0.0"
 
   - name: requestWithGraphPath
     summary: Makes a Facebook Graph API request.
@@ -641,7 +641,7 @@ methods:
       - name: callback
         summary: Callback to invoke when the request completes.
         type: Callback<FacebookPermissionResponse>
-    since: 4.0.0
+    since: "4.0.0"
     deprecated:
       since: "8.2.0"
       notes: Request all permissions via the `permissions` property before calling `authorize`.
@@ -667,7 +667,7 @@ methods:
       - name: callback
         summary: Callback to invoke when the request completes.
         type: Callback<FacebookPermissionResponse>
-    since: 4.0.0
+    since: "4.0.0"
     deprecated:
       since: "8.2.0"
       notes: Request all permissions via the `permissions` property before calling `authorize`.
@@ -897,7 +897,7 @@ events:
             Error message, if any returned.
             Will be undefined if `success` is `true`.
         type: String
-    since: 4.0.0
+    since: "4.0.0"
 
   - name: inviteCompleted
     summary: Fired when the Invite dialog is closed.
@@ -921,7 +921,7 @@ events:
 
   - name: tokenUpdated
     summary: Fired when [refreshPermissionsFromServer](Modules.Facebook.refreshPermissionsFromServer) is completed.
-    since: 4.0.0
+    since: "4.0.0"
 
 properties:
   - name: AUDIENCE_ONLY_ME
@@ -931,7 +931,7 @@ properties:
         or <Modules.Facebook.requestNewPublishPermissions>.
     type: Number
     permission: read-only
-    since: 4.0.0
+    since: "4.0.0"
 
   - name: AUDIENCE_FRIENDS
     summary: Published content is only visible to the user and user's friends.
@@ -940,7 +940,7 @@ properties:
         or <Modules.Facebook.requestNewPublishPermissions>.
     type: Number
     permission: read-only
-    since: 4.0.0
+    since: "4.0.0"
 
   - name: AUDIENCE_EVERYONE
     summary: Published content is visible to all Facebook users.
@@ -949,7 +949,7 @@ properties:
         or <Modules.Facebook.requestNewPublishPermissions>.
     type: Number
     permission: read-only
-    since: 4.0.0
+    since: "4.0.0"
 
   - name: ACTION_TYPE_NONE
     summary: No action type.
@@ -957,7 +957,7 @@ properties:
         Use to set the actionType with [presentSendRequestDialog()](Modules.Facebook.presentSendRequestDialog)
     type: Number
     permission: read-only
-    since: 5.0.0
+    since: "5.0.0"
 
   - name: ACTION_TYPE_SEND
     summary: The user is sending an object to the friends.
@@ -965,7 +965,7 @@ properties:
         Use to set the actionType with [presentSendRequestDialog()](Modules.Facebook.presentSendRequestDialog)
     type: Number
     permission: read-only
-    since: 5.0.0
+    since: "5.0.0"
 
   - name: ACTION_TYPE_ASK_FOR
     summary: The user is asking for an object from friends.
@@ -973,7 +973,7 @@ properties:
         Use to set the actionType with [presentSendRequestDialog()](Modules.Facebook.presentSendRequestDialog)
     type: Number
     permission: read-only
-    since: 5.0.0
+    since: "5.0.0"
 
   - name: ACTION_TYPE_TURN
     summary: It is the turn of the friends to play against the user in a match.
@@ -981,7 +981,7 @@ properties:
         Use to set the actionType with [presentSendRequestDialog()](Modules.Facebook.presentSendRequestDialog)
     type: Number
     permission: read-only
-    since: 5.0.0
+    since: "5.0.0"
 
   - name: FILTER_NONE
     summary: No filter all friends can be displayed.
@@ -989,7 +989,7 @@ properties:
         Use to set the filter with [presentSendRequestDialog()](Modules.Facebook.presentSendRequestDialog)
     type: Number
     permission: read-only
-    since: 5.0.0
+    since: "5.0.0"
 
   - name: FILTER_APP_USERS
     summary: Friends using the app can be displayed.
@@ -997,7 +997,7 @@ properties:
         Use to set the filter with [presentSendRequestDialog()](Modules.Facebook.presentSendRequestDialog)
     type: Number
     permission: read-only
-    since: 5.0.0
+    since: "5.0.0"
 
   - name: FILTER_APP_NON_USERS
     summary: Friends not using the app can be displayed.
@@ -1005,15 +1005,15 @@ properties:
         Use to set the filter with [presentSendRequestDialog()](Modules.Facebook.presentSendRequestDialog)
     type: Number
     permission: read-only
-    since: 5.0.0
+    since: "5.0.0"
 
   - name: BUTTON_STYLE_NORMAL
     summary: |
         Use with [LoginButton.style](Modules.Facebook.LoginButton.style) to specify
         the default login button reading "Connect" or "Login".
     deprecated:
-        since: 4.0.0
-        removed: 4.0.0
+        since: "4.0.0"
+        removed: "4.0.0"
     type: Number
     permission: read-only
 
@@ -1022,8 +1022,8 @@ properties:
         Use with [LoginButton.style](Modules.Facebook.LoginButton.style) to specify
         a wide login button reading "Connect with Facebook" or "Login with Facebook".
     deprecated:
-        since: 4.0.0
-        removed: 4.0.0
+        since: "4.0.0"
+        removed: "4.0.0"
     type: Number
     permission: read-only
     
@@ -1119,10 +1119,10 @@ properties:
         Use with the [LoginButton.sessionLoginBehavior](Modules.Facebook.LoginButton.sessionLoginBehavior) property.
     type: Number
     permission: read-only
-    since: 4.0.0
+    since: "4.0.0"
     deprecated:
-        since: 4.1.0
-        removed: 4.1.0
+        since: "4.1.0"
+        removed: "4.1.0"
     platforms: [android]
 
   - name: LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC
@@ -1170,10 +1170,10 @@ properties:
         Use with the [LoginButton.sessionLoginBehavior](Modules.Facebook.LoginButton.sessionLoginBehavior) property.
     type: Number
     permission: read-only
-    since: 4.0.0
+    since: "4.0.0"
     deprecated:
-        since: 4.1.0
-        removed: 4.1.0
+        since: "4.1.0"
+        removed: "4.1.0"
     platforms: [android]
 
   - name: SUPPRESS_SSO
@@ -1182,10 +1182,10 @@ properties:
         Use with the [LoginButton.sessionLoginBehavior](Modules.Facebook.LoginButton.sessionLoginBehavior) property.
     type: Number
     permission: read-only
-    since: 4.0.0
+    since: "4.0.0"
     deprecated:
-        since: 4.1.0
-        removed: 4.1.0
+        since: "4.1.0"
+        removed: "4.1.0"
     platforms: [android]
 
   - name: SHARE_DIALOG_MODE_AUTOMATIC
@@ -1273,18 +1273,18 @@ properties:
     summary: |
         Checks if the device can support the use of the Facebook Open Graph action dialog from the Facebook App.
     type: Boolean
-    since: 4.0.0
+    since: "4.0.0"
     platforms: [android]
     permission: read-only
 
   - name: canPresentShareDialog
     summary: Checks if the device can support the use of the Facebook Share dialog from the Facebook App.
     type: Boolean
-    since: 4.0.0
+    since: "4.0.0"
     permission: read-only
     deprecated:
-        since: 5.0.0
-        removed: 5.0.0
+        since: "5.0.0"
+        removed: "5.0.0"
 
   - name: expirationDate
     summary: Time at which the `accessToken` expires.
@@ -1296,8 +1296,8 @@ properties:
         Indicates whether the login should use the traditional dialog-based
         authentication.
     deprecated:
-        since: 4.0.0
-        removed: 4.0.0
+        since: "4.0.0"
+        removed: "4.0.0"
     description: |
         Set to `false` to enable Single-Sign-On (SSO) in cases where the official Facebook app is on the
         device.  Default is `true`, meaning the traditional, dialog-based
@@ -1371,13 +1371,13 @@ properties:
     description: |
         Be sure to set this before calling authorize if this is needed. It is
         recommended to follow Facebook's [guidelines](https://developers.facebook.com/blog/post/2015/10/29/Facebook-Login-iOS9)
-        for ideal login behavior
+        for ideal login behavior.
+        Defaults to [Titanium.Modules.Facebook.LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK](Titanium.Modules.Facebook.LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK)
+        on Android and [Titanium.Modules.Facebook.LOGIN_BEHAVIOR_BROWSER](Titanium.Modules.Facebook.LOGIN_BEHAVIOR_BROWSER) on iOS
+        (which uses the native Safari Dialog internally).
     type: Number
     constants: [Modules.Facebook.LOGIN_BEHAVIOR_*]
-    default:
-        Defaults to <Titanium.Modules.Facebook.LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK>
-        on Android and <Titanium.Modules.Facebook.LOGIN_BEHAVIOR_BROWSER> on iOS
-        (which uses the native Safari Dialog internally).
+        
     since: "5.4.0"
     availability: creation
     platforms: [android, iphone, ipad]
@@ -1688,7 +1688,7 @@ description: |
     The `success` and `cancelled` properties may not be reliable for dialogs. In the event
     that the user canceled the dialog, the `result` field is `undefined`.
 platforms: [android, iphone, ipad]
-since: 4.0.0
+since: "4.0.0"
 properties:
   - name: cancelled
     summary: Indicates if the user canceled the dialog.
@@ -1712,8 +1712,8 @@ summary: Argument passed to the reauthorize callback when the request is complet
 platforms: [android, iphone, ipad]
 since: 3.1.0
 deprecated:
-    since: 4.0.0
-    removed: 4.0.0
+    since: "4.0.0"
+    removed: "4.0.0"
 properties:
   - name: cancelled
     summary: Indicates if the user canceled the dialog.
@@ -1727,8 +1727,8 @@ summary: Argument passed to the dialog callback when a dialog is completed or ca
 platforms: [android, iphone, ipad]
 since: 3.1.0
 deprecated:
-    since: 4.0.0
-    removed: 4.0.0
+    since: "4.0.0"
+    removed: "4.0.0"
 description: |
     The `success` and `cancelled` properties may not be reliable for dialogs. In the event
     that the user canceled the dialog, the `result` field is `undefined`.
@@ -1753,8 +1753,8 @@ summary: |
 platforms: [android, iphone, ipad]
 since: 3.1.0
 deprecated:
-    since: 4.0.0
-    removed: 4.0.0
+    since: "4.0.0"
+    removed: "4.0.0"
 properties:
   - name: method
     summary: REST method call you specified.
@@ -1811,7 +1811,7 @@ summary: |
     Optional parameters to pass to either the
     [presentShareDialog()](Modules.Facebook.presentShareDialog) or
     [presentMessengerDialog()](Modules.Facebook.presentMessengerDialog) methods.
-since: 4.0.0
+since: "4.0.0"
 platforms: [android, iphone, ipad]
 properties:
   - name: link
@@ -1885,7 +1885,7 @@ properties:
 name: RequestDialogParams
 summary: |
     Parameters to pass to [presentSendRequestDialog()](Modules.Facebook.presentSendRequestDialog) method.
-since: 4.0.0
+since: "4.0.0"
 platforms: [android, iphone, ipad]
 properties:
   - name: message
