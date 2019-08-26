@@ -48,11 +48,16 @@ NS_ASSUME_NONNULL_BEGIN
 {
   _launchOptions = [[TiApp app] launchOptions];
   NSString *urlString = [_launchOptions objectForKey:@"url"];
-  NSString *sourceApplication = [_launchOptions objectForKey:@"source"];
   id annotation = nil;
+  NSString *sourceApplication = [_launchOptions objectForKey:@"source"];
 
   if ([TiUtils isIOSVersionOrGreater:@"9.0"]) {
     annotation = [_launchOptions objectForKey:UIApplicationOpenURLOptionsAnnotationKey];
+  }
+  
+  // Fix a psossible nullability issue with iOS 13+ (see TIMOB-27354)
+  if ([sourceApplication isKindOfClass:[NSNull class]]) {
+    sourceApplication = nil;
   }
 
   if (urlString != nil) {
