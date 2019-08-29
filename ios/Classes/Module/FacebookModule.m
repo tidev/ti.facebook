@@ -16,6 +16,7 @@
 #import "TiBase.h"
 #import "TiHost.h"
 #import "TiUtils.h"
+#import "TiBlob.h"
 
 #import <FBSDKPlacesKit/FBSDKPlacesKit.h>
 
