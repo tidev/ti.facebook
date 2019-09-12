@@ -14,7 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 
 - Deprecated messenger button & dialog
-- Deprecated LOGIN_BEHAVIOR_* constants
+- Deprecated some LOGIN_BEHAVIOR_* constants
+- DeprecatedLoginButton.publishPermissions and readPermissions
 
 ### Note
 
