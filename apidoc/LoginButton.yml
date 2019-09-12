@@ -64,6 +64,9 @@ properties:
         the session explicitly).
     type: Array<String>
     since: 4.0.0
+    deprecated:
+      since: "6.1.0"
+      notes: Use the `permissions` property
 
   - name: publishPermissions
     summary: |
@@ -89,6 +92,9 @@ properties:
         the session explicitly).
     type: Array<String>
     since: 4.0.0
+    deprecated:
+      since: "6.1.0"
+      notes: Use the `permissions` property
 
   - name: tooltipBehavior
     summary: Gets or sets the desired tooltip behavior.
