@@ -22,6 +22,11 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		19643CA62329C48000AA6A88 /* FacebookMessengerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 19643CA22329C48000AA6A88 /* FacebookMessengerButton.m */; };
+		19643CA72329C48000AA6A88 /* FacebookMessengerButtonProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 19643CA32329C48000AA6A88 /* FacebookMessengerButtonProxy.m */; };
+		19643CA82329C48000AA6A88 /* FacebookMessengerButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 19643CA42329C48000AA6A88 /* FacebookMessengerButton.h */; };
+		19643CA92329C48000AA6A88 /* FacebookMessengerButtonProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 19643CA52329C48000AA6A88 /* FacebookMessengerButtonProxy.h */; };
+		19643CAB2329C62500AA6A88 /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19643CAA2329C62500AA6A88 /* FBSDKMessengerShareKit.framework */; };
 		DB34EBD81F2574350057008D /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB34EBD21F2574350057008D /* Bolts.framework */; };
 		DB34EBD91F2574350057008D /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB34EBD31F2574350057008D /* FBSDKCoreKit.framework */; };
 		DB34EBDA1F2574350057008D /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB34EBD41F2574350057008D /* FBSDKLoginKit.framework */; };
@@ -51,6 +56,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		19643CA22329C48000AA6A88 /* FacebookMessengerButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookMessengerButton.m; sourceTree = "<group>"; };
+		19643CA32329C48000AA6A88 /* FacebookMessengerButtonProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookMessengerButtonProxy.m; sourceTree = "<group>"; };
+		19643CA42329C48000AA6A88 /* FacebookMessengerButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookMessengerButton.h; sourceTree = "<group>"; };
+		19643CA52329C48000AA6A88 /* FacebookMessengerButtonProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookMessengerButtonProxy.h; sourceTree = "<group>"; };
+		19643CAA2329C62500AA6A88 /* FBSDKMessengerShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKMessengerShareKit.framework; path = platform/FBSDKMessengerShareKit.framework; sourceTree = "<group>"; };
 		24DD6D1B1134B66800162E58 /* titanium.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = titanium.xcconfig; sourceTree = "<group>"; };
 		D2AAC07E0554694100DB518D /* libfacebook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libfacebook.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB34EBD21F2574350057008D /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = platform/Bolts.framework; sourceTree = "<group>"; };
@@ -80,6 +90,7 @@
 				DB34EBD91F2574350057008D /* FBSDKCoreKit.framework in Frameworks */,
 				DB34EBDD1F2574350057008D /* FBSDKShareKit.framework in Frameworks */,
 				DB34EBDA1F2574350057008D /* FBSDKLoginKit.framework in Frameworks */,
+				19643CAB2329C62500AA6A88 /* FBSDKMessengerShareKit.framework in Frameworks */,
 				DB34EBD81F2574350057008D /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -109,6 +120,7 @@
 		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				19643CAA2329C62500AA6A88 /* FBSDKMessengerShareKit.framework */,
 				DB34EBD21F2574350057008D /* Bolts.framework */,
 				DB34EBD31F2574350057008D /* FBSDKCoreKit.framework */,
 				DB34EBD41F2574350057008D /* FBSDKLoginKit.framework */,
@@ -121,11 +133,24 @@
 		08FB77AEFE84172EC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				19643CA12329C48000AA6A88 /* Messenger Button */,
 				DB34EBED1F2574B70057008D /* Module */,
 				DB34EBE31F2574B70057008D /* Login Button */,
 				DB34EBF21F2574B70057008D /* Utilities */,
 			);
 			name = Classes;
+			sourceTree = "<group>";
+		};
+		19643CA12329C48000AA6A88 /* Messenger Button */ = {
+			isa = PBXGroup;
+			children = (
+				19643CA22329C48000AA6A88 /* FacebookMessengerButton.m */,
+				19643CA32329C48000AA6A88 /* FacebookMessengerButtonProxy.m */,
+				19643CA42329C48000AA6A88 /* FacebookMessengerButton.h */,
+				19643CA52329C48000AA6A88 /* FacebookMessengerButtonProxy.h */,
+			);
+			name = "Messenger Button";
+			path = "Classes/Messenger Button";
 			sourceTree = "<group>";
 		};
 		32C88DFF0371C24200C91783 /* Other Sources */ = {
@@ -183,7 +208,9 @@
 				DB34EC051F2574B70057008D /* FacebookConstants.h in Headers */,
 				DB34EBF91F2574B70057008D /* FacebookLoginButton.h in Headers */,
 				DB34EC031F2574B70057008D /* FacebookModuleAssets.h in Headers */,
+				19643CA92329C48000AA6A88 /* FacebookMessengerButtonProxy.h in Headers */,
 				DB34EC011F2574B70057008D /* FacebookModule.h in Headers */,
+				19643CA82329C48000AA6A88 /* FacebookMessengerButton.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,10 +286,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB34EBFA1F2574B70057008D /* FacebookLoginButton.m in Sources */,
+				19643CA72329C48000AA6A88 /* FacebookMessengerButtonProxy.m in Sources */,
 				DB34EC041F2574B70057008D /* FacebookModuleAssets.m in Sources */,
 				DB34EBFC1F2574B70057008D /* FacebookLoginButtonProxy.m in Sources */,
 				DB34EC061F2574B70057008D /* FacebookConstants.m in Sources */,
 				DB34EC021F2574B70057008D /* FacebookModule.m in Sources */,
+				19643CA62329C48000AA6A88 /* FacebookMessengerButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

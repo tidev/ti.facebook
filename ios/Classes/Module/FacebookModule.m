@@ -14,9 +14,9 @@
 #import "FacebookConstants.h"
 #import "TiApp.h"
 #import "TiBase.h"
+#import "TiBlob.h"
 #import "TiHost.h"
 #import "TiUtils.h"
-#import "TiBlob.h"
 
 #import <FBSDKPlacesKit/FBSDKPlacesKit.h>
 
@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
   if ([TiUtils isIOSVersionOrGreater:@"9.0"]) {
     annotation = [_launchOptions objectForKey:UIApplicationOpenURLOptionsAnnotationKey];
   }
-  
+
   // Fix a psossible nullability issue with iOS 13+ (see TIMOB-27354)
   if ([sourceApplication isKindOfClass:[NSNull class]]) {
     sourceApplication = nil;
@@ -137,15 +137,15 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setCurrentAccessToken:(NSDictionary *_Nonnull)currentAccessToken
 {
   FBSDKAccessToken *newToken = [[FBSDKAccessToken alloc] initWithTokenString:[TiUtils stringValue:@"accessToken" properties:currentAccessToken]
-                                                              permissions:[currentAccessToken objectForKey:@"permissions"]
-                                                      declinedPermissions:[currentAccessToken objectForKey:@"declinedPermissions"]
-                                                       expiredPermissions:[currentAccessToken objectForKey:@"expiredPermissions"]
-                                                                    appID:[TiUtils stringValue:@"appID" properties:currentAccessToken]
-                                                                   userID:[TiUtils stringValue:@"userID" properties:currentAccessToken]
-                                                           expirationDate:[currentAccessToken objectForKey:@"exipirationDate"]
-                                                              refreshDate:[currentAccessToken objectForKey:@"refreshDate"]
-                                                 dataAccessExpirationDate:[currentAccessToken objectForKey:@"refreshDate"]];
-  
+                                                                 permissions:[currentAccessToken objectForKey:@"permissions"]
+                                                         declinedPermissions:[currentAccessToken objectForKey:@"declinedPermissions"]
+                                                          expiredPermissions:[currentAccessToken objectForKey:@"expiredPermissions"]
+                                                                       appID:[TiUtils stringValue:@"appID" properties:currentAccessToken]
+                                                                      userID:[TiUtils stringValue:@"userID" properties:currentAccessToken]
+                                                              expirationDate:[currentAccessToken objectForKey:@"exipirationDate"]
+                                                                 refreshDate:[currentAccessToken objectForKey:@"refreshDate"]
+                                                    dataAccessExpirationDate:[currentAccessToken objectForKey:@"refreshDate"]];
+
   [FBSDKAccessToken setCurrentAccessToken:newToken];
 }
 
@@ -248,21 +248,21 @@ NS_ASSUME_NONNULL_BEGIN
   TiThreadPerformOnMainThread(^{
     [loginManager logInWithPermissions:self->_permissions
                     fromViewController:nil
-                                   handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-                                     // Handle error
-                                     if (error != nil) {
-                                       [self fireLogin:nil cancelled:NO withError:error];
-                                       return;
-                                     }
+                               handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+                                 // Handle error
+                                 if (error != nil) {
+                                   [self fireLogin:nil cancelled:NO withError:error];
+                                   return;
+                                 }
 
-                                     // Login cancelled
-                                     if (result.isCancelled) {
-                                       [self fireLogin:nil cancelled:YES withError:nil];
-                                       return;
-                                     }
+                                 // Login cancelled
+                                 if (result.isCancelled) {
+                                   [self fireLogin:nil cancelled:YES withError:nil];
+                                   return;
+                                 }
 
-                                     // Logged In
-                                   }];
+                                 // Logged In
+                               }];
   },
       YES);
 }
@@ -350,8 +350,29 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)shareMediaToMessenger:(NSArray<NSDictionary<NSString *, id> *> *)args
 {
-  DEPRECATED_REPLACED_REMOVED(@"Facebook.shareMediaToMessenger", @"7.0.0", @"7.0.0", @"Facebook.shareMediaToMessenger");
-  DebugLog(@"[WARN] Facebook removed the MessengerShareDialog API via Web in SDK 5.0.0");
+  DebugLog(@"[WARN] Facebook removed the MessengerShareDialog API via Web in SDK 5.0.0. It will be removed in 7.0.0");
+  NSDictionary *_Nonnull params = [args objectAtIndex:0];
+
+  id media = [params valueForKey:@"media"];
+  ENSURE_TYPE(media, TiBlob);
+
+  TiThreadPerformOnMainThread(^{
+    FBSDKMessengerShareOptions *options = [[FBSDKMessengerShareOptions alloc] init];
+    options.metadata = [params objectForKey:@"metadata"];
+    options.sourceURL = [NSURL URLWithString:[params objectForKey:@"link"]];
+    options.renderAsSticker = [TiUtils boolValue:[params objectForKey:@"renderAsSticker"] def:NO];
+
+    if ([[media mimeType] isEqual:@"image/gif"]) {
+      [FBSDKMessengerSharer shareAnimatedGIF:[NSData dataWithContentsOfFile:[(TiBlob *)media path]] withOptions:options];
+    } else if ([[media mimeType] containsString:@"image/"]) {
+      [FBSDKMessengerSharer shareImage:[TiUtils image:media proxy:self] withOptions:options];
+    } else if ([[media mimeType] containsString:@"video/"]) {
+      [FBSDKMessengerSharer shareVideo:[NSData dataWithContentsOfFile:[(TiBlob *)media path]] withOptions:options];
+    } else {
+      NSLog(@"[ERROR] Unknown media provided. Allowed media: Image, GIF and video.");
+    }
+  },
+      NO);
 }
 
 - (void)presentWebShareDialog:(id _Nullable)unused
@@ -413,7 +434,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)requestNewReadPermissions:(NSArray<id> *_Nonnull)args
 {
-  DEPRECATED_REPLACED(@"Facebook.requestNewPublishPermissions", @"7.0.0", @"Facebook.authorize");
+  DEPRECATED_REPLACED(@"Facebook.requestNewPublishPermissions", @"6.1.0", @"Facebook.authorize");
 
   NSArray<NSString *> *readPermissions = [args objectAtIndex:0];
   ENSURE_ARRAY(readPermissions);
@@ -425,49 +446,49 @@ NS_ASSUME_NONNULL_BEGIN
 
   TiThreadPerformOnMainThread(^{
     [loginManager logInWithPermissions:readPermissions
-                        fromViewController:nil
-                                   handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-                                     BOOL success = NO;
-                                     BOOL cancelled = NO;
-                                     NSString *errorString = nil;
-                                     NSInteger code = 0;
+                    fromViewController:nil
+                               handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+                                 BOOL success = NO;
+                                 BOOL cancelled = NO;
+                                 NSString *errorString = nil;
+                                 NSInteger code = 0;
 
-                                     if (error != nil) {
-                                       code = [error code];
-                                       errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
-                                       if (errorString == nil) {
-                                         errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+                                 if (error != nil) {
+                                   code = [error code];
+                                   errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
+                                   if (errorString == nil) {
+                                     errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
 
-                                         if (errorString == nil) {
-                                           if (code == 308) {
-                                             errorString = TiFacebookErrorMessageKeychainAccess;
-                                           } else {
-                                             errorString = [error localizedDescription];
-                                           }
-                                         }
+                                     if (errorString == nil) {
+                                       if (code == 308) {
+                                         errorString = TiFacebookErrorMessageKeychainAccess;
+                                       } else {
+                                         errorString = [error localizedDescription];
                                        }
-                                     } else if (result.isCancelled) {
-                                       cancelled = YES;
-                                     } else {
-                                       success = YES;
                                      }
+                                   }
+                                 } else if (result.isCancelled) {
+                                   cancelled = YES;
+                                 } else {
+                                   success = YES;
+                                 }
 
-                                     NSDictionary *propertiesDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                                                                              NUMBOOL(success), @"success",
-                                                                                          NUMBOOL(cancelled), @"cancelled",
-                                                                                          NUMINTEGER(code), @"code",
-                                                                                          errorString, @"error", nil];
+                                 NSDictionary *propertiesDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                                                                          NUMBOOL(success), @"success",
+                                                                                      NUMBOOL(cancelled), @"cancelled",
+                                                                                      NUMINTEGER(code), @"code",
+                                                                                      errorString, @"error", nil];
 
-                                     KrollEvent *invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:propertiesDict thisObject:self];
-                                     [[callback context] enqueue:invocationEvent];
-                                   }];
+                                 KrollEvent *invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:propertiesDict thisObject:self];
+                                 [[callback context] enqueue:invocationEvent];
+                               }];
   },
       NO);
 }
 
 - (void)requestNewPublishPermissions:(NSArray<id> *_Nonnull)args
 {
-  DEPRECATED_REPLACED(@"Facebook.requestNewPublishPermissions", @"7.0.0", @"Facebook.authorize");
+  DEPRECATED_REPLACED(@"Facebook.requestNewPublishPermissions", @"6.1.0", @"Facebook.authorize");
 
   NSArray<NSString *> *publishPermissions = [args objectAtIndex:0];
   ENSURE_ARRAY(publishPermissions);
@@ -484,44 +505,44 @@ NS_ASSUME_NONNULL_BEGIN
 
   TiThreadPerformOnMainThread(^{
     [loginManager logInWithPermissions:publishPermissions
-                           fromViewController:nil
-                                      handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-                                        BOOL success = NO;
-                                        BOOL cancelled = NO;
-                                        NSString *errorString = nil;
-                                        NSInteger code = 0;
+                    fromViewController:nil
+                               handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+                                 BOOL success = NO;
+                                 BOOL cancelled = NO;
+                                 NSString *errorString = nil;
+                                 NSInteger code = 0;
 
-                                        if (error != nil) {
-                                          code = [error code];
-                                          errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
-                                          if (errorString == nil) {
-                                            errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+                                 if (error != nil) {
+                                   code = [error code];
+                                   errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
+                                   if (errorString == nil) {
+                                     errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
 
-                                            if (errorString == nil) {
-                                              if (code == 308) {
-                                                errorString = TiFacebookErrorMessageKeychainAccess;
-                                              } else {
-                                                errorString = [error localizedDescription];
-                                              }
-                                            }
-                                          }
-                                        } else if (result.isCancelled) {
-                                          cancelled = YES;
-                                        } else {
-                                          success = YES;
-                                        }
+                                     if (errorString == nil) {
+                                       if (code == 308) {
+                                         errorString = TiFacebookErrorMessageKeychainAccess;
+                                       } else {
+                                         errorString = [error localizedDescription];
+                                       }
+                                     }
+                                   }
+                                 } else if (result.isCancelled) {
+                                   cancelled = YES;
+                                 } else {
+                                   success = YES;
+                                 }
 
-                                        NSDictionary *propertiesDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                                                                                 NUMBOOL(success), @"success",
-                                                                                             NUMBOOL(cancelled), @"cancelled",
-                                                                                             NUMINTEGER(code), @"code",
-                                                                                             errorString, @"error", nil];
+                                 NSDictionary *propertiesDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                                                                          NUMBOOL(success), @"success",
+                                                                                      NUMBOOL(cancelled), @"cancelled",
+                                                                                      NUMINTEGER(code), @"code",
+                                                                                      errorString, @"error", nil];
 
-                                        KrollEvent *invocationEvent = [[KrollEvent alloc] initWithCallback:callback
-                                                                                               eventObject:propertiesDict
-                                                                                                thisObject:self];
-                                        [[callback context] enqueue:invocationEvent];
-                                      }];
+                                 KrollEvent *invocationEvent = [[KrollEvent alloc] initWithCallback:callback
+                                                                                        eventObject:propertiesDict
+                                                                                         thisObject:self];
+                                 [[callback context] enqueue:invocationEvent];
+                               }];
   },
       YES);
 }
@@ -1030,16 +1051,16 @@ MAKE_SYSTEM_PROP(FILTER_APP_USERS, FBSDKGameRequestFilterAppUsers);
 MAKE_SYSTEM_PROP(FILTER_APP_NON_USERS, FBSDKGameRequestFilterAppNonUsers);
 
 MAKE_SYSTEM_PROP(LOGIN_BEHAVIOR_BROWSER, FBSDKLoginBehaviorBrowser);
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(LOGIN_BEHAVIOR_NATIVE, 1, @"LOGIN_BEHAVIOR_NATIVE", @"7.0.0", @"7.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(LOGIN_BEHAVIOR_SYSTEM_ACCOUNT, 2, @"LOGIN_BEHAVIOR_SYSTEM_ACCOUNT", @"7.0.0", @"7.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(LOGIN_BEHAVIOR_WEB, 3, @"LOGIN_BEHAVIOR_WEB", @"7.0.0", @"7.0.0");
+MAKE_SYSTEM_PROP(LOGIN_BEHAVIOR_NATIVE, FBSDKLoginBehaviorBrowser);
+MAKE_SYSTEM_PROP(LOGIN_BEHAVIOR_SYSTEM_ACCOUNT, FBSDKLoginBehaviorBrowser);
+MAKE_SYSTEM_PROP(LOGIN_BEHAVIOR_WEB, FBSDKLoginBehaviorBrowser);
 
 MAKE_SYSTEM_PROP(MESSENGER_BUTTON_MODE_RECTANGULAR, TiFacebookShareButtonModeRectangular);
 MAKE_SYSTEM_PROP(MESSENGER_BUTTON_MODE_CIRCULAR, TiFacebookShareButtonModeCircular);
 
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(MESSENGER_BUTTON_STYLE_BLUE, 0, @"MESSENGER_BUTTON_STYLE_BLUE", @"7.0.0", @"7.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(MESSENGER_BUTTON_STYLE_WHITE, 1, @"MESSENGER_BUTTON_STYLE_WHITE", @"7.0.0", @"7.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(MESSENGER_BUTTON_STYLE_WHITE_BORDERED, 2, @"MESSENGER_BUTTON_STYLE_WHITE_BORDERED", @"7.0.0", @"7.0.0");
+MAKE_SYSTEM_PROP(MESSENGER_BUTTON_STYLE_BLUE, FBSDKMessengerShareButtonStyleBlue);
+MAKE_SYSTEM_PROP(MESSENGER_BUTTON_STYLE_WHITE, FBSDKMessengerShareButtonStyleWhite);
+MAKE_SYSTEM_PROP(MESSENGER_BUTTON_STYLE_WHITE_BORDERED, FBSDKMessengerShareButtonStyleWhiteBordered);
 
 MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_AUTOMATIC, FBSDKShareDialogModeAutomatic);
 MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_NATIVE, FBSDKShareDialogModeNative);

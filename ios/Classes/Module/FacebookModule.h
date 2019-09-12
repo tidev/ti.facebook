@@ -16,6 +16,7 @@
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
