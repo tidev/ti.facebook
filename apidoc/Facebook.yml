@@ -1077,6 +1077,10 @@ properties:
     permission: read-only
     since: "5.4.0"
     platforms: [android, iphone, ipad]
+    deprecated:
+        since: "6.1.0"
+        notes: Will behave the same as `LOGIN_BEHAVIOR_BROWSER`
+
 
   - name: LOGIN_BEHAVIOR_SYSTEM_ACCOUNT
     summary: |
@@ -1086,6 +1090,9 @@ properties:
     permission: read-only
     since: "5.4.0"
     platforms: [iphone, ipad]
+    deprecated:
+        since: "6.1.0"
+        notes: Will behave the same as `LOGIN_BEHAVIOR_BROWSER`
 
   - name: LOGIN_BEHAVIOR_WEB
     summary: |
@@ -1094,6 +1101,9 @@ properties:
     permission: read-only
     since: "5.4.0"
     platforms: [android, iphone, ipad]
+    deprecated:
+        since: "6.1.0"
+        notes: Will behave the same as `LOGIN_BEHAVIOR_BROWSER` on iOS
 
   - name: LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK
     summary: |
