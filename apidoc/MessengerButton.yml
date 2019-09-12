@@ -41,8 +41,8 @@ since: "5.4.0"
 platforms: [iphone, ipad]
 extends: Titanium.UI.View
 deprecated:
-  since: "8.2.0"
-  notes: This API will be removed in 9.0.0 to align with the removal of the Facebook SDK 5+.
+  since: "6.1.0"
+  notes: This API will be removed in 7.0.0 to align with the removal of the Facebook SDK 5+.
 properties:
   - name: mode
     summary: |
