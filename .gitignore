@@ -51,3 +51,4 @@ TESTS-*.xml
 node_modules/
 
 .vscode/
+/android/.gradle

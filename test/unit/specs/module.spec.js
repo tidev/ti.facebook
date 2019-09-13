@@ -147,32 +147,6 @@ describe('ti.facebook', () => {
 				}
 			});
 
-			if (IOS) {
-				describe('MESSENGER_BUTTON_MODE_*', () => {
-					it('MESSENGER_BUTTON_MODE_CIRCULAR', () => {
-						expect(Facebook.MESSENGER_BUTTON_MODE_CIRCULAR).toEqual(jasmine.any(Number));
-					});
-
-					it('MESSENGER_BUTTON_MODE_RECTANGULAR', () => {
-						expect(Facebook.MESSENGER_BUTTON_MODE_RECTANGULAR).toEqual(jasmine.any(Number));
-					});
-				});
-
-				describe('MESSENGER_BUTTON_STYLE_*', () => {
-					it('MESSENGER_BUTTON_STYLE_BLUE', () => {
-						expect(Facebook.MESSENGER_BUTTON_STYLE_BLUE).toEqual(jasmine.any(Number));
-					});
-
-					it('MESSENGER_BUTTON_STYLE_WHITE', () => {
-						expect(Facebook.MESSENGER_BUTTON_STYLE_WHITE).toEqual(jasmine.any(Number));
-					});
-
-					it('MESSENGER_BUTTON_STYLE_WHITE_BORDERED', () => {
-						expect(Facebook.MESSENGER_BUTTON_STYLE_WHITE_BORDERED).toEqual(jasmine.any(Number));
-					});
-				});
-			}
-
 			describe('LOGIN_BUTTON_TOOLTIP_BEHAVIOR_*', () => {
 				it('LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC', () => {
 					expect(Facebook.LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC).toEqual(jasmine.any(Number));
@@ -304,12 +278,6 @@ describe('ti.facebook', () => {
 
 			// FIXME: iOS specific APIs, ideally we'd have implementatiosn for Android!
 			if (IOS) {
-				describe('#createMessengerButton(params)', () => {
-					it('is a function', () => {
-						expect(Facebook.createMessengerButton).toEqual(jasmine.any(Function));
-					});
-				});
-
 				describe('#fetchNearbyPlacesForCurrentLocation([confidenceLevel], [fields], success, error)', () => {
 					it('is a function', () => {
 						expect(Facebook.fetchNearbyPlacesForCurrentLocation).toEqual(jasmine.any(Function));

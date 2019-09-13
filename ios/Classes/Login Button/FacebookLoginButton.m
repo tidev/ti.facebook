@@ -35,23 +35,38 @@ NS_ASSUME_NONNULL_BEGIN
 // The audience defaults to AUDIENCE_ONLY_ME if not specifically set.
 - (void)setPublishPermissions_:(NSArray<NSString *> *_Nonnull)publishPermissions
 {
-  [[self loginButton] setPublishPermissions:publishPermissions];
+  DEPRECATED_REPLACED(@"Facebook.LoginButton.publishPermissions", @"7.0.0", @"Facebook.LoginButton.permissions");
+  [[self loginButton] setPermissions:publishPermissions];
 }
 
 - (NSArray *_Nullable)publishPermissions
 {
-  return [[self loginButton] publishPermissions];
+  DEPRECATED_REPLACED(@"Facebook.LoginButton.publishPermissions", @"7.0.0", @"Facebook.LoginButton.permissions");
+  return [[self loginButton] permissions];
 }
 
 // Requested permissions when logging in. If set, do not set publish permissions
 - (void)setReadPermissions_:(NSArray<NSString *> *_Nullable)readPermissions
 {
-  [[self loginButton] setReadPermissions:readPermissions];
+  DEPRECATED_REPLACED(@"Facebook.LoginButton.readPermissions", @"7.0.0", @"Facebook.LoginButton.permissions");
+  [[self loginButton] setPermissions:readPermissions];
 }
 
 - (NSArray *_Nullable)readPermissions
 {
-  return [[self loginButton] readPermissions];
+  DEPRECATED_REPLACED(@"Facebook.LoginButton.readPermissions", @"7.0.0", @"Facebook.LoginButton.permissions");
+  return [[self loginButton] permissions];
+}
+
+// Requested permissions when logging in
+- (void)setPermissions_:(NSArray<NSString *> *_Nullable)permissions
+{
+  [[self loginButton] setPermissions:permissions];
+}
+
+- (NSArray *_Nullable)permissions
+{
+  return [[self loginButton] permissions];
 }
 
 // The default is AUDIENCE_ONLY_ME, only applicable to publish permissions

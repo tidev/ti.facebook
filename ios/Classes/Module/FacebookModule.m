@@ -16,6 +16,7 @@
 #import "TiBase.h"
 #import "TiHost.h"
 #import "TiUtils.h"
+#import "TiBlob.h"
 
 #import <FBSDKPlacesKit/FBSDKPlacesKit.h>
 
@@ -48,14 +49,17 @@ NS_ASSUME_NONNULL_BEGIN
 {
   _launchOptions = [[TiApp app] launchOptions];
   NSString *urlString = [_launchOptions objectForKey:@"url"];
-  NSString *sourceApplication = [_launchOptions objectForKey:@"source"];
   id annotation = nil;
+  NSString *sourceApplication = [_launchOptions objectForKey:@"source"];
 
-#ifdef __IPHONE_9_0
-  if ([TiUtils isIOS9OrGreater]) {
+  if ([TiUtils isIOSVersionOrGreater:@"9.0"]) {
     annotation = [_launchOptions objectForKey:UIApplicationOpenURLOptionsAnnotationKey];
   }
-#endif
+  
+  // Fix a psossible nullability issue with iOS 13+ (see TIMOB-27354)
+  if ([sourceApplication isKindOfClass:[NSNull class]]) {
+    sourceApplication = nil;
+  }
 
   if (urlString != nil) {
     [[FBSDKApplicationDelegate sharedInstance] application:[UIApplication sharedApplication]
@@ -127,18 +131,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSNumber *)accessTokenActive
 {
-  return @([FBSDKAccessToken currentAccessTokenIsActive]);
+  return @([FBSDKAccessToken isCurrentAccessTokenActive]);
 }
 
 - (void)setCurrentAccessToken:(NSDictionary *_Nonnull)currentAccessToken
 {
-  [FBSDKAccessToken setCurrentAccessToken:[[FBSDKAccessToken alloc] initWithTokenString:[TiUtils stringValue:@"accessToken" properties:currentAccessToken]
-                                                                            permissions:[currentAccessToken objectForKey:@"permissions"]
-                                                                    declinedPermissions:[currentAccessToken objectForKey:@"declinedPermissions"]
-                                                                                  appID:[TiUtils stringValue:@"appID" properties:currentAccessToken]
-                                                                                 userID:[TiUtils stringValue:@"userID" properties:currentAccessToken]
-                                                                         expirationDate:[currentAccessToken objectForKey:@"exipirationDate"]
-                                                                            refreshDate:[currentAccessToken objectForKey:@"refreshDate"]]];
+  FBSDKAccessToken *newToken = [[FBSDKAccessToken alloc] initWithTokenString:[TiUtils stringValue:@"accessToken" properties:currentAccessToken]
+                                                              permissions:[currentAccessToken objectForKey:@"permissions"]
+                                                      declinedPermissions:[currentAccessToken objectForKey:@"declinedPermissions"]
+                                                       expiredPermissions:[currentAccessToken objectForKey:@"expiredPermissions"]
+                                                                    appID:[TiUtils stringValue:@"appID" properties:currentAccessToken]
+                                                                   userID:[TiUtils stringValue:@"userID" properties:currentAccessToken]
+                                                           expirationDate:[currentAccessToken objectForKey:@"exipirationDate"]
+                                                              refreshDate:[currentAccessToken objectForKey:@"refreshDate"]
+                                                 dataAccessExpirationDate:[currentAccessToken objectForKey:@"refreshDate"]];
+  
+  [FBSDKAccessToken setCurrentAccessToken:newToken];
 }
 
 - (NSDate *_Nullable)expirationDate
@@ -238,8 +246,8 @@ NS_ASSUME_NONNULL_BEGIN
   [loginManager setLoginBehavior:_loginBehavior];
 
   TiThreadPerformOnMainThread(^{
-    [loginManager logInWithReadPermissions:self->_permissions
-                        fromViewController:nil
+    [loginManager logInWithPermissions:self->_permissions
+                    fromViewController:nil
                                    handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
                                      // Handle error
                                      if (error != nil) {
@@ -342,28 +350,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)shareMediaToMessenger:(NSArray<NSDictionary<NSString *, id> *> *)args
 {
-  NSDictionary *_Nonnull params = [args objectAtIndex:0];
-
-  id media = [params valueForKey:@"media"];
-  ENSURE_TYPE(media, TiBlob);
-
-  TiThreadPerformOnMainThread(^{
-    FBSDKMessengerShareOptions *options = [[FBSDKMessengerShareOptions alloc] init];
-    options.metadata = [params objectForKey:@"metadata"];
-    options.sourceURL = [NSURL URLWithString:[params objectForKey:@"link"]];
-    options.renderAsSticker = [TiUtils boolValue:[params objectForKey:@"renderAsSticker"] def:NO];
-
-    if ([[media mimeType] isEqual:@"image/gif"]) {
-      [FBSDKMessengerSharer shareAnimatedGIF:[NSData dataWithContentsOfFile:[(TiBlob *)media path]] withOptions:options];
-    } else if ([[media mimeType] containsString:@"image/"]) {
-      [FBSDKMessengerSharer shareImage:[TiUtils image:media proxy:self] withOptions:options];
-    } else if ([[media mimeType] containsString:@"video/"]) {
-      [FBSDKMessengerSharer shareVideo:[NSData dataWithContentsOfFile:[(TiBlob *)media path]] withOptions:options];
-    } else {
-      NSLog(@"[ERROR] Unknown media provided. Allowed media: Image, GIF and video.");
-    }
-  },
-      NO);
+  DEPRECATED_REPLACED_REMOVED(@"Facebook.shareMediaToMessenger", @"7.0.0", @"7.0.0", @"Facebook.shareMediaToMessenger");
+  DebugLog(@"[WARN] Facebook removed the MessengerShareDialog API via Web in SDK 5.0.0");
 }
 
 - (void)presentWebShareDialog:(id _Nullable)unused
@@ -425,6 +413,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)requestNewReadPermissions:(NSArray<id> *_Nonnull)args
 {
+  DEPRECATED_REPLACED(@"Facebook.requestNewPublishPermissions", @"7.0.0", @"Facebook.authorize");
+
   NSArray<NSString *> *readPermissions = [args objectAtIndex:0];
   ENSURE_ARRAY(readPermissions);
 
@@ -434,7 +424,7 @@ NS_ASSUME_NONNULL_BEGIN
   FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
 
   TiThreadPerformOnMainThread(^{
-    [loginManager logInWithReadPermissions:readPermissions
+    [loginManager logInWithPermissions:readPermissions
                         fromViewController:nil
                                    handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
                                      BOOL success = NO;
@@ -477,6 +467,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)requestNewPublishPermissions:(NSArray<id> *_Nonnull)args
 {
+  DEPRECATED_REPLACED(@"Facebook.requestNewPublishPermissions", @"7.0.0", @"Facebook.authorize");
+
   NSArray<NSString *> *publishPermissions = [args objectAtIndex:0];
   ENSURE_ARRAY(publishPermissions);
 
@@ -491,7 +483,7 @@ NS_ASSUME_NONNULL_BEGIN
   loginManager.defaultAudience = defaultAudience;
 
   TiThreadPerformOnMainThread(^{
-    [loginManager logInWithPublishPermissions:publishPermissions
+    [loginManager logInWithPermissions:publishPermissions
                            fromViewController:nil
                                       handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
                                         BOOL success = NO;
@@ -842,21 +834,7 @@ NS_ASSUME_NONNULL_BEGIN
   [self fireDialogEventWithName:TiFacebookEventTypeRequestDialogCompleted andSuccess:NO error:nil cancelled:YES];
 }
 
-#pragma mark Invite dialog delegates
-
-- (void)appInviteDialog:(FBSDKAppInviteDialog *)appInviteDialog didFailWithError:(NSError *)error
-{
-  [self fireDialogEventWithName:TiFacebookEventTypeInviteCompleted andSuccess:YES error:error cancelled:NO];
-}
-
-- (void)appInviteDialog:(FBSDKAppInviteDialog *)appInviteDialog didCompleteWithResults:(NSDictionary *)results
-{
-  BOOL cancelled = NO;
-  if (results != nil) {
-    cancelled = [[results valueForKey:@"completionGesture"] isEqualToString:@"cancel"];
-  }
-  [self fireDialogEventWithName:TiFacebookEventTypeInviteCompleted andSuccess:!cancelled error:nil cancelled:cancelled];
-}
+#pragma mark Dialog utilities
 
 - (void)fireDialogEventWithName:(NSString *_Nonnull)name andSuccess:(BOOL)success error:(NSError *_Nullable)error cancelled:(BOOL)cancelled
 {
@@ -951,6 +929,7 @@ NS_ASSUME_NONNULL_BEGIN
 
   if (link == nil) {
     NSLog(@"[ERROR] Missing required parameter \"link\"!");
+    return content;
   }
 
   [content setContentURL:link];
@@ -1051,16 +1030,16 @@ MAKE_SYSTEM_PROP(FILTER_APP_USERS, FBSDKGameRequestFilterAppUsers);
 MAKE_SYSTEM_PROP(FILTER_APP_NON_USERS, FBSDKGameRequestFilterAppNonUsers);
 
 MAKE_SYSTEM_PROP(LOGIN_BEHAVIOR_BROWSER, FBSDKLoginBehaviorBrowser);
-MAKE_SYSTEM_PROP(LOGIN_BEHAVIOR_NATIVE, FBSDKLoginBehaviorNative);
-MAKE_SYSTEM_PROP(LOGIN_BEHAVIOR_SYSTEM_ACCOUNT, FBSDKLoginBehaviorSystemAccount);
-MAKE_SYSTEM_PROP(LOGIN_BEHAVIOR_WEB, FBSDKLoginBehaviorWeb);
+MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(LOGIN_BEHAVIOR_NATIVE, 1, @"LOGIN_BEHAVIOR_NATIVE", @"7.0.0", @"7.0.0");
+MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(LOGIN_BEHAVIOR_SYSTEM_ACCOUNT, 2, @"LOGIN_BEHAVIOR_SYSTEM_ACCOUNT", @"7.0.0", @"7.0.0");
+MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(LOGIN_BEHAVIOR_WEB, 3, @"LOGIN_BEHAVIOR_WEB", @"7.0.0", @"7.0.0");
 
 MAKE_SYSTEM_PROP(MESSENGER_BUTTON_MODE_RECTANGULAR, TiFacebookShareButtonModeRectangular);
 MAKE_SYSTEM_PROP(MESSENGER_BUTTON_MODE_CIRCULAR, TiFacebookShareButtonModeCircular);
 
-MAKE_SYSTEM_PROP(MESSENGER_BUTTON_STYLE_BLUE, FBSDKMessengerShareButtonStyleBlue);
-MAKE_SYSTEM_PROP(MESSENGER_BUTTON_STYLE_WHITE, FBSDKMessengerShareButtonStyleWhite);
-MAKE_SYSTEM_PROP(MESSENGER_BUTTON_STYLE_WHITE_BORDERED, FBSDKMessengerShareButtonStyleWhiteBordered);
+MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(MESSENGER_BUTTON_STYLE_BLUE, 0, @"MESSENGER_BUTTON_STYLE_BLUE", @"7.0.0", @"7.0.0");
+MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(MESSENGER_BUTTON_STYLE_WHITE, 1, @"MESSENGER_BUTTON_STYLE_WHITE", @"7.0.0", @"7.0.0");
+MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(MESSENGER_BUTTON_STYLE_WHITE_BORDERED, 2, @"MESSENGER_BUTTON_STYLE_WHITE_BORDERED", @"7.0.0", @"7.0.0");
 
 MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_AUTOMATIC, FBSDKShareDialogModeAutomatic);
 MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_NATIVE, FBSDKShareDialogModeNative);
