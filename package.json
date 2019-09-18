@@ -1,9 +1,10 @@
 {
-  "name": "ti.facebook",
+  "name": "@tianium/facebook",
   "version": "8.0.0",
-  "description": "Use the native Facebook iOS SDK in Axway Titanium",
-  "private": true,
+  "description": "Use the native Facebook SDK in Axway Titanium",
   "scripts": {
+    "lint": "npm run lint:docs",
+    "lint:docs": "tdoc-validate -w Titanium.Blob,Titanium.UI.View,Titanium.Proxy,ErrorResponse,Titanium.Module apidoc",
     "test": "karma start test/unit/karma.unit.config.js",
     "test:android": "npm test -- --browsers android",
     "test:ios": "npm test -- --browsers ios"
@@ -37,7 +38,8 @@
     "karma-junit-reporter": "^1.2.0",
     "karma-mocha-reporter": "^2.2.5",
     "karma-titanium-launcher": "^0.7.4",
-    "socket.io": "^2.2.0"
+    "socket.io": "^2.2.0",
+    "titanium-docgen": "^0.2.0"
   },
   "dependencies": {}
 }
