@@ -3,6 +3,7 @@
   "version": "8.0.0",
   "description": "Use the native Facebook SDK in Axway Titanium",
   "scripts": {
+    "commit": "git-cz",
     "lint": "npm run lint:docs",
     "lint:docs": "tdoc-validate -w Titanium.Blob,Titanium.UI.View,Titanium.Proxy,ErrorResponse,Titanium.Module apidoc",
     "test": "karma start test/unit/karma.unit.config.js",
