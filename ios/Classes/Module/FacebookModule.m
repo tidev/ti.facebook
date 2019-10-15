@@ -14,9 +14,9 @@
 #import "FacebookConstants.h"
 #import "TiApp.h"
 #import "TiBase.h"
+#import "TiBlob.h"
 #import "TiHost.h"
 #import "TiUtils.h"
-#import "TiBlob.h"
 
 #import <FBSDKPlacesKit/FBSDKPlacesKit.h>
 
@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
   if ([TiUtils isIOSVersionOrGreater:@"9.0"]) {
     annotation = [_launchOptions objectForKey:UIApplicationOpenURLOptionsAnnotationKey];
   }
-  
+
   // Fix a psossible nullability issue with iOS 13+ (see TIMOB-27354)
   if ([sourceApplication isKindOfClass:[NSNull class]]) {
     sourceApplication = nil;
@@ -137,15 +137,15 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setCurrentAccessToken:(NSDictionary *_Nonnull)currentAccessToken
 {
   FBSDKAccessToken *newToken = [[FBSDKAccessToken alloc] initWithTokenString:[TiUtils stringValue:@"accessToken" properties:currentAccessToken]
-                                                              permissions:[currentAccessToken objectForKey:@"permissions"]
-                                                      declinedPermissions:[currentAccessToken objectForKey:@"declinedPermissions"]
-                                                       expiredPermissions:[currentAccessToken objectForKey:@"expiredPermissions"]
-                                                                    appID:[TiUtils stringValue:@"appID" properties:currentAccessToken]
-                                                                   userID:[TiUtils stringValue:@"userID" properties:currentAccessToken]
-                                                           expirationDate:[currentAccessToken objectForKey:@"exipirationDate"]
-                                                              refreshDate:[currentAccessToken objectForKey:@"refreshDate"]
-                                                 dataAccessExpirationDate:[currentAccessToken objectForKey:@"refreshDate"]];
-  
+                                                                 permissions:[currentAccessToken objectForKey:@"permissions"]
+                                                         declinedPermissions:[currentAccessToken objectForKey:@"declinedPermissions"]
+                                                          expiredPermissions:[currentAccessToken objectForKey:@"expiredPermissions"]
+                                                                       appID:[TiUtils stringValue:@"appID" properties:currentAccessToken]
+                                                                      userID:[TiUtils stringValue:@"userID" properties:currentAccessToken]
+                                                              expirationDate:[currentAccessToken objectForKey:@"exipirationDate"]
+                                                                 refreshDate:[currentAccessToken objectForKey:@"refreshDate"]
+                                                    dataAccessExpirationDate:[currentAccessToken objectForKey:@"refreshDate"]];
+
   [FBSDKAccessToken setCurrentAccessToken:newToken];
 }
 
@@ -248,21 +248,21 @@ NS_ASSUME_NONNULL_BEGIN
   TiThreadPerformOnMainThread(^{
     [loginManager logInWithPermissions:self->_permissions
                     fromViewController:nil
-                                   handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-                                     // Handle error
-                                     if (error != nil) {
-                                       [self fireLogin:nil cancelled:NO withError:error];
-                                       return;
-                                     }
+                               handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+                                 // Handle error
+                                 if (error != nil) {
+                                   [self fireLogin:nil cancelled:NO withError:error];
+                                   return;
+                                 }
 
-                                     // Login cancelled
-                                     if (result.isCancelled) {
-                                       [self fireLogin:nil cancelled:YES withError:nil];
-                                       return;
-                                     }
+                                 // Login cancelled
+                                 if (result.isCancelled) {
+                                   [self fireLogin:nil cancelled:YES withError:nil];
+                                   return;
+                                 }
 
-                                     // Logged In
-                                   }];
+                                 // Logged In
+                               }];
   },
       YES);
 }
@@ -425,42 +425,42 @@ NS_ASSUME_NONNULL_BEGIN
 
   TiThreadPerformOnMainThread(^{
     [loginManager logInWithPermissions:readPermissions
-                        fromViewController:nil
-                                   handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-                                     BOOL success = NO;
-                                     BOOL cancelled = NO;
-                                     NSString *errorString = nil;
-                                     NSInteger code = 0;
+                    fromViewController:nil
+                               handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+                                 BOOL success = NO;
+                                 BOOL cancelled = NO;
+                                 NSString *errorString = nil;
+                                 NSInteger code = 0;
 
-                                     if (error != nil) {
-                                       code = [error code];
-                                       errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
-                                       if (errorString == nil) {
-                                         errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+                                 if (error != nil) {
+                                   code = [error code];
+                                   errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
+                                   if (errorString == nil) {
+                                     errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
 
-                                         if (errorString == nil) {
-                                           if (code == 308) {
-                                             errorString = TiFacebookErrorMessageKeychainAccess;
-                                           } else {
-                                             errorString = [error localizedDescription];
-                                           }
-                                         }
+                                     if (errorString == nil) {
+                                       if (code == 308) {
+                                         errorString = TiFacebookErrorMessageKeychainAccess;
+                                       } else {
+                                         errorString = [error localizedDescription];
                                        }
-                                     } else if (result.isCancelled) {
-                                       cancelled = YES;
-                                     } else {
-                                       success = YES;
                                      }
+                                   }
+                                 } else if (result.isCancelled) {
+                                   cancelled = YES;
+                                 } else {
+                                   success = YES;
+                                 }
 
-                                     NSDictionary *propertiesDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                                                                              NUMBOOL(success), @"success",
-                                                                                          NUMBOOL(cancelled), @"cancelled",
-                                                                                          NUMINTEGER(code), @"code",
-                                                                                          errorString, @"error", nil];
+                                 NSDictionary *propertiesDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                                                                          NUMBOOL(success), @"success",
+                                                                                      NUMBOOL(cancelled), @"cancelled",
+                                                                                      NUMINTEGER(code), @"code",
+                                                                                      errorString, @"error", nil];
 
-                                     KrollEvent *invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:propertiesDict thisObject:self];
-                                     [[callback context] enqueue:invocationEvent];
-                                   }];
+                                 KrollEvent *invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:propertiesDict thisObject:self];
+                                 [[callback context] enqueue:invocationEvent];
+                               }];
   },
       NO);
 }
@@ -484,44 +484,44 @@ NS_ASSUME_NONNULL_BEGIN
 
   TiThreadPerformOnMainThread(^{
     [loginManager logInWithPermissions:publishPermissions
-                           fromViewController:nil
-                                      handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-                                        BOOL success = NO;
-                                        BOOL cancelled = NO;
-                                        NSString *errorString = nil;
-                                        NSInteger code = 0;
+                    fromViewController:nil
+                               handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+                                 BOOL success = NO;
+                                 BOOL cancelled = NO;
+                                 NSString *errorString = nil;
+                                 NSInteger code = 0;
 
-                                        if (error != nil) {
-                                          code = [error code];
-                                          errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
-                                          if (errorString == nil) {
-                                            errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+                                 if (error != nil) {
+                                   code = [error code];
+                                   errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
+                                   if (errorString == nil) {
+                                     errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
 
-                                            if (errorString == nil) {
-                                              if (code == 308) {
-                                                errorString = TiFacebookErrorMessageKeychainAccess;
-                                              } else {
-                                                errorString = [error localizedDescription];
-                                              }
-                                            }
-                                          }
-                                        } else if (result.isCancelled) {
-                                          cancelled = YES;
-                                        } else {
-                                          success = YES;
-                                        }
+                                     if (errorString == nil) {
+                                       if (code == 308) {
+                                         errorString = TiFacebookErrorMessageKeychainAccess;
+                                       } else {
+                                         errorString = [error localizedDescription];
+                                       }
+                                     }
+                                   }
+                                 } else if (result.isCancelled) {
+                                   cancelled = YES;
+                                 } else {
+                                   success = YES;
+                                 }
 
-                                        NSDictionary *propertiesDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                                                                                 NUMBOOL(success), @"success",
-                                                                                             NUMBOOL(cancelled), @"cancelled",
-                                                                                             NUMINTEGER(code), @"code",
-                                                                                             errorString, @"error", nil];
+                                 NSDictionary *propertiesDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                                                                          NUMBOOL(success), @"success",
+                                                                                      NUMBOOL(cancelled), @"cancelled",
+                                                                                      NUMINTEGER(code), @"code",
+                                                                                      errorString, @"error", nil];
 
-                                        KrollEvent *invocationEvent = [[KrollEvent alloc] initWithCallback:callback
-                                                                                               eventObject:propertiesDict
-                                                                                                thisObject:self];
-                                        [[callback context] enqueue:invocationEvent];
-                                      }];
+                                 KrollEvent *invocationEvent = [[KrollEvent alloc] initWithCallback:callback
+                                                                                        eventObject:propertiesDict
+                                                                                         thisObject:self];
+                                 [[callback context] enqueue:invocationEvent];
+                               }];
   },
       YES);
 }
