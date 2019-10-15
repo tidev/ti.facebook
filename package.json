@@ -43,6 +43,7 @@
     "karma-junit-reporter": "^1.2.0",
     "karma-mocha-reporter": "^2.2.5",
     "karma-titanium-launcher": "^0.7.4",
+    "lint-staged": "^9.4.2",
     "socket.io": "^2.2.0",
     "titanium-docgen": "^0.2.0"
   },
