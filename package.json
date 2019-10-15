@@ -11,7 +11,7 @@
     "lint": "npm run lint:android && npm run lint:ios && npm run lint:js && npm run lint:docs",
     "lint:android": "clang-format-lint android/src/**/*.java",
     "lint:docs": "tdoc-validate -w Titanium.Blob,Titanium.UI.View,Titanium.Proxy,ErrorResponse,Titanium.Module apidoc",
-    "lint:ios": "clang-format-lint ios/**/*.m ios/**/*.h",
+    "lint:ios": "clang-format-lint ios/Classes/**/*.m ios/Classes/**/*.h",
     "lint:js": "eslint .",
     "test": "npm run lint && npm run test:unit",
     "test:unit": "karma start test/unit/karma.unit.config.js",
@@ -65,7 +65,7 @@
     }
   },
   "lint-staged": {
-    "ios/**/*.{m,h}": [
+    "ios/Classes/**/*.{m,h}": [
       "npx clang-format -style=file -i",
       "git add"
     ],
