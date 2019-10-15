@@ -50,8 +50,20 @@
   "dependencies": {},
   "husky": {
     "hooks": {
+      "pre-commit": "lint-staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "lint-staged": {
+    "ios/**/*.{m,h}": [
+      "npx clang-format -style=file -i",
+      "git add"
+    ],
+    "*.java": [
+      "npx clang-format -style=file -i",
+      "git add"
+    ],
+    "*.js": "eslint"
   },
   "commitlint": {
     "extends": [
