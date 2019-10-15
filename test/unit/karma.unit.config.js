@@ -44,8 +44,8 @@ module.exports = config => {
 		reporters: [ 'mocha', 'junit' ],
 		plugins: [
 			'karma-*',
-			 {
-				'framework:projectManagerHook': ['factory', projectManagerHook]
+			{
+				'framework:projectManagerHook': [ 'factory', projectManagerHook ]
 			}
 		],
 		titanium: {

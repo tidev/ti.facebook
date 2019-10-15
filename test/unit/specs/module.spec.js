@@ -6,6 +6,7 @@ const ANDROID = (Ti.Platform.osname === 'android');
 describe('ti.facebook', () => {
 	it('can be required', () => {
 		Facebook = require('facebook');
+
 		expect(Facebook).toBeDefined();
 	});
 
@@ -136,7 +137,7 @@ describe('ti.facebook', () => {
 					it('SHARE_DIALOG_MODE_SHARE_SHEET', () => {
 						expect(Facebook.SHARE_DIALOG_MODE_SHARE_SHEET).toEqual(jasmine.any(Number));
 					});
-		
+
 					it('SHARE_DIALOG_MODE_BROWSER', () => {
 						expect(Facebook.SHARE_DIALOG_MODE_BROWSER).toEqual(jasmine.any(Number));
 					});
