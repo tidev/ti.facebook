@@ -1,5 +1,5 @@
 {
-  "name": "@tianium/facebook",
+  "name": "@tianium-sdk/facebook",
   "version": "8.0.0",
   "description": "Use the native Facebook SDK in Axway Titanium",
   "scripts": {
