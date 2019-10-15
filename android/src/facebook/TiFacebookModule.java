@@ -114,7 +114,8 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	@Kroll.constant
 	public static final String EVENT_PARAM_NUM_ITEMS = AppEventsConstants.EVENT_PARAM_NUM_ITEMS;
 	@Kroll.constant
-	public static final String EVENT_PARAM_PAYMENT_INFO_AVAILABLE = AppEventsConstants.EVENT_PARAM_PAYMENT_INFO_AVAILABLE;
+	public static final String EVENT_PARAM_PAYMENT_INFO_AVAILABLE =
+		AppEventsConstants.EVENT_PARAM_PAYMENT_INFO_AVAILABLE;
 
 	@Kroll.constant
 	public static final int AUDIENCE_NONE = 0;
@@ -367,26 +368,25 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		}
 	}
 
-    @Kroll.method
-    public void logRegistrationCompleted(String registrationMethod)
-    {
-        Activity activity = TiApplication.getInstance().getCurrentActivity();
-        AppEventsLogger logger = AppEventsLogger.newLogger(activity);
-        Bundle paramBundle = new Bundle();
-        paramBundle.putString(AppEventsConstants.EVENT_PARAM_REGISTRATION_METHOD, registrationMethod);
-
-        if (logger != null) {
-            logger.logEvent(AppEventsConstants.EVENT_NAME_COMPLETED_REGISTRATION, paramBundle);
-        }
-    }
-
 	@Kroll.method
-	public void logPurchase(double amount, String currency,
-                            @Kroll.argument(optional = true) KrollDict parameters)
+	public void logRegistrationCompleted(String registrationMethod)
 	{
 		Activity activity = TiApplication.getInstance().getCurrentActivity();
 		AppEventsLogger logger = AppEventsLogger.newLogger(activity);
-        Bundle paramBundle = parameters != null ? Utils.mapToBundle(parameters) : null;
+		Bundle paramBundle = new Bundle();
+		paramBundle.putString(AppEventsConstants.EVENT_PARAM_REGISTRATION_METHOD, registrationMethod);
+
+		if (logger != null) {
+			logger.logEvent(AppEventsConstants.EVENT_NAME_COMPLETED_REGISTRATION, paramBundle);
+		}
+	}
+
+	@Kroll.method
+	public void logPurchase(double amount, String currency, @Kroll.argument(optional = true) KrollDict parameters)
+	{
+		Activity activity = TiApplication.getInstance().getCurrentActivity();
+		AppEventsLogger logger = AppEventsLogger.newLogger(activity);
+		Bundle paramBundle = parameters != null ? Utils.mapToBundle(parameters) : null;
 		if (logger != null) {
 			logger.logPurchase(BigDecimal.valueOf(amount), Currency.getInstance(currency), paramBundle);
 		}
