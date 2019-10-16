@@ -1,4 +1,4 @@
-# Titanium Facebook Module [![Build Status](https://travis-ci.org/appcelerator-modules/ti.facebook.svg?branch=master)](https://travis-ci.org/appcelerator-modules/ti.facebook)
+# Titanium Facebook Module [![Build Status](https://jenkins.appcelerator.org/buildStatus/icon?job=modules%2Fti.facebook%2Fmaster)](https://jenkins.appcelerator.org/job/modules/job/ti.facebook/job/master/) [![@titanium-sdk/facebook](https://img.shields.io/npm/v/@titanium-sdk/facebook.png)](https://www.npmjs.com/package/@titanium-sdk/facebook)
 
 The Facebook module is used for connecting your application with Facebook. This module supports the following features:
 
