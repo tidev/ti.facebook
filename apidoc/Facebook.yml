@@ -490,7 +490,7 @@ methods:
         type: String
       - name: parameters
         summary: |
-            A dictionary object containing optional parameters (since 8.1.0).
+            A dictionary object containing optional parameters (since 8.2.0).
         type: Object
         optional: true
     since: "5.2.0"
@@ -1253,35 +1253,35 @@ properties:
     summary: Log this event when a user has completed registration with the app.
     type: String
     permission: read-only
-    since: "8.1.0"
+    since: "8.2.0"
     platforms: [iphone, ipad, android]
 
   - name: EVENT_NAME_VIEWED_CONTENT
     summary: Log this event when a user has viewed a form of content in the app.
     type: String
     permission: read-only
-    since: "8.1.0"
+    since: "8.2.0"
     platforms: [iphone, ipad, android]
 
   - name: EVENT_NAME_ADDED_TO_CART
     summary: Log this event when the user has added an item to their cart.
     type: String
     permission: read-only
-    since: "8.1.0"
+    since: "8.2.0"
     platforms: [iphone, ipad, android]
 
   - name: EVENT_NAME_INITIATED_CHECKOUT
     summary: Log this event when the user has entered the checkout process.
     type: String
     permission: read-only
-    since: "8.1.0"
+    since: "8.2.0"
     platforms: [iphone, ipad, android]
 
   - name: EVENT_NAME_ADDED_PAYMENT_INFO
     summary: Log this event when the user has entered their payment info.
     type: String
     permission: read-only
-    since: "8.1.0"
+    since: "8.2.0"
     platforms: [iphone, ipad, android]
 
   - name: EVENT_PARAM_CONTENT
@@ -1289,7 +1289,7 @@ properties:
         Parameter key used to specify data for the one or more pieces of content being logged about.
     type: String
     permission: read-only
-    since: "8.1.0"
+    since: "8.2.0"
     platforms: [iphone, ipad, android]
 
   - name: EVENT_PARAM_CONTENT_ID
@@ -1297,7 +1297,7 @@ properties:
         Parameter key used to specify an ID for the specific piece of content being logged about.
     type: String
     permission: read-only
-    since: "8.1.0"
+    since: "8.2.0"
     platforms: [iphone, ipad, android]
 
   - name: EVENT_PARAM_CONTENT_TYPE
@@ -1305,7 +1305,7 @@ properties:
         Parameter key used to specify a generic content type/family for the logged event.
     type: String
     permission: read-only
-    since: "8.1.0"
+    since: "8.2.0"
     platforms: [iphone, ipad, android]
 
   - name: EVENT_PARAM_CURRENCY
@@ -1313,7 +1313,7 @@ properties:
         Parameter key used to specify currency used with logged event.
     type: String
     permission: read-only
-    since: "8.1.0"
+    since: "8.2.0"
     platforms: [iphone, ipad, android]
 
   - name: EVENT_PARAM_NUM_ITEMS
@@ -1321,7 +1321,7 @@ properties:
         Parameter key used to specify how many items are being processed.
     type: String
     permission: read-only
-    since: "8.1.0"
+    since: "8.2.0"
     platforms: [iphone, ipad, android]
 
   - name: EVENT_PARAM_PAYMENT_INFO_AVAILABLE
@@ -1329,7 +1329,7 @@ properties:
         Parameter key used to specify whether payment info is available.
     type: String
     permission: read-only
-    since: "8.1.0"
+    since: "8.2.0"
     platforms: [iphone, ipad, android]
 
   - name: accessToken
