@@ -104,6 +104,8 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	public static final String EVENT_NAME_PURCHASED = AppEventsConstants.EVENT_NAME_PURCHASED;
 
 	@Kroll.constant
+	public static final String EVENT_PARAM_REGISTRATION_METHOD = AppEventsConstants.EVENT_PARAM_REGISTRATION_METHOD;
+	@Kroll.constant
 	public static final String EVENT_PARAM_CONTENT = AppEventsConstants.EVENT_PARAM_CONTENT;
 	@Kroll.constant
 	public static final String EVENT_PARAM_CONTENT_ID = AppEventsConstants.EVENT_PARAM_CONTENT_ID;
@@ -353,7 +355,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	}
 
 	@Kroll.method
-	public void logCustomEvent(String event, @Kroll.argument(optional = true) Double valueToSum,
+	public void logCustomEvent(String event, @Kroll.argument(optional = true) Object valueToSum,
 							   @Kroll.argument(optional = true) KrollDict parameters)
 	{
 		Activity activity = TiApplication.getInstance().getCurrentActivity();
@@ -363,7 +365,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			if (valueToSum == null) {
 				logger.logEvent(event, paramBundle);
 			} else {
-				logger.logEvent(event, valueToSum, paramBundle);
+				logger.logEvent(event, TiConvert.toDouble(valueToSum), paramBundle);
 			}
 		}
 	}

@@ -185,7 +185,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)logRegistrationCompleted:(NSString *_Nonnull)registrationMethod
 {
-  NSDictionary *params = @{ FBSDKAppEventParameterNameRegistrationMethod : registrationMethod };
+  NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:registrationMethod, FBSDKAppEventParameterNameRegistrationMethod, nil];
 
   [FBSDKAppEvents logEvent:FBSDKAppEventNameCompletedRegistration parameters:params];
 }
