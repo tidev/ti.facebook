@@ -490,11 +490,9 @@ methods:
         type: String
       - name: parameters
         summary: |
-            A dictionary object containing optional parameters.
+            A dictionary object containing optional parameters (since 8.0.0 in android and since 7.0.0 in ios). 
         type: Object
         optional: true
-        since: {android: "8.0.0", iphone: "7.0.0", ipad: "7.0.0"}
-
     since: "5.2.0"
 
   - name: logout
