@@ -30,7 +30,6 @@ import org.appcelerator.titanium.TiBlob;
 import org.appcelerator.titanium.TiFileProxy;
 import org.appcelerator.titanium.TiLifecycle.OnActivityResultEvent;
 import org.appcelerator.titanium.util.TiConvert;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.facebook.AccessToken;
@@ -39,7 +38,6 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookRequestError;
-import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphRequest.Callback;
 import com.facebook.GraphResponse;
@@ -57,11 +55,9 @@ import com.facebook.share.model.GameRequestContent.Filters;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.model.SharePhoto;
-import com.facebook.share.model.AppInviteContent;
 import com.facebook.share.widget.GameRequestDialog;
 import com.facebook.share.widget.ShareDialog;
 import com.facebook.share.widget.ShareDialog.Mode;
-import com.facebook.share.widget.AppInviteDialog;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -84,10 +80,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	public static final String PROPERTY_DATA = "data";
 	public static final String PROPERTY_UID = "uid";
 	public static final String PROPERTY_RESULT = "result";
-	public static final String PROPERTY_PATH = "path";
-	public static final String PROPERTY_METHOD = "method";
 	public static final String EVENT_SHARE_COMPLETE = "shareCompleted";
-	public static final String EVENT_INVITE_COMPLETE = "inviteCompleted";
 	public static final String EVENT_REQUEST_DIALOG_COMPLETE = "requestDialogCompleted";
 
 	@Kroll.constant
@@ -100,8 +93,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	public static final String EVENT_NAME_INITIATED_CHECKOUT = AppEventsConstants.EVENT_NAME_INITIATED_CHECKOUT;
 	@Kroll.constant
 	public static final String EVENT_NAME_ADDED_PAYMENT_INFO = AppEventsConstants.EVENT_NAME_ADDED_PAYMENT_INFO;
-	@Kroll.constant
-	public static final String EVENT_NAME_PURCHASED = AppEventsConstants.EVENT_NAME_PURCHASED;
 
 	@Kroll.constant
 	public static final String EVENT_PARAM_CONTENT = AppEventsConstants.EVENT_PARAM_CONTENT;
@@ -195,12 +186,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	public String getApiName()
 	{
 		return "Ti.Facebook";
-	}
-
-	@Kroll.onAppCreate
-	public static void onAppCreate(TiApplication app)
-	{
-		FacebookSdk.sdkInitialize(app.getApplicationContext());
 	}
 
 	public static TiFacebookModule getFacebookModule()
@@ -691,13 +676,13 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			}
 		});
 
-		Mode mode = Mode.AUTOMATIC;
 		Object[] proxyPhotos = (Object[]) args.get("photos");
 		KrollDict[] photos = new KrollDict[proxyPhotos.length];
 		SharePhotoContent shareContent = null;
 
 		for (int i = 0; i < proxyPhotos.length; i++) {
-			HashMap obj = (HashMap) proxyPhotos[i];
+			@SuppressWarnings("unchecked")
+			HashMap<String, Object> obj = (HashMap) proxyPhotos[i];
 			KrollDict dict = new KrollDict();
 
 			dict.put("photo", obj.get("photo"));
@@ -711,22 +696,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			}
 
 			photos[i] = dict;
-		}
-
-		switch (TiConvert.toInt(args.get("mode"), TiFacebookModule.SHARE_DIALOG_MODE_AUTOMATIC)) {
-			case TiFacebookModule.SHARE_DIALOG_MODE_NATIVE:
-				mode = Mode.NATIVE;
-				break;
-			case TiFacebookModule.SHARE_DIALOG_MODE_WEB:
-				mode = Mode.WEB;
-				break;
-			case TiFacebookModule.SHARE_DIALOG_MODE_FEED_WEB:
-				mode = Mode.FEED;
-				break;
-			default:
-			case TiFacebookModule.SHARE_DIALOG_MODE_AUTOMATIC:
-				mode = Mode.AUTOMATIC;
-				break;
 		}
 
 		SharePhotoContent.Builder shareContentBuilder = new SharePhotoContent.Builder();
@@ -767,7 +736,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			Log.e(TAG, "The \"photos\" property is required when showing a photo share dialog.");
 		}
 
-		if (shareDialog != null && shareDialog.canShow(SharePhotoContent.class)) {
+		if (shareDialog != null && ShareDialog.canShow(SharePhotoContent.class)) {
 			shareDialog.show(shareContent);
 		} else {
 			Log.e(TAG, "Cannot show image share dialog due to unsupported device or configuration!");
@@ -860,68 +829,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	}
 
 	@Kroll.method
-	public void presentInviteDialog(@Kroll.argument(optional = true) final KrollDict args)
-	{
-		Log.w(
-			TAG,
-			"The method presentInviteDialog has been deprecated by the Facebook SDK 4.29.0 and will be removed in the future.");
-
-		AppInviteDialog appInviteDialog = new AppInviteDialog(TiApplication.getInstance().getCurrentActivity());
-
-		appInviteDialog.registerCallback(callbackManager, new FacebookCallback<AppInviteDialog.Result>() {
-			KrollDict event = new KrollDict();
-			@Override
-			public void onCancel()
-			{
-				event.put(PROPERTY_SUCCESS, false);
-				event.put(PROPERTY_CANCELLED, true);
-				fireEvent(EVENT_INVITE_COMPLETE, event);
-			}
-
-			@Override
-			public void onError(FacebookException error)
-			{
-				event.put(PROPERTY_SUCCESS, false);
-				event.put(PROPERTY_CANCELLED, false);
-				event.put(PROPERTY_ERROR, "Error inviting people");
-				fireEvent(EVENT_INVITE_COMPLETE, event);
-			}
-
-			@Override
-			public void onSuccess(AppInviteDialog.Result results)
-			{
-				event.put(PROPERTY_SUCCESS, true);
-				event.put(PROPERTY_CANCELLED, false);
-				fireEvent(EVENT_INVITE_COMPLETE, event);
-			}
-		});
-
-		if (!appInviteDialog.canShow()) {
-			KrollDict errorEvent = new KrollDict();
-
-			errorEvent.put(PROPERTY_SUCCESS, false);
-			errorEvent.put(PROPERTY_CANCELLED, false);
-			errorEvent.put(PROPERTY_ERROR, "Could not show invite dialog");
-			fireEvent(EVENT_INVITE_COMPLETE, errorEvent);
-		} else {
-			String appLink = (String) args.get("appLink");
-			String appPreviewImageLink = (String) args.get("appPreviewImageLink");
-
-			AppInviteContent content =
-				new AppInviteContent.Builder().setApplinkUrl(appLink).setPreviewImageUrl(appPreviewImageLink).build();
-
-			appInviteDialog.show(content);
-		}
-	}
-
-	@Kroll.method
-	public void presentWebShareDialog(@Kroll.argument(optional = true) final KrollDict args)
-	{
-		Log.w(TAG, "The method presentWebShareDialog is deprecated.");
-		presentShareDialog(args);
-	}
-
-	@Kroll.method
 	public void presentSendRequestDialog(@Kroll.argument(optional = true) final KrollDict args)
 	{
 		GameRequestDialog requestDialog = new GameRequestDialog(TiApplication.getInstance().getCurrentActivity());
@@ -956,7 +863,8 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 
 		String title = (String) args.get("title");
 		String message = (String) args.get("message");
-		Map<String, String> data = (HashMap<String, String>) args.get("data");
+		@SuppressWarnings("unchecked")
+		Map<String, String> data = (Map<String, String>) args.get("data");
 		String recipients = (String) args.get("recipients");
 		String suggestions = (String) args.get("recipientSuggestions");
 		String objectID = (String) args.get("objectID");

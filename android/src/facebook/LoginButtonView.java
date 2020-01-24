@@ -48,19 +48,18 @@ public class LoginButtonView extends TiUIView
 	public void processProperties(KrollDict props)
 	{
 		super.processProperties(props);
-		Log.d(TAG, "[VIEW LIFECYCLE EVENT] processProperties " + props);
+
 		if (props.containsKey("publishPermissions")) {
-			Object value = props.get("publishPermissions");
-			if (value instanceof Object[]) {
-				String[] publishPermissions = TiConvert.toStringArray((Object[]) value);
-				loginButton.setPublishPermissions(Arrays.asList(publishPermissions));
-			}
+			Log.w(TAG, "The \"publishPermissions\" property has been deprecated in favor of the \"permissions\" property");
 		}
 		if (props.containsKey("readPermissions")) {
-			Object value = props.get("readPermissions");
+			Log.w(TAG, "The \"readPermissions\" property has been deprecated in favor of the \"permissions\" property");
+		}
+		if (props.containsKey("permissions")) {
+			Object value = props.get("permissions");
 			if (value instanceof Object[]) {
-				String[] readPermissions = TiConvert.toStringArray((Object[]) value);
-				loginButton.setReadPermissions(Arrays.asList(readPermissions));
+				String[] permissions = TiConvert.toStringArray((Object[]) value);
+				loginButton.setPermissions(Arrays.asList(permissions));
 			}
 		}
 		if (props.containsKey("audience")) {
@@ -116,19 +115,15 @@ public class LoginButtonView extends TiUIView
 	@Override
 	public void propertyChanged(String key, Object oldValue, Object newValue, KrollProxy proxy)
 	{
-		// This method is called whenever a proxy property value is updated. Note that this
-		// method is only called if the new value is different than the current value.
 		if (key.equals("publishPermissions")) {
-			if (newValue instanceof Object[]) {
-				String[] publishPermissions = TiConvert.toStringArray((Object[]) newValue);
-				loginButton.setPublishPermissions(Arrays.asList(publishPermissions));
-			}
+			Log.w(TAG, "The \"publishPermissions\" property has been deprecated in favor of the \"permissions\" property");
 		} else if (key.equals("readPermissions")) {
+			Log.w(TAG, "The \"readPermissions\" property has been deprecated in favor of the \"permissions\" property");
+		} else if (key.equals("permissions")) {
 			if (newValue instanceof Object[]) {
-				String[] readPermissions = TiConvert.toStringArray((Object[]) newValue);
-				loginButton.setReadPermissions(Arrays.asList(readPermissions));
+				String[] permissions = TiConvert.toStringArray((Object[]) newValue);
+				loginButton.setPermissions(Arrays.asList(permissions));
 			}
-
 		} else if (key.equals("audience")) {
 			int audience = TiConvert.toInt(newValue, TiFacebookModule.AUDIENCE_NONE);
 			switch (audience) {
