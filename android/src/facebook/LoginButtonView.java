@@ -50,7 +50,8 @@ public class LoginButtonView extends TiUIView
 		super.processProperties(props);
 
 		if (props.containsKey("publishPermissions")) {
-			Log.w(TAG, "The \"publishPermissions\" property has been deprecated in favor of the \"permissions\" property");
+			Log.w(TAG,
+				  "The \"publishPermissions\" property has been deprecated in favor of the \"permissions\" property");
 		}
 		if (props.containsKey("readPermissions")) {
 			Log.w(TAG, "The \"readPermissions\" property has been deprecated in favor of the \"permissions\" property");
@@ -116,9 +117,9 @@ public class LoginButtonView extends TiUIView
 	public void propertyChanged(String key, Object oldValue, Object newValue, KrollProxy proxy)
 	{
 		if (key.equals("publishPermissions")) {
-			Log.w(TAG, "The \"publishPermissions\" property has been deprecated in favor of the \"permissions\" property");
+			Log.w(TAG, "The 'publishPermissions' property has been deprecated in favor of the 'permissions' property");
 		} else if (key.equals("readPermissions")) {
-			Log.w(TAG, "The \"readPermissions\" property has been deprecated in favor of the \"permissions\" property");
+			Log.w(TAG, "The 'readPermissions' property has been deprecated in favor of the 'permissions' property");
 		} else if (key.equals("permissions")) {
 			if (newValue instanceof Object[]) {
 				String[] permissions = TiConvert.toStringArray((Object[]) newValue);
