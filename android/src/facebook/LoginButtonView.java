@@ -6,6 +6,7 @@
   */
 package facebook;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.appcelerator.kroll.KrollDict;
@@ -49,20 +50,31 @@ public class LoginButtonView extends TiUIView
 	{
 		super.processProperties(props);
 
+		ArrayList<String> permissionList = new ArrayList<>();
 		if (props.containsKey("publishPermissions")) {
-			Log.w(TAG,
-				  "The \"publishPermissions\" property has been deprecated in favor of the \"permissions\" property");
+			Log.w(TAG, "The 'publishPermissions' property has been deprecated in favor of the 'permissions' property");
+			Object value = props.get("publishPermissions");
+			if (value instanceof Object[]) {
+				permissionList.addAll(Arrays.asList(TiConvert.toStringArray((Object[]) value)));
+			}
 		}
 		if (props.containsKey("readPermissions")) {
-			Log.w(TAG, "The \"readPermissions\" property has been deprecated in favor of the \"permissions\" property");
+			Log.w(TAG, "The 'readPermissions' property has been deprecated in favor of the 'permissions' property");
+			Object value = props.get("readPermissions");
+			if (value instanceof Object[]) {
+				permissionList.addAll(Arrays.asList(TiConvert.toStringArray((Object[]) value)));
+			}
 		}
 		if (props.containsKey("permissions")) {
 			Object value = props.get("permissions");
 			if (value instanceof Object[]) {
-				String[] permissions = TiConvert.toStringArray((Object[]) value);
-				loginButton.setPermissions(Arrays.asList(permissions));
+				permissionList.addAll(Arrays.asList(TiConvert.toStringArray((Object[]) value)));
 			}
 		}
+		if (!permissionList.isEmpty()) {
+			loginButton.setPermissions(permissionList);
+		}
+
 		if (props.containsKey("audience")) {
 			Object value = props.get("audience");
 			int audience = TiConvert.toInt(value, TiFacebookModule.AUDIENCE_NONE);
@@ -118,8 +130,16 @@ public class LoginButtonView extends TiUIView
 	{
 		if (key.equals("publishPermissions")) {
 			Log.w(TAG, "The 'publishPermissions' property has been deprecated in favor of the 'permissions' property");
+			if (newValue instanceof Object[]) {
+				String[] permissions = TiConvert.toStringArray((Object[]) newValue);
+				loginButton.setPermissions(Arrays.asList(permissions));
+			}
 		} else if (key.equals("readPermissions")) {
 			Log.w(TAG, "The 'readPermissions' property has been deprecated in favor of the 'permissions' property");
+			if (newValue instanceof Object[]) {
+				String[] permissions = TiConvert.toStringArray((Object[]) newValue);
+				loginButton.setPermissions(Arrays.asList(permissions));
+			}
 		} else if (key.equals("permissions")) {
 			if (newValue instanceof Object[]) {
 				String[] permissions = TiConvert.toStringArray((Object[]) newValue);
