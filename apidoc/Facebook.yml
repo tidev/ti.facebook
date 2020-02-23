@@ -258,17 +258,12 @@ description: |
     to their timeline. This does not require the user to authorize your app or any extended permissions,
     so it is the easiest way to enable sharing.
 
-    The Facebook SDK automatically determines the best way to present the share dialog, e.g. if the Facebook
-    app is not installed. If you want to control the way the dialog is presented, set the `mode` property
-    of the [presentShareDialog()](Modules.Facebook.presentShareDialog) method to one of the `LOGIN_BEHAVIOR_*`
-    constants when presenting it.
-
     Pass either method parameters you want to add to the post, such as a `link` or `hashtag`, or to
     share the user's status, do not pass any parameters to the methods. Note: The `link` parameter is
     **required** by the Facebook SDK.
 
     To monitor if the share request succeeded or not, listen to the <Modules.Facebook.shareCompleted>
-    event. It uses the same arguments as `presentMessengerDialog`.
+    event.
 
             fb.addEventListener('shareCompleted', function (e) {
                 if (e.success) {
@@ -319,25 +314,6 @@ description: |
     For details on rgaame equest dialogs see the
     [official Facebook Request Dialogs documentation](https://developers.facebook.com/docs/games/services/gamerequests).
 
-    ### Messenger Dialog
-
-    A messenger dialog allows a user to send content to the Facebook Messenger using your application.
-
-    To send a message to a user, call the [presentMessengerDialog()](Modules.Facebook.presentMessengerDialog) method
-    and pass the method a dictionary with the optional values "hashtag", "link", "to", "placeID"
-    and "referal". It uses the same arguments as `presentShareDialog`. Note: The "link" parameter is
-    **required** by the Facebook SDK.
-
-            fb.presentMessengerDialog({
-                link: "https://appcelerator.com", // The link you want to share
-                referal: "ti_app", // The referal to be added as a suffix to your link
-                placeID: "my_id", // The ID for a place to tag with this content
-                to: [] // List of IDs for taggable people to tag with this content
-            });
-
-    For details on dialog see the
-    [official Facebook Messenger Dialogs documentation](https://developers.facebook.com/docs/messenger).
-
     ### Messenger Button
 
     The Messenger button provides a quick mechanism for users to share content to the Facebook Messenger.
@@ -353,28 +329,6 @@ description: |
         win.add(messengerButton);
 
     For more information, see the [MessengerButton API reference](Modules.Facebook.MessengerButton).
-    
-    ### Fetch Places
-    
-    The Facebook SDK supports fetching places since Graph API v2.9. You are able to use the
-    official FBSDKPlacesKit API in Titanium SDK 6.2.0+ to fetch places by 
-    the current user location or a specified search tearm. 
-    Example of using the current location:
-    
-        fb.fetchNearbyPlacesForCurrentLocation({
-            confidenceLevel: fb.PLACE_LOCATION_CONFIDENCE_NOT_APPLICABLE, // optional
-            fields: [], // optional, see https://developers.facebook.com/docs/places/fields
-            success: function (e) {
-                alert('Successfully fetched places!');
-                Ti.API.info(e);
-            },
-            error: function (e) {
-                alert('Error fetching places!');
-                Ti.API.error(e);
-            }
-        }); 
-        
-    Check out the full example in examples/facebook_places.js.
 
 extends: Titanium.Module
 since: "3.1.0"
@@ -498,33 +452,9 @@ methods:
   - name: logout
     summary: Clears the OAuth `accessToken` and logs out the user.
 
-  - name: presentInviteDialog
-    summary: |
-        Opens a supported Facebook Invite dialog from the Facebook App.
-    description: |
-        To monitor if the share request succeeded or not, listen to the
-        <Modules.Facebook.shareCompleted> event.
-    parameters:
-      - name: params
-        summary: |
-            A dictionary object containing required and optional parameters.
-        type: InviteDialogParams
-    since: "5.4.0"
-    platforms: [iphone, ipad, android]
-    deprecated:
-        since: "7.0.0"
-        removed: "7.0.0"
-        notes: |
-            The API was removed by the Facebook SDK. Please use the
-            [Modules.Facebook.presentShareDialog](Modules.Facebook.presentShareDialog) method instead.
-
   - name: presentShareDialog
     summary: Opens a Facebook link share dialog.
     description: |
-        The Facebook SDK automatically determines the best way to present the share dialog, e.g. if the Facebook
-        app is not installed. If you want to control the way the dialog is presented, set the `mode` property
-        of this method to one of the `LOGIN_BEHAVIOR_*` constants when presenting it. 
-        
         Note: The `link` parameter is **required** by the Facebook SDK.
 
         Listen for the <Modules.Facebook.shareCompleted> to be notified if the attempt was
@@ -538,10 +468,6 @@ methods:
   - name: presentPhotoShareDialog
     summary: Opens a Facebook photo share dialog.
     description: |
-        The Facebook SDK automatically determines the best way to present the share dialog, e.g. if the Facebook
-        app is not installed. If you want to control the way the dialog is presented, set the `mode` property
-        of this method to one of the `LOGIN_BEHAVIOR_*` constants when presenting it.
-        
         Note: The `images` parameter is **required** by the Facebook SDK.
 
         Android Note: In order to share images on Android, the Facebook app needs to be installed and the
@@ -576,6 +502,10 @@ methods:
         type: ShareLinkContentParams
     since: "5.4.0"
     platforms: [iphone, ipad]
+    deprecated:
+      since: "8.0.0"
+      removed: "8.0.0"
+      notes: "Removed by the native Facebook SDK"
 
   - name: presentSendRequestDialog
     summary: |
@@ -722,7 +652,11 @@ methods:
         type: Callback
     since: "6.2.0"
     platforms: [iphone, ipad]
-    
+    deprecated:
+      since: "8.0.0"
+      removed: "8.0.0"
+      notes: "Removed by the native Facebook SDK"
+
   - name: fetchNearbyPlacesForSearchTearm
     summary: Query for nearby places using the device's current location and search-term. 
     description: |
@@ -768,6 +702,10 @@ methods:
         type: Callback
     since: "6.2.0"
     platforms: [iphone, ipad]
+    deprecated:
+      since: "8.0.0"
+      removed: "8.0.0"
+      notes: "Removed by the native Facebook SDK"
 
   - name: shareMediaToMessenger
     summary: Call this method to open Messenger and share an image, animated GIF or video.
@@ -1011,26 +949,6 @@ properties:
     type: Number
     permission: read-only
     since: "5.0.0"
-
-  - name: BUTTON_STYLE_NORMAL
-    summary: |
-        Use with [LoginButton.style](Modules.Facebook.LoginButton.style) to specify
-        the default login button reading "Connect" or "Login".
-    deprecated:
-        since: "4.0.0"
-        removed: "4.0.0"
-    type: Number
-    permission: read-only
-
-  - name: BUTTON_STYLE_WIDE
-    summary: |
-        Use with [LoginButton.style](Modules.Facebook.LoginButton.style) to specify
-        a wide login button reading "Connect with Facebook" or "Login with Facebook".
-    deprecated:
-        since: "4.0.0"
-        removed: "4.0.0"
-    type: Number
-    permission: read-only
     
   - name: PLACE_LOCATION_CONFIDENCE_NOT_APPLICABLE
     summary: Used to indicate that any level is acceptable as a minimum threshold.
@@ -1038,35 +956,55 @@ properties:
     permission: read-only
     since: "6.2.0"
     platforms: [iphone, ipad]
-  
+    deprecated:
+      since: "8.0.0"
+      removed: "8.0.0"
+      notes: "Removed by the native Facebook SDK"
+
   - name: PLACE_LOCATION_CONFIDENCE_LOW
     summary: Low confidence level.
     type: Number
     permission: read-only
     since: "6.2.0"
     platforms: [iphone, ipad]
-    
+    deprecated:
+      since: "8.0.0"
+      removed: "8.0.0"
+      notes: "Removed by the native Facebook SDK"
+
   - name: PLACE_LOCATION_CONFIDENCE_MEDIUM
     summary: Medium confidence level.
     type: Number
     permission: read-only
     since: "6.2.0"
     platforms: [iphone, ipad]
-    
+    deprecated:
+      since: "8.0.0"
+      removed: "8.0.0"
+      notes: "Removed by the native Facebook SDK"
+
   - name: PLACE_LOCATION_CONFIDENCE_HIGH
     summary: High confidence level.
     type: Number
     permission: read-only
     since: "6.2.0"
     platforms: [iphone, ipad]
+    deprecated:
+      since: "8.0.0"
+      removed: "8.0.0"
+      notes: "Removed by the native Facebook SDK"
 
-  - name: LOGIN_BEHAVIOR_BROWSER
+- name: LOGIN_BEHAVIOR_BROWSER
     summary: |
         Opens login window in the default Web Browser (Safari/Firefox etc...)
     type: Number
     permission: read-only
     since: "5.4.0"
     platforms: [android, iphone, ipad]
+    deprecated:
+      since: "8.0.0"
+      removed: "8.0.0"
+      notes: "Removed by the native Facebook SDK"
 
   - name: LOGIN_BEHAVIOR_NATIVE
     summary: |
@@ -1082,6 +1020,10 @@ properties:
     permission: read-only
     since: "5.4.0"
     platforms: [android, iphone, ipad]
+    deprecated:
+      since: "8.0.0"
+      removed: "8.0.0"
+      notes: "Removed by the native Facebook SDK"
 
   - name: LOGIN_BEHAVIOR_SYSTEM_ACCOUNT
     summary: |
@@ -1091,6 +1033,10 @@ properties:
     permission: read-only
     since: "5.4.0"
     platforms: [iphone, ipad]
+    deprecated:
+      since: "8.0.0"
+      removed: "8.0.0"
+      notes: "Removed by the native Facebook SDK"
 
   - name: LOGIN_BEHAVIOR_WEB
     summary: |
@@ -1099,6 +1045,10 @@ properties:
     permission: read-only
     since: "5.4.0"
     platforms: [android, iphone, ipad]
+    deprecated:
+      since: "8.0.0"
+      removed: "8.0.0"
+      notes: "Removed by the native Facebook SDK"
 
   - name: LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK
     summary: |
@@ -1109,6 +1059,10 @@ properties:
     permission: read-only
     since: "5.4.0"
     platforms: [android]
+    deprecated:
+      since: "8.0.0"
+      removed: "8.0.0"
+      notes: "Removed by the native Facebook SDK"
 
   - name: LOGIN_BEHAVIOR_DEVICE_AUTH
     summary: |
@@ -1117,18 +1071,10 @@ properties:
     permission: read-only
     since: "5.4.0"
     platforms: [android]
-
-  - name: SSO_ONLY
-    summary: Only attempt single sign-on.
-    description: |
-        Use with the [LoginButton.sessionLoginBehavior](Modules.Facebook.LoginButton.sessionLoginBehavior) property.
-    type: Number
-    permission: read-only
-    since: "4.0.0"
     deprecated:
-        since: "4.1.0"
-        removed: "4.1.0"
-    platforms: [android]
+      since: "8.0.0"
+      removed: "8.0.0"
+      notes: "Removed by the native Facebook SDK"
 
   - name: LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC
     summary: |
@@ -1168,30 +1114,6 @@ properties:
     permission: read-only
     since: "6.1.0"
     platforms: [iphone, ipad, android]
-
-  - name: SSO_WITH_FALLBACK
-    summary: Attempt single sign-on, then fallback to dialog authorization.
-    description: |
-        Use with the [LoginButton.sessionLoginBehavior](Modules.Facebook.LoginButton.sessionLoginBehavior) property.
-    type: Number
-    permission: read-only
-    since: "4.0.0"
-    deprecated:
-        since: "4.1.0"
-        removed: "4.1.0"
-    platforms: [android]
-
-  - name: SUPPRESS_SSO
-    summary: Do not attempt single sign-on and only use dialog authorization.
-    description: |
-        Use with the [LoginButton.sessionLoginBehavior](Modules.Facebook.LoginButton.sessionLoginBehavior) property.
-    type: Number
-    permission: read-only
-    since: "4.0.0"
-    deprecated:
-        since: "4.1.0"
-        removed: "4.1.0"
-    platforms: [android]
 
   - name: SHARE_DIALOG_MODE_AUTOMATIC
     summary: Acts with the most appropriate mode that is available.
@@ -1365,37 +1287,10 @@ properties:
     platforms: [android]
     permission: read-only
 
-  - name: canPresentShareDialog
-    summary: Checks if the device can support the use of the Facebook Share dialog from the Facebook App.
-    type: Boolean
-    since: "4.0.0"
-    permission: read-only
-    deprecated:
-        since: "5.0.0"
-        removed: "5.0.0"
-
   - name: expirationDate
     summary: Time at which the `accessToken` expires.
     type: Date
     permission: read-only
-
-  - name: forceDialogAuth
-    summary:  |
-        Indicates whether the login should use the traditional dialog-based
-        authentication.
-    deprecated:
-        since: "4.0.0"
-        removed: "4.0.0"
-    description: |
-        Set to `false` to enable Single-Sign-On (SSO) in cases where the official Facebook app is on the
-        device.  Default is `true`, meaning the traditional, dialog-based
-        authentication is used rather than SSO. See  the
-        [Facebook Mobile Guide](http://developers.facebook.com/docs/guides/mobile) for
-        details of their Single-Sign-On scheme.
-
-        To use the built-in iOS 6 login, set this property to `false`.
-    type: Boolean
-    default: true
 
   - name: loggedIn
     summary: Indicates if the user is logged in.
@@ -1464,6 +1359,10 @@ properties:
         on Android and [Titanium.Modules.Facebook.LOGIN_BEHAVIOR_BROWSER](Titanium.Modules.Facebook.LOGIN_BEHAVIOR_BROWSER) on iOS
         (which uses the native Safari Dialog internally).
     type: Number
+    deprecated:
+      since: "8.0.0"
+      removed: "8.0.0"
+      notes: "Removed by the native Facebook SDK"
     constants: [Modules.Facebook.LOGIN_BEHAVIOR_*]
         
     since: "5.4.0"
@@ -1794,67 +1693,6 @@ properties:
     type: String
 
 ---
-name: FacebookReauthResponse
-extends: ErrorResponse
-summary: Argument passed to the reauthorize callback when the request is completed or canceled.
-platforms: [android, iphone, ipad]
-since: 3.1.0
-deprecated:
-    since: "4.0.0"
-    removed: "4.0.0"
-properties:
-  - name: cancelled
-    summary: Indicates if the user canceled the dialog.
-    type: Boolean
-
-
----
-name: FacebookDialogResponse
-extends: ErrorResponse
-summary: Argument passed to the dialog callback when a dialog is completed or canceled.
-platforms: [android, iphone, ipad]
-since: 3.1.0
-deprecated:
-    since: "4.0.0"
-    removed: "4.0.0"
-description: |
-    The `success` and `cancelled` properties may not be reliable for dialogs. In the event
-    that the user canceled the dialog, the `result` field is `undefined`.
-properties:
-  - name: cancelled
-    summary: Indicates if the user canceled the dialog.
-    type: Boolean
-
-  - name: result
-    summary: |
-        If successful, returns the JSON response containing the `post_id` of the new post.
-        If the user canceled the dialog, the results is undefined.
-    type: String
-
-
----
-name: FacebookRESTResponse
-extends: ErrorResponse
-summary: |
-    Argument passed to the REST API callback when a request completes (successfully
-    or unsuccessfully).
-platforms: [android, iphone, ipad]
-since: 3.1.0
-deprecated:
-    since: "4.0.0"
-    removed: "4.0.0"
-properties:
-  - name: method
-    summary: REST method call you specified.
-    type: String
-
-  - name: result
-    summary: |
-        If successful, returns the JSON response returned by Facebook.
-        If the request is not successfully completed, the result is undefined.
-    type: String
-
----
 name: SharePhotoContentParams
 summary: |
     Parameters to pass to the the [presentPhotoShareDialog()](Modules.Facebook.presentPhotoShareDialog) method.
@@ -1896,9 +1734,7 @@ properties:
 ---
 name: ShareLinkContentParams
 summary: |
-    Optional parameters to pass to either the
-    [presentShareDialog()](Modules.Facebook.presentShareDialog) or
-    [presentMessengerDialog()](Modules.Facebook.presentMessengerDialog) methods.
+    Optional parameters to pass to the [presentShareDialog()](Modules.Facebook.presentShareDialog) method.
 since: "4.0.0"
 platforms: [android, iphone, ipad]
 properties:
@@ -1934,40 +1770,6 @@ properties:
     default: Modules.Facebook.SHARE_DIALOG_MODE_AUTOMATIC
     constants: Modules.Facebook.SHARE_DIALOG_MODE_*
     since: "6.0.0"
-
-  - name: title
-    summary: Title associated with the link.
-    type: String
-    since: "5.0.0"
-    deprecated:
-        since: "6.2.0"
-        removed: "6.2.0"
-        notes: |
-            Facebook deprecated the "title" key in Graph v2.9+, making it
-            read-only. Information about the title will instead of scraped
-            from the `link` property.
-
-  - name: picture
-    summary: Link to a thumbnail to associate with the link.
-    type: String
-    deprecated:
-        since: "6.2.0"
-        removed: "6.2.0"
-        notes: |
-            Facebook deprecated the "picture" key in Graph v2.9+, making it
-            read-only. Information about the picture will instead of scraped
-            from the `link` property.
-
-  - name: description
-    summary: Description associated with the link.
-    type: String
-    deprecated:
-        since: "6.2.0"
-        removed: "6.2.0"
-        notes: |
-            Facebook deprecated the "description" key in Graph v2.9+, making it
-            read-only. Information about the description will instead of scraped
-            from the `link` property.
 
 ---
 name: RequestDialogParams

@@ -26,7 +26,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FacebookModule : TiModule <FBSDKSharingDelegate, FBSDKGameRequestDialogDelegate> {
   NSString *_userID;
   NSArray *_permissions;
-  FBSDKLoginBehavior _loginBehavior;
   NSDictionary *_launchOptions;
 }
 
