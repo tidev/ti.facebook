@@ -994,7 +994,7 @@ properties:
       removed: "8.0.0"
       notes: "Removed by the native Facebook SDK"
 
-- name: LOGIN_BEHAVIOR_BROWSER
+  - name: LOGIN_BEHAVIOR_BROWSER
     summary: |
         Opens login window in the default Web Browser (Safari/Firefox etc...)
     type: Number
