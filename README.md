@@ -9,8 +9,8 @@ The Facebook module is used for connecting your application with Facebook. This 
 * Posting web and native share dialogs
 * Posting send request dialogs
 
-Getting Started
-------
+## Getting Started
+
 Note that the min SDK for this module is 5.0.0.GA and later. You do not need to download or unpack it.
 Edit the modules section of your tiapp.xml file to include this module:
 ```xml
@@ -20,6 +20,8 @@ Edit the modules section of your tiapp.xml file to include this module:
 </modules>
 ```
 Also you will need a Facebook App ID ready. To create a Facebook App ID, go to the Facebook Developer App: developers.facebook.com/apps
+
+### iOS
 
 On the iOS platform, add the following property to the \<ios\>\<plist\>\<dict\> section in tiapp.xml:
 ```xml
@@ -91,11 +93,7 @@ If you choose to enable it, you have to set the following keys and values in tia
     </dict>
 ```
 
-#### iOS 10 Compatibility
-
-**Note**: The paragraph about custom capabilities was only necessary between Titanium SDK 5.5.0 and 6.0.0. Since 6.0.1.GA, we add the 
-required capabilities automatically, so you don't need to curate your own entitlements file anymore, which will avoid possible issues 
-with concurring values. Please ensure to use both SDK and CLI 6.0.1 (or later).
+### Android
 
 On the android platform, in tiapp.xml or AndroidManifest.xml you must declare the following inside the `<application/>` node 
 ```xml
@@ -123,8 +121,7 @@ Finally, if using sharing capabilities, you should add the content provider sett
           android:exported="true" />
 ```
 
-Android Key Hash for Facebook Developer Profile
----
+#### Android Key Hash for Facebook Developer Profile
 
 Facebook requires you to add the Key Hash of the Android app in order for you to use the module. Steps to get the Key Hash as follows. Alternatively, if you do not have the correct Key Hash on the Android App, the App will give an error message when you login with the Key Hash of the App which you can then copy.
 
@@ -140,8 +137,7 @@ You would also require, to fill up the `Google Play Package Name` which is the A
 
 For more info, please see https://developers.facebook.com/docs/android/getting-started
 
-Proxy required per Android activity
----
+#### Proxy required per Android activity
 
 Unlike iOS, where the entire app is active in memory, in Android only a single Activity is active at any time. In Titanium, an Activity corresponds to a standalone (i.e. not a Tab window) `Ti.UI.Window` or `Ti.UI.TabGroup`. The Facebook SDK contains tools to synchronize state between the various activities in the app, and this module implements that functionality, but for this to work we need to tell the module which is the currently active Activity. Thus the following is required:
 
@@ -156,8 +152,7 @@ We must pass to the proxy the Ti.UI.Window or Ti.UI.TabGroup that will be using 
 The proxy object must be created prior to calling open() on the window or tabgroup in order to make sure the Activity onCreate event is captured correctly.
 This proxy has no APIs (new since version 3.20.05), its sole function is to signal the Facebook SDK for the various Activity transitions. So just create it and attach it to the window/tabgroup.
 
-Facebook Login and Authorization
----
+## Facebook Login and Authorization
 
 To use Facebook, a user must log in to Facebook and explicitly authorize the application to perform certain actions, such as accessing profile information or posting status messages.
 
@@ -202,8 +197,7 @@ Call authorize to prompt the user to login and authorize the application. This m
 ```
 Which approach you take depends on your UI and how central Facebook is to your application. Both approaches fire a `login` event.
 
-Requesting read and publish permissions
----
+## Requesting read and publish permissions
 
 For a complete list of permissions, see the official Facebook Permissions Reference.
 
@@ -239,13 +233,11 @@ fb.requestNewPublishPermissions(['read_stream','user_hometown', etc...], fb.AUDI
 });
 ```
 
-Refreshing Permissions
----
+## Refreshing Permissions
 
 Facebook now grants total control over granted permissions, and if the user modified the permissions outside of your app your cached token may not be updated. To get the current permissions from Facebook's servers you can call fb.refreshPermissionsFromServer(). You may listen for the tokenUpdated event to be notified of this operation's successful completion.
 
-Facebook Graph API
----
+## Facebook Graph API
 
 The Facebook Graph API is the preferred method for getting information about a user's friends, news feed, and so on. Each object in the Facebook social graph is represented by a graph API object, such as a user, photo, or status message. The Graph API allows you to make requests on behalf of the user, such as posting a picture or status message. Use the requestWithGraphPath method to make a request to the Graph API.
 
@@ -285,8 +277,7 @@ Example 2:
     }
 ```
 
-Share Dialog
----
+## Share Dialog
 
 You don't need permissions. You can either use presentShareDialog which requires facebook app to be preinstalled, or presentWebStareDialog that uses the web browser instead. Both approaches fire a `shareCompleted` event.
 To share a user's status just call fb.share({});
@@ -303,8 +294,7 @@ To share more information, example:
     });
 ```
 
-Invite Dialog
----
+## Invite Dialog
 
 Opens a supported Facebook Invite dialog from the Facebook App. To monitor if the share request succeeded 
 or not, listen to the `shareCompleted` event. Example:
@@ -317,8 +307,7 @@ or not, listen to the `shareCompleted` event. Example:
     });
 ```
 
-Messenger Dialogs (iOS)
----
+## Messenger Dialogs (iOS)
 
 You can share content (including links and places) using the `presentMessengerDialog` method and 
 share media including images, GIF's and videos using the `shareMediaToMessenger` method. 
@@ -370,8 +359,7 @@ Share media:
     });
 ```
 
-Send Requests Dialog
----
+## Send Requests Dialog
 
 Sends an application request. Fires a `sendRequestCompleted` event. You can optionally include a `title` key with the title string, or customized parameters in the `data` dictionary. To preselect users to send the invite to, you can optionally add a `to` key with a string of values containing the facebook ids, seperated by commas. See below for example.
 See official Facebook Dialogs documentation for more details.
@@ -389,8 +377,7 @@ See official Facebook Dialogs documentation for more details.
     });
 ```
 
-Messenger Button
----
+## Messenger Button
 
 The Messenger button provides a quick mechanism for users to share content to the Facebook Messenger. 
 A click on the button can share the content to multiple users.
@@ -406,8 +393,7 @@ To create a Messenger button, call the `createMessengerButton` method. Example:
     win.add(messengerButton);
 ```
 
-Deferred App links
-------------------
+## Deferred App links
 
 Deferred deep linking allows you to send people to a custom view after they installed your app via the app store.
 
@@ -422,27 +408,26 @@ fb.fetchDeferredAppLink(function(e) {
 });
 ```
 
-Log App Events
----
+## Log App Events
+
 ```js
 fb.logCustomEvent('handsClapped'); // Pass a string for the event name, view the events on Facebook Insights
 ```
 
-Log Purchases
----
+## Log Purchases
+
 ```js
 fb.logPurchase(13.37, 'USD'); // Pass a number of the amound and a string for the currency.
 ```
 
-Notes
----
+## Notes
+
 * The FBSDKCoreKit.framework, FBSDKLoginKit.framework, FBSDKShareKit.framework directory is the prebuilt Facebook SDK directly downloaded from Facebook, zero modifications. 
 * Facebook is moving away from the native iOS login, and towards login through the Facebook app. The default behavior of this module is the same as in the Facebook SDK: app login with a fallback to webview. The advantages of the app login are: User control over individual permissions, and a uniform login experience over iOS, Android, and web.
 * AppEvents are automatically logged. Check out the app Insights on Facebook. We can also log custom events for Insights.
 * Choose to use the LoginButton, rather than a customized UI, since it's directly from Facebook and it's easier in maintaining Facebook sessions.
 
-Events and error handling
----
+## Events and error handling
 
 The error handling adheres to the new Facebook guideline for events such as `login`, `shareCompleted` and `requestSendCompleted`. Here is how to handle `login` events:
 ```javascript
@@ -466,11 +451,11 @@ The error handling adheres to the new Facebook guideline for events such as `log
     });
 ```
 
-Credits
----
+## Credits
+
 Big shout-out to [@mokesmokes](https://github.com/mokesmokes) for the initial version of this module, great work! :rocket:
 
-Contributors
----
+## Contributors
+
 * Please see https://github.com/appcelerator-modules/ti.facebook/graphs/contributors
 * Interested in contributing? Read the [contributors/committer's](https://wiki.appcelerator.org/display/community/Home) guide.
