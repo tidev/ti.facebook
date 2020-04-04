@@ -20,10 +20,14 @@ tabGroup.addTab(Titanium.UI.createTab({
 }));
 
 if (Ti.Platform.osname !== 'android') {
+	 tabGroup.addTab(Titanium.UI.createTab({
+	 	title: 'Places',
+	 	window: require('facebook_places').window()
+	 }));
 	tabGroup.addTab(Titanium.UI.createTab({
-		title: 'Places',
-		window: require('facebook_places').window()
-	}));
+        title:'Messenger',
+        window:require('facebook_messenger').window()
+    }));
 }
 
 fb.initialize(); // after you set up login/logout listeners and permissions

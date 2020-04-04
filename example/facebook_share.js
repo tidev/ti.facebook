@@ -61,7 +61,7 @@ exports.window = function (value) {
 				fb.presentPhotoShareDialog({
 					photos: [
 						{
-							image: event.media, // Required Ti.Blob or String URL
+							photo: event.media, // Required Ti.Blob or String URL
 							caption: 'Great photo!' // Optional caption
 
 						}
@@ -76,7 +76,28 @@ exports.window = function (value) {
 
 	actionsView.add(shareImage);
 
-	fb.addEventListener('shareCompleted', function (e) {
+    var shareImageGraphAPI = Ti.UI.createButton({
+        title: 'Share image from file with share dialog',
+        top: '10%',
+        center: true,
+    });
+    shareImageGraphAPI.addEventListener('click', function () {
+                                        var f = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, 'images', 'flower.jpg');
+                                        var blob = f.read();
+                                        fb.presentPhotoShareDialog({
+                                            photos: [
+                                                {
+                                                    photo: blob, // Required Ti.Blob or String URL
+                                                    caption: 'Great photo!' // Optional caption
+
+                                                }
+                                            ]
+                                        });
+    });
+
+    actionsView.add(shareImageGraphAPI);
+
+    fb.addEventListener('shareCompleted', function (e) {
 		if(e.success) {
 			alert('Share completed');
 		} else if(e.cancelled) {
@@ -94,11 +115,9 @@ exports.window = function (value) {
 
 	requestDialog.addEventListener('click', function () {
 		fb.presentSendRequestDialog({
-			message: 'Go to https://appcelerator.com/'
-		}, {
-			data: '{\'badge_of_awesomeness\':\'1\',' +
-				'\'social_karma\':\'5\'}'
-		});
+			message: 'Go to https://appcelerator.com/',
+			data: { badge_of_awesomeness: '1', social_karma: '5' }
+			});
 	});
 
 	fb.addEventListener('requestDialogCompleted', function (e) {
