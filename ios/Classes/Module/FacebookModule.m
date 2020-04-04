@@ -377,7 +377,16 @@ NS_ASSUME_NONNULL_BEGIN
   NSArray *recipientSuggestions = [params objectForKey:@"recipientSuggestions"];
   FBSDKGameRequestFilter filters = [TiUtils intValue:[params objectForKey:@"filters"]];
   NSString *objectID = [params objectForKey:@"objectID"];
-  NSString *data = [params objectForKey:@"data"];
+  id tempData = [params objectForKey:@"data"];
+  NSString *data = nil;
+  if ([tempData isKindOfClass:[NSDictionary class]]) {
+    NSData *dictonaryData = [NSJSONSerialization dataWithJSONObject:tempData options:NSJSONWritingPrettyPrinted error:nil];
+    data = [[NSString alloc] initWithData:dictonaryData
+                                 encoding:NSUTF8StringEncoding];
+  } else {
+    data = (NSString *)tempData;
+  }
+
   FBSDKGameRequestActionType actionType = [TiUtils intValue:[params objectForKey:@"actionType"]];
 
   if (to != nil) {
