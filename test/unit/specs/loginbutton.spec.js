@@ -1,7 +1,6 @@
 
 const Facebook = require('facebook');
 
-const IOS = (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad');
 const ANDROID = (Ti.Platform.osname === 'android');
 
 describe('ti.facebook', () => {
