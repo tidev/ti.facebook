@@ -1,4 +1,4 @@
-exports.window = function (value) {
+exports.window = function () {
 	var fb = require('facebook');
 
 	var win = Ti.UI.createWindow({
@@ -26,11 +26,11 @@ exports.window = function (value) {
 
 		fb.requestWithGraphPath('me/groups', {}, 'GET', function (r) {
 			// console.log(r);
-			if(!r.success) {
-				if(r.error) {
+			if (!r.success) {
+				if (r.error) {
 					alert(r.error);
 				} else {
-					alert("call was unsuccessful");
+					alert('call was unsuccessful');
 				}
 				return;
 			}
@@ -39,7 +39,7 @@ exports.window = function (value) {
 			result = JSON.parse(r.result).data;
 
 			var data = [];
-			for(var c = 0; c < result.length; c++) {
+			for (var c = 0; c < result.length; c++) {
 
 				var row = result[c];
 
@@ -72,7 +72,7 @@ exports.window = function (value) {
 	}
 
 	b1.addEventListener('click', function () {
-		if(!fb.loggedIn) {
+		if (!fb.loggedIn) {
 			Ti.UI.createAlertDialog({
 				title: 'Facebook',
 				message: 'Login before running query'
@@ -80,9 +80,9 @@ exports.window = function (value) {
 			return;
 		}
 
-		if(fb.permissions.indexOf('groups_access_member_info') < 0) {
-			fb.requestNewReadPermissions(['groups_access_member_info'], function (e) {
-				if(!e.success) {
+		if (fb.permissions.indexOf('groups_access_member_info') < 0) {
+			fb.requestNewReadPermissions([ 'groups_access_member_info' ], function (e) {
+				if (!e.success) {
 					Ti.API.debug('Failed authorization due to: ' + e.error);
 				} else {
 					runQuery();
