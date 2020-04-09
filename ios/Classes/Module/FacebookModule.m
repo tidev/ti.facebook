@@ -18,8 +18,6 @@
 #import "TiHost.h"
 #import "TiUtils.h"
 
-#import <FBSDKPlacesKit/FBSDKPlacesKit.h>
-
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation FacebookModule
@@ -236,14 +234,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setLoginBehavior:(NSNumber *_Nonnull)loginBehavior
 {
-  ENSURE_TYPE(loginBehavior, NSNumber);
-  _loginBehavior = [loginBehavior unsignedIntegerValue];
+  DEPRECATED_REMOVED(@"Facebook.loginBehavior", @"8.0.0", @"8.0.0");
 }
 
 - (void)authorize:(__unused id)unused
 {
   __block FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
-  [loginManager setLoginBehavior:_loginBehavior];
 
   TiThreadPerformOnMainThread(^{
     [loginManager logInWithPermissions:self->_permissions
@@ -271,7 +267,6 @@ NS_ASSUME_NONNULL_BEGIN
 {
   TiThreadPerformOnMainThread(^{
     [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
-    self->_loginBehavior = FBSDKLoginBehaviorBrowser;
 
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(logEvents:) name:UIApplicationDidBecomeActiveNotification object:nil];
@@ -339,13 +334,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)presentMessengerDialog:(NSArray<NSDictionary<NSString *, id> *> *)args
 {
-  NSDictionary *_Nonnull params = [args objectAtIndex:0];
-
-  TiThreadPerformOnMainThread(^{
-    FBSDKShareLinkContent *content = [FacebookModule shareLinkContentFromDictionary:params];
-    [FBSDKMessageDialog showWithContent:content delegate:self];
-  },
-      NO);
+  DEPRECATED_REMOVED(@"Facebook.presentMessengerDialog", @"8.0.0", @"8.0.0");
+  DebugLog(@"[WARN] Facebook removed the MessengerDialog API via Web in SDK 6.0.0");
 }
 
 - (void)shareMediaToMessenger:(NSArray<NSDictionary<NSString *, id> *> *)args
@@ -630,99 +620,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)fetchNearbyPlacesForCurrentLocation:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args
 {
-  NSDictionary *params = [args objectAtIndex:0];
-
-  FBSDKPlaceLocationConfidence confidenceLevel = [TiUtils intValue:[params objectForKey:@"confidenceLevel"]
-                                                               def:FBSDKPlaceLocationConfidenceNotApplicable];
-  NSArray *fields = [params objectForKey:@"fields"];
-  KrollCallback *successCallback = [params objectForKey:@"success"];
-  KrollCallback *errorCallback = [params objectForKey:@"error"];
-
-  ENSURE_TYPE(successCallback, KrollCallback);
-  ENSURE_TYPE(errorCallback, KrollCallback);
-
-  __block FBSDKPlacesManager *placesManager = [[FBSDKPlacesManager alloc] init];
-
-  [placesManager generateCurrentPlaceRequestWithMinimumConfidenceLevel:confidenceLevel
-                                                                fields:fields
-                                                            completion:^(FBSDKGraphRequest *_Nullable graphRequest, NSError *_Nullable error) {
-                                                              if (graphRequest) {
-                                                                [graphRequest startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *requestError) {
-                                                                  if (requestError != nil) {
-                                                                    NSDictionary *errorEvent = @{
-                                                                      @"error" : [requestError localizedDescription],
-                                                                      @"success" : @NO
-                                                                    };
-                                                                    [errorCallback call:@[ errorEvent ] thisObject:self];
-                                                                    return;
-                                                                  }
-
-                                                                  NSDictionary *successEvent = @{
-                                                                    @"success" : @YES,
-                                                                    @"places" : result[FBSDKPlacesResponseKeyData]
-                                                                  };
-                                                                  [successCallback call:@[ successEvent ] thisObject:self];
-                                                                }];
-                                                              } else {
-                                                                NSDictionary *errorEvent = @{
-                                                                  @"error" : [error localizedDescription],
-                                                                  @"success" : @NO
-                                                                };
-                                                                [errorCallback call:@[ errorEvent ] thisObject:self];
-                                                              }
-                                                            }];
+  DEPRECATED_REMOVED(@"Facebook.fetchNearbyPlacesForCurrentLocation", @"8.0.0", @"8.0.0");
 }
 
 - (void)fetchNearbyPlacesForSearchTearm:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args
 {
-  NSDictionary *params = [args objectAtIndex:0];
-
-  NSString *searchTearm = [params objectForKey:@"searchTearm"];
-  NSArray *categories = [params objectForKey:@"categories"];
-  NSArray *fields = [params objectForKey:@"fields"];
-  CLLocationDistance distance = [TiUtils doubleValue:[params objectForKey:@"distance"] def:0];
-  NSString *cursor = [params objectForKey:@"cursor"];
-
-  KrollCallback *successCallback = [params objectForKey:@"success"];
-  KrollCallback *errorCallback = [params objectForKey:@"error"];
-
-  ENSURE_TYPE(successCallback, KrollCallback);
-  ENSURE_TYPE(errorCallback, KrollCallback);
-
-  __block FBSDKPlacesManager *placesManager = [[FBSDKPlacesManager alloc] init];
-
-  [placesManager generatePlaceSearchRequestForSearchTerm:searchTearm
-                                              categories:categories
-                                                  fields:fields
-                                                distance:distance
-                                                  cursor:cursor
-                                              completion:^(FBSDKGraphRequest *_Nullable graphRequest, CLLocation *_Nullable location, NSError *_Nullable error) {
-                                                if (graphRequest) {
-                                                  [graphRequest startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *requestError) {
-                                                    if (requestError != nil) {
-                                                      NSDictionary *errorEvent = @{
-                                                        @"error" : [requestError localizedDescription],
-                                                        @"success" : @NO
-                                                      };
-                                                      [errorCallback call:@[ errorEvent ] thisObject:self];
-                                                      return;
-                                                    }
-
-                                                    NSDictionary *successEvent = @{
-                                                      @"success" : @YES,
-                                                      @"places" : result[FBSDKPlacesResponseKeyData],
-                                                      @"paging" : [result objectForKey:@"paging"]
-                                                    };
-                                                    [successCallback call:@[ successEvent ] thisObject:self];
-                                                  }];
-                                                } else {
-                                                  NSDictionary *errorEvent = @{
-                                                    @"error" : [error localizedDescription],
-                                                    @"success" : @NO
-                                                  };
-                                                  [errorCallback call:@[ errorEvent ] thisObject:self];
-                                                }
-                                              }];
+  DEPRECATED_REMOVED(@"Facebook.fetchNearbyPlacesForSearchTearm", @"8.0.0", @"8.0.0");
 }
 
 #pragma mark Event Listeners
@@ -1029,7 +932,7 @@ MAKE_SYSTEM_PROP(FILTER_NONE, FBSDKGameRequestFilterNone);
 MAKE_SYSTEM_PROP(FILTER_APP_USERS, FBSDKGameRequestFilterAppUsers);
 MAKE_SYSTEM_PROP(FILTER_APP_NON_USERS, FBSDKGameRequestFilterAppNonUsers);
 
-MAKE_SYSTEM_PROP(LOGIN_BEHAVIOR_BROWSER, FBSDKLoginBehaviorBrowser);
+MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(LOGIN_BEHAVIOR_BROWSER, 0, @"LOGIN_BEHAVIOR_BROWSER", @"8.0.0", @"8.0.0");
 MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(LOGIN_BEHAVIOR_NATIVE, 1, @"LOGIN_BEHAVIOR_NATIVE", @"7.0.0", @"7.0.0");
 MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(LOGIN_BEHAVIOR_SYSTEM_ACCOUNT, 2, @"LOGIN_BEHAVIOR_SYSTEM_ACCOUNT", @"7.0.0", @"7.0.0");
 MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(LOGIN_BEHAVIOR_WEB, 3, @"LOGIN_BEHAVIOR_WEB", @"7.0.0", @"7.0.0");
@@ -1056,10 +959,10 @@ MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE, FBSDKLoginButtonTooltipB
 MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY, FBSDKTooltipColorStyleNeutralGray);
 MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE, FBSDKTooltipColorStyleFriendlyBlue);
 
-MAKE_SYSTEM_PROP(PLACE_LOCATION_CONFIDENCE_NOT_APPLICABLE, FBSDKPlaceLocationConfidenceNotApplicable);
-MAKE_SYSTEM_PROP(PLACE_LOCATION_CONFIDENCE_LOW, FBSDKPlaceLocationConfidenceLow);
-MAKE_SYSTEM_PROP(PLACE_LOCATION_CONFIDENCE_MEDIUM, FBSDKPlaceLocationConfidenceMedium);
-MAKE_SYSTEM_PROP(PLACE_LOCATION_CONFIDENCE_HIGH, FBSDKPlaceLocationConfidenceHigh);
+MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(PLACE_LOCATION_CONFIDENCE_NOT_APPLICABLE, 0, @"PLACE_LOCATION_CONFIDENCE_NOT_APPLICABLE", @"8.0.0", @"8.0.0");
+MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(PLACE_LOCATION_CONFIDENCE_LOW, 1, @"PLACE_LOCATION_CONFIDENCE_LOW", @"8.0.0", @"8.0.0");
+MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(PLACE_LOCATION_CONFIDENCE_MEDIUM, 2, @"PLACE_LOCATION_CONFIDENCE_MEDIUM", @"8.0.0", @"8.0.0");
+MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(PLACE_LOCATION_CONFIDENCE_HIGH, 3, @"PLACE_LOCATION_CONFIDENCE_HIGH", @"8.0.0", @"8.0.0");
 
 MAKE_SYSTEM_STR(EVENT_NAME_COMPLETED_REGISTRATION, FBSDKAppEventNameCompletedRegistration);
 MAKE_SYSTEM_STR(EVENT_NAME_VIEWED_CONTENT, FBSDKAppEventNameViewedContent);
