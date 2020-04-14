@@ -1,16 +1,3 @@
 {
-  "extends": [ "axway/env-titanium" ],
-  "parserOptions": {
-    "ecmaVersion": 2015,
-    "sourceType": "script"
-  },
-  "overrides": [
-    {
-      "files": [ "dangerfile.js" ],
-      "parserOptions": {
-        "ecmaVersion": 2017,
-        "sourceType": "module"
-      }
-    }
-  ]
+  "extends": [ "axway/env-titanium" ]
 }
