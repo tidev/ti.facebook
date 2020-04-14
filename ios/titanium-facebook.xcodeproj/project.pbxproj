@@ -22,11 +22,9 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		DB34EBD81F2574350057008D /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB34EBD21F2574350057008D /* Bolts.framework */; };
-		DB34EBD91F2574350057008D /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB34EBD31F2574350057008D /* FBSDKCoreKit.framework */; };
-		DB34EBDA1F2574350057008D /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB34EBD41F2574350057008D /* FBSDKLoginKit.framework */; };
-		DB34EBDC1F2574350057008D /* FBSDKPlacesKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB34EBD61F2574350057008D /* FBSDKPlacesKit.framework */; };
-		DB34EBDD1F2574350057008D /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB34EBD71F2574350057008D /* FBSDKShareKit.framework */; };
+		312EA00A244444C5001B5EFA /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 312EA007244444C5001B5EFA /* FBSDKCoreKit.framework */; };
+		312EA00B244444C5001B5EFA /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 312EA008244444C5001B5EFA /* FBSDKLoginKit.framework */; };
+		312EA00C244444C5001B5EFA /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 312EA009244444C5001B5EFA /* FBSDKShareKit.framework */; };
 		DB34EBF91F2574B70057008D /* FacebookLoginButton.h in Headers */ = {isa = PBXBuildFile; fileRef = DB34EBE41F2574B70057008D /* FacebookLoginButton.h */; };
 		DB34EBFA1F2574B70057008D /* FacebookLoginButton.m in Sources */ = {isa = PBXBuildFile; fileRef = DB34EBE51F2574B70057008D /* FacebookLoginButton.m */; };
 		DB34EBFB1F2574B70057008D /* FacebookLoginButtonProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = DB34EBE61F2574B70057008D /* FacebookLoginButtonProxy.h */; };
@@ -52,12 +50,10 @@
 
 /* Begin PBXFileReference section */
 		24DD6D1B1134B66800162E58 /* titanium.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = titanium.xcconfig; sourceTree = "<group>"; };
+		312EA007244444C5001B5EFA /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = platform/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		312EA008244444C5001B5EFA /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = platform/FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		312EA009244444C5001B5EFA /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = platform/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		D2AAC07E0554694100DB518D /* libfacebook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libfacebook.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		DB34EBD21F2574350057008D /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = platform/Bolts.framework; sourceTree = "<group>"; };
-		DB34EBD31F2574350057008D /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = platform/FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		DB34EBD41F2574350057008D /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = platform/FBSDKLoginKit.framework; sourceTree = "<group>"; };
-		DB34EBD61F2574350057008D /* FBSDKPlacesKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKPlacesKit.framework; path = platform/FBSDKPlacesKit.framework; sourceTree = "<group>"; };
-		DB34EBD71F2574350057008D /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = platform/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		DB34EBE41F2574B70057008D /* FacebookLoginButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookLoginButton.h; sourceTree = "<group>"; };
 		DB34EBE51F2574B70057008D /* FacebookLoginButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookLoginButton.m; sourceTree = "<group>"; };
 		DB34EBE61F2574B70057008D /* FacebookLoginButtonProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookLoginButtonProxy.h; sourceTree = "<group>"; };
@@ -76,11 +72,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB34EBDC1F2574350057008D /* FBSDKPlacesKit.framework in Frameworks */,
-				DB34EBD91F2574350057008D /* FBSDKCoreKit.framework in Frameworks */,
-				DB34EBDD1F2574350057008D /* FBSDKShareKit.framework in Frameworks */,
-				DB34EBDA1F2574350057008D /* FBSDKLoginKit.framework in Frameworks */,
-				DB34EBD81F2574350057008D /* Bolts.framework in Frameworks */,
+				312EA00B244444C5001B5EFA /* FBSDKLoginKit.framework in Frameworks */,
+				312EA00A244444C5001B5EFA /* FBSDKCoreKit.framework in Frameworks */,
+				312EA00C244444C5001B5EFA /* FBSDKShareKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,11 +103,9 @@
 		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DB34EBD21F2574350057008D /* Bolts.framework */,
-				DB34EBD31F2574350057008D /* FBSDKCoreKit.framework */,
-				DB34EBD41F2574350057008D /* FBSDKLoginKit.framework */,
-				DB34EBD61F2574350057008D /* FBSDKPlacesKit.framework */,
-				DB34EBD71F2574350057008D /* FBSDKShareKit.framework */,
+				312EA007244444C5001B5EFA /* FBSDKCoreKit.framework */,
+				312EA008244444C5001B5EFA /* FBSDKLoginKit.framework */,
+				312EA009244444C5001B5EFA /* FBSDKShareKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
