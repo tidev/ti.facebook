@@ -14,13 +14,165 @@ describe('ti.facebook', () => {
 		it('.apiName', () => {
 			expect(Facebook.apiName).toBe('Ti.Facebook');
 		});
+		if (IOS) {
+			it('.moduleId', () => {
+				expect(Facebook.moduleId).toBe('facebook');
+			});
+		}
 
 		// TODO: moduleid, guid, name
 		// TODO: properties
 
+		describe('properties', () => {
+			describe('.loginButton', () => {
+				it('defaults to undefined', () => {
+					expect(Facebook.loginButton).not.toBeDefined();
+				});
+			});
+			describe('.loggedIn', () => {
+				it('defaults to false', () => {
+					expect(Facebook.loggedIn).toEqual(false);
+				});
+			});
+			describe('.appID', () => {
+				it('defaults to undefined', () => {
+					expect(Facebook.appID).not.toBeDefined();
+				});
+			});
+			describe('.accessTokenExpired', () => {
+				it('defaults to false', () => {
+					expect(Facebook.accessTokenExpired).toEqual(false);
+				});
+			});
+			describe('.accessTokenActive', () => {
+				it('defaults to false', () => {
+					expect(Facebook.accessTokenActive).toEqual(false);
+				});
+			});
+			if (ANDROID) {
+				describe('.uid android', () => {
+					it('defaults to defined', () => {
+						expect(Facebook.uid).toBeDefined();
+					});
+				});
+				describe('.permissions android', () => {
+					it('defaults to defined', () => {
+						expect(Facebook.permissions).toBeDefined();
+					});
+				});
+				describe('.accessToken android', () => {
+					it('defaults to defined', () => {
+						expect(Facebook.accessToken).toBeDefined();
+					});
+				});
+				describe('.EVENT_LOGIN', () => {
+					it('defaults to undefined', () => {
+						expect(Facebook.EVENT_LOGIN).not.toBeDefined();
+					});
+				});
+				describe('.EVENT_LOGOUT', () => {
+					it('defaults to undefined', () => {
+						expect(Facebook.EVENT_LOGOUT).not.toBeDefined();
+					});
+				});
+				describe('.EVENT_TOKEN_UPDATED', () => {
+					it('defaults to undefined', () => {
+						expect(Facebook.EVENT_TOKEN_UPDATED).not.toBeDefined();
+					});
+				});
+				describe('.PROPERTY_SUCCESS', () => {
+					it('defaults to undefined', () => {
+						expect(Facebook.PROPERTY_SUCCESS).not.toBeDefined();
+					});
+				});
+				describe('.PROPERTY_CANCELLED', () => {
+					it('defaults to undefined', () => {
+						expect(Facebook.PROPERTY_CANCELLED).not.toBeDefined();
+					});
+				});
+				describe('.PROPERTY_ERROR', () => {
+					it('defaults to undefined', () => {
+						expect(Facebook.PROPERTY_ERROR).not.toBeDefined();
+					});
+				});
+				describe('.PROPERTY_CODE', () => {
+					it('defaults to undefined', () => {
+						expect(Facebook.PROPERTY_CODE).not.toBeDefined();
+					});
+				});
+				describe('.PROPERTY_DATA', () => {
+					it('defaults to undefined', () => {
+						expect(Facebook.PROPERTY_DATA).not.toBeDefined();
+					});
+				});
+				describe('.PROPERTY_UID', () => {
+					it('defaults to undefined', () => {
+						expect(Facebook.PROPERTY_UID).not.toBeDefined();
+					});
+				});
+				describe('.PROPERTY_RESULT', () => {
+					it('defaults to undefined', () => {
+						expect(Facebook.PROPERTY_RESULT).not.toBeDefined();
+					});
+				});
+				describe('.EVENT_SHARE_COMPLETE', () => {
+					it('defaults to undefined', () => {
+						expect(Facebook.EVENT_SHARE_COMPLETE).not.toBeDefined();
+					});
+				});
+				describe('.EVENT_REQUEST_DIALOG_COMPLETE', () => {
+					it('defaults to undefined', () => {
+						expect(Facebook.EVENT_REQUEST_DIALOG_COMPLETE).not.toBeDefined();
+					});
+				});
+				describe('.getFacebookModule', () => {
+					it('defaults to undefined', () => {
+						expect(Facebook.getFacebookModule).not.toBeDefined();
+					});
+				});
+				describe('.getCallbackManager', () => {
+					it('defaults to undefined', () => {
+						expect(Facebook.getCallbackManager).not.toBeDefined();
+					});
+				});
+				describe('.getFacebookCallback', () => {
+					it('defaults to undefined', () => {
+						expect(Facebook.getFacebookCallback).not.toBeDefined();
+					});
+				});
+				describe('.makeMeRequest(accessToken)', () => {
+					it('defaults to undefined', () => {
+						expect(Facebook.getFacebookCallback).not.toBeDefined();
+					});
+				});
+			}
+			if (IOS) {
+				describe('.uid ios', () => {
+					it('defaults to undefined', () => {
+						expect(Facebook.uid).not.toBeDefined();
+					});
+				});
+				describe('.permissions ios', () => {
+					it('defaults to undefined', () => {
+						expect(Facebook.permissions).not.toBeDefined();
+					});
+				});
+				describe('.accessToken ios', () => {
+					it('defaults to undefined', () => {
+						expect(Facebook.accessToken).not.toBeDefined();
+					});
+				});
+			}
+		});
+
 		describe('constants', () => {
 			describe('AUDIENCE_*', () => {
-				// FIXME: Android has an AUDIENCE_NONE constant!
+				if (ANDROID) {
+					it('AUDIENCE_NONE', () => {
+						expect(Facebook.AUDIENCE_NONE).toEqual(jasmine.any(Number));
+					});
+				}
+
 				it('AUDIENCE_ONLY_ME', () => {
 					expect(Facebook.AUDIENCE_ONLY_ME).toEqual(jasmine.any(Number));
 				});
@@ -65,37 +217,8 @@ describe('ti.facebook', () => {
 					expect(Facebook.FILTER_APP_NON_USERS).toEqual(jasmine.any(Number));
 				});
 			});
-
-			if (IOS) { // iOS-specific constants
-				describe('PLACE_LOCATION_CONFIDENCE_*', () => {
-					it('PLACE_LOCATION_CONFIDENCE_NOT_APPLICABLE', () => {
-						expect(Facebook.PLACE_LOCATION_CONFIDENCE_NOT_APPLICABLE).toEqual(jasmine.any(Number));
-					});
-
-					it('PLACE_LOCATION_CONFIDENCE_LOW', () => {
-						expect(Facebook.PLACE_LOCATION_CONFIDENCE_LOW).toEqual(jasmine.any(Number));
-					});
-
-					it('PLACE_LOCATION_CONFIDENCE_MEDIUM', () => {
-						expect(Facebook.PLACE_LOCATION_CONFIDENCE_MEDIUM).toEqual(jasmine.any(Number));
-					});
-
-					it('PLACE_LOCATION_CONFIDENCE_HIGH', () => {
-						expect(Facebook.PLACE_LOCATION_CONFIDENCE_HIGH).toEqual(jasmine.any(Number));
-					});
-				});
-			}
-
-			describe('LOGIN_BEHAVIOR_*', () => {
-				it('LOGIN_BEHAVIOR_BROWSER', () => {
-					expect(Facebook.LOGIN_BEHAVIOR_BROWSER).toEqual(jasmine.any(Number));
-				});
-
-				it('LOGIN_BEHAVIOR_NATIVE', () => {
-					expect(Facebook.LOGIN_BEHAVIOR_NATIVE).toEqual(jasmine.any(Number));
-				});
-
-				if (ANDROID) {
+			if (ANDROID) {
+				describe('LOGIN_BEHAVIOR_*', () => {
 					it('LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK', () => {
 						expect(Facebook.LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK).toEqual(jasmine.any(Number));
 					});
@@ -103,18 +226,20 @@ describe('ti.facebook', () => {
 					it('LOGIN_BEHAVIOR_DEVICE_AUTH', () => {
 						expect(Facebook.LOGIN_BEHAVIOR_DEVICE_AUTH).toEqual(jasmine.any(Number));
 					});
-				}
 
-				if (IOS) {
-					it('LOGIN_BEHAVIOR_SYSTEM_ACCOUNT', () => {
-						expect(Facebook.LOGIN_BEHAVIOR_SYSTEM_ACCOUNT).toEqual(jasmine.any(Number));
+					it('LOGIN_BEHAVIOR_BROWSER', () => {
+						expect(Facebook.LOGIN_BEHAVIOR_BROWSER).toEqual(jasmine.any(Number));
 					});
 
 					it('LOGIN_BEHAVIOR_WEB', () => {
 						expect(Facebook.LOGIN_BEHAVIOR_WEB).toEqual(jasmine.any(Number));
 					});
-				}
-			});
+
+					it('LOGIN_BEHAVIOR_NATIVE', () => {
+						expect(Facebook.LOGIN_BEHAVIOR_NATIVE).toEqual(jasmine.any(Number));
+					});
+				});
+			}
 
 			describe('SHARE_DIALOG_MODE_*', () => {
 				it('SHARE_DIALOG_MODE_AUTOMATIC', () => {
@@ -170,6 +295,54 @@ describe('ti.facebook', () => {
 
 				it('LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE', () => {
 					expect(Facebook.LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE).toEqual(jasmine.any(Number));
+				});
+			});
+
+			describe('EVENT_NAME_*', () => {
+				it('EVENT_NAME_COMPLETED_REGISTRATION', () => {
+					expect(Facebook.EVENT_NAME_COMPLETED_REGISTRATION).toEqual(jasmine.any(String));
+				});
+
+				it('EVENT_NAME_VIEWED_CONTENT', () => {
+					expect(Facebook.EVENT_NAME_VIEWED_CONTENT).toEqual(jasmine.any(String));
+				});
+
+				it('EVENT_NAME_ADDED_TO_CART', () => {
+					expect(Facebook.EVENT_NAME_ADDED_TO_CART).toEqual(jasmine.any(String));
+				});
+
+				it('EVENT_NAME_INITIATED_CHECKOUT', () => {
+					expect(Facebook.EVENT_NAME_INITIATED_CHECKOUT).toEqual(jasmine.any(String));
+				});
+
+				it('EVENT_NAME_ADDED_PAYMENT_INFO', () => {
+					expect(Facebook.EVENT_NAME_ADDED_PAYMENT_INFO).toEqual(jasmine.any(String));
+				});
+			});
+
+			describe('EVENT_PARAM_*', () => {
+				it('EVENT_PARAM_CONTENT', () => {
+					expect(Facebook.EVENT_PARAM_CONTENT).toEqual(jasmine.any(String));
+				});
+
+				it('EVENT_PARAM_CONTENT_ID', () => {
+					expect(Facebook.EVENT_PARAM_CONTENT_ID).toEqual(jasmine.any(String));
+				});
+
+				it('EVENT_PARAM_CONTENT_TYPE', () => {
+					expect(Facebook.EVENT_PARAM_CONTENT_TYPE).toEqual(jasmine.any(String));
+				});
+
+				it('EVENT_PARAM_CURRENCY', () => {
+					expect(Facebook.EVENT_PARAM_CURRENCY).toEqual(jasmine.any(String));
+				});
+
+				it('EVENT_PARAM_NUM_ITEMS', () => {
+					expect(Facebook.EVENT_PARAM_NUM_ITEMS).toEqual(jasmine.any(String));
+				});
+
+				it('EVENT_PARAM_PAYMENT_INFO_AVAILABLE', () => {
+					expect(Facebook.EVENT_PARAM_PAYMENT_INFO_AVAILABLE).toEqual(jasmine.any(String));
 				});
 			});
 		});
@@ -277,35 +450,53 @@ describe('ti.facebook', () => {
 				});
 			});
 
-			// FIXME: iOS specific APIs, ideally we'd have implementatiosn for Android!
+			describe('#logRegistrationCompleted(registrationMethod)', () => {
+				it('is a function', () => {
+					expect(Facebook.logRegistrationCompleted).toEqual(jasmine.any(Function));
+				});
+			});
+
 			if (IOS) {
-				describe('#fetchNearbyPlacesForCurrentLocation([confidenceLevel], [fields], success, error)', () => {
-					it('is a function', () => {
-						expect(Facebook.fetchNearbyPlacesForCurrentLocation).toEqual(jasmine.any(Function));
-					});
-				});
-
-				describe('#fetchNearbyPlacesForSearchTearm(searchTearm, [categories], [fields], [distance], [cursor], success, error)', () => {
-					it('is a function', () => {
-						expect(Facebook.fetchNearbyPlacesForSearchTearm).toEqual(jasmine.any(Function));
-					});
-				});
-
-				describe('#presentMessengerDialog(params)', () => {
-					it('is a function', () => {
-						expect(Facebook.presentMessengerDialog).toEqual(jasmine.any(Function));
-					});
-				});
-
 				describe('#setCurrentAccessToken(params)', () => {
 					it('is a function', () => {
 						expect(Facebook.setCurrentAccessToken).toEqual(jasmine.any(Function));
 					});
 				});
-
-				describe('#shareMediaToMessenger(params)', () => {
+				describe('#handleRelaunch(notification)', () => {
 					it('is a function', () => {
-						expect(Facebook.shareMediaToMessenger).toEqual(jasmine.any(Function));
+						expect(Facebook.handleRelaunch).toEqual(jasmine.any(Function));
+					});
+				});
+				describe('#resumed(note)', () => {
+					it('is a function', () => {
+						expect(Facebook.resumed).toEqual(jasmine.any(Function));
+					});
+				});
+				describe('#activateApp(notification)', () => {
+					it('is a function', () => {
+						expect(Facebook.activateApp).toEqual(jasmine.any(Function));
+					});
+				});
+				describe('#shutdown(sender)', () => {
+					it('is a function', () => {
+						expect(Facebook.shutdown).toEqual(jasmine.any(Function));
+					});
+				});
+				describe('#setPermissions(permissions)', () => {
+					it('is a function', () => {
+						expect(Facebook.setPermissions).toEqual(jasmine.any(Function));
+					});
+				});
+			}
+			if (ANDROID) {
+				describe('#setLoginBehavior(behaviorConstant)', () => {
+					it('is a function', () => {
+						expect(Facebook.setLoginBehavior).toEqual(jasmine.any(Function));
+					});
+				});
+				describe('#getLoginBehavior(behaviorConstant)', () => {
+					it('is a function', () => {
+						expect(Facebook.getLoginBehavior).toEqual(jasmine.any(Function));
 					});
 				});
 			}
