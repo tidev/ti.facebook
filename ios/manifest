@@ -12,7 +12,7 @@ copyright: Copyright (c) 2009-present by Axway Appcelerator
 # these should not be edited
 name: titanium-facebook
 moduleid: facebook
-guid: da8acc57-8673-4692-9282-e3c1a21f5d83
+guid: e4f7ac61-1ee7-44c5-bc27-fa6876e2dce9
 platform: iphone
 minsdk: 8.0.0
 architectures: armv7 arm64 i386 x86_64
