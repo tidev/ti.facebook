@@ -716,6 +716,10 @@ methods:
         type: ShareToMessengerParams
     since: "5.4.0"
     platforms: [iphone, ipad]
+    deprecated:
+      since: "7.0.0"
+      removed: "7.0.0"
+      notes: "Removed by the native Facebook SDK"
     
   - name: setCurrentAccessToken
     summary: Set a new access token for using Facebook services.
@@ -1329,6 +1333,10 @@ properties:
     permission: read-only
     since: "5.4.0"
     platforms: [iphone, ipad]
+    deprecated:
+      since: "7.0.0"
+      removed: "7.0.0"
+      notes: "Removed by the native Facebook SDK"
 
   - name: MESSENGER_BUTTON_STYLE_WHITE
     summary: |
@@ -1338,6 +1346,10 @@ properties:
     permission: read-only
     since: "5.4.0"
     platforms: [iphone, ipad]
+    deprecated:
+      since: "7.0.0"
+      removed: "7.0.0"
+      notes: "Removed by the native Facebook SDK"
 
   - name: MESSENGER_BUTTON_STYLE_WHITE_BORDERED
     summary: |
@@ -1347,6 +1359,10 @@ properties:
     permission: read-only
     since: "5.4.0"
     platforms: [iphone, ipad]
+    deprecated:
+      since: "7.0.0"
+      removed: "7.0.0"
+      notes: "Removed by the native Facebook SDK"
 
   - name: loginBehavior
     summary: |
@@ -1881,6 +1897,11 @@ properties:
     description: This is optional. If you don't include it a fallback image will be used.
     type: String
     optional: true 
+    
+deprecated:
+  since: "5.7.0"
+  removed: "5.7.0"
+  notes: "Removed by the native Facebook SDK"
 
 ---
 name: CurrentAccessTokenParams
