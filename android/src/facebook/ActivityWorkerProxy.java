@@ -18,6 +18,7 @@ import org.appcelerator.kroll.common.Log;
 import org.appcelerator.titanium.TiBaseActivity;
 import org.appcelerator.titanium.TiLifecycle.OnInstanceStateEvent;
 import org.appcelerator.titanium.TiLifecycle.OnActivityResultEvent;
+import org.appcelerator.titanium.proxy.TiWindowProxy;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -42,6 +43,12 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
 	public void handleCreationDict(KrollDict options)
 	{
 		super.handleCreationDict(options);
+
+		if (options.containsKey("lifecycleContainer") && accessTokenTracker == null) {
+			TiWindowProxy window = (TiWindowProxy)options.get("lifecycleContainer");
+
+			this.onCreate(window.getActivity(), null);
+		}
 	}
 
 	@Override
