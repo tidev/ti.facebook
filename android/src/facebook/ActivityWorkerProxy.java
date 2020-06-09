@@ -42,6 +42,12 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
 	public void handleCreationDict(KrollDict options)
 	{
 		super.handleCreationDict(options);
+
+		if (options.containsKey("lifecycleContainer") && accessTokenTracker == null) {
+			TiWindowProxy window = (TiWindowProxy)options.get("lifecycleContainer");
+
+			this.onCreate(window.getActivity(), null);
+		}
 	}
 
 	@Override
