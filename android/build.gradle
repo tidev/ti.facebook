@@ -1,26 +1,10 @@
-apply plugin: 'java'
 
-repositories {
-	google()
-	jcenter()
-	mavenCentral()
+buildscript {
+	repositories {
+		mavenCentral()
+	}
 }
 
 dependencies {
-    implementation 'com.facebook.android:facebook-core:5.+'
-    implementation 'com.facebook.android:facebook-common:5.+'
-    implementation 'com.facebook.android:facebook-login:5.+'
-    implementation 'com.facebook.android:facebook-share:5.+'
-    implementation 'com.facebook.android:facebook-places:5.+'
-    implementation 'com.facebook.android:facebook-messenger:5.+'
-    implementation 'com.facebook.android:facebook-applinks:5.+'
-}
-
-configurations.all {
-  transitive = false
-}
-
-task getDeps(type: Copy) {
-	from sourceSets.main.runtimeClasspath
-	into 'lib/'
+	implementation 'com.facebook.android:facebook-android-sdk:5.13.0'
 }

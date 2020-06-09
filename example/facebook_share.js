@@ -1,4 +1,4 @@
-exports.window = function (value) {
+exports.window = function () {
 	var win = Titanium.UI.createWindow({
 		title: 'Share Dialog'
 	});
@@ -29,7 +29,7 @@ exports.window = function (value) {
 		actionsView.show();
 	});
 
-	fb.addEventListener('logout', function (e) {
+	fb.addEventListener('logout', function () {
 		Ti.API.info('logout event');
 		actionsView.hide();
 	});
@@ -61,7 +61,7 @@ exports.window = function (value) {
 				fb.presentPhotoShareDialog({
 					photos: [
 						{
-							image: event.media, // Required Ti.Blob or String URL
+							photo: event.media, // Required Ti.Blob or String URL
 							caption: 'Great photo!' // Optional caption
 
 						}
@@ -69,17 +69,38 @@ exports.window = function (value) {
 				});
 			},
 			cancel: function () {},
-			error: function (error) {},
+			error: function () {},
 			allowEditing: true
 		});
 	});
 
 	actionsView.add(shareImage);
 
+	var shareImageGraphAPI = Ti.UI.createButton({
+		title: 'Share image from file with share dialog',
+		top: '10%',
+		center: true,
+	});
+	shareImageGraphAPI.addEventListener('click', function () {
+		var f = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, 'images', 'flower.jpg');
+		var blob = f.read();
+		fb.presentPhotoShareDialog({
+			photos: [
+				{
+					photo: blob, // Required Ti.Blob or String URL
+					caption: 'Great photo!' // Optional caption
+
+				}
+			]
+		});
+	});
+
+	actionsView.add(shareImageGraphAPI);
+
 	fb.addEventListener('shareCompleted', function (e) {
-		if(e.success) {
+		if (e.success) {
 			alert('Share completed');
-		} else if(e.cancelled) {
+		} else if (e.cancelled) {
 			alert('Share cancelled');
 		} else {
 			alert('error ' + e.errorDesciption + '. code: ' + e.code);
@@ -94,17 +115,15 @@ exports.window = function (value) {
 
 	requestDialog.addEventListener('click', function () {
 		fb.presentSendRequestDialog({
-			message: 'Go to https://appcelerator.com/'
-		}, {
-			data: '{\'badge_of_awesomeness\':\'1\',' +
-				'\'social_karma\':\'5\'}'
+			message: 'Go to https://appcelerator.com/',
+			data: { badge_of_awesomeness: '1', social_karma: '5' }
 		});
 	});
 
 	fb.addEventListener('requestDialogCompleted', function (e) {
-		if(e.success) {
+		if (e.success) {
 			alert('Request dialog completed. Returned data is ' + e.data);
-		} else if(e.cancelled) {
+		} else if (e.cancelled) {
 			alert('Request dialog cancelled');
 		} else {
 			alert('error ' + e.error);

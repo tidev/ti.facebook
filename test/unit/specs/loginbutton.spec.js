@@ -1,9 +1,6 @@
 
 const Facebook = require('facebook');
 
-const IOS = (Ti.Platform.osname === 'iphone' || Ti.Platform.osname === 'ipad');
-const ANDROID = (Ti.Platform.osname === 'android');
-
 describe('ti.facebook', () => {
 	describe('LoginButton', () => {
 		let button;
@@ -12,11 +9,41 @@ describe('ti.facebook', () => {
 			button = Facebook.createLoginButton();
 		});
 
+		function checkValidAudiance(audience) {
+			if (audience === Facebook.AUDIENCE_ONLY_ME
+				|| audience === Facebook.AUDIENCE_FRIENDS
+				|| audience === Facebook.AUDIENCE_EVERYONE) {
+			// for valid audiance it will not throw exception and test case will fail
+			} else {
+				throw new Error('You must provide valid audience');
+			}
+		}
+
+		function checkValidTooltipBehavior(tooltipBehavior) {
+			if (tooltipBehavior === Facebook.LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC
+				|| tooltipBehavior === Facebook.LOGIN_BUTTON_TOOLTIP_BEHAVIOR_FORCE_DISPLAY
+				|| tooltipBehavior === Facebook.LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE) {
+			// for valid tooltipBehavior it will not throw exception and test case will fail
+			} else {
+				throw new Error('You must provide valid tooltipBehavior');
+			}
+		}
+
+		function checkValidTooltipColorStyle(tooltipColorStyle) {
+			if (tooltipColorStyle === Facebook.LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY
+				|| tooltipColorStyle === Facebook.LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE) {
+			// for valid tooltipColorStyle it will not throw exception and test case will fail
+			} else {
+				throw new Error('You must provide valid tooltipColorStyle');
+			}
+		}
+
 		it('.apiName', () => {
 			expect(button.apiName).toBe('Ti.Facebook.LoginButton');
 		});
 
 		describe('properties', () => {
+
 			describe('.audience', () => {
 				it('defaults to AUDIENCE_FRIENDS', () => {
 					expect(button.audience).toEqual(Facebook.AUDIENCE_FRIENDS);
@@ -27,25 +54,22 @@ describe('ti.facebook', () => {
 
 					expect(button.audience).toEqual(Facebook.AUDIENCE_EVERYONE);
 				});
-				// TODO: try invalid values
+
+				it('fail with invalid value', () => {
+					button.audience = -1; // Assign invalid value
+					expect(() => checkValidAudiance(button.audience)).toThrow();
+				});
 			});
 
-			if (ANDROID) {
-				// FIXME: on iOS we get undefined, presumably because of https://jira.appcelerator.org/browse/TIMOB-23504
-				describe('.publishPermissions', () => {
-					it('is a property', () => {
-						expect(Object.getOwnPropertyDescriptor(button, 'publishPermissions')).toBeDefined();
-					});
-					// TODO: change the value, verify it updates? try invalid values
+			describe('.permissions', () => {
+				it('is a property', () => {
+					expect(button.permissions).not.toBeDefined();
 				});
-
-				describe('.readPermissions', () => {
-					it('is a property', () => {
-						expect(Object.getOwnPropertyDescriptor(button, 'readPermissions')).toBeDefined();
-					});
-					// TODO: change the value, verify it updates? try invalid values
+				it('change permissions to publish_actions', () => {
+					button.permissions = [ 'publish_actions' ];
+					expect(button.permissions).toEqual([ 'publish_actions' ]);
 				});
-			}
+			});
 
 			describe('.tooltipBehavior', () => {
 				it('defaults to LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC', () => {
@@ -57,7 +81,11 @@ describe('ti.facebook', () => {
 
 					expect(button.tooltipBehavior).toEqual(Facebook.LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE);
 				});
-				// TODO: try invalid values
+
+				it('fail tooltipBehavior with invalid value', () => {
+					button.tooltipBehavior = -1; // Assign invalid value
+					expect(() => checkValidTooltipBehavior(button.tooltipBehavior)).toThrow();
+				});
 			});
 
 			describe('.tooltipColorStyle', () => {
@@ -73,7 +101,11 @@ describe('ti.facebook', () => {
 
 					expect(button.tooltipColorStyle).toEqual(Facebook.LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY);
 				});
-				// TODO: ctry invalid values
+
+				it('fail tooltipColorStyle with invalid value', () => {
+					button.tooltipColorStyle = -1; // Assign invalid value
+					expect(() => checkValidTooltipColorStyle(button.tooltipColorStyle)).toThrow();
+				});
 			});
 		});
 	});
