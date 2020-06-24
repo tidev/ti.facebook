@@ -15,11 +15,10 @@ description: |
     calling <Modules.Facebook.presentMessengerDialog>. 
 
     This functionality is currently iOS-only.
-
 examples:
-
   - title: Messenger button to share the Appcelerator website.
     example: |
+        ``` javascript
         var fb = require("facebook");
         var messengerButton = fb.createMessengerButton({
             mode: fb.MESSENGER_BUTTON_MODE_RECTANGULAR
@@ -36,7 +35,7 @@ examples:
         });
 
         win.add(messengerButton);
-
+        ```
 since: "5.4.0"
 platforms: [iphone, ipad]
 extends: Titanium.UI.View
