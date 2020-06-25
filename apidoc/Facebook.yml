@@ -30,12 +30,12 @@ description: |
     - Instantiate the module with the `require('facebook')` method, then make subsequent API calls
       with the new Facebook object.
 
-          ``` javascript  
-          var fb = require('facebook');
-          fb.permissions = [FACEBOOK_APP_PERMISSIONS]; // e.g. ['email']
-          fb.initialize();
-          fb.authorize();
-          ```
+        ``` javascript
+        var fb = require('facebook');
+        fb.permissions = [FACEBOOK_APP_PERMISSIONS]; // e.g. ['email']
+        fb.initialize();
+        fb.authorize();
+        ```
 
     ### Additional iOS Setup Steps
 
@@ -115,7 +115,7 @@ description: |
     ```
 
     For iOS 9+ and Titanium 5.0.0.GA and above, App Transport Security is disabled by default.
-    If you choose to enable it, you have to set the following keys and values in `tiapp.xml` <ios> section for facebook module:
+    If you choose to enable it, you have to set the following keys and values in `tiapp.xml` `<ios>` section for facebook module:
 
     ``` xml
     <key>NSAppTransportSecurity</key>
@@ -200,7 +200,7 @@ description: |
     which you can then copy.
 
     Use the following command to generate and receive the key-hashpath of your app. To do do, 
-    replace <sdk-version> with your SDK-version and run:
+    replace `<sdk-version>` with your SDK-version and run:
 
     ``` sh
     keytool -exportcert -alias androiddebugkey -keystore ~/Library/Application\ Support/Titanium/mobilesdk/osx/<sdk-version>/dev_keystore | openssl sha1 -binary | openssl base64
@@ -210,7 +210,7 @@ description: |
     and the Class Name which is the Application ID followed by the Application Name concatenated 
     with the word Activity. Example, an App called Kitchensink with Application ID of 
     "com.appcelerator.kitchensink" will have the Class Name as "com.appcelerator.kitchensink.KitchensinkActivity".
-    Alternatively, you can check the Class Name in "<project>/build/android/AndroidManifest.xml" which is 
+    Alternatively, you can check the Class Name in `<project>/build/android/AndroidManifest.xml` which is 
     generated when you build the project. The launcher activity is the Class Name of the Application.
 
     For more info, please see https://developers.facebook.com/docs/android/getting-started
