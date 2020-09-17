@@ -10,13 +10,10 @@
  * Please see the LICENSE included with this distribution for details.
  */
 
+#import <TitaniumKit/TitaniumKit.h>
+
 #import "FacebookModule.h"
 #import "FacebookConstants.h"
-#import "TiApp.h"
-#import "TiBase.h"
-#import "TiBlob.h"
-#import "TiHost.h"
-#import "TiUtils.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -776,20 +773,6 @@ NS_ASSUME_NONNULL_BEGIN
   }
 
   [self fireEvent:name withObject:event];
-}
-
-// A function for parsing URL parameters returned by the Feed Dialog.
-- (NSDictionary *)parseURLParams:(NSString *)query
-{
-  NSArray *pairs = [query componentsSeparatedByString:@"&"];
-  NSMutableDictionary *params = [NSMutableDictionary dictionary];
-  NSCharacterSet *charSet = [NSCharacterSet characterSetWithCharactersInString:@"[]"];
-  for (NSString *pair in pairs) {
-    NSArray *kv = [pair componentsSeparatedByString:@"="];
-    NSString *val = [kv[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    params[[[[kv[0] stringByRemovingPercentEncoding] componentsSeparatedByCharactersInSet:charSet] componentsJoinedByString:@""]] = val;
-  }
-  return params;
 }
 
 #pragma mark Utilities

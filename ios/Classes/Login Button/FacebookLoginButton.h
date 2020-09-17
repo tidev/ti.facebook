@@ -5,8 +5,7 @@
  * Please see the LICENSE included with this distribution for details.
  */
 
-#import "TiUIView.h"
-
+#import <TitaniumKit/TitaniumKit.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 

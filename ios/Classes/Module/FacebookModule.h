@@ -10,13 +10,11 @@
  * Please see the LICENSE included with this distribution for details.
  */
 
-#import "TiModule.h"
-
-#import <Social/Social.h>
-
+#import <TitaniumKit/TitaniumKit.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
+#import <Social/Social.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
