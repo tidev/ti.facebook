@@ -56,7 +56,7 @@
     "karma-titanium-launcher": "^0.7.4",
     "lint-staged": "^10.3.0",
     "socket.io": "^2.2.0",
-    "titanium-docgen": "^0.2.0"
+    "titanium-docgen": "^4.7.0"
   },
   "dependencies": {},
   "husky": {
