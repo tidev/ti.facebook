@@ -1,4 +1,3 @@
-
 const Facebook = require('facebook');
 
 describe('ti.facebook', () => {
