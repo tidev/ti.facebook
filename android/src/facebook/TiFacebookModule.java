@@ -11,6 +11,39 @@
  */
 package facebook;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookRequestError;
+import com.facebook.GraphRequest;
+import com.facebook.GraphRequest.Callback;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.appevents.AppEventsConstants;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.applinks.AppLinkData;
+import com.facebook.login.DefaultAudience;
+import com.facebook.login.LoginBehavior;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.share.Sharer;
+import com.facebook.share.model.GameRequestContent;
+import com.facebook.share.model.GameRequestContent.ActionType;
+import com.facebook.share.model.GameRequestContent.Filters;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.GameRequestDialog;
+import com.facebook.share.widget.ShareDialog;
+import com.facebook.share.widget.ShareDialog.Mode;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Currency;
 import java.util.Date;
@@ -18,8 +51,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.math.BigDecimal;
-
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollFunction;
 import org.appcelerator.kroll.KrollModule;
@@ -31,40 +62,6 @@ import org.appcelerator.titanium.TiFileProxy;
 import org.appcelerator.titanium.TiLifecycle.OnActivityResultEvent;
 import org.appcelerator.titanium.util.TiConvert;
 import org.json.JSONObject;
-
-import com.facebook.AccessToken;
-import com.facebook.applinks.AppLinkData;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookRequestError;
-import com.facebook.GraphRequest;
-import com.facebook.GraphRequest.Callback;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
-import com.facebook.appevents.AppEventsLogger;
-import com.facebook.appevents.AppEventsConstants;
-import com.facebook.login.DefaultAudience;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginBehavior;
-import com.facebook.login.LoginResult;
-import com.facebook.share.Sharer;
-import com.facebook.share.model.GameRequestContent;
-import com.facebook.share.model.GameRequestContent.ActionType;
-import com.facebook.share.model.GameRequestContent.Filters;
-import com.facebook.share.model.ShareLinkContent;
-import com.facebook.share.model.SharePhotoContent;
-import com.facebook.share.model.SharePhoto;
-import com.facebook.share.widget.GameRequestDialog;
-import com.facebook.share.widget.ShareDialog;
-import com.facebook.share.widget.ShareDialog.Mode;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 
 @Kroll.module(name = "Facebook", id = "facebook")
 public class TiFacebookModule extends KrollModule implements OnActivityResultEvent

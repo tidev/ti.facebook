@@ -112,9 +112,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *_Nullable)accessToken
 {
   __block NSString *token;
-  TiThreadPerformOnMainThread(^{
-    token = [[FBSDKAccessToken currentAccessToken] tokenString];
-  },
+  TiThreadPerformOnMainThread(
+      ^{
+        token = [[FBSDKAccessToken currentAccessToken] tokenString];
+      },
       YES);
   return token;
 }
@@ -148,9 +149,10 @@ NS_ASSUME_NONNULL_BEGIN
 {
   __block NSDate *expirationDate = nil;
 
-  TiThreadPerformOnMainThread(^{
-    expirationDate = [[FBSDKAccessToken currentAccessToken] expirationDate];
-  },
+  TiThreadPerformOnMainThread(
+      ^{
+        expirationDate = [[FBSDKAccessToken currentAccessToken] expirationDate];
+      },
       YES);
 
   return expirationDate;
@@ -238,58 +240,61 @@ NS_ASSUME_NONNULL_BEGIN
 {
   __block FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
 
-  TiThreadPerformOnMainThread(^{
-    [loginManager logInWithPermissions:self->_permissions
-                    fromViewController:nil
-                               handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-                                 // Handle error
-                                 if (error != nil) {
-                                   [self fireLogin:nil cancelled:NO withError:error];
-                                   return;
-                                 }
+  TiThreadPerformOnMainThread(
+      ^{
+        [loginManager logInWithPermissions:self->_permissions
+                        fromViewController:nil
+                                   handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+                                     // Handle error
+                                     if (error != nil) {
+                                       [self fireLogin:nil cancelled:NO withError:error];
+                                       return;
+                                     }
 
-                                 // Login cancelled
-                                 if (result.isCancelled) {
-                                   [self fireLogin:nil cancelled:YES withError:nil];
-                                   return;
-                                 }
+                                     // Login cancelled
+                                     if (result.isCancelled) {
+                                       [self fireLogin:nil cancelled:YES withError:nil];
+                                       return;
+                                     }
 
-                                 // Logged In
-                               }];
-  },
+                                     // Logged In
+                                   }];
+      },
       YES);
 }
 
 - (void)initialize:(__unused id)unused
 {
-  TiThreadPerformOnMainThread(^{
-    [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
+  TiThreadPerformOnMainThread(
+      ^{
+        [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
 
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(logEvents:) name:UIApplicationDidBecomeActiveNotification object:nil];
-    [nc addObserver:self selector:@selector(accessTokenChanged:) name:FBSDKAccessTokenDidChangeNotification object:nil];
-    [nc addObserver:self selector:@selector(activateApp:) name:UIApplicationDidFinishLaunchingNotification object:nil];
-    [nc addObserver:self selector:@selector(currentProfileChanged:) name:FBSDKProfileDidChangeNotification object:nil];
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+        [nc addObserver:self selector:@selector(logEvents:) name:UIApplicationDidBecomeActiveNotification object:nil];
+        [nc addObserver:self selector:@selector(accessTokenChanged:) name:FBSDKAccessTokenDidChangeNotification object:nil];
+        [nc addObserver:self selector:@selector(activateApp:) name:UIApplicationDidFinishLaunchingNotification object:nil];
+        [nc addObserver:self selector:@selector(currentProfileChanged:) name:FBSDKProfileDidChangeNotification object:nil];
 
-    // Only triggered by Titanium SDK 5.5.0+
-    // Older SDK's get notified by the `resumed:` delegate
-    [nc addObserver:self selector:@selector(handleRelaunch:) name:@"TiApplicationLaunchedFromURL" object:nil];
+        // Only triggered by Titanium SDK 5.5.0+
+        // Older SDK's get notified by the `resumed:` delegate
+        [nc addObserver:self selector:@selector(handleRelaunch:) name:@"TiApplicationLaunchedFromURL" object:nil];
 
-    if ([FBSDKAccessToken currentAccessToken] == nil) {
-      [self activateApp:nil];
-    } else {
-      [self handleRelaunch:nil];
-    }
-  },
+        if ([FBSDKAccessToken currentAccessToken] == nil) {
+          [self activateApp:nil];
+        } else {
+          [self handleRelaunch:nil];
+        }
+      },
       YES);
 }
 
 - (void)logout:(__unused id)unused
 {
-  TiThreadPerformOnMainThread(^{
-    FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
-    [loginManager logOut];
-  },
+  TiThreadPerformOnMainThread(
+      ^{
+        FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
+        [loginManager logOut];
+      },
       NO);
 }
 
@@ -297,17 +302,18 @@ NS_ASSUME_NONNULL_BEGIN
 {
   NSDictionary *_Nonnull params = [args objectAtIndex:0];
 
-  TiThreadPerformOnMainThread(^{
-    FBSDKShareLinkContent *content = [FacebookModule shareLinkContentFromDictionary:params];
-    FBSDKShareDialog *dialog = [[FBSDKShareDialog alloc] init];
+  TiThreadPerformOnMainThread(
+      ^{
+        FBSDKShareLinkContent *content = [FacebookModule shareLinkContentFromDictionary:params];
+        FBSDKShareDialog *dialog = [[FBSDKShareDialog alloc] init];
 
-    [dialog setMode:[TiUtils intValue:[params objectForKey:@"mode"] def:FBSDKShareDialogModeAutomatic]];
-    [dialog setFromViewController:nil];
-    [dialog setShareContent:content];
-    [dialog setDelegate:self];
+        [dialog setMode:[TiUtils intValue:[params objectForKey:@"mode"] def:FBSDKShareDialogModeAutomatic]];
+        [dialog setFromViewController:nil];
+        [dialog setShareContent:content];
+        [dialog setDelegate:self];
 
-    [dialog show];
-  },
+        [dialog show];
+      },
       NO);
 }
 
@@ -315,17 +321,18 @@ NS_ASSUME_NONNULL_BEGIN
 {
   NSDictionary *_Nonnull params = [args objectAtIndex:0];
 
-  TiThreadPerformOnMainThread(^{
-    FBSDKSharePhotoContent *content = [FacebookModule sharePhotoContentFromDictionary:params];
-    FBSDKShareDialog *dialog = [[FBSDKShareDialog alloc] init];
+  TiThreadPerformOnMainThread(
+      ^{
+        FBSDKSharePhotoContent *content = [FacebookModule sharePhotoContentFromDictionary:params];
+        FBSDKShareDialog *dialog = [[FBSDKShareDialog alloc] init];
 
-    [dialog setMode:[TiUtils intValue:[params objectForKey:@"mode"] def:FBSDKShareDialogModeAutomatic]];
-    [dialog setFromViewController:nil];
-    [dialog setShareContent:content];
-    [dialog setDelegate:self];
+        [dialog setMode:[TiUtils intValue:[params objectForKey:@"mode"] def:FBSDKShareDialogModeAutomatic]];
+        [dialog setFromViewController:nil];
+        [dialog setShareContent:content];
+        [dialog setDelegate:self];
 
-    [dialog show];
-  },
+        [dialog show];
+      },
       NO);
 }
 
@@ -380,30 +387,32 @@ NS_ASSUME_NONNULL_BEGIN
     DEPRECATED_REPLACED_REMOVED(@"Facebook.sendRequestDialog.to", @"5.0.0", @"5.0.0", @"Titanium.Facebook.sendRequestDialog.recipients");
   }
 
-  TiThreadPerformOnMainThread(^{
-    FBSDKGameRequestContent *gameRequestContent = [[FBSDKGameRequestContent alloc] init];
+  TiThreadPerformOnMainThread(
+      ^{
+        FBSDKGameRequestContent *gameRequestContent = [[FBSDKGameRequestContent alloc] init];
 
-    gameRequestContent.title = title;
-    gameRequestContent.message = message;
-    gameRequestContent.recipients = recipients;
-    gameRequestContent.objectID = objectID;
-    gameRequestContent.data = data;
-    gameRequestContent.recipientSuggestions = recipientSuggestions;
-    gameRequestContent.filters = filters;
-    gameRequestContent.actionType = actionType;
+        gameRequestContent.title = title;
+        gameRequestContent.message = message;
+        gameRequestContent.recipients = recipients;
+        gameRequestContent.objectID = objectID;
+        gameRequestContent.data = data;
+        gameRequestContent.recipientSuggestions = recipientSuggestions;
+        gameRequestContent.filters = filters;
+        gameRequestContent.actionType = actionType;
 
-    [FBSDKGameRequestDialog showWithContent:gameRequestContent delegate:self];
-  },
+        [FBSDKGameRequestDialog showWithContent:gameRequestContent delegate:self];
+      },
       NO);
 }
 
 - (void)refreshPermissionsFromServer:(__unused id)unused
 {
-  TiThreadPerformOnMainThread(^{
-    [FBSDKAccessToken refreshCurrentAccessToken:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-      [self fireEvent:@"tokenUpdated" withObject:nil];
-    }];
-  },
+  TiThreadPerformOnMainThread(
+      ^{
+        [FBSDKAccessToken refreshCurrentAccessToken:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+          [self fireEvent:@"tokenUpdated" withObject:nil];
+        }];
+      },
       NO);
 }
 
@@ -419,45 +428,46 @@ NS_ASSUME_NONNULL_BEGIN
 
   FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
 
-  TiThreadPerformOnMainThread(^{
-    [loginManager logInWithPermissions:readPermissions
-                    fromViewController:nil
-                               handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-                                 BOOL success = NO;
-                                 BOOL cancelled = NO;
-                                 NSString *errorString = nil;
-                                 NSInteger code = 0;
+  TiThreadPerformOnMainThread(
+      ^{
+        [loginManager logInWithPermissions:readPermissions
+                        fromViewController:nil
+                                   handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+                                     BOOL success = NO;
+                                     BOOL cancelled = NO;
+                                     NSString *errorString = nil;
+                                     NSInteger code = 0;
 
-                                 if (error != nil) {
-                                   code = [error code];
-                                   errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
-                                   if (errorString == nil) {
-                                     errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+                                     if (error != nil) {
+                                       code = [error code];
+                                       errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
+                                       if (errorString == nil) {
+                                         errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
 
-                                     if (errorString == nil) {
-                                       if (code == 308) {
-                                         errorString = TiFacebookErrorMessageKeychainAccess;
-                                       } else {
-                                         errorString = [error localizedDescription];
+                                         if (errorString == nil) {
+                                           if (code == 308) {
+                                             errorString = TiFacebookErrorMessageKeychainAccess;
+                                           } else {
+                                             errorString = [error localizedDescription];
+                                           }
+                                         }
                                        }
+                                     } else if (result.isCancelled) {
+                                       cancelled = YES;
+                                     } else {
+                                       success = YES;
                                      }
-                                   }
-                                 } else if (result.isCancelled) {
-                                   cancelled = YES;
-                                 } else {
-                                   success = YES;
-                                 }
 
-                                 NSDictionary *propertiesDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                                                                          NUMBOOL(success), @"success",
-                                                                                      NUMBOOL(cancelled), @"cancelled",
-                                                                                      NUMINTEGER(code), @"code",
-                                                                                      errorString, @"error", nil];
+                                     NSDictionary *propertiesDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                                                                              NUMBOOL(success), @"success",
+                                                                                          NUMBOOL(cancelled), @"cancelled",
+                                                                                          NUMINTEGER(code), @"code",
+                                                                                          errorString, @"error", nil];
 
-                                 KrollEvent *invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:propertiesDict thisObject:self];
-                                 [[callback context] enqueue:invocationEvent];
-                               }];
-  },
+                                     KrollEvent *invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:propertiesDict thisObject:self];
+                                     [[callback context] enqueue:invocationEvent];
+                                   }];
+      },
       NO);
 }
 
@@ -478,47 +488,48 @@ NS_ASSUME_NONNULL_BEGIN
   FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
   loginManager.defaultAudience = defaultAudience;
 
-  TiThreadPerformOnMainThread(^{
-    [loginManager logInWithPermissions:publishPermissions
-                    fromViewController:nil
-                               handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-                                 BOOL success = NO;
-                                 BOOL cancelled = NO;
-                                 NSString *errorString = nil;
-                                 NSInteger code = 0;
+  TiThreadPerformOnMainThread(
+      ^{
+        [loginManager logInWithPermissions:publishPermissions
+                        fromViewController:nil
+                                   handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+                                     BOOL success = NO;
+                                     BOOL cancelled = NO;
+                                     NSString *errorString = nil;
+                                     NSInteger code = 0;
 
-                                 if (error != nil) {
-                                   code = [error code];
-                                   errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
-                                   if (errorString == nil) {
-                                     errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+                                     if (error != nil) {
+                                       code = [error code];
+                                       errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
+                                       if (errorString == nil) {
+                                         errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
 
-                                     if (errorString == nil) {
-                                       if (code == 308) {
-                                         errorString = TiFacebookErrorMessageKeychainAccess;
-                                       } else {
-                                         errorString = [error localizedDescription];
+                                         if (errorString == nil) {
+                                           if (code == 308) {
+                                             errorString = TiFacebookErrorMessageKeychainAccess;
+                                           } else {
+                                             errorString = [error localizedDescription];
+                                           }
+                                         }
                                        }
+                                     } else if (result.isCancelled) {
+                                       cancelled = YES;
+                                     } else {
+                                       success = YES;
                                      }
-                                   }
-                                 } else if (result.isCancelled) {
-                                   cancelled = YES;
-                                 } else {
-                                   success = YES;
-                                 }
 
-                                 NSDictionary *propertiesDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                                                                          NUMBOOL(success), @"success",
-                                                                                      NUMBOOL(cancelled), @"cancelled",
-                                                                                      NUMINTEGER(code), @"code",
-                                                                                      errorString, @"error", nil];
+                                     NSDictionary *propertiesDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                                                                              NUMBOOL(success), @"success",
+                                                                                          NUMBOOL(cancelled), @"cancelled",
+                                                                                          NUMINTEGER(code), @"code",
+                                                                                          errorString, @"error", nil];
 
-                                 KrollEvent *invocationEvent = [[KrollEvent alloc] initWithCallback:callback
-                                                                                        eventObject:propertiesDict
-                                                                                         thisObject:self];
-                                 [[callback context] enqueue:invocationEvent];
-                               }];
-  },
+                                     KrollEvent *invocationEvent = [[KrollEvent alloc] initWithCallback:callback
+                                                                                            eventObject:propertiesDict
+                                                                                             thisObject:self];
+                                     [[callback context] enqueue:invocationEvent];
+                                   }];
+      },
       YES);
 }
 
@@ -546,45 +557,46 @@ NS_ASSUME_NONNULL_BEGIN
     }
   }
 
-  TiThreadPerformOnMainThread(^{
-    if ([FBSDKAccessToken currentAccessToken]) {
-      [[[FBSDKGraphRequest alloc] initWithGraphPath:path parameters:params HTTPMethod:httpMethod]
-          startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-            NSDictionary *returnedObject;
-            BOOL success = NO;
+  TiThreadPerformOnMainThread(
+      ^{
+        if ([FBSDKAccessToken currentAccessToken]) {
+          [[[FBSDKGraphRequest alloc] initWithGraphPath:path parameters:params HTTPMethod:httpMethod]
+              startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+                NSDictionary *returnedObject;
+                BOOL success = NO;
 
-            if (!error) {
-              success = YES;
-              //for parity with android, have to stringify json object
-              NSString *resultString = [TiUtils jsonStringify:result];
-              returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                                         resultString, @"result", NUMBOOL(success), @"success",
-                                                     path, @"path", nil];
-            } else {
-              //DebugLog(@"requestWithGraphPath error for path, %@", path);
-              success = NO;
-              NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
-              if (errorString == nil) {
-                errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+                if (!error) {
+                  success = YES;
+                  //for parity with android, have to stringify json object
+                  NSString *resultString = [TiUtils jsonStringify:result];
+                  returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                                             resultString, @"result", NUMBOOL(success), @"success",
+                                                         path, @"path", nil];
+                } else {
+                  //DebugLog(@"requestWithGraphPath error for path, %@", path);
+                  success = NO;
+                  NSString *errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
+                  if (errorString == nil) {
+                    errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
 
-                if (errorString == nil) {
-                  if ([error code] == 308) {
-                    errorString = TiFacebookErrorMessageKeychainAccess;
-                  } else {
-                    errorString = [error localizedDescription];
+                    if (errorString == nil) {
+                      if ([error code] == 308) {
+                        errorString = TiFacebookErrorMessageKeychainAccess;
+                      } else {
+                        errorString = [error localizedDescription];
+                      }
+                    }
                   }
+                  returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                                             NUMBOOL(success), @"success",
+                                                         path, @"path", errorString, @"error", nil];
                 }
-              }
-              returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                                         NUMBOOL(success), @"success",
-                                                     path, @"path", errorString, @"error", nil];
-            }
 
-            KrollEvent *invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:returnedObject thisObject:self];
-            [[callback context] enqueue:invocationEvent];
-          }];
-    }
-  },
+                KrollEvent *invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:returnedObject thisObject:self];
+                [[callback context] enqueue:invocationEvent];
+              }];
+        }
+      },
       NO);
 }
 
@@ -592,35 +604,36 @@ NS_ASSUME_NONNULL_BEGIN
 {
   KrollCallback *callback = [args objectAtIndex:0];
 
-  TiThreadPerformOnMainThread(^{
-    [FBSDKAppLinkUtility fetchDeferredAppLink:^(NSURL *url, NSError *error) {
-      NSDictionary *returnedObject;
+  TiThreadPerformOnMainThread(
+      ^{
+        [FBSDKAppLinkUtility fetchDeferredAppLink:^(NSURL *url, NSError *error) {
+          NSDictionary *returnedObject;
 
-      if (url != nil) {
-        returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys:[url absoluteURL], @"url", NUMBOOL(YES), @"success", nil];
-      } else {
-        NSString *errorString = @"An error occurred. Please try again.";
-        if (error != nil) {
-          errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
-          if (errorString == nil) {
-            errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
+          if (url != nil) {
+            returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys:[url absoluteURL], @"url", NUMBOOL(YES), @"success", nil];
+          } else {
+            NSString *errorString = @"An error occurred. Please try again.";
+            if (error != nil) {
+              errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
+              if (errorString == nil) {
+                errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
 
-            if (errorString == nil) {
-              if ([error code] == 308) {
-                errorString = [NSString stringWithFormat:@"Error 308 detected: Please enable keychain-sharing in your project by creating an Entitlements file. For more information check the \"Migrate to iOS 10\" section in https://docs.appcelerator.com/platform/latest/#!/api/Modules.Facebook"];
-              } else {
-                errorString = [error localizedDescription];
+                if (errorString == nil) {
+                  if ([error code] == 308) {
+                    errorString = [NSString stringWithFormat:@"Error 308 detected: Please enable keychain-sharing in your project by creating an Entitlements file. For more information check the \"Migrate to iOS 10\" section in https://docs.appcelerator.com/platform/latest/#!/api/Modules.Facebook"];
+                  } else {
+                    errorString = [error localizedDescription];
+                  }
+                }
               }
             }
+            returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys:errorString, @"error", NUMBOOL(NO), @"success", nil];
           }
-        }
-        returnedObject = [[NSDictionary alloc] initWithObjectsAndKeys:errorString, @"error", NUMBOOL(NO), @"success", nil];
-      }
 
-      KrollEvent *invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:returnedObject thisObject:self];
-      [[callback context] enqueue:invocationEvent];
-    }];
-  },
+          KrollEvent *invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:returnedObject thisObject:self];
+          [[callback context] enqueue:invocationEvent];
+        }];
+      },
       YES);
 }
 
@@ -779,15 +792,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)populateUserDetails
 {
-  TiThreadPerformOnMainThread(^{
-    if ([FBSDKAccessToken currentAccessToken] != nil) {
-      FBSDKProfile *user = [FBSDKProfile currentProfile];
-      self->_userID = [user userID];
-      [self fireLogin:user cancelled:NO withError:nil];
-    } else {
-      [self fireLogin:nil cancelled:NO withError:nil];
-    }
-  },
+  TiThreadPerformOnMainThread(
+      ^{
+        if ([FBSDKAccessToken currentAccessToken] != nil) {
+          FBSDKProfile *user = [FBSDKProfile currentProfile];
+          self->_userID = [user userID];
+          [self fireLogin:user cancelled:NO withError:nil];
+        } else {
+          [self fireLogin:nil cancelled:NO withError:nil];
+        }
+      },
       NO);
 }
 

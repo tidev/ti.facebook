@@ -787,7 +787,6 @@ methods:
         type: String
 
 events:
-
   - name: login
     summary: Fired at session login.
     properties:
@@ -825,6 +824,7 @@ events:
             Data returned by Facebook when we query for the UID (using graph path "me")
             after a successful login. Data is in JSON format, and includes information
             such as user name, locale and gender.
+        type: String
 
   - name: logout
     summary: Fired at session logout.

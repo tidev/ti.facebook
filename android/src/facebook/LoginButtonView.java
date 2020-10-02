@@ -6,23 +6,20 @@
   */
 package facebook;
 
+import android.app.Activity;
+import com.facebook.CallbackManager;
+import com.facebook.login.DefaultAudience;
+import com.facebook.login.widget.LoginButton;
+import com.facebook.login.widget.LoginButton.ToolTipMode;
+import com.facebook.login.widget.ToolTipPopup;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.titanium.proxy.TiViewProxy;
 import org.appcelerator.titanium.util.TiConvert;
 import org.appcelerator.titanium.view.TiUIView;
-
-import android.app.Activity;
-
-import com.facebook.CallbackManager;
-import com.facebook.login.DefaultAudience;
-import com.facebook.login.widget.LoginButton;
-import com.facebook.login.widget.ToolTipPopup;
-import com.facebook.login.widget.LoginButton.ToolTipMode;
 
 public class LoginButtonView extends TiUIView
 {

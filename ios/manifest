@@ -15,4 +15,5 @@ moduleid: facebook
 guid: e4f7ac61-1ee7-44c5-bc27-fa6876e2dce9
 platform: iphone
 minsdk: 9.2.0
+mac: false
 architectures: armv7 arm64 i386 x86_64
