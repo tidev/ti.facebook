@@ -1,9 +1,10 @@
+#! groovy
 library 'pipeline-library'
 
 def isMaster = env.BRANCH_NAME.equals('master')
 
 buildModule {
-	sdkVersion = '9.0.0.v20200127103011'
+	sdkVersion = '9.2.0.v20200922085315' // use a master build with ARM64 sim, and macOS support
 	npmPublish = isMaster // By default it'll do github release on master anyways too
-	iosLabels = 'osx && xcode-11'
+	iosLabels = 'osx && xcode-12'
 }

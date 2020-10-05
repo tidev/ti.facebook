@@ -6,15 +6,13 @@
 
 package facebook;
 
+import android.os.Bundle;
 import java.io.IOException;
 import java.util.Map;
-
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.titanium.TiBlob;
 import org.appcelerator.titanium.io.TiBaseFile;
 import org.appcelerator.titanium.util.TiConvert;
-
-import android.os.Bundle;
 
 public final class Utils
 {

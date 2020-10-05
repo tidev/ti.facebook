@@ -11,20 +11,19 @@
  */
 package facebook;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import com.facebook.*;
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.titanium.TiBaseActivity;
-import org.appcelerator.titanium.TiLifecycle.OnInstanceStateEvent;
 import org.appcelerator.titanium.TiLifecycle.OnActivityResultEvent;
 import org.appcelerator.titanium.proxy.TiWindowProxy;
 
-import android.os.Bundle;
-import android.app.Activity;
-import android.content.Intent;
-
-import com.facebook.*;
+import org.appcelerator.titanium.TiLifecycle.OnInstanceStateEvent;
 
 @Kroll.proxy(creatableInModule = TiFacebookModule.class)
 public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultEvent, OnInstanceStateEvent

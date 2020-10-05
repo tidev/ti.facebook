@@ -28,7 +28,6 @@ description: |
     The Facebook SDK 4.19.0 and later (used in Ti.Facebook 5.4.0 and later) provides an updated Login 
     button. The title now is "Continue with Facebook" instead of "Login with Facebook" and the recommended 
     height is 28px. Please always specify a height for best results.
-    
 extends: Titanium.UI.View
 since: "3.1.0"
 platforms: [android, iphone, ipad]

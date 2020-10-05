@@ -37,13 +37,10 @@ description: |
 
     If the `objectId` property is not set before the button is rendered,
     the application will throw an error.
-
-
 examples:
-
   - title: Like button to share Appcelerator's Facebook page
     example: |
-
+        ``` javascript
         var likeButton = fb.createLikeButton({
                 top: 230,
                 height: "50%", // Note: on iOS setting Ti.UI.SIZE dimensions prevents the button from being clicked
@@ -61,7 +58,7 @@ examples:
             likeButton.width = Ti.UI.SIZE;
         }
         win.add(likeButton);
-
+        ```
 since: "4.0.0"
 deprecated:
     since: "6.0.0"
