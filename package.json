@@ -55,7 +55,7 @@
     "karma-mocha-reporter": "^2.2.5",
     "karma-titanium-launcher": "^0.7.4",
     "lint-staged": "^10.3.0",
-    "socket.io": "^2.2.0",
+    "socket.io": "^3.0.0",
     "titanium-docgen": "^4.7.0"
   },
   "dependencies": {},
