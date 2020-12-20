@@ -1,2 +1,1 @@
-// Link the Facebook SDK's to the app-target
-OTHER_LDFLAGS=$(inherited) -framework Social -framework FBSDKCoreKit -framework FBSDKLoginKit -framework FBSDKShareKit -framework Accelerate
+// No manual framework linking necessary due to the SPM
