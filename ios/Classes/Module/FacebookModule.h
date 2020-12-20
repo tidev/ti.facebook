@@ -239,19 +239,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setPushNotificationsDeviceToken:(NSString *_Nonnull)deviceToken;
 
 /*!
- @brief The login-behavior used when calling the "authorize" method.
- 
- @param loginBehavior The constant used to define login-behavior.
- 
- @code
- const fb = require('facebook');
- 
- fb.loginBehavior = fb.LOGIN_BEHAVIOR_NATIVE;
- @endcode
- */
-- (void)setLoginBehavior:(NSNumber *_Nonnull)loginBehavior;
-
-/*!
  @brief Logs the user in or authorizes additional permissions.
  
  @param unused An used parameter for proxy-consistency. Permissions and login-behavior are set before.
@@ -346,81 +333,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)presentPhotoShareDialog:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args;
 
 /*!
- @brief Present a messenger-dialog. Currently only possible to use when Messenger is installed.
- 
- @param args The arguments passed to the messenger-dialog.
- 
- @code
- const fb = require('facebook');
- 
- fb.presentMessengerDialog({
-   link: 'https://appcelerator.com',
-   hashtag: '#codestrong'
- });
- @endcode
- */
-- (void)presentMessengerDialog:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args;
-
-/*!
- @brief Share images, GIFs and videos to the messenger.
- 
- @param args The arguments passed to the messenger.
- 
- @code
- const fb = require('facebook');
- 
- // Show camera to take a picture
- Ti.Media.showCamera({
-   success: function(e) {
-     // Share the taken photo via Messenger
-     fb.shareMediaToMessenger({
-       media: e.media
-     });
-   }
- });
- @endcode
- */
-- (void)shareMediaToMessenger:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args;
-
-/*!
- @brief Present a share dialog using web dialog. Removed in Ti.Facebook 5.0.0 and later, use "presentShareDialog" instead.
- 
- @param unused An used parameter for proxy-consistency.
- */
-- (void)presentWebShareDialog:(id _Nullable)unused;
-
-/*!
- @brief Present an invite dialog using the native application.
- 
- @param args The arguments passed to the invite-dialog.
- 
- @code
- const fb = require('facebook');
- 
- fb.presentInviteDialog({
-   appLink: 'https://itunes.apple.com/us/app/facebook/id284882215?mt=8'
- });
- @endcode
- */
-- (void)presentInviteDialog:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args;
-
-/*!
- @brief Build up and present a game request.
- 
- @param args The arguments passed to the send-request-dialog.
- 
- @code
- const fb = require('facebook');
- 
- fb.presentSendRequestDialog({
-   title: 'New Game available',
-   message: 'Check this new game!'
- });
- @endcode
- */
-- (void)presentSendRequestDialog:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args;
-
-/*!
  @brief Refresh the current access token's permission state and extend the token's expiration date, if possible.
  
  @param unused An used parameter for proxy-consistency.
@@ -432,36 +344,6 @@ NS_ASSUME_NONNULL_BEGIN
  @endcode
  */
 - (void)refreshPermissionsFromServer:(__unused id)unused;
-
-/*!
- @brief Authorize the user for additional read-permissions.
- 
- @param args The arguments passed to the authorization-flow.
- 
- @code
- const fb = require('facebook');
- 
- fb.requestNewReadPermissions(['email'], function(e) {
-   // Handle response, do graph requests, etc.
- });
- @endcode
- */
-- (void)requestNewReadPermissions:(NSArray<id> *_Nonnull)args;
-
-/*!
- @brief Authorize the user for additional public-permissions.
- 
- @param args The arguments passed to the authorization-flow.
- 
- @code
- const fb = require('facebook');
- 
- fb.requestNewPublishPermissions(['read_stream'], fb.AUDIENCE_FRIENDS function(e) {
-   // Handle response, do graph requests, etc.
- });
- @endcode
- */
-- (void)requestNewPublishPermissions:(NSArray<id> *_Nonnull)args;
 
 /*!
  @brief Represents a request to the Facebook Graph API.
@@ -506,53 +388,6 @@ NS_ASSUME_NONNULL_BEGIN
  @endcode
  */
 - (void)fetchDeferredAppLink:(NSArray<KrollCallback *> *_Nonnull)args;
-
-/*!
- @brief Method to query for places the device is likely located in.
- 
- @param args The arguments containing the fields, confidence-level, success- and error-callback.
- 
- @code
- const fb = require('facebook');
- 
- fb.fetchNearbyPlacesForCurrentLocation({
-   confidenceLevel: 0, // optional
-   fields: [], // optional
-   success: function(e) {
-     Ti.API.info(e);
-   },
-   error: function(e) {
-     Ti.API.error(e);
-   }
- });
- @endcode
- */
-- (void)fetchNearbyPlacesForCurrentLocation:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args;
-
-/*!
- @brief Method to query for places based on the search-term.
- 
- @param args The arguments containing the search-term, categories, distance, fields, cursor, success- and error-callback.
- 
- @code
- const fb = require('facebook');
- 
- fb.fetchNearbyPlacesForSearchTearm({
-   searchTerm: 'San Jose, CA',
-   categories: [], // categories, optional 
-   distance: 5000, // in meters, optional
-   fields: [], // places-fields, optional
-   cursor: null, // paging-cursorm, optional
-   success: function(e) {
-     Ti.API.info(e);
-   },
-   error: function(e) {
-     Ti.API.error(e);
-   }
- });
- @endcode
- */
-- (void)fetchNearbyPlacesForSearchTearm:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args;
 
 @end
 
