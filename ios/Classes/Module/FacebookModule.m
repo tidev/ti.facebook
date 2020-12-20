@@ -234,11 +234,6 @@ NS_ASSUME_NONNULL_BEGIN
   [FBSDKAppEvents setPushNotificationsDeviceToken:[FacebookModule dataFromHexString:deviceToken]];
 }
 
-- (void)setLoginBehavior:(NSNumber *_Nonnull)loginBehavior
-{
-  DEPRECATED_REMOVED(@"Facebook.loginBehavior", @"8.0.0", @"8.0.0");
-}
-
 - (void)authorize:(__unused id)unused
 {
   __block FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
@@ -339,30 +334,6 @@ NS_ASSUME_NONNULL_BEGIN
       NO);
 }
 
-- (void)presentMessengerDialog:(NSArray<NSDictionary<NSString *, id> *> *)args
-{
-  DEPRECATED_REMOVED(@"Facebook.presentMessengerDialog", @"8.0.0", @"8.0.0");
-  DebugLog(@"[WARN] Facebook removed the MessengerDialog API via Web in SDK 6.0.0");
-}
-
-- (void)shareMediaToMessenger:(NSArray<NSDictionary<NSString *, id> *> *)args
-{
-  DEPRECATED_REPLACED_REMOVED(@"Facebook.shareMediaToMessenger", @"7.0.0", @"7.0.0", @"Facebook.shareMediaToMessenger");
-  DebugLog(@"[WARN] Facebook removed the MessengerShareDialog API via Web in SDK 5.0.0");
-}
-
-- (void)presentWebShareDialog:(id _Nullable)unused
-{
-  DEPRECATED_REPLACED_REMOVED(@"Facebook.presentWebShareDialog", @"5.0.0", @"5.0.0", @"Facebook.presentShareDialog");
-  DebugLog(@"[WARN] Facebook removed the ShareDialog API via Web in SDK 4.28.0");
-}
-
-- (void)presentInviteDialog:(NSArray<NSDictionary<NSString *, id> *> *)args
-{
-  DEPRECATED_REMOVED(@"Facebook.presentInviteDialog", @"5.7.0", @"5.7.0");
-  DebugLog(@"[WARN] Facebook removed the InviteDialog API in SDK 4.28.0");
-}
-
 - (void)presentSendRequestDialog:(NSArray<NSDictionary<NSString *, id> *> *)args
 {
   NSDictionary *_Nonnull params = [args objectAtIndex:0];
@@ -385,10 +356,6 @@ NS_ASSUME_NONNULL_BEGIN
   }
 
   FBSDKGameRequestActionType actionType = [TiUtils intValue:[params objectForKey:@"actionType"]];
-
-  if (to != nil) {
-    DEPRECATED_REPLACED_REMOVED(@"Facebook.sendRequestDialog.to", @"5.0.0", @"5.0.0", @"Titanium.Facebook.sendRequestDialog.recipients");
-  }
 
   TiThreadPerformOnMainThread(
       ^{
@@ -417,123 +384,6 @@ NS_ASSUME_NONNULL_BEGIN
         }];
       },
       NO);
-}
-
-- (void)requestNewReadPermissions:(NSArray<id> *_Nonnull)args
-{
-  DEPRECATED_REPLACED(@"Facebook.requestNewPublishPermissions", @"7.0.0", @"Facebook.authorize");
-
-  NSArray<NSString *> *readPermissions = [args objectAtIndex:0];
-  ENSURE_ARRAY(readPermissions);
-
-  KrollCallback *callback = [args objectAtIndex:1];
-  ENSURE_TYPE(callback, KrollCallback);
-
-  FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
-
-  TiThreadPerformOnMainThread(
-      ^{
-        [loginManager logInWithPermissions:readPermissions
-                        fromViewController:nil
-                                   handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-                                     BOOL success = NO;
-                                     BOOL cancelled = NO;
-                                     NSString *errorString = nil;
-                                     NSInteger code = 0;
-
-                                     if (error != nil) {
-                                       code = [error code];
-                                       errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
-                                       if (errorString == nil) {
-                                         errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
-
-                                         if (errorString == nil) {
-                                           if (code == 308) {
-                                             errorString = TiFacebookErrorMessageKeychainAccess;
-                                           } else {
-                                             errorString = [error localizedDescription];
-                                           }
-                                         }
-                                       }
-                                     } else if (result.isCancelled) {
-                                       cancelled = YES;
-                                     } else {
-                                       success = YES;
-                                     }
-
-                                     NSDictionary *propertiesDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                                                                              NUMBOOL(success), @"success",
-                                                                                          NUMBOOL(cancelled), @"cancelled",
-                                                                                          NUMINTEGER(code), @"code",
-                                                                                          errorString, @"error", nil];
-
-                                     KrollEvent *invocationEvent = [[KrollEvent alloc] initWithCallback:callback eventObject:propertiesDict thisObject:self];
-                                     [[callback context] enqueue:invocationEvent];
-                                   }];
-      },
-      NO);
-}
-
-- (void)requestNewPublishPermissions:(NSArray<id> *_Nonnull)args
-{
-  DEPRECATED_REPLACED(@"Facebook.requestNewPublishPermissions", @"7.0.0", @"Facebook.authorize");
-
-  NSArray<NSString *> *publishPermissions = [args objectAtIndex:0];
-  ENSURE_ARRAY(publishPermissions);
-
-  NSNumber *_defaultAudience = [args objectAtIndex:1];
-  ENSURE_TYPE(_defaultAudience, NSNumber);
-  FBSDKDefaultAudience defaultAudience = [TiUtils intValue:_defaultAudience];
-
-  KrollCallback *callback = [args objectAtIndex:2];
-  ENSURE_TYPE(callback, KrollCallback);
-
-  FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
-  loginManager.defaultAudience = defaultAudience;
-
-  TiThreadPerformOnMainThread(
-      ^{
-        [loginManager logInWithPermissions:publishPermissions
-                        fromViewController:nil
-                                   handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-                                     BOOL success = NO;
-                                     BOOL cancelled = NO;
-                                     NSString *errorString = nil;
-                                     NSInteger code = 0;
-
-                                     if (error != nil) {
-                                       code = [error code];
-                                       errorString = [[error userInfo] objectForKey:FBSDKErrorLocalizedDescriptionKey];
-                                       if (errorString == nil) {
-                                         errorString = [[error userInfo] objectForKey:FBSDKErrorDeveloperMessageKey];
-
-                                         if (errorString == nil) {
-                                           if (code == 308) {
-                                             errorString = TiFacebookErrorMessageKeychainAccess;
-                                           } else {
-                                             errorString = [error localizedDescription];
-                                           }
-                                         }
-                                       }
-                                     } else if (result.isCancelled) {
-                                       cancelled = YES;
-                                     } else {
-                                       success = YES;
-                                     }
-
-                                     NSDictionary *propertiesDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                                                                              NUMBOOL(success), @"success",
-                                                                                          NUMBOOL(cancelled), @"cancelled",
-                                                                                          NUMINTEGER(code), @"code",
-                                                                                          errorString, @"error", nil];
-
-                                     KrollEvent *invocationEvent = [[KrollEvent alloc] initWithCallback:callback
-                                                                                            eventObject:propertiesDict
-                                                                                             thisObject:self];
-                                     [[callback context] enqueue:invocationEvent];
-                                   }];
-      },
-      YES);
 }
 
 - (void)requestWithGraphPath:(NSArray<id> *_Nonnull)args
@@ -638,16 +488,6 @@ NS_ASSUME_NONNULL_BEGIN
         }];
       },
       YES);
-}
-
-- (void)fetchNearbyPlacesForCurrentLocation:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args
-{
-  DEPRECATED_REMOVED(@"Facebook.fetchNearbyPlacesForCurrentLocation", @"8.0.0", @"8.0.0");
-}
-
-- (void)fetchNearbyPlacesForSearchTearm:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args
-{
-  DEPRECATED_REMOVED(@"Facebook.fetchNearbyPlacesForSearchTearm", @"8.0.0", @"8.0.0");
 }
 
 #pragma mark Event Listeners
@@ -826,32 +666,12 @@ NS_ASSUME_NONNULL_BEGIN
 {
   FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
 
-  // Deprecated
-  NSString *description = [dictionary objectForKey:@"description"];
-  NSString *title = [dictionary objectForKey:@"title"];
-  NSString *picture = [dictionary objectForKey:@"picture"];
-
   NSString *hashtag = [dictionary objectForKey:@"hashtag"];
   NSString *quote = [dictionary objectForKey:@"quote"];
   NSArray *to = [dictionary objectForKey:@"to"];
   NSURL *link = [NSURL URLWithString:[dictionary objectForKey:@"link"]];
   NSString *placeID = [dictionary objectForKey:@"placeID"];
   NSString *referal = [dictionary objectForKey:@"referal"];
-
-  if (description != nil) {
-    NSLog(@"[WARN] Setting the \"description\" is no longer possible in Ti.Facebook 5.5.0 as part of the Graph v2.9 changes.");
-    NSLog(@"[WARN] It's information is scraped from the 'link' property instead, so setting it is no longer supported and will be ignored!");
-  }
-
-  if (title != nil) {
-    NSLog(@"[WARN] Setting the \"title\" parameter is no longer possible in Ti.Facebook 5.5.0 as part of the Graph v2.9 changes.");
-    NSLog(@"[WARN] It's information is scraped from the 'link' property instead, so setting it is no longer supported and will be ignored!");
-  }
-
-  if (picture != nil) {
-    NSLog(@"[WARN] Setting the \"picture\" is no longer possible in Ti.Facebook 5.5.0 as part of the Graph v2.9 changes.");
-    NSLog(@"[WARN] It's information is scraped from the 'link' property instead, so setting it is no longer supported and will be ignored!");
-  }
 
   if (link == nil) {
     NSLog(@"[ERROR] Missing required parameter \"link\"!");
@@ -941,7 +761,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark Constants
 
-MAKE_SYSTEM_PROP_DEPRECATED_REPLACED_REMOVED(AUDIENCE_NONE, -1, @"Facebook.AUDIENCE_NONE", @"5.0.0", @"5.0.0", @"Facebook.AUDIENCE_ONLY_ME");
 MAKE_SYSTEM_PROP(AUDIENCE_ONLY_ME, FBSDKDefaultAudienceOnlyMe);
 MAKE_SYSTEM_PROP(AUDIENCE_FRIENDS, FBSDKDefaultAudienceFriends);
 MAKE_SYSTEM_PROP(AUDIENCE_EVERYONE, FBSDKDefaultAudienceEveryone);
@@ -955,17 +774,8 @@ MAKE_SYSTEM_PROP(FILTER_NONE, FBSDKGameRequestFilterNone);
 MAKE_SYSTEM_PROP(FILTER_APP_USERS, FBSDKGameRequestFilterAppUsers);
 MAKE_SYSTEM_PROP(FILTER_APP_NON_USERS, FBSDKGameRequestFilterAppNonUsers);
 
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(LOGIN_BEHAVIOR_BROWSER, 0, @"LOGIN_BEHAVIOR_BROWSER", @"8.0.0", @"8.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(LOGIN_BEHAVIOR_NATIVE, 1, @"LOGIN_BEHAVIOR_NATIVE", @"7.0.0", @"7.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(LOGIN_BEHAVIOR_SYSTEM_ACCOUNT, 2, @"LOGIN_BEHAVIOR_SYSTEM_ACCOUNT", @"7.0.0", @"7.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(LOGIN_BEHAVIOR_WEB, 3, @"LOGIN_BEHAVIOR_WEB", @"7.0.0", @"7.0.0");
-
 MAKE_SYSTEM_PROP(MESSENGER_BUTTON_MODE_RECTANGULAR, TiFacebookShareButtonModeRectangular);
 MAKE_SYSTEM_PROP(MESSENGER_BUTTON_MODE_CIRCULAR, TiFacebookShareButtonModeCircular);
-
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(MESSENGER_BUTTON_STYLE_BLUE, 0, @"MESSENGER_BUTTON_STYLE_BLUE", @"7.0.0", @"7.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(MESSENGER_BUTTON_STYLE_WHITE, 1, @"MESSENGER_BUTTON_STYLE_WHITE", @"7.0.0", @"7.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(MESSENGER_BUTTON_STYLE_WHITE_BORDERED, 2, @"MESSENGER_BUTTON_STYLE_WHITE_BORDERED", @"7.0.0", @"7.0.0");
 
 MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_AUTOMATIC, FBSDKShareDialogModeAutomatic);
 MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_NATIVE, FBSDKShareDialogModeNative);
@@ -981,11 +791,6 @@ MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE, FBSDKLoginButtonTooltipB
 
 MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY, FBSDKTooltipColorStyleNeutralGray);
 MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE, FBSDKTooltipColorStyleFriendlyBlue);
-
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(PLACE_LOCATION_CONFIDENCE_NOT_APPLICABLE, 0, @"PLACE_LOCATION_CONFIDENCE_NOT_APPLICABLE", @"8.0.0", @"8.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(PLACE_LOCATION_CONFIDENCE_LOW, 1, @"PLACE_LOCATION_CONFIDENCE_LOW", @"8.0.0", @"8.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(PLACE_LOCATION_CONFIDENCE_MEDIUM, 2, @"PLACE_LOCATION_CONFIDENCE_MEDIUM", @"8.0.0", @"8.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(PLACE_LOCATION_CONFIDENCE_HIGH, 3, @"PLACE_LOCATION_CONFIDENCE_HIGH", @"8.0.0", @"8.0.0");
 
 MAKE_SYSTEM_STR(EVENT_NAME_COMPLETED_REGISTRATION, FBSDKAppEventNameCompletedRegistration);
 MAKE_SYSTEM_STR(EVENT_NAME_VIEWED_CONTENT, FBSDKAppEventNameViewedContent);

@@ -7,8 +7,8 @@
 
 #import "TiUIView.h"
 
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
-#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKCoreKit.h>
+#import <FBSDKLoginKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

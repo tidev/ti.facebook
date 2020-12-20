@@ -14,9 +14,9 @@
 
 #import <Social/Social.h>
 
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
-#import <FBSDKLoginKit/FBSDKLoginKit.h>
-#import <FBSDKShareKit/FBSDKShareKit.h>
+#import <FBSDKCoreKit.h>
+#import <FBSDKLoginKit.h>
+#import <FBSDKShareKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

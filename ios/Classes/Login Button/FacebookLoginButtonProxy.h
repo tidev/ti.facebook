@@ -13,16 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 /*!
- @brief Returns the granted publish-permissions.
- */
-- (NSArray *_Nullable)publishPermissions;
-
-/*!
- @brief Returns the granted read-permissions.
- */
-- (NSArray *_Nullable)readPermissions;
-
-/*!
  @brief The permissions to request.
  */
 - (NSArray *_Nullable)permissions;

@@ -8,7 +8,7 @@
 #import "FacebookLoginButtonProxy.h"
 #import "FacebookLoginButton.h"
 #import "TiUtils.h"
-#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKLoginKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,18 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)apiName
 {
   return @"Ti.Facebook.LoginButton";
-}
-
-- (NSArray *_Nullable)publishPermissions
-{
-  DEPRECATED_REPLACED(@"Facebook.LoginButton.publishPermissions", @"7.0.0", @"Facebook.LoginButton.permissions");
-  return [[self loginButton] permissions];
-}
-
-- (NSArray *_Nullable)readPermissions
-{
-  DEPRECATED_REPLACED(@"Facebook.LoginButton.readPermissions", @"7.0.0", @"Facebook.LoginButton.permissions");
-  return [[self loginButton] permissions];
 }
 
 - (NSArray *_Nullable)permissions

@@ -31,21 +31,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark Public API's
 
-// Requested permissions when logging in. If set, do not set read permissions
-// The audience defaults to AUDIENCE_ONLY_ME if not specifically set.
-- (void)setPublishPermissions_:(NSArray<NSString *> *_Nonnull)publishPermissions
-{
-  DEPRECATED_REPLACED(@"Facebook.LoginButton.publishPermissions", @"7.0.0", @"Facebook.LoginButton.permissions");
-  [[self loginButton] setPermissions:publishPermissions];
-}
-
-// Requested permissions when logging in. If set, do not set publish permissions
-- (void)setReadPermissions_:(NSArray<NSString *> *_Nullable)readPermissions
-{
-  DEPRECATED_REPLACED(@"Facebook.LoginButton.readPermissions", @"7.0.0", @"Facebook.LoginButton.permissions");
-  [[self loginButton] setPermissions:readPermissions];
-}
-
 // Requested permissions when logging in
 - (void)setPermissions_:(NSArray<NSString *> *_Nullable)permissions
 {
