@@ -111,7 +111,7 @@ properties:
     constants: [Modules.Facebook.LOGIN_TRACKING_*]
     default: Modules.Facebook.LOGIN_TRACKING_ENABLED
     since: "10.0.0"
-    platforms: [iphone, ipad, android]
+    platforms: [iphone, ipad]
 
   - name: nonce
     summary: Gets or sets an optional nonce to use for login attempts.
@@ -121,4 +121,4 @@ properties:
         for login attempts.
     type: String
     since: "10.0.0"
-    platforms: [iphone, ipad, android]
+    platforms: [iphone, ipad]
