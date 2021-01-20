@@ -9,7 +9,7 @@ import UIKit
 public typealias LoginResultBlock = (FBSDKLoginKit.LoginResult) -> Swift.Void
 @available(tvOS, unavailable)
 public enum LoginResult {
-  case success(granted: Swift.Set<FBSDKCoreKit.Permission>, declined: Swift.Set<FBSDKCoreKit.Permission>, token: FBSDKCoreKit.AccessToken)
+  case success(granted: Swift.Set<FBSDKCoreKit.Permission>, declined: Swift.Set<FBSDKCoreKit.Permission>, token: FBSDKCoreKit.AccessToken?)
   case cancelled
   case failed(Swift.Error)
 }
@@ -17,8 +17,13 @@ public enum LoginResult {
 extension LoginManager {
   convenience public init(defaultAudience: FBSDKLoginKit.DefaultAudience = .friends)
   public func logIn(permissions: [FBSDKCoreKit.Permission] = [.publicProfile], viewController: UIKit.UIViewController? = nil, completion: FBSDKLoginKit.LoginResultBlock? = nil)
+  public func logIn(viewController: UIKit.UIViewController? = nil, configuration: FBSDKLoginKit.LoginConfiguration, completion: @escaping FBSDKLoginKit.LoginResultBlock)
+  public func logIn(configuration: FBSDKLoginKit.LoginConfiguration, completion: @escaping FBSDKLoginKit.LoginResultBlock)
 }
 @available(tvOS, unavailable)
 extension FBLoginButton {
   convenience public init(frame: CoreGraphics.CGRect = .zero, permissions: [FBSDKCoreKit.Permission] = [.publicProfile])
+}
+extension LoginConfiguration {
+  convenience public init?(permissions: Swift.Set<FBSDKCoreKit.Permission> = [], tracking: FBSDKLoginKit.LoginTracking = .enabled, nonce: Swift.String = UUID().uuidString)
 }

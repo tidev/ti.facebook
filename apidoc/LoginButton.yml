@@ -104,3 +104,21 @@ properties:
     default: Modules.Facebook.LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE
     since: "6.1.0"
     platforms: [iphone, ipad, android]
+
+  - name: loginTracking
+    summary: Gets or sets the desired tracking preference to use for login attempts.
+    type: Number
+    constants: [Modules.Facebook.LOGIN_TRACKING_*]
+    default: Modules.Facebook.LOGIN_TRACKING_ENABLED
+    since: "10.0.0"
+    platforms: [iphone, ipad, android]
+
+  - name: nonce
+    summary: Gets or sets an optional nonce to use for login attempts.
+    desccription: |
+        A valid nonce must be a non-empty string without whitespace.
+        An invalid nonce will not be set. Instead, default unique nonceswill be used
+        for login attempts.
+    type: String
+    since: "10.0.0"
+    platforms: [iphone, ipad, android]

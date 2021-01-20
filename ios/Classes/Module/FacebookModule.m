@@ -145,6 +145,11 @@ NS_ASSUME_NONNULL_BEGIN
   [FBSDKAccessToken setCurrentAccessToken:newToken];
 }
 
+- (void)setLoginTracking_:(NSNumber *_Nonnull)loginTracking
+{
+  _loginTracking = loginTracking;
+}
+
 - (NSDate *_Nullable)expirationDate
 {
   __block NSDate *expirationDate = nil;
@@ -231,20 +236,18 @@ NS_ASSUME_NONNULL_BEGIN
   [FBSDKAppEvents setPushNotificationsDeviceToken:[FacebookModule dataFromHexString:deviceToken]];
 }
 
-- (void)setLoginBehavior:(NSNumber *_Nonnull)loginBehavior
-{
-  DEPRECATED_REMOVED(@"Facebook.loginBehavior", @"8.0.0", @"8.0.0");
-}
-
 - (void)authorize:(__unused id)unused
 {
   __block FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
+  __block FBSDKLoginConfiguration *loginConfiguration = [[FBSDKLoginConfiguration alloc] initWithPermissions:_permissions
+                                                                                                    tracking:[TiUtils intValue:_loginTracking
+                                                                                                                           def:FBSDKLoginTrackingEnabled]];
 
   TiThreadPerformOnMainThread(
       ^{
-        [loginManager logInWithPermissions:self->_permissions
-                        fromViewController:nil
-                                   handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+    [loginManager logInFromViewController:nil
+                            configuration:loginConfiguration
+                               completion:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
                                      // Handle error
                                      if (error != nil) {
                                        [self fireLogin:nil cancelled:NO withError:error];
@@ -336,37 +339,12 @@ NS_ASSUME_NONNULL_BEGIN
       NO);
 }
 
-- (void)presentMessengerDialog:(NSArray<NSDictionary<NSString *, id> *> *)args
-{
-  DEPRECATED_REMOVED(@"Facebook.presentMessengerDialog", @"8.0.0", @"8.0.0");
-  DebugLog(@"[WARN] Facebook removed the MessengerDialog API via Web in SDK 6.0.0");
-}
-
-- (void)shareMediaToMessenger:(NSArray<NSDictionary<NSString *, id> *> *)args
-{
-  DEPRECATED_REPLACED_REMOVED(@"Facebook.shareMediaToMessenger", @"7.0.0", @"7.0.0", @"Facebook.shareMediaToMessenger");
-  DebugLog(@"[WARN] Facebook removed the MessengerShareDialog API via Web in SDK 5.0.0");
-}
-
-- (void)presentWebShareDialog:(id _Nullable)unused
-{
-  DEPRECATED_REPLACED_REMOVED(@"Facebook.presentWebShareDialog", @"5.0.0", @"5.0.0", @"Facebook.presentShareDialog");
-  DebugLog(@"[WARN] Facebook removed the ShareDialog API via Web in SDK 4.28.0");
-}
-
-- (void)presentInviteDialog:(NSArray<NSDictionary<NSString *, id> *> *)args
-{
-  DEPRECATED_REMOVED(@"Facebook.presentInviteDialog", @"5.7.0", @"5.7.0");
-  DebugLog(@"[WARN] Facebook removed the InviteDialog API in SDK 4.28.0");
-}
-
 - (void)presentSendRequestDialog:(NSArray<NSDictionary<NSString *, id> *> *)args
 {
   NSDictionary *_Nonnull params = [args objectAtIndex:0];
 
   NSString *message = [params objectForKey:@"message"];
   NSString *title = [params objectForKey:@"title"];
-  NSArray *to = [params objectForKey:@"to"];
   NSArray *recipients = [params objectForKey:@"recipients"];
   NSArray *recipientSuggestions = [params objectForKey:@"recipientSuggestions"];
   FBSDKGameRequestFilter filters = [TiUtils intValue:[params objectForKey:@"filters"]];
@@ -382,10 +360,6 @@ NS_ASSUME_NONNULL_BEGIN
   }
 
   FBSDKGameRequestActionType actionType = [TiUtils intValue:[params objectForKey:@"actionType"]];
-
-  if (to != nil) {
-    DEPRECATED_REPLACED_REMOVED(@"Facebook.sendRequestDialog.to", @"5.0.0", @"5.0.0", @"Titanium.Facebook.sendRequestDialog.recipients");
-  }
 
   TiThreadPerformOnMainThread(
       ^{
@@ -635,16 +609,6 @@ NS_ASSUME_NONNULL_BEGIN
         }];
       },
       YES);
-}
-
-- (void)fetchNearbyPlacesForCurrentLocation:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args
-{
-  DEPRECATED_REMOVED(@"Facebook.fetchNearbyPlacesForCurrentLocation", @"8.0.0", @"8.0.0");
-}
-
-- (void)fetchNearbyPlacesForSearchTearm:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args
-{
-  DEPRECATED_REMOVED(@"Facebook.fetchNearbyPlacesForSearchTearm", @"8.0.0", @"8.0.0");
 }
 
 #pragma mark Event Listeners
@@ -924,7 +888,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark Constants
 
-MAKE_SYSTEM_PROP_DEPRECATED_REPLACED_REMOVED(AUDIENCE_NONE, -1, @"Facebook.AUDIENCE_NONE", @"5.0.0", @"5.0.0", @"Facebook.AUDIENCE_ONLY_ME");
+MAKE_SYSTEM_PROP(LOGIN_TRACKING_ENABLED, FBSDKLoginTrackingEnabled);
+MAKE_SYSTEM_PROP(LOGIN_TRACKING_LIMITED, FBSDKLoginTrackingLimited);
+
 MAKE_SYSTEM_PROP(AUDIENCE_ONLY_ME, FBSDKDefaultAudienceOnlyMe);
 MAKE_SYSTEM_PROP(AUDIENCE_FRIENDS, FBSDKDefaultAudienceFriends);
 MAKE_SYSTEM_PROP(AUDIENCE_EVERYONE, FBSDKDefaultAudienceEveryone);
@@ -938,17 +904,8 @@ MAKE_SYSTEM_PROP(FILTER_NONE, FBSDKGameRequestFilterNone);
 MAKE_SYSTEM_PROP(FILTER_APP_USERS, FBSDKGameRequestFilterAppUsers);
 MAKE_SYSTEM_PROP(FILTER_APP_NON_USERS, FBSDKGameRequestFilterAppNonUsers);
 
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(LOGIN_BEHAVIOR_BROWSER, 0, @"LOGIN_BEHAVIOR_BROWSER", @"8.0.0", @"8.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(LOGIN_BEHAVIOR_NATIVE, 1, @"LOGIN_BEHAVIOR_NATIVE", @"7.0.0", @"7.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(LOGIN_BEHAVIOR_SYSTEM_ACCOUNT, 2, @"LOGIN_BEHAVIOR_SYSTEM_ACCOUNT", @"7.0.0", @"7.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(LOGIN_BEHAVIOR_WEB, 3, @"LOGIN_BEHAVIOR_WEB", @"7.0.0", @"7.0.0");
-
 MAKE_SYSTEM_PROP(MESSENGER_BUTTON_MODE_RECTANGULAR, TiFacebookShareButtonModeRectangular);
 MAKE_SYSTEM_PROP(MESSENGER_BUTTON_MODE_CIRCULAR, TiFacebookShareButtonModeCircular);
-
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(MESSENGER_BUTTON_STYLE_BLUE, 0, @"MESSENGER_BUTTON_STYLE_BLUE", @"7.0.0", @"7.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(MESSENGER_BUTTON_STYLE_WHITE, 1, @"MESSENGER_BUTTON_STYLE_WHITE", @"7.0.0", @"7.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(MESSENGER_BUTTON_STYLE_WHITE_BORDERED, 2, @"MESSENGER_BUTTON_STYLE_WHITE_BORDERED", @"7.0.0", @"7.0.0");
 
 MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_AUTOMATIC, FBSDKShareDialogModeAutomatic);
 MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_NATIVE, FBSDKShareDialogModeNative);
@@ -964,11 +921,6 @@ MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE, FBSDKLoginButtonTooltipB
 
 MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY, FBSDKTooltipColorStyleNeutralGray);
 MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE, FBSDKTooltipColorStyleFriendlyBlue);
-
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(PLACE_LOCATION_CONFIDENCE_NOT_APPLICABLE, 0, @"PLACE_LOCATION_CONFIDENCE_NOT_APPLICABLE", @"8.0.0", @"8.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(PLACE_LOCATION_CONFIDENCE_LOW, 1, @"PLACE_LOCATION_CONFIDENCE_LOW", @"8.0.0", @"8.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(PLACE_LOCATION_CONFIDENCE_MEDIUM, 2, @"PLACE_LOCATION_CONFIDENCE_MEDIUM", @"8.0.0", @"8.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(PLACE_LOCATION_CONFIDENCE_HIGH, 3, @"PLACE_LOCATION_CONFIDENCE_HIGH", @"8.0.0", @"8.0.0");
 
 MAKE_SYSTEM_STR(EVENT_NAME_COMPLETED_REGISTRATION, FBSDKAppEventNameCompletedRegistration);
 MAKE_SYSTEM_STR(EVENT_NAME_VIEWED_CONTENT, FBSDKAppEventNameViewedContent);

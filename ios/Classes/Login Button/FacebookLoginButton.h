@@ -50,6 +50,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)setTooltipColorStyle_:(NSNumber *_Nonnull)tooltipColorStyle;
 
+// Gets or sets the desired tracking preference to use for login attempts. Defaults to `LOGIN_TRACKING_ENABLED`
+- (void)setLoginTracking_:(NSNumber *_Nonnull)loginTracking;
+
+// Gets or sets an optional nonce to use for login attempts. A valid nonce must be a non-empty string without whitespace.
+- (void)setNonce_:(NSString *_Nonnull)nonce;
+
 @end
 
 NS_ASSUME_NONNULL_END

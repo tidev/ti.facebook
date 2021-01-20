@@ -69,6 +69,18 @@ NS_ASSUME_NONNULL_BEGIN
   [[self loginButton] setTooltipColorStyle:[TiUtils intValue:tooltipColorStyle]];
 }
 
+// Gets or sets the desired tracking preference to use for login attempts. Defaults to `LOGIN_TRACKING_ENABLED`
+- (void)setLoginTracking_:(NSNumber *_Nonnull)loginTracking
+{
+  [[self loginButton] setLoginTracking:[TiUtils intValue:loginTracking]];
+}
+
+// Gets or sets an optional nonce to use for login attempts. A valid nonce must be a non-empty string without whitespace.
+- (void)setNonce_:(NSString *_Nonnull)nonce
+{
+  [[self loginButton] setNonce:[TiUtils stringValue:nonce]];
+}
+
 NS_ASSUME_NONNULL_END
 
 @end
