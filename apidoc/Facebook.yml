@@ -362,11 +362,6 @@ methods:
         [requestNewPublishPermissions()](Modules.Facebook.requestNewPublishPermissions)
         to request write permissions once the user authorizes the application.
 
-        #### Prior to Release 4.0.0
-
-        Set the [appid](Modules.Facebook.appid) property as well as the `permissions` property
-        before calling `authorize()`.
-
   - name: createActivityWorker
     summary: |
         Creates a Facebook proxy to hook into the activity of either a standalone <Titanium.UI.Window>

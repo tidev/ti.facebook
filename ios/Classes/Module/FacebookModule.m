@@ -250,13 +250,13 @@ NS_ASSUME_NONNULL_BEGIN
                                completion:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
                                      // Handle error
                                      if (error != nil) {
-                                       [self fireLogin:nil cancelled:NO withError:error];
+                                       [self fireLogin:nil authenticationToken:result.authenticationToken cancelled:result.isCancelled withError:error];
                                        return;
                                      }
 
                                      // Login cancelled
                                      if (result.isCancelled) {
-                                       [self fireLogin:nil cancelled:YES withError:nil];
+                                       [self fireLogin:nil authenticationToken:FBSDKAuthenticationToken.currentAuthenticationToken cancelled:YES withError:nil];
                                        return;
                                      }
 
@@ -613,7 +613,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark Event Listeners
 
-- (void)fireLogin:(id _Nullable)result cancelled:(BOOL)cancelled withError:(NSError *_Nullable)error
+- (void)fireLogin:(id _Nullable)result authenticationToken:(FBSDKAuthenticationToken * _Nullable)authenticationToken cancelled:(BOOL)cancelled withError:(NSError *_Nullable)error
 {
   BOOL success = (result != nil);
   NSInteger code = [error code];
@@ -645,20 +645,30 @@ NS_ASSUME_NONNULL_BEGIN
   if (result != nil) {
     FBSDKProfile *profile = (FBSDKProfile *)result;
     NSDictionary *jsonDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                     profile.userID, @"userID",
-                                                 profile.firstName, @"firstName",
-                                                 profile.middleName ?: @"", @"middleName",
-                                                 profile.lastName, @"lastName",
-                                                 profile.name, @"name",
-                                                 [profile.linkURL absoluteString], @"linkURL",
-                                                 nil];
+                                    profile.userID, @"userID",
+                                    NULL_IF_NIL(profile.firstName), @"firstName",
+                                    NULL_IF_NIL(profile.middleName), @"middleName",
+                                    NULL_IF_NIL(profile.lastName), @"lastName",
+                                    NULL_IF_NIL(profile.name), @"name",
+                                    NULL_IF_NIL([profile.linkURL absoluteString]), @"linkURL",
+                                    nil];
 
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDictionary options:0 error:&error];
     NSString *resultString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     [event setObject:resultString forKey:@"data"];
+    
     if (_userID != nil) {
       [event setObject:_userID forKey:@"uid"];
     }
+  }
+
+  // Inject Open ID authentication token (for limited logins)
+  if (authenticationToken != nil) {
+    [event setObject:@{
+      @"tokenString": NULL_IF_NIL(authenticationToken.tokenString),
+      @"graphDomain": NULL_IF_NIL(authenticationToken.graphDomain),
+      @"nonce": NULL_IF_NIL(authenticationToken.nonce)
+    } forKey:@"authenticationToken"];
   }
 
   [self fireEvent:@"login" withObject:event];
@@ -682,7 +692,7 @@ NS_ASSUME_NONNULL_BEGIN
   FBSDKProfile *profile = notification.userInfo[FBSDKProfileChangeNewKey];
   if (profile != nil) {
     _userID = [profile userID];
-    [self fireLogin:profile cancelled:NO withError:nil];
+    [self fireLogin:profile authenticationToken:FBSDKAuthenticationToken.currentAuthenticationToken cancelled:NO withError:nil];
   }
 }
 
@@ -753,21 +763,6 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark Utilities
-
-- (void)populateUserDetails
-{
-  TiThreadPerformOnMainThread(
-      ^{
-        if ([FBSDKAccessToken currentAccessToken] != nil) {
-          FBSDKProfile *user = [FBSDKProfile currentProfile];
-          self->_userID = [user userID];
-          [self fireLogin:user cancelled:NO withError:nil];
-        } else {
-          [self fireLogin:nil cancelled:NO withError:nil];
-        }
-      },
-      NO);
-}
 
 + (FBSDKShareLinkContent *_Nonnull)shareLinkContentFromDictionary:(NSDictionary *)dictionary
 {
