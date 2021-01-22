@@ -55,6 +55,11 @@ NS_ASSUME_NONNULL_BEGIN
   return NUMUINTEGER([[self loginButton] loginTracking]);
 }
 
+- (NSString *_Nullable)nonce
+{
+  return [[self loginButton] nonce];
+}
+
 #pragma Utility
 
 - (FBSDKLoginButton *)loginButton

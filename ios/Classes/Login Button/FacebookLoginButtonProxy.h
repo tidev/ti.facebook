@@ -42,6 +42,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSNumber *_Nonnull)tooltipColorStyle;
 
+/*!
+ @brief Returns the nonce.
+ */
+- (NSString *_Nullable)nonce;
 @end
 
 NS_ASSUME_NONNULL_END
