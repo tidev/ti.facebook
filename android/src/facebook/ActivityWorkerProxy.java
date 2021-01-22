@@ -13,6 +13,7 @@ package facebook;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import com.facebook.*;
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollProxy;
@@ -26,7 +27,7 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
 {
 	private static final String TAG = "ActivityWorkerProxy";
 
-	private AccessTokenTracker accessTokenTracker;
+	private AccessTokenTracker accessTokenTracker = null;
 
 	public ActivityWorkerProxy()
 	{
@@ -46,26 +47,39 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
 
 			// Obtain activity result.
 			baseActivity.addOnActivityResultListener(this);
+		}
 
-			// Create access token tracker.
-			accessTokenTracker = new AccessTokenTracker() {
-				@Override
-				protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken)
-				{
-					if (currentAccessToken == null) {
+		// Create access token tracker.
+		accessTokenTracker = new AccessTokenTracker() {
+			@Override
+			protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken)
+			{
+				if (currentAccessToken == null) {
 
-						// User logged out.
-						TiFacebookModule.getFacebookModule().fireEvent(TiFacebookModule.EVENT_LOGOUT, null);
-					} else {
+					// User logged out.
+					TiFacebookModule.getFacebookModule().fireEvent(TiFacebookModule.EVENT_LOGOUT, null);
+				} else {
 
-						// AccessToken updated.
-						if (TiFacebookModule.getFacebookModule().isAccessTokenRefreshCalled()) {
-							TiFacebookModule.getFacebookModule().setAccessTokenRefreshCalled(false);
-							TiFacebookModule.getFacebookModule().fireEvent(TiFacebookModule.EVENT_TOKEN_UPDATED, null);
-						}
+					// AccessToken updated.
+					if (TiFacebookModule.getFacebookModule().isAccessTokenRefreshCalled()) {
+						TiFacebookModule.getFacebookModule().setAccessTokenRefreshCalled(false);
+						TiFacebookModule.getFacebookModule().fireEvent(TiFacebookModule.EVENT_TOKEN_UPDATED, null);
 					}
 				}
-			};
+			}
+		};
+	}
+
+	@Override
+	public void onCreate(Activity activity, Bundle savedInstanceState)
+	{
+		Log.d(TAG, "onCreate");
+
+		if (activity instanceof TiBaseActivity) {
+			final TiBaseActivity baseActivity = (TiBaseActivity) activity;
+
+			// Obtain activity result.
+			baseActivity.addOnActivityResultListener(this);
 		}
 	}
 
@@ -73,6 +87,7 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
 	public void onDestroy(Activity activity)
 	{
 		Log.d(TAG, "onDestroy");
+
 		accessTokenTracker.stopTracking();
 	}
 
@@ -80,6 +95,7 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
 	public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data)
 	{
 		Log.d(TAG, "onActivityResult");
+
 		TiFacebookModule.getFacebookModule().getCallbackManager().onActivityResult(requestCode, resultCode, data);
 	}
 }
