@@ -115,7 +115,7 @@ properties:
 
   - name: nonce
     summary: Gets or sets an optional nonce to use for login attempts.
-    desccription: |
+    description: |
         A valid nonce must be a non-empty string without whitespace.
         An invalid nonce will not be set. Instead, default unique nonceswill be used
         for login attempts.
