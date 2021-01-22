@@ -5,9 +5,9 @@
  * Please see the LICENSE included with this distribution for details.
  */
 
-#import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "FacebookLoginButtonProxy.h"
 #import "FacebookLoginButton.h"
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

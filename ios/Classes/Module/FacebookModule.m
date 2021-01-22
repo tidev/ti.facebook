@@ -12,8 +12,8 @@
 
 #import <TitaniumKit/TitaniumKit.h>
 
-#import "FacebookModule.h"
 #import "FacebookConstants.h"
+#import "FacebookModule.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -245,9 +245,9 @@ NS_ASSUME_NONNULL_BEGIN
 
   TiThreadPerformOnMainThread(
       ^{
-    [loginManager logInFromViewController:nil
-                            configuration:loginConfiguration
-                               completion:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+        [loginManager logInFromViewController:nil
+                                configuration:loginConfiguration
+                                   completion:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
                                      // Handle error
                                      if (error != nil) {
                                        [self fireLogin:nil authenticationToken:result.authenticationToken cancelled:result.isCancelled withError:error];
@@ -613,7 +613,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark Event Listeners
 
-- (void)fireLogin:(id _Nullable)result authenticationToken:(FBSDKAuthenticationToken * _Nullable)authenticationToken cancelled:(BOOL)cancelled withError:(NSError *_Nullable)error
+- (void)fireLogin:(id _Nullable)result authenticationToken:(FBSDKAuthenticationToken *_Nullable)authenticationToken cancelled:(BOOL)cancelled withError:(NSError *_Nullable)error
 {
   BOOL success = (result != nil);
   NSInteger code = [error code];
@@ -645,18 +645,18 @@ NS_ASSUME_NONNULL_BEGIN
   if (result != nil) {
     FBSDKProfile *profile = (FBSDKProfile *)result;
     NSDictionary *jsonDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    profile.userID, @"userID",
-                                    NULL_IF_NIL(profile.firstName), @"firstName",
-                                    NULL_IF_NIL(profile.middleName), @"middleName",
-                                    NULL_IF_NIL(profile.lastName), @"lastName",
-                                    NULL_IF_NIL(profile.name), @"name",
-                                    NULL_IF_NIL([profile.linkURL absoluteString]), @"linkURL",
-                                    nil];
+                                                     profile.userID, @"userID",
+                                                 NULL_IF_NIL(profile.firstName), @"firstName",
+                                                 NULL_IF_NIL(profile.middleName), @"middleName",
+                                                 NULL_IF_NIL(profile.lastName), @"lastName",
+                                                 NULL_IF_NIL(profile.name), @"name",
+                                                 NULL_IF_NIL([profile.linkURL absoluteString]), @"linkURL",
+                                                 nil];
 
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDictionary options:0 error:&error];
     NSString *resultString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     [event setObject:resultString forKey:@"data"];
-    
+
     if (_userID != nil) {
       [event setObject:_userID forKey:@"uid"];
     }
@@ -665,10 +665,11 @@ NS_ASSUME_NONNULL_BEGIN
   // Inject Open ID authentication token (for limited logins)
   if (authenticationToken != nil) {
     [event setObject:@{
-      @"tokenString": NULL_IF_NIL(authenticationToken.tokenString),
-      @"graphDomain": NULL_IF_NIL(authenticationToken.graphDomain),
-      @"nonce": NULL_IF_NIL(authenticationToken.nonce)
-    } forKey:@"authenticationToken"];
+      @"tokenString" : NULL_IF_NIL(authenticationToken.tokenString),
+      @"graphDomain" : NULL_IF_NIL(authenticationToken.graphDomain),
+      @"nonce" : NULL_IF_NIL(authenticationToken.nonce)
+    }
+              forKey:@"authenticationToken"];
   }
 
   [self fireEvent:@"login" withObject:event];
