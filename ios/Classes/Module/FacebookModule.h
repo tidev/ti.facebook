@@ -150,9 +150,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setCurrentAccessToken:(NSDictionary *_Nonnull)currentAccessToken;
 
 /*!
- @brief Gets or sets the desired tracking preference to use for login attempts. Defaults to `LOGIN_TRACKING_ENABLED`
+ @brief Sets the desired tracking preference to use for login attempts. Defaults to `LOGIN_TRACKING_ENABLED`.
  
- @param loginTracking The tracking configuration to use
+ @param loginTracking The tracking configuration to use.
  
  @code
  const fb = require('facebook');
@@ -162,6 +162,19 @@ NS_ASSUME_NONNULL_BEGIN
  @endcode
  */
 - (void)setLoginTracking_:(NSNumber *_Nonnull)loginTracking;
+
+/*!
+ @brief Gets the desired tracking preference to use for login attempts. Defaults to `LOGIN_TRACKING_ENABLED`.
+  
+ @code
+ const fb = require('facebook');
+ 
+ console.warn(fb.loginTracking);
+ @endcode
+ 
+ @return BOOL The tracking configuration to use.
+ */
+- (NSNumber *)loginTracking;
 
 /*!
  @brief Returns the expiration date.

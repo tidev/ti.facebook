@@ -50,6 +50,11 @@ NS_ASSUME_NONNULL_BEGIN
   return NUMUINTEGER([[self loginButton] tooltipColorStyle]);
 }
 
+- (NSNumber *_Nonnull)loginTracking
+{
+  return NUMUINTEGER([[self loginButton] loginTracking]);
+}
+
 #pragma Utility
 
 - (FBSDKLoginButton *)loginButton

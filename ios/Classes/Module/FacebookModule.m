@@ -150,6 +150,11 @@ NS_ASSUME_NONNULL_BEGIN
   _loginTracking = loginTracking;
 }
 
+- (NSNumber *)loginTracking
+{
+  return @([TiUtils intValue:_loginTracking def:FBSDKLoginTrackingEnabled]);
+}
+
 - (NSDate *_Nullable)expirationDate
 {
   __block NSDate *expirationDate = nil;
