@@ -9,7 +9,7 @@ description: |
     * Logging in to Facebook and authorizing your application with either the
       [Login button](Modules.Facebook.LoginButton) or programatically.
 
-    * Making requests through the Facebook Graph API v3 using the
+    * Making requests through the Facebook Graph API using the
       [requestWithGraphPath()](Modules.Facebook.requestWithGraphPath) method.
 
     ## Getting Started
@@ -92,30 +92,7 @@ description: |
     </array>
     ```
 
-    If you are using the older Ti.Facebook Module 4.0.5 and wish to support iOS9, you will instead need to include the following key
-    and values in `tiapp.xml` to handle the switching in and out of your app:
-
-    ``` xml
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>fbapi</string>
-        <string>fbapi20130214</string>
-        <string>fbapi20130410</string>
-        <string>fbapi20130702</string>
-        <string>fbapi20131010</string>
-        <string>fbapi20131219</string>
-        <string>fbapi20140410</string>
-        <string>fbapi20140116</string>
-        <string>fbapi20150313</string>
-        <string>fbapi20150629</string>
-        <string>fbauth</string>
-        <string>fbauth2</string>
-        <string>fb-messenger-api20140430</string>
-    </array>
-    ```
-
-    For iOS 9+ and Titanium 5.0.0.GA and above, App Transport Security is disabled by default.
-    If you choose to enable it, you have to set the following keys and values in `tiapp.xml` `<ios>` section for facebook module:
+    If you choose to enable App Transport Security (ATS), you have to set the following keys and values in `tiapp.xml` `<ios>` section for facebook module:
 
     ``` xml
     <key>NSAppTransportSecurity</key>
@@ -356,6 +333,14 @@ description: |
     ```
 
     For more information, see the [MessengerButton API reference](Modules.Facebook.MessengerButton).
+
+    ### Login Tracking (iOS only)
+
+    The Ti.Facecebook iOS version 10.0.0 and later supports the `loginTracking` property in the [LoginButton](Modules.Facebook.LoginButton.loginTracking)
+    and as a top-level property [loginTracking](Modules.Facebook.loginTracking). You can choose between the two constants
+    [LOGIN_TRACKING_ENABLED](Modules.Facebook.LOGIN_TRACKING_ENABLED) (default) and [LOGIN_TRACKING_LIMITED](Modules.Facebook.LOGIN_TRACKING_LIMITED).
+
+    For more information, see the [Login Tracking API reference](https://developers.facebook.com/docs/facebook-login/limited-login) and review the constants above.
 extends: Titanium.Module
 since: "3.1.0"
 platforms: [android, iphone, ipad]
@@ -376,11 +361,6 @@ methods:
         On iOS, do not request any write permissions before calling this method.  Use the
         [requestNewPublishPermissions()](Modules.Facebook.requestNewPublishPermissions)
         to request write permissions once the user authorizes the application.
-
-        #### Prior to Release 4.0.0
-
-        Set the [appid](Modules.Facebook.appid) property as well as the `permissions` property
-        before calling `authorize()`.
 
   - name: createActivityWorker
     summary: |
@@ -417,8 +397,6 @@ methods:
         **Note: This method needs to be called before calling <Modules.Facebook.authorize> 
         in order to be handle the auth-flow correctly. Otherwise, you might see a white screen without
         any response.
-        
-        The `timeout` parameter was deprecated in version 5.0.0 of Ti.Facebook and is not used anymore. 
     since: "4.0.0"
 
   - name: logCustomEvent
@@ -512,28 +490,6 @@ methods:
         summary: A dictionary object containing the required and optional parameters.
         type: SharePhotoContentParams
     since: "7.4.0"
-
-  - name: presentMessengerDialog
-    summary: |
-        Opens a supported Messenger dialog from the Facebook Messenger App.
-    description: |
-        Be sure to check if the device can support this method by calling [canOpenURL](Titanium.Platform.canOpenURL) with "fb-messenger-api://"
-        before using this method. If true, you can use this method. If false, the Facebook Messenger application
-        is probably not installed in the device.
-
-        Listen for the <Modules.Facebook.shareCompleted> to be notified if the attempt was
-        successful or not.
-    parameters:
-      - name: params
-        summary: |
-            A dictionary object containing optional parameters.
-        type: ShareLinkContentParams
-    since: "5.4.0"
-    platforms: [iphone, ipad]
-    deprecated:
-      since: "8.0.0"
-      removed: "8.0.0"
-      notes: "Removed by the native Facebook SDK"
 
   - name: presentSendRequestDialog
     summary: |
@@ -645,110 +601,7 @@ methods:
         summary: Callback to invoke when the request completes.
         type: Callback<FacebookDeferredAppLinkResponse>
     since: "5.4.0"
-    
-  - name: fetchNearbyPlacesForCurrentLocation
-    summary: Query for places the device is likely located in.
-    description: |
-        This is an asynchronous call, due to the need to fetch the current location 
-        from the device. Note that the results of the graph request are improved 
-        if the user has both Wi-Fi and Bluetooth enabled.
-        
-        **Note**: Remember to request the location permssions with <Titanium.Geolocation>
-        and include either the `NSLocationWhenInUseUsageDescription` or the
-        `NSLocationAlwaysUsageDescription` key in your plist before using this method.
-        The Facebook graph also requires the `FacebookClientToken` to be present in the 
-        plist, so check the Facebook Developer Portal > Apps > Your App > Settings > Advanced 
-        for your OAuth client-token.
-    parameters:
-      - name: confidenceLevel
-        summary: The Minimum Confidence level place estimate candidates must meet.
-        type: Number
-        constants: [Modules.Facebook.PLACE_LOCATION_CONFIDENCE_*]
-        default: Modules.Facebook.PLACE_LOCATION_CONFIDENCE_NOT_APPLICABLE
-        optional: true
-      - name: fields
-        summary: |
-            A list of fields that you might want the request to return. 
-            See the [Facebook docs](https://developers.facebook.com/docs/places/fields) for all possible values.
-        type: Array<String>
-        optional: true
-      - name: success
-        summary: The callback triggered when places are successfully fetched.
-        type: Callback
-      - name: error
-        summary: The callback triggered when places could not be fetched.
-        type: Callback
-    since: "6.2.0"
-    platforms: [iphone, ipad]
-    deprecated:
-      since: "8.0.0"
-      removed: "8.0.0"
-      notes: "Removed by the native Facebook SDK"
 
-  - name: fetchNearbyPlacesForSearchTearm
-    summary: Query for nearby places using the device's current location and search-term. 
-    description: |
-        This is an asynchronous call, due to the need to fetch the current location from the device.
-                   
-        **Note**: Remember to request the location permssions with <Titanium.Geolocation>
-        and include either the `NSLocationWhenInUseUsageDescription` or the
-        `NSLocationAlwaysUsageDescription` key in your plist before using this method.
-        The Facebook graph also requires the `FacebookClientToken` to be present in the 
-        plist, so check the Facebook Developer Portal > Apps > Your App > Settings > Advanced 
-        for your OAuth client-token.
-    parameters:
-      - name: searchTearm
-        summary: The term to search for in the Places Graph.
-        type: String
-      - name: categories
-        summary: |
-            The categories for the place. Each string in this array must be a 
-            category recognized by the SDK. See the [Facebook Docs](https://developers.facebook.com/docs/places/web/search#categories) for all 
-            possible values.
-        type: Array<String>
-        optional: true
-      - name: fields
-        summary: |
-            A list of fields that you might want the request to return. 
-            See the [Facebook docs](https://developers.facebook.com/docs/places/fields) for all possible values.
-        type: Array<String>
-        optional: true
-      - name: distance
-        summary: The search radius. For an unlimited radius, use 0.
-        default: 0
-        type: Number
-        optional: true
-      - name: cursor
-        summary: A pagination cursor.
-        type: String
-        optional: true
-      - name: success
-        summary: The callback triggered when places are successfully fetched.
-        type: Callback
-      - name: error
-        summary: The callback triggered when places could not be fetched.
-        type: Callback
-    since: "6.2.0"
-    platforms: [iphone, ipad]
-    deprecated:
-      since: "8.0.0"
-      removed: "8.0.0"
-      notes: "Removed by the native Facebook SDK"
-
-  - name: shareMediaToMessenger
-    summary: Call this method to open Messenger and share an image, animated GIF or video.
-    parameters:
-      - name: params
-        summary: |
-            A dictionary object containing required and optional parameters.
-        type: ShareToMessengerParams
-    since: "5.4.0"
-    platforms: [iphone, ipad]
-    deprecated:
-      since: "7.0.0"
-      removed: "7.0.0"
-      notes: "Removed by the native Facebook SDK"
-    
   - name: setCurrentAccessToken
     summary: Set a new access token for using Facebook services.
     parameters:
@@ -981,132 +834,6 @@ properties:
     type: Number
     permission: read-only
     since: "5.0.0"
-    
-  - name: PLACE_LOCATION_CONFIDENCE_NOT_APPLICABLE
-    summary: Used to indicate that any level is acceptable as a minimum threshold.
-    type: Number
-    permission: read-only
-    since: "6.2.0"
-    platforms: [iphone, ipad]
-    deprecated:
-      since: "8.0.0"
-      removed: "8.0.0"
-      notes: "Removed by the native Facebook SDK"
-
-  - name: PLACE_LOCATION_CONFIDENCE_LOW
-    summary: Low confidence level.
-    type: Number
-    permission: read-only
-    since: "6.2.0"
-    platforms: [iphone, ipad]
-    deprecated:
-      since: "8.0.0"
-      removed: "8.0.0"
-      notes: "Removed by the native Facebook SDK"
-
-  - name: PLACE_LOCATION_CONFIDENCE_MEDIUM
-    summary: Medium confidence level.
-    type: Number
-    permission: read-only
-    since: "6.2.0"
-    platforms: [iphone, ipad]
-    deprecated:
-      since: "8.0.0"
-      removed: "8.0.0"
-      notes: "Removed by the native Facebook SDK"
-
-  - name: PLACE_LOCATION_CONFIDENCE_HIGH
-    summary: High confidence level.
-    type: Number
-    permission: read-only
-    since: "6.2.0"
-    platforms: [iphone, ipad]
-    deprecated:
-      since: "8.0.0"
-      removed: "8.0.0"
-      notes: "Removed by the native Facebook SDK"
-
-  - name: LOGIN_BEHAVIOR_BROWSER
-    summary: |
-        Opens login window in the default Web Browser (Safari/Firefox etc...)
-    type: Number
-    permission: read-only
-    since: "5.4.0"
-    platforms: [android, iphone, ipad]
-    deprecated:
-      since: "8.0.0"
-      removed: "8.0.0"
-      notes: "Removed by the native Facebook SDK"
-
-  - name: LOGIN_BEHAVIOR_NATIVE
-    summary: |
-        Opens login window with the native Facebook app. On iOS it will attempt to
-        fallback to <Titanium.Modules.Facebook.LOGIN_BEHAVIOR_BROWSER> if the Facebook app
-        is not installed or Facebook chooses it internally. For Android use
-        <Titanium.Modules.Facebook.LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK> to get this behavior.
-        
-        Note: As of today (Facebook SDK 4.11.0), Facebook seems to not allow logging in using 
-        the Facebook app to login, so this constant won't work proper on iOS. This issue is 
-        discussed [here](https://developers.facebook.com/bugs/786729821439894/?search_id).
-    type: Number
-    permission: read-only
-    since: "5.4.0"
-    platforms: [android, iphone, ipad]
-    deprecated:
-      since: "8.0.0"
-      removed: "8.0.0"
-      notes: "Removed by the native Facebook SDK"
-
-  - name: LOGIN_BEHAVIOR_SYSTEM_ACCOUNT
-    summary: |
-        Attempts to login with through the Facebook account currently signed in through
-        Settings.
-    type: Number
-    permission: read-only
-    since: "5.4.0"
-    platforms: [iphone, ipad]
-    deprecated:
-      since: "8.0.0"
-      removed: "8.0.0"
-      notes: "Removed by the native Facebook SDK"
-
-  - name: LOGIN_BEHAVIOR_WEB
-    summary: |
-        Opens login window through a modal browser window.
-    type: Number
-    permission: read-only
-    since: "5.4.0"
-    platforms: [android, iphone, ipad]
-    deprecated:
-      since: "8.0.0"
-      removed: "8.0.0"
-      notes: "Removed by the native Facebook SDK"
-
-  - name: LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK
-    summary: |
-        Opens login window with the native Facebook app. On Android it will attempt to
-        fallback to <Titanium.Modules.Facebook.LOGIN_BEHAVIOR_BROWSER> if the Facebook app
-        is not installed. For iOS use <Titanium.Modules.Facebook.NATIVE> to get this behavior.
-    type: Number
-    permission: read-only
-    since: "5.4.0"
-    platforms: [android]
-    deprecated:
-      since: "8.0.0"
-      removed: "8.0.0"
-      notes: "Removed by the native Facebook SDK"
-
-  - name: LOGIN_BEHAVIOR_DEVICE_AUTH
-    summary: |
-        Expose Facebook Login for devices such as Android TV and Fire TV.
-    type: Number
-    permission: read-only
-    since: "5.4.0"
-    platforms: [android]
-    deprecated:
-      since: "8.0.0"
-      removed: "8.0.0"
-      notes: "Removed by the native Facebook SDK"
 
   - name: LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC
     summary: |
@@ -1353,65 +1080,37 @@ properties:
     since: "5.4.0"
     platforms: [iphone, ipad]
 
-  - name: MESSENGER_BUTTON_STYLE_BLUE
-    summary: |
-        Use with [MessengerButton.style](Modules.Facebook.MessengerButton.style) to specify
-        the default send button style.
+  - name: loginTracking
+    summary: Gets or sets the desired tracking preference to use for login attempts.
     type: Number
-    permission: read-only
-    since: "5.4.0"
+    constants: [Modules.Facebook.LOGIN_TRACKING_*]
+    default: Modules.Facebook.LOGIN_TRACKING_ENABLED
+    since: "10.0.0"
     platforms: [iphone, ipad]
-    deprecated:
-      since: "7.0.0"
-      removed: "7.0.0"
-      notes: "Removed by the native Facebook SDK"
 
-  - name: MESSENGER_BUTTON_STYLE_WHITE
+  - name: LOGIN_TRACKING_ENABLED
     summary: |
-        Use with [MessengerButton.style](Modules.Facebook.MessengerButton.style) to specify
-        the default send button style.
-    type: Number
-    permission: read-only
-    since: "5.4.0"
-    platforms: [iphone, ipad]
-    deprecated:
-      since: "7.0.0"
-      removed: "7.0.0"
-      notes: "Removed by the native Facebook SDK"
-
-  - name: MESSENGER_BUTTON_STYLE_WHITE_BORDERED
-    summary: |
-        Use with [MessengerButton.style](Modules.Facebook.MessengerButton.style) to specify
-        the default send button style.
-    type: Number
-    permission: read-only
-    since: "5.4.0"
-    platforms: [iphone, ipad]
-    deprecated:
-      since: "7.0.0"
-      removed: "7.0.0"
-      notes: "Removed by the native Facebook SDK"
-
-  - name: loginBehavior
-    summary: |
-        Defines the behavior that the module will attempt to use for authorize().
+        Use with [LoginButton.loginTracking](Modules.Facebook.LoginButton.loginTracking) or the top-level
+        [loginTracking](Modules.Facebook.loginTracking) property to set the desired tracking preference.
     description: |
-        Be sure to set this before calling authorize if this is needed. It is
-        recommended to follow Facebook's [guidelines](https://developers.facebook.com/blog/post/2015/10/29/Facebook-Login-iOS9)
-        for ideal login behavior.
-        Defaults to [Titanium.Modules.Facebook.LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK](Titanium.Modules.Facebook.LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK)
-        on Android and [Titanium.Modules.Facebook.LOGIN_BEHAVIOR_BROWSER](Titanium.Modules.Facebook.LOGIN_BEHAVIOR_BROWSER) on iOS
-        (which uses the native Safari Dialog internally).
+        For more information on the differences between
+        `LOGIN_TRACKING_ENABLED` and `LOGIN_TRACKING_LIMITED` see: https://developers.facebook.com/docs/facebook-login/ios/limited-login/
     type: Number
-    deprecated:
-      since: "8.0.0"
-      removed: "8.0.0"
-      notes: "Removed by the native Facebook SDK"
-    constants: [Modules.Facebook.LOGIN_BEHAVIOR_*]
-        
-    since: "5.4.0"
-    availability: creation
-    platforms: [android, iphone, ipad]
+    permission: read-only
+    since: "10.0.0"
+    platforms: [iphone, ipad]
+
+  - name: LOGIN_TRACKING_LIMITED
+    summary: |
+        Use with [LoginButton.loginTracking](Modules.Facebook.LoginButton.loginTracking) or the top-level
+        [loginTracking](Modules.Facebook.loginTracking) property to set the desired tracking preference.
+    description: |
+        For more information on the differences between
+        `LOGIN_TRACKING_ENABLED` and `LOGIN_TRACKING_LIMITED` see: https://developers.facebook.com/docs/facebook-login/ios/limited-login/
+    type: Number
+    permission: read-only
+    since: "10.0.0"
+    platforms: [iphone, ipad]
 
   - name: permissions
     summary: Array of permissions to request for your app.
@@ -1913,31 +1612,6 @@ properties:
     type: Boolean
     default: false
     optional: true
-
----
-name: InviteDialogParams
-summary: |
-    Parameters to pass to [presentInviteDialog()](Modules.Facebook.presentInviteDialog) method.
-since: "5.4.0"
-platforms: [iphone, ipad, android]
-properties:
-  - name: appLink
-    summary: An app link target that will be used as a target when the user accept the invite.
-    description: |
-        This is a requirement. You can find out more about app links [here](https://developers.facebook.com/docs/applinks).
-    type: String
-    optional: false
-
-  - name: appPreviewImageLink
-    summary: A URL to a preview image that will be displayed with the app invite
-    description: This is optional. If you don't include it a fallback image will be used.
-    type: String
-    optional: true 
-    
-deprecated:
-  since: "5.7.0"
-  removed: "5.7.0"
-  notes: "Removed by the native Facebook SDK"
 
 ---
 name: CurrentAccessTokenParams

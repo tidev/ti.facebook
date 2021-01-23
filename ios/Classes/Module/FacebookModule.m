@@ -10,13 +10,10 @@
  * Please see the LICENSE included with this distribution for details.
  */
 
-#import "FacebookModule.h"
+#import <TitaniumKit/TitaniumKit.h>
+
 #import "FacebookConstants.h"
-#import "TiApp.h"
-#import "TiBase.h"
-#import "TiBlob.h"
-#import "TiHost.h"
-#import "TiUtils.h"
+#import "FacebookModule.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -148,6 +145,16 @@ NS_ASSUME_NONNULL_BEGIN
   [FBSDKAccessToken setCurrentAccessToken:newToken];
 }
 
+- (void)setLoginTracking_:(NSNumber *_Nonnull)loginTracking
+{
+  _loginTracking = loginTracking;
+}
+
+- (NSNumber *)loginTracking
+{
+  return @([TiUtils intValue:_loginTracking def:FBSDKLoginTrackingEnabled]);
+}
+
 - (NSDate *_Nullable)expirationDate
 {
   __block NSDate *expirationDate = nil;
@@ -234,29 +241,27 @@ NS_ASSUME_NONNULL_BEGIN
   [FBSDKAppEvents setPushNotificationsDeviceToken:[FacebookModule dataFromHexString:deviceToken]];
 }
 
-- (void)setLoginBehavior:(NSNumber *_Nonnull)loginBehavior
-{
-  DEPRECATED_REMOVED(@"Facebook.loginBehavior", @"8.0.0", @"8.0.0");
-}
-
 - (void)authorize:(__unused id)unused
 {
   __block FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
+  __block FBSDKLoginConfiguration *loginConfiguration = [[FBSDKLoginConfiguration alloc] initWithPermissions:_permissions
+                                                                                                    tracking:[TiUtils intValue:_loginTracking
+                                                                                                                           def:FBSDKLoginTrackingEnabled]];
 
   TiThreadPerformOnMainThread(
       ^{
-        [loginManager logInWithPermissions:self->_permissions
-                        fromViewController:nil
-                                   handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+        [loginManager logInFromViewController:nil
+                                configuration:loginConfiguration
+                                   completion:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
                                      // Handle error
                                      if (error != nil) {
-                                       [self fireLogin:nil cancelled:NO withError:error];
+                                       [self fireLogin:nil authenticationToken:result.authenticationToken cancelled:result.isCancelled withError:error];
                                        return;
                                      }
 
                                      // Login cancelled
                                      if (result.isCancelled) {
-                                       [self fireLogin:nil cancelled:YES withError:nil];
+                                       [self fireLogin:nil authenticationToken:FBSDKAuthenticationToken.currentAuthenticationToken cancelled:YES withError:nil];
                                        return;
                                      }
 
@@ -339,37 +344,12 @@ NS_ASSUME_NONNULL_BEGIN
       NO);
 }
 
-- (void)presentMessengerDialog:(NSArray<NSDictionary<NSString *, id> *> *)args
-{
-  DEPRECATED_REMOVED(@"Facebook.presentMessengerDialog", @"8.0.0", @"8.0.0");
-  DebugLog(@"[WARN] Facebook removed the MessengerDialog API via Web in SDK 6.0.0");
-}
-
-- (void)shareMediaToMessenger:(NSArray<NSDictionary<NSString *, id> *> *)args
-{
-  DEPRECATED_REPLACED_REMOVED(@"Facebook.shareMediaToMessenger", @"7.0.0", @"7.0.0", @"Facebook.shareMediaToMessenger");
-  DebugLog(@"[WARN] Facebook removed the MessengerShareDialog API via Web in SDK 5.0.0");
-}
-
-- (void)presentWebShareDialog:(id _Nullable)unused
-{
-  DEPRECATED_REPLACED_REMOVED(@"Facebook.presentWebShareDialog", @"5.0.0", @"5.0.0", @"Facebook.presentShareDialog");
-  DebugLog(@"[WARN] Facebook removed the ShareDialog API via Web in SDK 4.28.0");
-}
-
-- (void)presentInviteDialog:(NSArray<NSDictionary<NSString *, id> *> *)args
-{
-  DEPRECATED_REMOVED(@"Facebook.presentInviteDialog", @"5.7.0", @"5.7.0");
-  DebugLog(@"[WARN] Facebook removed the InviteDialog API in SDK 4.28.0");
-}
-
 - (void)presentSendRequestDialog:(NSArray<NSDictionary<NSString *, id> *> *)args
 {
   NSDictionary *_Nonnull params = [args objectAtIndex:0];
 
   NSString *message = [params objectForKey:@"message"];
   NSString *title = [params objectForKey:@"title"];
-  NSArray *to = [params objectForKey:@"to"];
   NSArray *recipients = [params objectForKey:@"recipients"];
   NSArray *recipientSuggestions = [params objectForKey:@"recipientSuggestions"];
   FBSDKGameRequestFilter filters = [TiUtils intValue:[params objectForKey:@"filters"]];
@@ -385,10 +365,6 @@ NS_ASSUME_NONNULL_BEGIN
   }
 
   FBSDKGameRequestActionType actionType = [TiUtils intValue:[params objectForKey:@"actionType"]];
-
-  if (to != nil) {
-    DEPRECATED_REPLACED_REMOVED(@"Facebook.sendRequestDialog.to", @"5.0.0", @"5.0.0", @"Titanium.Facebook.sendRequestDialog.recipients");
-  }
 
   TiThreadPerformOnMainThread(
       ^{
@@ -640,19 +616,9 @@ NS_ASSUME_NONNULL_BEGIN
       YES);
 }
 
-- (void)fetchNearbyPlacesForCurrentLocation:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args
-{
-  DEPRECATED_REMOVED(@"Facebook.fetchNearbyPlacesForCurrentLocation", @"8.0.0", @"8.0.0");
-}
-
-- (void)fetchNearbyPlacesForSearchTearm:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args
-{
-  DEPRECATED_REMOVED(@"Facebook.fetchNearbyPlacesForSearchTearm", @"8.0.0", @"8.0.0");
-}
-
 #pragma mark Event Listeners
 
-- (void)fireLogin:(id _Nullable)result cancelled:(BOOL)cancelled withError:(NSError *_Nullable)error
+- (void)fireLogin:(id _Nullable)result authenticationToken:(FBSDKAuthenticationToken *_Nullable)authenticationToken cancelled:(BOOL)cancelled withError:(NSError *_Nullable)error
 {
   BOOL success = (result != nil);
   NSInteger code = [error code];
@@ -685,19 +651,30 @@ NS_ASSUME_NONNULL_BEGIN
     FBSDKProfile *profile = (FBSDKProfile *)result;
     NSDictionary *jsonDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
                                                      profile.userID, @"userID",
-                                                 profile.firstName, @"firstName",
-                                                 profile.middleName ?: @"", @"middleName",
-                                                 profile.lastName, @"lastName",
-                                                 profile.name, @"name",
-                                                 [profile.linkURL absoluteString], @"linkURL",
+                                                 NULL_IF_NIL(profile.firstName), @"firstName",
+                                                 NULL_IF_NIL(profile.middleName), @"middleName",
+                                                 NULL_IF_NIL(profile.lastName), @"lastName",
+                                                 NULL_IF_NIL(profile.name), @"name",
+                                                 NULL_IF_NIL([profile.linkURL absoluteString]), @"linkURL",
                                                  nil];
 
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDictionary options:0 error:&error];
     NSString *resultString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     [event setObject:resultString forKey:@"data"];
+
     if (_userID != nil) {
       [event setObject:_userID forKey:@"uid"];
     }
+  }
+
+  // Inject Open ID authentication token (for limited logins)
+  if (authenticationToken != nil) {
+    [event setObject:@{
+      @"tokenString" : NULL_IF_NIL(authenticationToken.tokenString),
+      @"graphDomain" : NULL_IF_NIL(authenticationToken.graphDomain),
+      @"nonce" : NULL_IF_NIL(authenticationToken.nonce)
+    }
+              forKey:@"authenticationToken"];
   }
 
   [self fireEvent:@"login" withObject:event];
@@ -721,7 +698,7 @@ NS_ASSUME_NONNULL_BEGIN
   FBSDKProfile *profile = notification.userInfo[FBSDKProfileChangeNewKey];
   if (profile != nil) {
     _userID = [profile userID];
-    [self fireLogin:profile cancelled:NO withError:nil];
+    [self fireLogin:profile authenticationToken:FBSDKAuthenticationToken.currentAuthenticationToken cancelled:NO withError:nil];
   }
 }
 
@@ -791,36 +768,7 @@ NS_ASSUME_NONNULL_BEGIN
   [self fireEvent:name withObject:event];
 }
 
-// A function for parsing URL parameters returned by the Feed Dialog.
-- (NSDictionary *)parseURLParams:(NSString *)query
-{
-  NSArray *pairs = [query componentsSeparatedByString:@"&"];
-  NSMutableDictionary *params = [NSMutableDictionary dictionary];
-  NSCharacterSet *charSet = [NSCharacterSet characterSetWithCharactersInString:@"[]"];
-  for (NSString *pair in pairs) {
-    NSArray *kv = [pair componentsSeparatedByString:@"="];
-    NSString *val = [kv[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    params[[[[kv[0] stringByRemovingPercentEncoding] componentsSeparatedByCharactersInSet:charSet] componentsJoinedByString:@""]] = val;
-  }
-  return params;
-}
-
 #pragma mark Utilities
-
-- (void)populateUserDetails
-{
-  TiThreadPerformOnMainThread(
-      ^{
-        if ([FBSDKAccessToken currentAccessToken] != nil) {
-          FBSDKProfile *user = [FBSDKProfile currentProfile];
-          self->_userID = [user userID];
-          [self fireLogin:user cancelled:NO withError:nil];
-        } else {
-          [self fireLogin:nil cancelled:NO withError:nil];
-        }
-      },
-      NO);
-}
 
 + (FBSDKShareLinkContent *_Nonnull)shareLinkContentFromDictionary:(NSDictionary *)dictionary
 {
@@ -941,7 +889,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark Constants
 
-MAKE_SYSTEM_PROP_DEPRECATED_REPLACED_REMOVED(AUDIENCE_NONE, -1, @"Facebook.AUDIENCE_NONE", @"5.0.0", @"5.0.0", @"Facebook.AUDIENCE_ONLY_ME");
+MAKE_SYSTEM_PROP(LOGIN_TRACKING_ENABLED, FBSDKLoginTrackingEnabled);
+MAKE_SYSTEM_PROP(LOGIN_TRACKING_LIMITED, FBSDKLoginTrackingLimited);
+
 MAKE_SYSTEM_PROP(AUDIENCE_ONLY_ME, FBSDKDefaultAudienceOnlyMe);
 MAKE_SYSTEM_PROP(AUDIENCE_FRIENDS, FBSDKDefaultAudienceFriends);
 MAKE_SYSTEM_PROP(AUDIENCE_EVERYONE, FBSDKDefaultAudienceEveryone);
@@ -955,17 +905,8 @@ MAKE_SYSTEM_PROP(FILTER_NONE, FBSDKGameRequestFilterNone);
 MAKE_SYSTEM_PROP(FILTER_APP_USERS, FBSDKGameRequestFilterAppUsers);
 MAKE_SYSTEM_PROP(FILTER_APP_NON_USERS, FBSDKGameRequestFilterAppNonUsers);
 
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(LOGIN_BEHAVIOR_BROWSER, 0, @"LOGIN_BEHAVIOR_BROWSER", @"8.0.0", @"8.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(LOGIN_BEHAVIOR_NATIVE, 1, @"LOGIN_BEHAVIOR_NATIVE", @"7.0.0", @"7.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(LOGIN_BEHAVIOR_SYSTEM_ACCOUNT, 2, @"LOGIN_BEHAVIOR_SYSTEM_ACCOUNT", @"7.0.0", @"7.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(LOGIN_BEHAVIOR_WEB, 3, @"LOGIN_BEHAVIOR_WEB", @"7.0.0", @"7.0.0");
-
 MAKE_SYSTEM_PROP(MESSENGER_BUTTON_MODE_RECTANGULAR, TiFacebookShareButtonModeRectangular);
 MAKE_SYSTEM_PROP(MESSENGER_BUTTON_MODE_CIRCULAR, TiFacebookShareButtonModeCircular);
-
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(MESSENGER_BUTTON_STYLE_BLUE, 0, @"MESSENGER_BUTTON_STYLE_BLUE", @"7.0.0", @"7.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(MESSENGER_BUTTON_STYLE_WHITE, 1, @"MESSENGER_BUTTON_STYLE_WHITE", @"7.0.0", @"7.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(MESSENGER_BUTTON_STYLE_WHITE_BORDERED, 2, @"MESSENGER_BUTTON_STYLE_WHITE_BORDERED", @"7.0.0", @"7.0.0");
 
 MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_AUTOMATIC, FBSDKShareDialogModeAutomatic);
 MAKE_SYSTEM_PROP(SHARE_DIALOG_MODE_NATIVE, FBSDKShareDialogModeNative);
@@ -981,11 +922,6 @@ MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE, FBSDKLoginButtonTooltipB
 
 MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY, FBSDKTooltipColorStyleNeutralGray);
 MAKE_SYSTEM_PROP(LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE, FBSDKTooltipColorStyleFriendlyBlue);
-
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(PLACE_LOCATION_CONFIDENCE_NOT_APPLICABLE, 0, @"PLACE_LOCATION_CONFIDENCE_NOT_APPLICABLE", @"8.0.0", @"8.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(PLACE_LOCATION_CONFIDENCE_LOW, 1, @"PLACE_LOCATION_CONFIDENCE_LOW", @"8.0.0", @"8.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(PLACE_LOCATION_CONFIDENCE_MEDIUM, 2, @"PLACE_LOCATION_CONFIDENCE_MEDIUM", @"8.0.0", @"8.0.0");
-MAKE_SYSTEM_PROP_DEPRECATED_REMOVED(PLACE_LOCATION_CONFIDENCE_HIGH, 3, @"PLACE_LOCATION_CONFIDENCE_HIGH", @"8.0.0", @"8.0.0");
 
 MAKE_SYSTEM_STR(EVENT_NAME_COMPLETED_REGISTRATION, FBSDKAppEventNameCompletedRegistration);
 MAKE_SYSTEM_STR(EVENT_NAME_VIEWED_CONTENT, FBSDKAppEventNameViewedContent);

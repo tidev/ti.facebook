@@ -10,13 +10,11 @@
  * Please see the LICENSE included with this distribution for details.
  */
 
-#import "TiModule.h"
-
-#import <Social/Social.h>
-
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
+#import <Social/Social.h>
+#import <TitaniumKit/TitaniumKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FacebookModule : TiModule <FBSDKSharingDelegate, FBSDKGameRequestDialogDelegate> {
   NSString *_userID;
   NSArray *_permissions;
+  NSNumber *_loginTracking;
   NSDictionary *_launchOptions;
 }
 
@@ -151,6 +150,33 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setCurrentAccessToken:(NSDictionary *_Nonnull)currentAccessToken;
 
 /*!
+ @brief Sets the desired tracking preference to use for login attempts. Defaults to `LOGIN_TRACKING_ENABLED`.
+ 
+ @param loginTracking The tracking configuration to use.
+ 
+ @code
+ const fb = require('facebook');
+ 
+ fb.loginTracking = fb.LOGIN_TRACKING_LIMITED;
+ fb.authorize();
+ @endcode
+ */
+- (void)setLoginTracking_:(NSNumber *_Nonnull)loginTracking;
+
+/*!
+ @brief Gets the desired tracking preference to use for login attempts. Defaults to `LOGIN_TRACKING_ENABLED`.
+  
+ @code
+ const fb = require('facebook');
+ 
+ console.warn(fb.loginTracking);
+ @endcode
+ 
+ @return BOOL The tracking configuration to use.
+ */
+- (NSNumber *)loginTracking;
+
+/*!
  @brief Returns the expiration date.
  
  @code
@@ -237,19 +263,6 @@ NS_ASSUME_NONNULL_BEGIN
  @endcode
  */
 - (void)setPushNotificationsDeviceToken:(NSString *_Nonnull)deviceToken;
-
-/*!
- @brief The login-behavior used when calling the "authorize" method.
- 
- @param loginBehavior The constant used to define login-behavior.
- 
- @code
- const fb = require('facebook');
- 
- fb.loginBehavior = fb.LOGIN_BEHAVIOR_NATIVE;
- @endcode
- */
-- (void)setLoginBehavior:(NSNumber *_Nonnull)loginBehavior;
 
 /*!
  @brief Logs the user in or authorizes additional permissions.
@@ -344,65 +357,6 @@ NS_ASSUME_NONNULL_BEGIN
  @endcode
  */
 - (void)presentPhotoShareDialog:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args;
-
-/*!
- @brief Present a messenger-dialog. Currently only possible to use when Messenger is installed.
- 
- @param args The arguments passed to the messenger-dialog.
- 
- @code
- const fb = require('facebook');
- 
- fb.presentMessengerDialog({
-   link: 'https://appcelerator.com',
-   hashtag: '#codestrong'
- });
- @endcode
- */
-- (void)presentMessengerDialog:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args;
-
-/*!
- @brief Share images, GIFs and videos to the messenger.
- 
- @param args The arguments passed to the messenger.
- 
- @code
- const fb = require('facebook');
- 
- // Show camera to take a picture
- Ti.Media.showCamera({
-   success: function(e) {
-     // Share the taken photo via Messenger
-     fb.shareMediaToMessenger({
-       media: e.media
-     });
-   }
- });
- @endcode
- */
-- (void)shareMediaToMessenger:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args;
-
-/*!
- @brief Present a share dialog using web dialog. Removed in Ti.Facebook 5.0.0 and later, use "presentShareDialog" instead.
- 
- @param unused An used parameter for proxy-consistency.
- */
-- (void)presentWebShareDialog:(id _Nullable)unused;
-
-/*!
- @brief Present an invite dialog using the native application.
- 
- @param args The arguments passed to the invite-dialog.
- 
- @code
- const fb = require('facebook');
- 
- fb.presentInviteDialog({
-   appLink: 'https://itunes.apple.com/us/app/facebook/id284882215?mt=8'
- });
- @endcode
- */
-- (void)presentInviteDialog:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args;
 
 /*!
  @brief Build up and present a game request.
@@ -506,53 +460,6 @@ NS_ASSUME_NONNULL_BEGIN
  @endcode
  */
 - (void)fetchDeferredAppLink:(NSArray<KrollCallback *> *_Nonnull)args;
-
-/*!
- @brief Method to query for places the device is likely located in.
- 
- @param args The arguments containing the fields, confidence-level, success- and error-callback.
- 
- @code
- const fb = require('facebook');
- 
- fb.fetchNearbyPlacesForCurrentLocation({
-   confidenceLevel: 0, // optional
-   fields: [], // optional
-   success: function(e) {
-     Ti.API.info(e);
-   },
-   error: function(e) {
-     Ti.API.error(e);
-   }
- });
- @endcode
- */
-- (void)fetchNearbyPlacesForCurrentLocation:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args;
-
-/*!
- @brief Method to query for places based on the search-term.
- 
- @param args The arguments containing the search-term, categories, distance, fields, cursor, success- and error-callback.
- 
- @code
- const fb = require('facebook');
- 
- fb.fetchNearbyPlacesForSearchTearm({
-   searchTerm: 'San Jose, CA',
-   categories: [], // categories, optional 
-   distance: 5000, // in meters, optional
-   fields: [], // places-fields, optional
-   cursor: null, // paging-cursorm, optional
-   success: function(e) {
-     Ti.API.info(e);
-   },
-   error: function(e) {
-     Ti.API.error(e);
-   }
- });
- @endcode
- */
-- (void)fetchNearbyPlacesForSearchTearm:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args;
 
 @end
 

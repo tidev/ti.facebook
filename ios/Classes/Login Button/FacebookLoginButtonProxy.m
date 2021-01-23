@@ -7,7 +7,6 @@
 
 #import "FacebookLoginButtonProxy.h"
 #import "FacebookLoginButton.h"
-#import "TiUtils.h"
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -49,6 +48,16 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSNumber *_Nonnull)tooltipColorStyle
 {
   return NUMUINTEGER([[self loginButton] tooltipColorStyle]);
+}
+
+- (NSNumber *_Nonnull)loginTracking
+{
+  return NUMUINTEGER([[self loginButton] loginTracking]);
+}
+
+- (NSString *_Nullable)nonce
+{
+  return [[self loginButton] nonce];
 }
 
 #pragma Utility

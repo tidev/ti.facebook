@@ -5,10 +5,9 @@
  * Please see the LICENSE included with this distribution for details.
  */
 
-#import "TiUIView.h"
-
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <TitaniumKit/TitaniumKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -50,6 +49,12 @@ NS_ASSUME_NONNULL_BEGIN
  @brief Sets the desired tooltip color style.
  */
 - (void)setTooltipColorStyle_:(NSNumber *_Nonnull)tooltipColorStyle;
+
+// Sets the desired tracking preference to use for login attempts. Defaults to `LOGIN_TRACKING_ENABLED`
+- (void)setLoginTracking_:(NSNumber *_Nonnull)loginTracking;
+
+// Gets or sets an optional nonce to use for login attempts. A valid nonce must be a non-empty string without whitespace.
+- (void)setNonce_:(NSString *_Nonnull)nonce;
 
 @end
 

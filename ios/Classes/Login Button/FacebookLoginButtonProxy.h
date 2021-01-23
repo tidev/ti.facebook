@@ -5,7 +5,7 @@
  * Please see the LICENSE included with this distribution for details.
  */
 
-#import "TiViewProxy.h"
+#import <TitaniumKit/TiViewProxy.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -42,6 +42,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSNumber *_Nonnull)tooltipColorStyle;
 
+/*!
+ @brief Returns the nonce.
+ */
+- (NSString *_Nullable)nonce;
 @end
 
 NS_ASSUME_NONNULL_END
