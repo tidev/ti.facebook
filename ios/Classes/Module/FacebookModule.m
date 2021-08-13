@@ -67,7 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)resumed:(id)note
 {
   [self handleRelaunch:nil];
-  [FBSDKAppEvents activateApp];
+  [[FBSDKAppEvents singleton] activateApp];
 }
 
 - (void)activateApp:(NSNotification *_Nullable)notification
@@ -388,8 +388,8 @@ NS_ASSUME_NONNULL_BEGIN
 {
   TiThreadPerformOnMainThread(
       ^{
-        [FBSDKAccessToken refreshCurrentAccessToken:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-          [self fireEvent:@"tokenUpdated" withObject:nil];
+      [FBSDKAccessToken refreshCurrentAccessTokenWithCompletion:^(id<FBSDKGraphRequestConnecting>  _Nullable connection, id  _Nullable result, NSError * _Nullable error) {
+          [self fireEvent:@"tokenUpdated" withObject:@{ @"success": @(error == nil), @"error": NULL_IF_NIL(error.localizedDescription) }];
         }];
       },
       NO);
@@ -540,7 +540,7 @@ NS_ASSUME_NONNULL_BEGIN
       ^{
         if ([FBSDKAccessToken currentAccessToken]) {
           [[[FBSDKGraphRequest alloc] initWithGraphPath:path parameters:params HTTPMethod:httpMethod]
-              startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+           startWithCompletion:^(id<FBSDKGraphRequestConnecting>  _Nullable connection, id  _Nullable result, NSError * _Nullable error) {
                 NSDictionary *returnedObject;
                 BOOL success = NO;
 
@@ -682,7 +682,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)logEvents:(NSNotification *)notification
 {
-  [FBSDKAppEvents activateApp];
+  [[FBSDKAppEvents singleton] activateApp];
 }
 
 - (void)accessTokenChanged:(NSNotification *)notification
