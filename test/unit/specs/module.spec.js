@@ -408,12 +408,6 @@ describe('ti.facebook', () => {
 				});
 			});
 
-			describe('#presentSendRequestDialog(params)', () => {
-				it('is a function', () => {
-					expect(Facebook.presentSendRequestDialog).toEqual(jasmine.any(Function));
-				});
-			});
-
 			describe('#presentShareDialog(params)', () => {
 				it('is a function', () => {
 					expect(Facebook.presentShareDialog).toEqual(jasmine.any(Function));
