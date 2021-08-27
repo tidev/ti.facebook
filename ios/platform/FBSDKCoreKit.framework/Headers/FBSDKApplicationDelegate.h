@@ -18,6 +18,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "FBSDKApplicationObserving.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -98,12 +100,29 @@ controlled via 'FacebookAutoLogAppEventsEnabled' key in the project info plist f
 didFinishLaunchingWithOptions:(nullable NSDictionary<UIApplicationLaunchOptionsKey, id> *)launchOptions;
 
 /**
-  Call this method to manually initialize SDK.
+ Initializes the SDK.
 
- @param launchOptions The launchOptions as passed to [UIApplicationDelegate application:didFinishLaunchingWithOptions:].
- Could be nil if you don't call this function from [UIApplicationDelegate application:didFinishLaunchingWithOptions:].
+ If you are using the SDK within the context of the UIApplication lifecycle, do not use this method.
+ Instead use `application: didFinishLaunchingWithOptions:`.
+
+ As part of SDK initialization basic auto logging of app events will occur, this can be
+ controlled via 'FacebookAutoLogAppEventsEnabled' key in the project info plist file.
  */
-+ (void)initializeSDK:(nullable NSDictionary<UIApplicationLaunchOptionsKey, id> *)launchOptions;
+- (void)initializeSDK;
+
+/**
+  Adds an observer that will be informed about application lifecycle events.
+
+  @note Observers are weakly held
+ */
+- (void)addObserver:(id<FBSDKApplicationObserving>)observer;
+
+/**
+  Removes an observer so that it will no longer be informed about application lifecycle events.
+
+  @note Observers are weakly held
+ */
+- (void)removeObserver:(id<FBSDKApplicationObserving>)observer;
 
 @end
 

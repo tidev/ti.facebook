@@ -328,6 +328,11 @@ typedef NS_ERROR_ENUM(FBSDKErrorDomain, FBSDKCoreError)
    Indicates that a bridge api interaction was interrupted.
    */
   FBSDKErrorBridgeAPIInterruption,
+
+  /**
+   Indicates that a bridge api response creation failed.
+   */
+  FBSDKErrorBridgeAPIResponse,
 } NS_SWIFT_NAME(CoreError);
 
 /**
@@ -354,22 +359,13 @@ NS_SWIFT_UNAVAILABLE("")
  attempt the recovery
  @param error the error
  @param recoveryOptionIndex the selected option index
- @param delegate the delegate
- @param didRecoverSelector the callback selector, see discussion.
- @param contextInfo context info to pass back to callback selector, see discussion.
+ @param completionHandler the handler called upon completion of error recovery
 
-
- Given that an error alert has been presented document-modally to the user, and the user has chosen one of the error's recovery options, attempt recovery from the error, and send the selected message to the specified delegate. The option index is an index into the error's array of localized recovery options. The method selected by didRecoverSelector must have the same signature as:
-
- - (void)didPresentErrorWithRecovery:(BOOL)didRecover contextInfo:(void *)contextInfo;
-
- The value passed for didRecover must be YES if error recovery was completely successful, NO otherwise.
+ Given that an error alert has been presented document-modally to the user, and the user has chosen one of the error's recovery options, attempt recovery from the error, and call the completion handler. The option index is an index into the error's array of localized recovery options. The value passed for didRecover must be YES if error recovery was completely successful, NO otherwise.
  */
 - (void)attemptRecoveryFromError:(NSError *)error
                      optionIndex:(NSUInteger)recoveryOptionIndex
-                        delegate:(nullable id)delegate
-              didRecoverSelector:(SEL)didRecoverSelector
-                     contextInfo:(nullable void *)contextInfo;
+               completionHandler:(void (^)(BOOL didRecover))completionHandler;
 @end
 
 NS_ASSUME_NONNULL_END

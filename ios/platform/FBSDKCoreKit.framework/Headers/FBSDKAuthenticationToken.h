@@ -18,13 +18,17 @@
 
 #import <Foundation/Foundation.h>
 
+
+@class FBSDKAuthenticationTokenClaims;
+@protocol FBSDKTokenCaching;
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
  Represent an AuthenticationToken used for a login attempt
 */
 NS_SWIFT_NAME(AuthenticationToken)
-@interface FBSDKAuthenticationToken : NSObject<NSSecureCoding>
+@interface FBSDKAuthenticationToken : NSObject<NSCopying, NSObject, NSSecureCoding>
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
@@ -51,6 +55,19 @@ NS_SWIFT_NAME(AuthenticationToken)
   The graph domain where the user is authenticated.
  */
 @property (nonatomic, copy, readonly) NSString *graphDomain;
+
+/**
+  Returns the claims encoded in the AuthenticationToken
+ */
+- (nullable FBSDKAuthenticationTokenClaims *)claims;
+
+/**
+ Internal Type exposed to facilitate transition to Swift.
+ API Subject to change or removal without warning. Do not use.
+
+ @warning UNSAFE - DO NOT USE
+ */
+@property (class, nonatomic, copy) id<FBSDKTokenCaching> tokenCache;
 
 @end
 
