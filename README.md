@@ -29,6 +29,10 @@ On the iOS platform, add the following property to the \<ios\>\<plist\>\<dict\> 
 <string>1234567890123456</string>
 <key>FacebookDisplayName</key>
 <string>SomeName</string>
+<!-- This one is required since Ti.Facebook iOS 12.0.0 -->
+<!-- you can find it under your Facebook App Settings > Advanced > Security > Client Token -->
+<key>FacebookClientToken</key>
+<string>YOUR_FACEBOOK_CLIENT_TOKEN</string>
 ```
 where SomeName is exactly as appears in the Facebook developer settings page
 
