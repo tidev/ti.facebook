@@ -1,0 +1,27 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.6 (swiftlang-5.6.0.323.62 clang-1316.0.20.8)
+// swift-module-flags: -target x86_64-apple-ios11.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name FBAEMKit
+@_exported import FBAEMKit
+import Swift
+import _Concurrency
+@_hasMissingDesignatedInitializers @objcMembers @objc(FBAEMEvent) final public class AEMEvent : ObjectiveC.NSObject, Foundation.NSCopying, Foundation.NSSecureCoding {
+  @objc final public var eventName: Swift.String {
+    get
+  }
+  @objc final public var values: [Swift.String : Swift.Int]? {
+    get
+  }
+  @objc(initWithJSON:) public init?(dict: [Swift.String : Any]?)
+  @objc public static var supportsSecureCoding: Swift.Bool {
+    @objc get
+  }
+  @objc convenience public init?(coder: Foundation.NSCoder)
+  @objc final public func encode(with coder: Foundation.NSCoder)
+  @objc final public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objcMembers @objc(FBAEMSettings) final public class AEMSettings : ObjectiveC.NSObject {
+  @objc public static func appID() -> Swift.String?
+  @objc override dynamic public init()
+  @objc deinit
+}
