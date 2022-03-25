@@ -103,9 +103,12 @@ On the android platform, in tiapp.xml or AndroidManifest.xml you must declare th
 ```xml
 <activity android:name="com.facebook.FacebookActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:label="YourAppName" android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" />
 ```
-You must also reference the string containing your Facebook app ID, inside the `<application/>` node as well: 
+You must also reference the string containing your Facebook app ID and client token, inside the `<application/>` node as well: 
 ```xml
 <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
+<!-- This one is required since Ti.Facebook iOS 12.0.0 -->
+<!-- you can find it under your Facebook App Settings > Advanced > Security > Client Token -->
+<meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token" />
 ```
 The app id goes into the the file `/platform/android/res/values/strings.xml` (classic) or ``app/platform/android/res/values/strings.xml``, where you should define:
 ```xml
@@ -113,6 +116,7 @@ The app id goes into the the file `/platform/android/res/values/strings.xml` (cl
 <resources>
     <!-- ... -->
     <string name="app_id">1234567890123456</string>
+    <string name="facebook_client_token">FACEBOOK_CLIENT_TOKEN</string>
     <!-- ... -->
 </resources>
 ```
