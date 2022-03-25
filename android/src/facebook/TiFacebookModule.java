@@ -34,13 +34,9 @@ import com.facebook.login.LoginBehavior;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.share.Sharer;
-import com.facebook.share.model.GameRequestContent;
-import com.facebook.share.model.GameRequestContent.ActionType;
-import com.facebook.share.model.GameRequestContent.Filters;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.model.SharePhoto;
 import com.facebook.share.model.SharePhotoContent;
-import com.facebook.share.widget.GameRequestDialog;
 import com.facebook.share.widget.ShareDialog;
 import com.facebook.share.widget.ShareDialog.Mode;
 import java.math.BigDecimal;
@@ -165,7 +161,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 
 	private static TiFacebookModule module;
 	private static String[] permissions = new String[] {};
-	private LoginBehavior loginBehavior;
+	private LoginBehavior loginBehavior = LoginBehavior.NATIVE_WITH_FALLBACK;
 
 	private KrollFunction permissionCallback = null;
 
@@ -825,115 +821,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		if (shareDialog != null && shareDialog.canShow(shareContent, mode)) {
 			shareDialog.show(shareContent, mode);
 		}
-	}
-
-	@Kroll.method
-	public void presentSendRequestDialog(@Kroll.argument(optional = true) final KrollDict args)
-	{
-		GameRequestDialog requestDialog = new GameRequestDialog(TiApplication.getInstance().getCurrentActivity());
-		requestDialog.registerCallback(callbackManager, new FacebookCallback<GameRequestDialog.Result>() {
-			KrollDict data = new KrollDict();
-			public void onSuccess(GameRequestDialog.Result result)
-			{
-				final String postId = result.getRequestId();
-				if (postId != null) {
-					data.put(PROPERTY_RESULT, postId);
-				}
-				data.put(PROPERTY_SUCCESS, true);
-				data.put(PROPERTY_CANCELLED, false);
-				fireEvent(EVENT_REQUEST_DIALOG_COMPLETE, data);
-			}
-
-			public void onCancel()
-			{
-				data.put(PROPERTY_SUCCESS, false);
-				data.put(PROPERTY_CANCELLED, true);
-				fireEvent(EVENT_REQUEST_DIALOG_COMPLETE, data);
-			}
-
-			public void onError(FacebookException error)
-			{
-				data.put(PROPERTY_SUCCESS, false);
-				data.put(PROPERTY_CANCELLED, false);
-				data.put(PROPERTY_ERROR, "Error sending Game Request");
-				fireEvent(EVENT_REQUEST_DIALOG_COMPLETE, data);
-			}
-		});
-
-		String title = (String) args.get("title");
-		String message = (String) args.get("message");
-		@SuppressWarnings("unchecked")
-		Map<String, String> data = (Map<String, String>) args.get("data");
-		String recipients = (String) args.get("recipients");
-		String suggestions = (String) args.get("recipientSuggestions");
-		String objectID = (String) args.get("objectID");
-
-		String to = (String) args.get("to");
-		if (to != null) {
-			Log.w(TAG, "Property `to` is deprecated. Please use `recipients`.");
-		}
-
-		int actionTypeChoice = args.optInt("actionType", TiFacebookModule.ACTION_TYPE_NONE);
-		ActionType actionType;
-		switch (actionTypeChoice) {
-			case TiFacebookModule.ACTION_TYPE_SEND:
-				actionType = ActionType.SEND;
-				break;
-			case TiFacebookModule.ACTION_TYPE_TURN:
-				actionType = ActionType.TURN;
-				break;
-			case TiFacebookModule.ACTION_TYPE_ASK_FOR:
-				actionType = ActionType.ASKFOR;
-				break;
-			default:
-			case TiFacebookModule.ACTION_TYPE_NONE:
-				actionType = null;
-				break;
-		}
-
-		int filtersChoice = args.optInt("filters", TiFacebookModule.FILTER_NONE);
-		Filters filters;
-		switch (filtersChoice) {
-			case TiFacebookModule.FILTER_APP_NON_USERS:
-				filters = Filters.APP_NON_USERS;
-				break;
-			case TiFacebookModule.FILTER_APP_USERS:
-				filters = Filters.APP_USERS;
-				break;
-			default:
-			case TiFacebookModule.FILTER_NONE:
-				filters = null;
-				break;
-		}
-
-		String dataString = null;
-		if (data != null) {
-			dataString = data.toString();
-		}
-
-		List<String> recipientsList = null;
-		if (recipients != null) {
-			String[] recipientsArray = recipients.split(",");
-			recipientsList = Arrays.asList(recipientsArray);
-		}
-
-		List<String> suggestionsList = null;
-		if (suggestions != null) {
-			String[] suggestionsArray = suggestions.split(",");
-			suggestionsList = Arrays.asList(suggestionsArray);
-		}
-
-		GameRequestContent content = new GameRequestContent.Builder()
-										 .setTitle(title)
-										 .setMessage(message)
-										 .setData(dataString)
-										 .setRecipients(recipientsList)
-										 .setActionType(actionType)
-										 .setObjectId(objectID)
-										 .setFilters(filters)
-										 .setSuggestions(suggestionsList)
-										 .build();
-		requestDialog.show(content);
 	}
 
 	@Override
