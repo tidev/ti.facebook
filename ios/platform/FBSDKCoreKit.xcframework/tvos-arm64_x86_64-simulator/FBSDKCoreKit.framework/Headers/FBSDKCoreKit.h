@@ -1,84 +1,112 @@
-// Copyright (c) 2014-present, Facebook, Inc. All rights reserved.
-//
-// You are hereby granted a non-exclusive, worldwide, royalty-free license to use,
-// copy, modify, and distribute this software in source code or binary form for use
-// in connection with the web services and APIs provided by Facebook.
-//
-// As with any software that integrates with the Facebook platform, your use of
-// this software is subject to the Facebook Developer Principles and Policies
-// [http://developers.facebook.com/policy/]. This copyright notice shall be
-// included in all copies or substantial portions of the software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-// FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-// COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-// IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-// CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+/*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ * All rights reserved.
+ *
+ * This source code is licensed under the license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+#import <FBSDKCoreKit/FBSDKAccessToken.h>
+#import <FBSDKCoreKit/FBSDKAccessTokenProtocols.h>
+#import <FBSDKCoreKit/FBSDKAdvertisingTrackingStatus.h>
+#import <FBSDKCoreKit/FBSDKAppAvailabilityChecker.h>
+#import <FBSDKCoreKit/FBSDKAppEventName.h>
+#import <FBSDKCoreKit/FBSDKAppEventParameterName.h>
+#import <FBSDKCoreKit/FBSDKAppEventParameterProduct.h>
+#import <FBSDKCoreKit/FBSDKAppEventParameterValue.h>
+#import <FBSDKCoreKit/FBSDKAppEventUserDataType.h>
+#import <FBSDKCoreKit/FBSDKAppEvents.h>
+#import <FBSDKCoreKit/FBSDKAppEventsFlushBehavior.h>
+#import <FBSDKCoreKit/FBSDKAppEventsNotificationName.h>
+#import <FBSDKCoreKit/FBSDKAppURLSchemeProviding.h>
+#import <FBSDKCoreKit/FBSDKApplicationDelegate.h>
+#import <FBSDKCoreKit/FBSDKApplicationObserving.h>
+#import <FBSDKCoreKit/FBSDKAuthenticationToken.h>
+#import <FBSDKCoreKit/FBSDKAuthenticationTokenClaims.h>
+#import <FBSDKCoreKit/FBSDKAuthenticationTokenProtocols.h>
+#import <FBSDKCoreKit/FBSDKButton.h>
+#import <FBSDKCoreKit/FBSDKButtonImpressionLogging.h>
+#import <FBSDKCoreKit/FBSDKConstants.h>
+#import <FBSDKCoreKit/FBSDKCoreKitVersions.h>
+#import <FBSDKCoreKit/FBSDKDeviceButton.h>
+#import <FBSDKCoreKit/FBSDKDeviceDialogView.h>
+#import <FBSDKCoreKit/FBSDKDeviceViewControllerBase.h>
+#import <FBSDKCoreKit/FBSDKDynamicFrameworkLoaderProxy.h>
+#import <FBSDKCoreKit/FBSDKDynamicSocialFrameworkLoader.h>
+#import <FBSDKCoreKit/FBSDKErrorCreating.h>
+#import <FBSDKCoreKit/FBSDKErrorFactory.h>
+#import <FBSDKCoreKit/FBSDKErrorRecoveryAttempting.h>
+#import <FBSDKCoreKit/FBSDKFeatureChecking.h>
+#import <FBSDKCoreKit/FBSDKGraphRequest.h>
+#import <FBSDKCoreKit/FBSDKGraphRequestConnecting.h>
+#import <FBSDKCoreKit/FBSDKGraphRequestConnection.h>
+#import <FBSDKCoreKit/FBSDKGraphRequestConnectionDelegate.h>
+#import <FBSDKCoreKit/FBSDKGraphRequestConnectionFactory.h>
+#import <FBSDKCoreKit/FBSDKGraphRequestDataAttachment.h>
+#import <FBSDKCoreKit/FBSDKGraphRequestFactory.h>
+#import <FBSDKCoreKit/FBSDKGraphRequestFactoryProtocol.h>
+#import <FBSDKCoreKit/FBSDKGraphRequestFlags.h>
+#import <FBSDKCoreKit/FBSDKGraphRequestProtocol.h>
+#import <FBSDKCoreKit/FBSDKIcon.h>
+#import <FBSDKCoreKit/FBSDKImpressionLoggingButton.h>
+#import <FBSDKCoreKit/FBSDKInternalUtility.h>
+#import <FBSDKCoreKit/FBSDKInternalUtilityProtocol.h>
+#import <FBSDKCoreKit/FBSDKKeychainStore.h>
+#import <FBSDKCoreKit/FBSDKKeychainStoreFactory.h>
+#import <FBSDKCoreKit/FBSDKKeychainStoreProtocol.h>
+#import <FBSDKCoreKit/FBSDKKeychainStoreProviding.h>
+#import <FBSDKCoreKit/FBSDKLocation.h>
+#import <FBSDKCoreKit/FBSDKLogger.h>
+#import <FBSDKCoreKit/FBSDKLogging.h>
+#import <FBSDKCoreKit/FBSDKLoggingBehavior.h>
+#import <FBSDKCoreKit/FBSDKLoginTooltip.h>
+#import <FBSDKCoreKit/FBSDKNetworkErrorChecker.h>
+#import <FBSDKCoreKit/FBSDKNetworkErrorChecking.h>
+#import <FBSDKCoreKit/FBSDKProductAvailability.h>
+#import <FBSDKCoreKit/FBSDKProductCondition.h>
+#import <FBSDKCoreKit/FBSDKRandom.h>
+#import <FBSDKCoreKit/FBSDKServerConfigurationProvider.h>
+#import <FBSDKCoreKit/FBSDKSettings.h>
+#import <FBSDKCoreKit/FBSDKSettingsLogging.h>
+#import <FBSDKCoreKit/FBSDKSettingsProtocol.h>
+#import <FBSDKCoreKit/FBSDKTokenStringProviding.h>
+#import <FBSDKCoreKit/FBSDKTransformer.h>
+#import <FBSDKCoreKit/FBSDKURLScheme.h>
+#import <FBSDKCoreKit/FBSDKUserAgeRange.h>
+#import <FBSDKCoreKit/FBSDKUtility.h>
+#import <FBSDKCoreKit/__FBSDKLoggerCreating.h>
 
 #import <UIKit/UIKit.h>
 
-#import "FBSDKAccessToken.h"
-#import "FBSDKAccessTokenProtocols.h"
-#import "FBSDKAdvertisingTrackingStatus.h"
-#import "FBSDKAppEventName.h"
-#import "FBSDKAppEventParameterName.h"
-#import "FBSDKAppEvents.h"
-#import "FBSDKAppEventsFlushBehavior.h"
-#import "FBSDKApplicationDelegate.h"
-#import "FBSDKApplicationObserving.h"
-#import "FBSDKAuthenticationToken.h"
-#import "FBSDKAuthenticationTokenClaims.h"
-#import "FBSDKButton.h"
-#import "FBSDKButtonImpressionTracking.h"
-#import "FBSDKConstants.h"
-#import "FBSDKCoreKitVersions.h"
-#import "FBSDKDeviceButton.h"
-#import "FBSDKDeviceViewControllerBase.h"
-#import "FBSDKError.h"
-#import "FBSDKFeatureChecking.h"
-#import "FBSDKGraphRequest.h"
-#import "FBSDKGraphRequestConnecting.h"
-#import "FBSDKGraphRequestConnection.h"
-#import "FBSDKGraphRequestConnection+GraphRequestConnecting.h"
-#import "FBSDKGraphRequestConnectionFactory.h"
-#import "FBSDKGraphRequestConnectionProviding.h"
-#import "FBSDKGraphRequestDataAttachment.h"
-#import "FBSDKGraphRequestFlags.h"
-#import "FBSDKGraphRequestProtocol.h"
-#import "FBSDKImpressionTrackingButton.h"
-#import "FBSDKInternalUtility.h"
-#import "FBSDKLocation.h"
-#import "FBSDKLoggingBehavior.h"
-#import "FBSDKRandom.h"
-#import "FBSDKSettings.h"
-#import "FBSDKSettingsLogging.h"
-#import "FBSDKSettingsProtocol.h"
-#import "FBSDKUserAgeRange.h"
-#import "FBSDKUtility.h"
-
 #if !TARGET_OS_TV
- #import "FBSDKAppLink.h"
- #import "FBSDKAppLinkNavigation.h"
- #import "FBSDKAppLinkResolver.h"
- #import "FBSDKAppLinkResolverRequestBuilder.h"
- #import "FBSDKAppLinkResolving.h"
- #import "FBSDKAppLinkTarget.h"
- #import "FBSDKAppLinkUtility.h"
- #import "FBSDKBridgeAPI.h"
- #import "FBSDKBridgeAPIProtocol.h"
- #import "FBSDKBridgeAPIProtocolType.h"
- #import "FBSDKBridgeAPIRequest.h"
- #import "FBSDKBridgeAPIResponse.h"
- #import "FBSDKGraphErrorRecoveryProcessor.h"
- #import "FBSDKMeasurementEvent.h"
- #import "FBSDKMutableCopying.h"
- #import "FBSDKProfile.h"
- #import "FBSDKProfilePictureView.h"
- #import "FBSDKURL.h"
- #import "FBSDKURLOpening.h"
- #import "FBSDKWebDialog.h"
- #import "FBSDKWebDialogView.h"
- #import "FBSDKWebViewAppLinkResolver.h"
- #import "FBSDKWindowFinding.h"
+ #import <FBSDKCoreKit/FBSDKAppLink.h>
+ #import <FBSDKCoreKit/FBSDKAppLinkNavigation.h>
+ #import <FBSDKCoreKit/FBSDKAppLinkResolver.h>
+ #import <FBSDKCoreKit/FBSDKAppLinkResolving.h>
+ #import <FBSDKCoreKit/FBSDKAppLinkTarget.h>
+ #import <FBSDKCoreKit/FBSDKAppLinkTargetProtocol.h>
+ #import <FBSDKCoreKit/FBSDKAppLinkUtility.h>
+ #import <FBSDKCoreKit/FBSDKBridgeAPI.h>
+ #import <FBSDKCoreKit/FBSDKBridgeAPIProtocol.h>
+ #import <FBSDKCoreKit/FBSDKBridgeAPIProtocolType.h>
+ #import <FBSDKCoreKit/FBSDKBridgeAPIRequest.h>
+ #import <FBSDKCoreKit/FBSDKBridgeAPIRequestCreating.h>
+ #import <FBSDKCoreKit/FBSDKBridgeAPIResponse.h>
+ #import <FBSDKCoreKit/FBSDKGraphErrorRecoveryProcessor.h>
+ #import <FBSDKCoreKit/FBSDKInternalUtilityProtocol.h>
+ #import <FBSDKCoreKit/FBSDKMeasurementEvent.h>
+ #import <FBSDKCoreKit/FBSDKMutableCopying.h>
+ #import <FBSDKCoreKit/FBSDKProfile.h>
+ #import <FBSDKCoreKit/FBSDKProfilePictureView.h>
+ #import <FBSDKCoreKit/FBSDKProfileProtocols.h>
+ #import <FBSDKCoreKit/FBSDKShareDialogConfiguration.h>
+ #import <FBSDKCoreKit/FBSDKURL.h>
+ #import <FBSDKCoreKit/FBSDKURLHosting.h>
+ #import <FBSDKCoreKit/FBSDKURLOpener.h>
+ #import <FBSDKCoreKit/FBSDKURLOpening.h>
+ #import <FBSDKCoreKit/FBSDKWebDialog.h>
+ #import <FBSDKCoreKit/FBSDKWebDialogDelegate.h>
+ #import <FBSDKCoreKit/FBSDKWebDialogView.h>
+ #import <FBSDKCoreKit/FBSDKWebViewAppLinkResolver.h>
+ #import <FBSDKCoreKit/_FBSDKWindowFinding.h>
 #endif

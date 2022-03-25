@@ -1,46 +1,63 @@
-// Copyright (c) 2014-present, Facebook, Inc. All rights reserved.
-//
-// You are hereby granted a non-exclusive, worldwide, royalty-free license to use,
-// copy, modify, and distribute this software in source code or binary form for use
-// in connection with the web services and APIs provided by Facebook.
-//
-// As with any software that integrates with the Facebook platform, your use of
-// this software is subject to the Facebook Developer Principles and Policies
-// [http://developers.facebook.com/policy/]. This copyright notice shall be
-// included in all copies or substantial portions of the software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-// FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-// COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-// IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-// CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+/*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ * All rights reserved.
+ *
+ * This source code is licensed under the license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
-#import "FBSDKLoggingBehavior.h"
-#import "FBSDKAdvertisingTrackingStatus.h"
+#import <FBSDKCoreKit/FBSDKAdvertisingTrackingStatus.h>
+#import <FBSDKCoreKit/FBSDKLoggingBehavior.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 NS_SWIFT_NAME(SettingsProtocol)
 @protocol FBSDKSettings
 
-@property (class, nonatomic, copy, nullable) NSString *appID;
-@property (class, nonatomic, copy, nullable) NSString *clientToken;
-@property (class, nullable, nonatomic, copy) NSString *userAgentSuffix;
-@property (class, nullable, nonatomic, copy) NSString *sdkVersion;
-@property (class, nonatomic, copy, nonnull) NSSet<FBSDKLoggingBehavior> *loggingBehaviors;
-
-@property (nonatomic, copy, nullable) NSString *appID;
+@property (nullable, nonatomic, copy) NSString *appID;
+@property (nullable, nonatomic, copy) NSString *clientToken;
+@property (nullable, nonatomic, copy) NSString *userAgentSuffix;
+@property (nonatomic, readonly, copy) NSString *sdkVersion;
+@property (nullable, nonatomic, copy) NSString *displayName;
+@property (nullable, nonatomic, copy) NSString *facebookDomainPart;
+@property (nonnull, nonatomic, copy) NSSet<FBSDKLoggingBehavior> *loggingBehaviors;
+@property (nullable, nonatomic, copy) NSString *appURLSchemeSuffix;
 @property (nonatomic, readonly) BOOL isDataProcessingRestricted;
 @property (nonatomic, readonly) BOOL isAutoLogAppEventsEnabled;
+@property (nonatomic, getter = isCodelessDebugLogEnabled) BOOL codelessDebugLogEnabled;
+@property (nonatomic, getter = isAdvertiserIDCollectionEnabled) BOOL advertiserIDCollectionEnabled;
 @property (nonatomic, readonly) BOOL isSetATETimeExceedsInstallTime;
 @property (nonatomic, readonly) BOOL isSKAdNetworkReportEnabled;
-@property (nonatomic, readonly, nonnull) NSSet<FBSDKLoggingBehavior> *loggingBehaviors;
-@property (nonatomic) FBSDKAdvertisingTrackingStatus advertisingTrackingStatus;
-@property (nonatomic, readonly, nullable) NSDate* installTimestamp;
-@property (nonatomic, readonly, nullable) NSDate* advertiserTrackingEnabledTimestamp;
-@property (nonatomic, readonly) BOOL shouldLimitEventAndDataUsage;
+@property (nonatomic, readonly) FBSDKAdvertisingTrackingStatus advertisingTrackingStatus;
+@property (nullable, nonatomic, readonly) NSDate *installTimestamp;
+@property (nullable, nonatomic, readonly) NSDate *advertiserTrackingEnabledTimestamp;
+@property (nonatomic) BOOL isEventDataUsageLimited;
 @property (nonatomic) BOOL shouldUseTokenOptimizations;
-@property (nonatomic, readonly) NSString * _Nonnull graphAPIVersion;
-@property (nonatomic, readonly) BOOL isGraphErrorRecoveryEnabled;
-@property (nonatomic, readonly, copy, nullable) NSString *graphAPIDebugParamValue;
+@property (nonatomic, copy) NSString *graphAPIVersion;
+@property (nonatomic) BOOL isGraphErrorRecoveryEnabled;
+@property (nullable, nonatomic, readonly, copy) NSString *graphAPIDebugParamValue;
+@property (nonatomic, getter = isAdvertiserTrackingEnabled) BOOL advertiserTrackingEnabled;
+@property (nonatomic) BOOL shouldUseCachedValuesForExpensiveMetadata;
+@property (nullable, nonatomic, readonly) NSDictionary<NSString *, id> *persistableDataProcessingOptions;
+
+/**
+ Set the data processing options.
+
+ @param options list of options
+ */
+- (void)setDataProcessingOptions:(nullable NSArray<NSString *> *)options;
+
+/**
+ Set the data processing options.
+
+ @param options list of the options
+ @param country code of the country
+ @param state code of the state
+ */
+- (void)setDataProcessingOptions:(nullable NSArray<NSString *> *)options
+                         country:(int)country
+                           state:(int)state;
 
 @end
+
+NS_ASSUME_NONNULL_END

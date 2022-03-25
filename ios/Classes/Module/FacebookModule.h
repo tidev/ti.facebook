@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  @brief The root-namespace for the Facebook module
  */
-@interface FacebookModule : TiModule <FBSDKSharingDelegate, FBSDKGameRequestDialogDelegate> {
+@interface FacebookModule : TiModule <FBSDKSharingDelegate> {
   NSString *_userID;
   NSArray *_permissions;
   NSNumber *_loginTracking;
@@ -357,22 +357,6 @@ NS_ASSUME_NONNULL_BEGIN
  @endcode
  */
 - (void)presentPhotoShareDialog:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args;
-
-/*!
- @brief Build up and present a game request.
- 
- @param args The arguments passed to the send-request-dialog.
- 
- @code
- const fb = require('facebook');
- 
- fb.presentSendRequestDialog({
-   title: 'New Game available',
-   message: 'Check this new game!'
- });
- @endcode
- */
-- (void)presentSendRequestDialog:(NSArray<NSDictionary<NSString *, id> *> *_Nonnull)args;
 
 /*!
  @brief Refresh the current access token's permission state and extend the token's expiration date, if possible.

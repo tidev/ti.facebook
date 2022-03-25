@@ -4,221 +4,176 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>Headers/FBSDKCoreKitImport.h</key>
+		<key>Headers/FBSDKShareBridgeOptions.h</key>
 		<data>
-		Dx4bs8Anww/HXD9p6ktaXolY7u4=
+		UnSjaUXm5qLeLGXDUNVRzXY9NrQ=
 		</data>
-		<key>Headers/FBSDKHashtag.h</key>
+		<key>Headers/FBSDKShareErrorDomain.h</key>
 		<data>
-		Cg9VtXkb0DjVM1M91X/V8uRAZBk=
+		ccdtzvuodQ/lvKIVoHt8KIM9u2U=
 		</data>
-		<key>Headers/FBSDKShareConstants.h</key>
+		<key>Headers/FBSDKShareKit-Swift.h</key>
 		<data>
-		uPtE5sP8/2niyU0qTesP6E5P0ak=
+		+w6X9OO5SFtjs6fMwp82DGEZn1M=
 		</data>
 		<key>Headers/FBSDKShareKit.h</key>
 		<data>
-		ZwDHO6bTQtuBih77AqgR63olyJM=
-		</data>
-		<key>Headers/FBSDKShareLinkContent.h</key>
-		<data>
-		4FVaITTX/gpxEuERTILEPq4NyTI=
-		</data>
-		<key>Headers/FBSDKShareMediaContent.h</key>
-		<data>
-		BqLhyRgE67/jSG7n7AbtGBIPlAc=
-		</data>
-		<key>Headers/FBSDKSharePhoto.h</key>
-		<data>
-		OLx21eyM8ICHbstZwdANhbkk39Q=
-		</data>
-		<key>Headers/FBSDKSharePhotoContent.h</key>
-		<data>
-		ne5vHn1yW9idzqhoUSef+ot34/w=
-		</data>
-		<key>Headers/FBSDKShareVideo.h</key>
-		<data>
-		O7nAWQMO9BNafPqZfDBpbUvZ3pU=
-		</data>
-		<key>Headers/FBSDKShareVideoContent.h</key>
-		<data>
-		ThDL5JOayVep/v1ZNPHfYbvSO4k=
-		</data>
-		<key>Headers/FBSDKSharing.h</key>
-		<data>
-		CHsAmlyqQAcG71/77aiJcK2xL7A=
-		</data>
-		<key>Headers/FBSDKSharingContent.h</key>
-		<data>
-		7UIscY507Z1oJ5jqCewDNkjNwSA=
-		</data>
-		<key>Headers/FBSDKSharingValidation.h</key>
-		<data>
-		R46YistcrwmVEF1tuH9iKRW1HuU=
+		3Vlzn/6bUD/wgctBGh6x9fepcJg=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		KcexJVjrj31e5Xd2o8Qu4yHh9ds=
+		7g5+ZAGQR5c2LiILvGbWLearz/I=
+		</data>
+		<key>Modules/FBSDKShareKit.swiftmodule/arm64-apple-tvos-simulator.swiftdoc</key>
+		<data>
+		W+PKpU7mmJs7gmRtqYXkOVm0FnE=
+		</data>
+		<key>Modules/FBSDKShareKit.swiftmodule/arm64-apple-tvos-simulator.swiftinterface</key>
+		<data>
+		9zxLDUObFjwL+i51fP211ogsGPs=
+		</data>
+		<key>Modules/FBSDKShareKit.swiftmodule/arm64-apple-tvos-simulator.swiftmodule</key>
+		<data>
+		UlCaAm1zDA4TV/x00CRbwHtc8yU=
+		</data>
+		<key>Modules/FBSDKShareKit.swiftmodule/x86_64-apple-tvos-simulator.swiftdoc</key>
+		<data>
+		XHGvcrGU0fc7SLfM6VjYlEylBYw=
+		</data>
+		<key>Modules/FBSDKShareKit.swiftmodule/x86_64-apple-tvos-simulator.swiftinterface</key>
+		<data>
+		AF6i6Hg9venaZnXQHkgY9Iw4Vas=
+		</data>
+		<key>Modules/FBSDKShareKit.swiftmodule/x86_64-apple-tvos-simulator.swiftmodule</key>
+		<data>
+		tE1Bnu0tu/laCzUCWxrZZzK+PeM=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
-		EvnDtqT8EVgi++2IButU0lj4SA0=
+		c/1l3+MTRWj+XKPFv/2HWhKeUtA=
 		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>Headers/FBSDKCoreKitImport.h</key>
+		<key>Headers/FBSDKShareBridgeOptions.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Dx4bs8Anww/HXD9p6ktaXolY7u4=
+			UnSjaUXm5qLeLGXDUNVRzXY9NrQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			RuJd1u3mkF+HMoNchRVDYdiasvM02uXpuyXb7IGreS0=
+			IxpwBSGJEUrCXBdjRGpZ0yehzDl7wfNF5HReqM5qO/8=
 			</data>
 		</dict>
-		<key>Headers/FBSDKHashtag.h</key>
+		<key>Headers/FBSDKShareErrorDomain.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Cg9VtXkb0DjVM1M91X/V8uRAZBk=
+			ccdtzvuodQ/lvKIVoHt8KIM9u2U=
 			</data>
 			<key>hash2</key>
 			<data>
-			gY6cAFuowsASQB9rWFgrX+kTi1fB+h0tuGoJXDTL2Gk=
+			Gq/jBWHIi9/+dLPC1EqzBf+XM4GcHg1JpVUb0DiK6jM=
 			</data>
 		</dict>
-		<key>Headers/FBSDKShareConstants.h</key>
+		<key>Headers/FBSDKShareKit-Swift.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			uPtE5sP8/2niyU0qTesP6E5P0ak=
+			+w6X9OO5SFtjs6fMwp82DGEZn1M=
 			</data>
 			<key>hash2</key>
 			<data>
-			elZrG+shzDDQSIa0RELQX/BE5jHIVaOxAm2ojocZUuY=
+			Z2aSAidGXlVLdH9/x2W47gR+CiFLJXH8RbL6v+ht2+c=
 			</data>
 		</dict>
 		<key>Headers/FBSDKShareKit.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			ZwDHO6bTQtuBih77AqgR63olyJM=
+			3Vlzn/6bUD/wgctBGh6x9fepcJg=
 			</data>
 			<key>hash2</key>
 			<data>
-			Dktqg0hKQulHWvnsyb5E/iu+pRkiFAj9dutyUeMiXGU=
+			BizbBQ3VvhD8p64UL0pkalRRg0wPwYLFP3IXGeJnkE4=
 			</data>
 		</dict>
-		<key>Headers/FBSDKShareLinkContent.h</key>
+		<key>Modules/FBSDKShareKit.swiftmodule/arm64-apple-tvos-simulator.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			4FVaITTX/gpxEuERTILEPq4NyTI=
+			W+PKpU7mmJs7gmRtqYXkOVm0FnE=
 			</data>
 			<key>hash2</key>
 			<data>
-			izEW6Hb2K5FLLTHEZooGkZVsBkI/5e6evostNRsrzZY=
+			CP8cZiHKdTHU+KUNYx+Llkd3XQT51FxLStEdWGusNnc=
 			</data>
 		</dict>
-		<key>Headers/FBSDKShareMediaContent.h</key>
+		<key>Modules/FBSDKShareKit.swiftmodule/arm64-apple-tvos-simulator.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			BqLhyRgE67/jSG7n7AbtGBIPlAc=
+			9zxLDUObFjwL+i51fP211ogsGPs=
 			</data>
 			<key>hash2</key>
 			<data>
-			MPcEIJfUccuFHcujWRWYQH1SHLjXSAxit9fC8XHaf3A=
+			hYpqO8NwTROrMIPerPFxS/VctTUtLjQHtqAinwe1nPE=
 			</data>
 		</dict>
-		<key>Headers/FBSDKSharePhoto.h</key>
+		<key>Modules/FBSDKShareKit.swiftmodule/arm64-apple-tvos-simulator.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			OLx21eyM8ICHbstZwdANhbkk39Q=
+			UlCaAm1zDA4TV/x00CRbwHtc8yU=
 			</data>
 			<key>hash2</key>
 			<data>
-			1Ht7ssFsstWh4IocJ0lskuuerDPCGX912MCem1xDxQw=
+			tEikXxu4Ijq1F9Z7+Gd6WEidXoLtTKg3qSZ3cvpdo3U=
 			</data>
 		</dict>
-		<key>Headers/FBSDKSharePhotoContent.h</key>
+		<key>Modules/FBSDKShareKit.swiftmodule/x86_64-apple-tvos-simulator.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			ne5vHn1yW9idzqhoUSef+ot34/w=
+			XHGvcrGU0fc7SLfM6VjYlEylBYw=
 			</data>
 			<key>hash2</key>
 			<data>
-			i99hk65QQXdaRIXksUTqxgKTRuuA7Kl5fw1ZO7nWjzk=
+			jA1NbU22bnTDEOF9mqsX/RZr55+gEJtqnGWCqK2Fp2s=
 			</data>
 		</dict>
-		<key>Headers/FBSDKShareVideo.h</key>
+		<key>Modules/FBSDKShareKit.swiftmodule/x86_64-apple-tvos-simulator.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			O7nAWQMO9BNafPqZfDBpbUvZ3pU=
+			AF6i6Hg9venaZnXQHkgY9Iw4Vas=
 			</data>
 			<key>hash2</key>
 			<data>
-			PA0C8gBydUSqdss5vWOG7MAjWn4BjGMo/bUS0QEQom4=
+			j8r40bN7gWcqujOSKoRSiPIahsUxLr0vy9K63b4awx0=
 			</data>
 		</dict>
-		<key>Headers/FBSDKShareVideoContent.h</key>
+		<key>Modules/FBSDKShareKit.swiftmodule/x86_64-apple-tvos-simulator.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			ThDL5JOayVep/v1ZNPHfYbvSO4k=
+			tE1Bnu0tu/laCzUCWxrZZzK+PeM=
 			</data>
 			<key>hash2</key>
 			<data>
-			1m2um5UUwRSt9cruSGvRTmSM0shQrd0C6XcFMxQxotw=
-			</data>
-		</dict>
-		<key>Headers/FBSDKSharing.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			CHsAmlyqQAcG71/77aiJcK2xL7A=
-			</data>
-			<key>hash2</key>
-			<data>
-			B1me9CjHUalyQbGTNHRycr90tKW5olHRNsXaVgMzM4w=
-			</data>
-		</dict>
-		<key>Headers/FBSDKSharingContent.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			7UIscY507Z1oJ5jqCewDNkjNwSA=
-			</data>
-			<key>hash2</key>
-			<data>
-			/fXDYmmZ0oS3HkrbGp+AJwo+YoiXcU8jkKcD2TgFvIk=
-			</data>
-		</dict>
-		<key>Headers/FBSDKSharingValidation.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			R46YistcrwmVEF1tuH9iKRW1HuU=
-			</data>
-			<key>hash2</key>
-			<data>
-			ANUB1iMAdqkSWq41Hjtuf0uR0UTps1Baaqo6fZfKh8c=
+			Lrz6PCgH/Wj1wYFmXFxJmn8C2C14TgU+0DInRcQX5oQ=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			EvnDtqT8EVgi++2IButU0lj4SA0=
+			c/1l3+MTRWj+XKPFv/2HWhKeUtA=
 			</data>
 			<key>hash2</key>
 			<data>
-			QUkMp1gWuBwjgkSZpNG2+4va28QWt1CElsire521xMY=
+			LFKLAS36xoxx786XN6Efo7GDNLqGNFpjOc/zQ1+JRXY=
 			</data>
 		</dict>
 	</dict>

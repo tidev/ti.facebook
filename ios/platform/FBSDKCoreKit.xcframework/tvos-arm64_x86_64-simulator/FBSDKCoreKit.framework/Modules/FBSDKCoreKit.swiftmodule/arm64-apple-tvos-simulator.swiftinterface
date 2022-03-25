@@ -1,10 +1,13 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.4 (swiftlang-1205.0.26.9 clang-1205.0.19.55)
-// swift-module-flags: -target arm64-apple-tvos10.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name FBSDKCoreKit
+// swift-compiler-version: Apple Swift version 5.6 (swiftlang-5.6.0.323.62 clang-1316.0.20.8)
+// swift-module-flags: -target arm64-apple-tvos11.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name FBSDKCoreKit
 @_exported import FBSDKCoreKit
+import FBSDKCoreKit_Basics
 import Foundation
 import Swift
-extension AccessToken {
+import UIKit
+import _Concurrency
+extension FBSDKCoreKit.AccessToken {
   public var permissions: Swift.Set<FBSDKCoreKit.Permission> {
     get
   }
@@ -15,6 +18,28 @@ extension AccessToken {
     get
   }
   public func hasGranted(_ permission: FBSDKCoreKit.Permission) -> Swift.Bool
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class FBSDKAppEventsCAPIManager : ObjectiveC.NSObject {
+  @objc public static let shared: FBSDKCoreKit.FBSDKAppEventsCAPIManager
+  @objc override dynamic public init()
+  @objc public func configure(factory: FBSDKCoreKit.GraphRequestFactoryProtocol, settings: FBSDKCoreKit.SettingsProtocol)
+  @objc public func enable()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class FBSDKTransformerGraphRequestFactory : FBSDKCoreKit.GraphRequestFactory {
+  @objc public static let shared: FBSDKCoreKit.FBSDKTransformerGraphRequestFactory
+  public struct CbCredentials {
+  }
+  @objc override dynamic public init()
+  @objc public func configure(datasetID: Swift.String, url: Swift.String, accessKey: Swift.String)
+  @objc public func callCapiGatewayAPI(with graphPath: Swift.String, parameters: [Swift.String : Any])
+  @objc override dynamic public func createGraphRequest(withGraphPath graphPath: Swift.String, parameters: [Swift.String : Any], tokenString: Swift.String?, httpMethod: FBSDKCoreKit.HTTPMethod?, flags: FBSDKCoreKit.GraphRequestFlags) -> FBSDKCoreKit.GraphRequestProtocol
+  @objc override dynamic public func createGraphRequest(withGraphPath graphPath: Swift.String, parameters: [Swift.String : Any]) -> FBSDKCoreKit.GraphRequestProtocol
+  @objc override dynamic public func createGraphRequest(withGraphPath graphPath: Swift.String) -> FBSDKCoreKit.GraphRequestProtocol
+  @objc override dynamic public func createGraphRequest(withGraphPath graphPath: Swift.String, parameters: [Swift.String : Any], httpMethod: FBSDKCoreKit.HTTPMethod) -> FBSDKCoreKit.GraphRequestProtocol
+  @objc override dynamic public func createGraphRequest(withGraphPath graphPath: Swift.String, parameters: [Swift.String : Any], tokenString: Swift.String?, version: Swift.String?, httpMethod: FBSDKCoreKit.HTTPMethod) -> FBSDKCoreKit.GraphRequestProtocol
+  @objc override dynamic public func createGraphRequest(withGraphPath graphPath: Swift.String, parameters: [Swift.String : Any], flags: FBSDKCoreKit.GraphRequestFlags) -> FBSDKCoreKit.GraphRequestProtocol
+  @objc deinit
 }
 public enum Permission : Swift.Hashable, Swift.ExpressibleByStringLiteral {
   case publicProfile
