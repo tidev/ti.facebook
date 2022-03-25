@@ -67,7 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)resumed:(id)note
 {
   [self handleRelaunch:nil];
-  [FBSDKAppEvents activateApp];
+  [[FBSDKAppEvents shared] activateApp];
 }
 
 - (void)activateApp:(NSNotification *_Nullable)notification
@@ -96,12 +96,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *_Nonnull)appID
 {
-  return [FBSDKSettings appID];
+  return FBSDKSettings.sharedSettings.appID;
 }
 
 - (void)setAppID:(NSString *_Nonnull)appID
 {
-  [FBSDKSettings setAppID:[TiUtils stringValue:appID]];
+  FBSDKSettings.sharedSettings.appID = [TiUtils stringValue:appID];
 }
 
 - (NSArray<NSString *> *_Nullable)permissions
@@ -184,9 +184,9 @@ NS_ASSUME_NONNULL_BEGIN
     NSDictionary *parameters = [purchase objectAtIndex:2];
     ENSURE_TYPE(parameters, NSDictionary);
 
-    [FBSDKAppEvents logPurchase:[amount doubleValue] currency:currency parameters:parameters];
+    [FBSDKAppEvents.shared logPurchase:[amount doubleValue] currency:currency parameters:parameters];
   } else {
-    [FBSDKAppEvents logPurchase:[amount doubleValue] currency:currency];
+    [FBSDKAppEvents.shared logPurchase:[amount doubleValue] currency:currency];
   }
 }
 
@@ -194,7 +194,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
   NSDictionary *params = @{ FBSDKAppEventParameterNameRegistrationMethod : registrationMethod };
 
-  [FBSDKAppEvents logEvent:FBSDKAppEventNameCompletedRegistration parameters:params];
+  [FBSDKAppEvents.shared logEvent:FBSDKAppEventNameCompletedRegistration parameters:params];
 }
 
 - (void)logCustomEvent:(NSArray<id> *_Nonnull)customEvent
@@ -214,14 +214,14 @@ NS_ASSUME_NONNULL_BEGIN
   ENSURE_SINGLE_ARG_OR_NIL(args2, NSDictionary);
   NSDictionary *parameters = args2;
 
-  [FBSDKAppEvents logEvent:event valueToSum:valueToSum parameters:parameters];
+  [FBSDKAppEvents.shared logEvent:event valueToSum:valueToSum parameters:parameters];
 }
 
 - (void)logPushNotificationOpen:(NSArray<id> *_Nonnull)pushNotification
 {
   if ([pushNotification count] == 1) {
     NSDictionary *payload = [pushNotification objectAtIndex:0];
-    [FBSDKAppEvents logPushNotificationOpen:payload];
+    [FBSDKAppEvents.shared logPushNotificationOpen:payload];
   } else if ([pushNotification count] == 2) {
     id payload = [pushNotification objectAtIndex:0];
     id action = [pushNotification objectAtIndex:1];
@@ -229,7 +229,7 @@ NS_ASSUME_NONNULL_BEGIN
     ENSURE_TYPE(payload, NSDictionary);
     ENSURE_TYPE(action, NSString);
 
-    [FBSDKAppEvents logPushNotificationOpen:payload action:action];
+    [FBSDKAppEvents.shared logPushNotificationOpen:payload action:action];
   } else {
     NSLog(@"[ERROR] Invalid number of arguments provided, please check the docs for 'logPushNotificationOpen' and try again!");
   }
@@ -238,7 +238,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setPushNotificationsDeviceToken:(NSString *_Nonnull)deviceToken
 {
   ENSURE_TYPE(deviceToken, NSString);
-  [FBSDKAppEvents setPushNotificationsDeviceToken:[FacebookModule dataFromHexString:deviceToken]];
+  [FBSDKAppEvents.shared setPushNotificationsDeviceToken:[FacebookModule dataFromHexString:deviceToken]];
 }
 
 - (void)authorize:(__unused id)unused
@@ -313,12 +313,11 @@ NS_ASSUME_NONNULL_BEGIN
   TiThreadPerformOnMainThread(
       ^{
         FBSDKShareLinkContent *content = [FacebookModule shareLinkContentFromDictionary:params];
-        FBSDKShareDialog *dialog = [[FBSDKShareDialog alloc] init];
+        FBSDKShareDialog *dialog = [[FBSDKShareDialog alloc] initWithViewController:nil content:content delegate:self];
 
-        [dialog setMode:[TiUtils intValue:[params objectForKey:@"mode"] def:FBSDKShareDialogModeAutomatic]];
-        [dialog setFromViewController:nil];
-        [dialog setShareContent:content];
-        [dialog setDelegate:self];
+        if ([params objectForKey:@"mode"]  != nil) {
+          dialog.mode = [TiUtils intValue:[params objectForKey:@"mode"] def:FBSDKShareDialogModeAutomatic];
+        }
 
         [dialog show];
       },
@@ -332,54 +331,13 @@ NS_ASSUME_NONNULL_BEGIN
   TiThreadPerformOnMainThread(
       ^{
         FBSDKSharePhotoContent *content = [FacebookModule sharePhotoContentFromDictionary:params];
-        FBSDKShareDialog *dialog = [[FBSDKShareDialog alloc] init];
+        FBSDKShareDialog *dialog = [[FBSDKShareDialog alloc] initWithViewController:nil content:content delegate:self];
 
-        [dialog setMode:[TiUtils intValue:[params objectForKey:@"mode"] def:FBSDKShareDialogModeAutomatic]];
-        [dialog setFromViewController:nil];
-        [dialog setShareContent:content];
-        [dialog setDelegate:self];
+        if ([params objectForKey:@"mode"]  != nil) {
+          dialog.mode = [TiUtils intValue:[params objectForKey:@"mode"] def:FBSDKShareDialogModeAutomatic];
+        }
 
         [dialog show];
-      },
-      NO);
-}
-
-- (void)presentSendRequestDialog:(NSArray<NSDictionary<NSString *, id> *> *)args
-{
-  NSDictionary *_Nonnull params = [args objectAtIndex:0];
-
-  NSString *message = [params objectForKey:@"message"];
-  NSString *title = [params objectForKey:@"title"];
-  NSArray *recipients = [params objectForKey:@"recipients"];
-  NSArray *recipientSuggestions = [params objectForKey:@"recipientSuggestions"];
-  FBSDKGameRequestFilter filters = [TiUtils intValue:[params objectForKey:@"filters"]];
-  NSString *objectID = [params objectForKey:@"objectID"];
-  id tempData = [params objectForKey:@"data"];
-  NSString *data = nil;
-  if ([tempData isKindOfClass:[NSDictionary class]]) {
-    NSData *dictonaryData = [NSJSONSerialization dataWithJSONObject:tempData options:NSJSONWritingPrettyPrinted error:nil];
-    data = [[NSString alloc] initWithData:dictonaryData
-                                 encoding:NSUTF8StringEncoding];
-  } else {
-    data = (NSString *)tempData;
-  }
-
-  FBSDKGameRequestActionType actionType = [TiUtils intValue:[params objectForKey:@"actionType"]];
-
-  TiThreadPerformOnMainThread(
-      ^{
-        FBSDKGameRequestContent *gameRequestContent = [[FBSDKGameRequestContent alloc] init];
-
-        gameRequestContent.title = title;
-        gameRequestContent.message = message;
-        gameRequestContent.recipients = recipients;
-        gameRequestContent.objectID = objectID;
-        gameRequestContent.data = data;
-        gameRequestContent.recipientSuggestions = recipientSuggestions;
-        gameRequestContent.filters = filters;
-        gameRequestContent.actionType = actionType;
-
-        [FBSDKGameRequestDialog showWithContent:gameRequestContent delegate:self];
       },
       NO);
 }
@@ -388,8 +346,8 @@ NS_ASSUME_NONNULL_BEGIN
 {
   TiThreadPerformOnMainThread(
       ^{
-        [FBSDKAccessToken refreshCurrentAccessToken:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-          [self fireEvent:@"tokenUpdated" withObject:nil];
+      [FBSDKAccessToken refreshCurrentAccessTokenWithCompletion:^(id<FBSDKGraphRequestConnecting>  _Nullable connection, id  _Nullable result, NSError * _Nullable error) {
+          [self fireEvent:@"tokenUpdated" withObject:@{ @"success": @(error == nil), @"error": NULL_IF_NIL(error.localizedDescription) }];
         }];
       },
       NO);
@@ -540,7 +498,7 @@ NS_ASSUME_NONNULL_BEGIN
       ^{
         if ([FBSDKAccessToken currentAccessToken]) {
           [[[FBSDKGraphRequest alloc] initWithGraphPath:path parameters:params HTTPMethod:httpMethod]
-              startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+           startWithCompletion:^(id<FBSDKGraphRequestConnecting>  _Nullable connection, id  _Nullable result, NSError * _Nullable error) {
                 NSDictionary *returnedObject;
                 BOOL success = NO;
 
@@ -682,7 +640,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)logEvents:(NSNotification *)notification
 {
-  [FBSDKAppEvents activateApp];
+  [FBSDKAppEvents.shared activateApp];
 }
 
 - (void)accessTokenChanged:(NSNotification *)notification
@@ -717,23 +675,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)sharerDidCancel:(id<FBSDKSharing>)sharer
 {
   [self fireDialogEventWithName:TiFacebookEventTypeShareCompleted andSuccess:NO error:nil cancelled:YES];
-}
-
-#pragma Game request delegates
-
-- (void)gameRequestDialog:(FBSDKGameRequestDialog *)gameRequestDialog didCompleteWithResults:(NSDictionary *)results
-{
-  [self fireDialogEventWithName:TiFacebookEventTypeRequestDialogCompleted andSuccess:YES error:nil cancelled:NO];
-}
-
-- (void)gameRequestDialog:(FBSDKGameRequestDialog *)gameRequestDialog didFailWithError:(NSError *)error
-{
-  [self fireDialogEventWithName:TiFacebookEventTypeRequestDialogCompleted andSuccess:NO error:error cancelled:NO];
-}
-
-- (void)gameRequestDialogDidCancel:(FBSDKGameRequestDialog *)gameRequestDialog
-{
-  [self fireDialogEventWithName:TiFacebookEventTypeRequestDialogCompleted andSuccess:NO error:nil cancelled:YES];
 }
 
 #pragma mark Dialog utilities
@@ -809,7 +750,7 @@ NS_ASSUME_NONNULL_BEGIN
   [content setContentURL:link];
 
   if (hashtag != nil) {
-    [content setHashtag:[FBSDKHashtag hashtagWithString:hashtag]];
+    [content setHashtag:[[FBSDKHashtag alloc] initWithString:hashtag]];
   }
 
   if (quote != nil) {
@@ -839,27 +780,27 @@ NS_ASSUME_NONNULL_BEGIN
   NSMutableArray<FBSDKSharePhoto *> *nativePhotos = [NSMutableArray arrayWithCapacity:photos.count];
 
   for (NSDictionary<NSString *, id> *photoDictionary in photos) {
+    FBSDKSharePhoto *nativePhoto = nil;
     id photo = photoDictionary[@"photo"];
     NSString *caption = photoDictionary[@"caption"];
-    FBSDKSharePhoto *nativePhoto = [FBSDKSharePhoto new];
     BOOL userGenerated = [TiUtils boolValue:photoDictionary[@"userGenerated"]];
 
     // A photo can either be a Blob or String
     if ([photo isKindOfClass:[TiBlob class]]) {
-      nativePhoto.image = [(TiBlob *)photo image];
+      UIImage *image = [(TiBlob *)photo image];
+      nativePhoto = [[FBSDKSharePhoto alloc] initWithImage:image isUserGenerated:userGenerated];
     } else if ([photo isKindOfClass:[NSString class]]) {
-      nativePhoto.imageURL = [NSURL URLWithString:(NSString *)photo];
+      NSURL *imageURL = [NSURL URLWithString:(NSString *)photo];
+      nativePhoto = [[FBSDKSharePhoto alloc] initWithImageURL:imageURL isUserGenerated:userGenerated];
     } else {
       NSLog(@"[ERROR] Required \"photo\" not found or of unknown type: %@", NSStringFromClass([photo class]));
+      return;
     }
 
     // An optional caption
     if (caption != nil) {
       nativePhoto.caption = caption;
     }
-
-    // An optional flag indicating if the photo was user generated
-    nativePhoto.userGenerated = userGenerated;
 
     [nativePhotos addObject:nativePhoto];
   }
@@ -895,15 +836,6 @@ MAKE_SYSTEM_PROP(LOGIN_TRACKING_LIMITED, FBSDKLoginTrackingLimited);
 MAKE_SYSTEM_PROP(AUDIENCE_ONLY_ME, FBSDKDefaultAudienceOnlyMe);
 MAKE_SYSTEM_PROP(AUDIENCE_FRIENDS, FBSDKDefaultAudienceFriends);
 MAKE_SYSTEM_PROP(AUDIENCE_EVERYONE, FBSDKDefaultAudienceEveryone);
-
-MAKE_SYSTEM_PROP(ACTION_TYPE_NONE, FBSDKGameRequestActionTypeNone);
-MAKE_SYSTEM_PROP(ACTION_TYPE_SEND, FBSDKGameRequestActionTypeSend);
-MAKE_SYSTEM_PROP(ACTION_TYPE_ASK_FOR, FBSDKGameRequestActionTypeAskFor);
-MAKE_SYSTEM_PROP(ACTION_TYPE_TURN, FBSDKGameRequestActionTypeTurn);
-
-MAKE_SYSTEM_PROP(FILTER_NONE, FBSDKGameRequestFilterNone);
-MAKE_SYSTEM_PROP(FILTER_APP_USERS, FBSDKGameRequestFilterAppUsers);
-MAKE_SYSTEM_PROP(FILTER_APP_NON_USERS, FBSDKGameRequestFilterAppNonUsers);
 
 MAKE_SYSTEM_PROP(MESSENGER_BUTTON_MODE_RECTANGULAR, TiFacebookShareButtonModeRectangular);
 MAKE_SYSTEM_PROP(MESSENGER_BUTTON_MODE_CIRCULAR, TiFacebookShareButtonModeCircular);
