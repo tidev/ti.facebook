@@ -6,5 +6,5 @@ buildscript {
 }
 
 dependencies {
-	implementation 'com.facebook.android:facebook-android-sdk:13.1.0'
+	implementation 'com.facebook.android:facebook-android-sdk:13.2.0'
 }
