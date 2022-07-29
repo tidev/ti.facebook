@@ -7,16 +7,17 @@
  */
 
 #import <FBSDKLoginKit/FBSDKCodeVerifier.h>
+#import <FBSDKLoginKit/FBSDKDefaultAudience.h>
 #import <FBSDKLoginKit/FBSDKDeviceLoginCodeInfo.h>
 #import <FBSDKLoginKit/FBSDKDeviceLoginManager.h>
 #import <FBSDKLoginKit/FBSDKDeviceLoginManagerDelegate.h>
 #import <FBSDKLoginKit/FBSDKDeviceLoginManagerResult.h>
-#import <FBSDKLoginKit/FBSDKLoginButton.h>
-#import <FBSDKLoginKit/FBSDKLoginButtonDelegate.h>
-#import <FBSDKLoginKit/FBSDKLoginConfiguration.h>
+#import <FBSDKLoginKit/FBSDKLoginAuthType.h>
 #import <FBSDKLoginKit/FBSDKLoginConstants.h>
 #import <FBSDKLoginKit/FBSDKLoginManager.h>
 #import <FBSDKLoginKit/FBSDKLoginManagerLoginResult.h>
+#import <FBSDKLoginKit/FBSDKLoginManagerLoginResultBlock.h>
+#import <FBSDKLoginKit/FBSDKLoginProviding.h>
 #import <FBSDKLoginKit/FBSDKLoginTooltipView.h>
 #import <FBSDKLoginKit/FBSDKLoginTooltipViewDelegate.h>
 #import <FBSDKLoginKit/FBSDKTooltipView.h>
