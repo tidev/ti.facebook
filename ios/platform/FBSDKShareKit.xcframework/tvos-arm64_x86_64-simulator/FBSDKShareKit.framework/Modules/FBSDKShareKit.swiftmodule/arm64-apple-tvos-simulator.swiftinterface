@@ -1,6 +1,6 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.5 (swiftlang-1300.0.31.1 clang-1300.0.29.1)
-// swift-module-flags: -target arm64-apple-tvos11.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name FBSDKShareKit
+// swift-compiler-version: Apple Swift version 5.6.1 (swiftlang-5.6.0.323.66 clang-1316.0.20.12)
+// swift-module-flags: -target arm64-apple-tvos12.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name FBSDKShareKit
 import FBSDKCoreKit
 import FBSDKCoreKit_Basics
 @_exported import FBSDKShareKit
@@ -51,7 +51,7 @@ public let ShareErrorDomain: Swift.String
 extension FBSDKShareKit.ShareLinkContent : FBSDKShareKit.SharingContent {
   @objc(addParameters:bridgeOptions:) final public func addParameters(_ existingParameters: [Swift.String : Any], options bridgeOptions: FBSDKShareKit.ShareBridgeOptions) -> [Swift.String : Any]
 }
-extension FBSDKShareKit.ShareLinkContent : FBSDKShareKit.SharingValidation {
+extension FBSDKShareKit.ShareLinkContent : FBSDKShareKit.SharingValidatable {
   @objc(validateWithOptions:error:) final public func validate(options bridgeOptions: FBSDKShareKit.ShareBridgeOptions) throws
 }
 @objc(FBSDKShareMedia) public protocol ShareMedia {
@@ -71,7 +71,7 @@ extension FBSDKShareKit.ShareLinkContent : FBSDKShareKit.SharingValidation {
 extension FBSDKShareKit.ShareMediaContent : FBSDKShareKit.SharingContent {
   @objc(addParameters:bridgeOptions:) final public func addParameters(_ existingParameters: [Swift.String : Any], options bridgeOptions: FBSDKShareKit.ShareBridgeOptions) -> [Swift.String : Any]
 }
-extension FBSDKShareKit.ShareMediaContent : FBSDKShareKit.SharingValidation {
+extension FBSDKShareKit.ShareMediaContent : FBSDKShareKit.SharingValidatable {
   @objc(validateWithOptions:error:) final public func validate(options bridgeOptions: FBSDKShareKit.ShareBridgeOptions) throws
 }
 @_hasMissingDesignatedInitializers @objcMembers @objc(FBSDKSharePhoto) final public class SharePhoto : ObjectiveC.NSObject, FBSDKShareKit.ShareMedia {
@@ -94,7 +94,7 @@ extension FBSDKShareKit.ShareMediaContent : FBSDKShareKit.SharingValidation {
   @objc convenience public init(photoAsset: Photos.PHAsset, isUserGenerated: Swift.Bool)
   @objc deinit
 }
-extension FBSDKShareKit.SharePhoto : FBSDKShareKit.SharingValidation {
+extension FBSDKShareKit.SharePhoto : FBSDKShareKit.SharingValidatable {
   @objc(validateWithOptions:error:) final public func validate(options bridgeOptions: FBSDKShareKit.ShareBridgeOptions) throws
 }
 @_inheritsConvenienceInitializers @objcMembers @objc(FBSDKSharePhotoContent) final public class SharePhotoContent : ObjectiveC.NSObject {
@@ -112,7 +112,7 @@ extension FBSDKShareKit.SharePhoto : FBSDKShareKit.SharingValidation {
 extension FBSDKShareKit.SharePhotoContent : FBSDKShareKit.SharingContent {
   @objc(addParameters:bridgeOptions:) final public func addParameters(_ existingParameters: [Swift.String : Any], options bridgeOptions: FBSDKShareKit.ShareBridgeOptions) -> [Swift.String : Any]
 }
-extension FBSDKShareKit.SharePhotoContent : FBSDKShareKit.SharingValidation {
+extension FBSDKShareKit.SharePhotoContent : FBSDKShareKit.SharingValidatable {
   @objc(validateWithOptions:error:) final public func validate(options bridgeOptions: FBSDKShareKit.ShareBridgeOptions) throws
 }
 @_hasMissingDesignatedInitializers @objcMembers @objc(FBSDKShareVideo) final public class ShareVideo : ObjectiveC.NSObject, FBSDKShareKit.ShareMedia {
@@ -134,7 +134,7 @@ extension FBSDKShareKit.SharePhotoContent : FBSDKShareKit.SharingValidation {
   @objc convenience public init(videoURL: Foundation.URL, previewPhoto: FBSDKShareKit.SharePhoto? = nil)
   @objc deinit
 }
-extension FBSDKShareKit.ShareVideo : FBSDKShareKit.SharingValidation {
+extension FBSDKShareKit.ShareVideo : FBSDKShareKit.SharingValidatable {
   @objc(validateWithOptions:error:) final public func validate(options bridgeOptions: FBSDKShareKit.ShareBridgeOptions) throws
 }
 @_inheritsConvenienceInitializers @objcMembers @objc(FBSDKShareVideoContent) final public class ShareVideoContent : ObjectiveC.NSObject {
@@ -154,14 +154,14 @@ extension FBSDKShareKit.ShareVideo : FBSDKShareKit.SharingValidation {
 extension FBSDKShareKit.ShareVideoContent : FBSDKShareKit.SharingContent {
   @objc(addParameters:bridgeOptions:) final public func addParameters(_ existingParameters: [Swift.String : Any], options bridgeOptions: FBSDKShareKit.ShareBridgeOptions) -> [Swift.String : Any]
 }
-extension FBSDKShareKit.ShareVideoContent : FBSDKShareKit.SharingValidation {
+extension FBSDKShareKit.ShareVideoContent : FBSDKShareKit.SharingValidatable {
   @objc(validateWithOptions:error:) final public func validate(options bridgeOptions: FBSDKShareKit.ShareBridgeOptions) throws
 }
 @available(tvOS, unavailable)
 @objc(FBSDKSharingButton) public protocol SharingButton {
   @objc var shareContent: FBSDKShareKit.SharingContent? { get set }
 }
-@objc(FBSDKSharingContent) public protocol SharingContent : FBSDKShareKit.SharingValidation, ObjectiveC.NSObjectProtocol {
+@objc(FBSDKSharingContent) public protocol SharingContent : FBSDKShareKit.SharingValidatable, ObjectiveC.NSObjectProtocol {
   @objc var contentURL: Foundation.URL? { get set }
   @objc var hashtag: FBSDKShareKit.Hashtag? { get set }
   @objc var peopleIDs: [Swift.String] { get set }
@@ -171,7 +171,7 @@ extension FBSDKShareKit.ShareVideoContent : FBSDKShareKit.SharingValidation {
   @objc var shareUUID: Swift.String? { get }
   @objc(addParameters:bridgeOptions:) func addParameters(_ existingParameters: [Swift.String : Any], options bridgeOptions: FBSDKShareKit.ShareBridgeOptions) -> [Swift.String : Any]
 }
-@objc(FBSDKSharingValidation) public protocol SharingValidation {
+@objc(FBSDKSharingValidatable) public protocol SharingValidatable {
   @objc(validateWithOptions:error:) func validate(options: FBSDKShareKit.ShareBridgeOptions) throws
 }
 public enum _ShareUtility {

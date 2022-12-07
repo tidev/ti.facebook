@@ -22,9 +22,11 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		3AE75A1F26C679F900DA3B73 /* FBSDKCoreKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AE75A1C26C679F900DA3B73 /* FBSDKCoreKit.xcframework */; };
-		3AE75A2026C679F900DA3B73 /* FBSDKLoginKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AE75A1D26C679F900DA3B73 /* FBSDKLoginKit.xcframework */; };
-		3AE75A2126C679F900DA3B73 /* FBSDKShareKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AE75A1E26C679F900DA3B73 /* FBSDKShareKit.xcframework */; };
+		3AE3ED8C2940DC050039F1A7 /* FBSDKLoginKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AE3ED872940DC050039F1A7 /* FBSDKLoginKit.xcframework */; };
+		3AE3ED8D2940DC050039F1A7 /* FBSDKShareKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AE3ED882940DC050039F1A7 /* FBSDKShareKit.xcframework */; };
+		3AE3ED8E2940DC050039F1A7 /* FBSDKCoreKit_Basics.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AE3ED892940DC050039F1A7 /* FBSDKCoreKit_Basics.xcframework */; };
+		3AE3ED8F2940DC050039F1A7 /* FBAEMKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AE3ED8A2940DC050039F1A7 /* FBAEMKit.xcframework */; };
+		3AE3ED902940DC050039F1A7 /* FBSDKCoreKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AE3ED8B2940DC050039F1A7 /* FBSDKCoreKit.xcframework */; };
 		DB34EBF91F2574B70057008D /* FacebookLoginButton.h in Headers */ = {isa = PBXBuildFile; fileRef = DB34EBE41F2574B70057008D /* FacebookLoginButton.h */; };
 		DB34EBFA1F2574B70057008D /* FacebookLoginButton.m in Sources */ = {isa = PBXBuildFile; fileRef = DB34EBE51F2574B70057008D /* FacebookLoginButton.m */; };
 		DB34EBFB1F2574B70057008D /* FacebookLoginButtonProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = DB34EBE61F2574B70057008D /* FacebookLoginButtonProxy.h */; };
@@ -50,9 +52,11 @@
 
 /* Begin PBXFileReference section */
 		24DD6D1B1134B66800162E58 /* titanium.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = titanium.xcconfig; sourceTree = "<group>"; };
-		3AE75A1C26C679F900DA3B73 /* FBSDKCoreKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FBSDKCoreKit.xcframework; path = platform/FBSDKCoreKit.xcframework; sourceTree = "<group>"; };
-		3AE75A1D26C679F900DA3B73 /* FBSDKLoginKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FBSDKLoginKit.xcframework; path = platform/FBSDKLoginKit.xcframework; sourceTree = "<group>"; };
-		3AE75A1E26C679F900DA3B73 /* FBSDKShareKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FBSDKShareKit.xcframework; path = platform/FBSDKShareKit.xcframework; sourceTree = "<group>"; };
+		3AE3ED872940DC050039F1A7 /* FBSDKLoginKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FBSDKLoginKit.xcframework; path = platform/FBSDKLoginKit.xcframework; sourceTree = "<group>"; };
+		3AE3ED882940DC050039F1A7 /* FBSDKShareKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FBSDKShareKit.xcframework; path = platform/FBSDKShareKit.xcframework; sourceTree = "<group>"; };
+		3AE3ED892940DC050039F1A7 /* FBSDKCoreKit_Basics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FBSDKCoreKit_Basics.xcframework; path = platform/FBSDKCoreKit_Basics.xcframework; sourceTree = "<group>"; };
+		3AE3ED8A2940DC050039F1A7 /* FBAEMKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FBAEMKit.xcframework; path = platform/FBAEMKit.xcframework; sourceTree = "<group>"; };
+		3AE3ED8B2940DC050039F1A7 /* FBSDKCoreKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FBSDKCoreKit.xcframework; path = platform/FBSDKCoreKit.xcframework; sourceTree = "<group>"; };
 		D2AAC07E0554694100DB518D /* libfacebook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libfacebook.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB34EBE41F2574B70057008D /* FacebookLoginButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookLoginButton.h; sourceTree = "<group>"; };
 		DB34EBE51F2574B70057008D /* FacebookLoginButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookLoginButton.m; sourceTree = "<group>"; };
@@ -72,9 +76,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3AE75A2126C679F900DA3B73 /* FBSDKShareKit.xcframework in Frameworks */,
-				3AE75A1F26C679F900DA3B73 /* FBSDKCoreKit.xcframework in Frameworks */,
-				3AE75A2026C679F900DA3B73 /* FBSDKLoginKit.xcframework in Frameworks */,
+				3AE3ED8C2940DC050039F1A7 /* FBSDKLoginKit.xcframework in Frameworks */,
+				3AE3ED8E2940DC050039F1A7 /* FBSDKCoreKit_Basics.xcframework in Frameworks */,
+				3AE3ED8F2940DC050039F1A7 /* FBAEMKit.xcframework in Frameworks */,
+				3AE3ED8D2940DC050039F1A7 /* FBSDKShareKit.xcframework in Frameworks */,
+				3AE3ED902940DC050039F1A7 /* FBSDKCoreKit.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,9 +109,11 @@
 		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3AE75A1C26C679F900DA3B73 /* FBSDKCoreKit.xcframework */,
-				3AE75A1D26C679F900DA3B73 /* FBSDKLoginKit.xcframework */,
-				3AE75A1E26C679F900DA3B73 /* FBSDKShareKit.xcframework */,
+				3AE3ED8A2940DC050039F1A7 /* FBAEMKit.xcframework */,
+				3AE3ED892940DC050039F1A7 /* FBSDKCoreKit_Basics.xcframework */,
+				3AE3ED8B2940DC050039F1A7 /* FBSDKCoreKit.xcframework */,
+				3AE3ED872940DC050039F1A7 /* FBSDKLoginKit.xcframework */,
+				3AE3ED882940DC050039F1A7 /* FBSDKShareKit.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -205,7 +213,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1330;
+				LastUpgradeCheck = 1410;
 			};
 			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "titanium-facebook" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -296,7 +304,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INSTALL_PATH = /usr/local/lib;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = (
 					"-DDEBUG",
@@ -343,7 +351,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INSTALL_PATH = /usr/local/lib;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LIBRARY_SEARCH_PATHS = "";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DTI_POST_1_2";
@@ -405,7 +413,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INSTALL_PATH = /usr/local/lib;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-DDEBUG",
@@ -469,7 +477,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INSTALL_PATH = /usr/local/lib;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DTI_POST_1_2";
 				OTHER_LDFLAGS = "-ObjC";

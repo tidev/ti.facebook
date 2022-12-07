@@ -4,461 +4,99 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>Headers/FBAEMAdvertiserRuleFactory.h</key>
-		<data>
-		yKvLFvS6IAEnl4wy2Hr+qpLlTZQ=
-		</data>
-		<key>Headers/FBAEMAdvertiserRuleMatching.h</key>
-		<data>
-		J4XLVbU1QkQ+vsp96NbE2CDglZw=
-		</data>
-		<key>Headers/FBAEMAdvertiserRuleOperator.h</key>
-		<data>
-		pxydqvI15BpRVBvfSn9RXFP6zz0=
-		</data>
-		<key>Headers/FBAEMAdvertiserRuleProviding.h</key>
-		<data>
-		oBjpGjCzOkGy0g6v8hbcpjXxy9I=
-		</data>
-		<key>Headers/FBAEMAdvertiserSingleEntryRule.h</key>
-		<data>
-		hLUkAkmODucoUntMPo6uLRF72Lo=
-		</data>
-		<key>Headers/FBAEMInvocation.h</key>
-		<data>
-		vA7s6hcnI31hKtWSwAIwWaQVe2E=
-		</data>
-		<key>Headers/FBAEMKit-Prefix-Header.h</key>
-		<data>
-		K7g/zhr5ZA6vVqsMHKBc4hwRqTs=
-		</data>
 		<key>Headers/FBAEMKit-Swift.h</key>
 		<data>
-		PpLMnFpacN35/sqxwa+Ppy7UDDY=
-		</data>
-		<key>Headers/FBAEMKit.h</key>
-		<data>
-		gB02kjZCTPSjf3JmciNaczoklC4=
-		</data>
-		<key>Headers/FBAEMKitVersions.h</key>
-		<data>
-		6axPztwda+5bKIIkkxzurKmP/p4=
-		</data>
-		<key>Headers/FBAEMNetworker.h</key>
-		<data>
-		1YIulr37EaDtIX9J+Qhun6tLf+U=
-		</data>
-		<key>Headers/FBAEMNetworking.h</key>
-		<data>
-		ghTzHaeILWcH507QH7tTFKT45po=
-		</data>
-		<key>Headers/FBAEMReporter.h</key>
-		<data>
-		p+LiA7Shk5uAVBAzAFEy20Rvm/Y=
-		</data>
-		<key>Headers/FBAEMRequestBody.h</key>
-		<data>
-		/3dF50huTEGkN3puysyndoBwaSI=
-		</data>
-		<key>Headers/FBAEMRule.h</key>
-		<data>
-		vf04ru85SXUoqaOlvLiBjJTWiPw=
-		</data>
-		<key>Headers/FBAEMUtility.h</key>
-		<data>
-		tYxNbX/UFxFuy8CvDSrX2P7eHnA=
-		</data>
-		<key>Headers/FBSKAdNetworkReporting.h</key>
-		<data>
-		pky/QYIj/dB780WrIohjghUSH/E=
+		7/G8ZPG11a3H0gHXs0tysv+z/q4=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		TXMqT1HomZAeSqYWAQsuafMl1Vo=
+		GELF+xnovjEu4i44St5PTZQ+4pY=
 		</data>
 		<key>Modules/FBAEMKit.swiftmodule/arm64-apple-tvos-simulator.swiftdoc</key>
 		<data>
-		Mn3/D/d9iVZflfhXIayU6zSqzkw=
+		MOha/FE8ceZYyf3jO8p4l8HnJkA=
 		</data>
 		<key>Modules/FBAEMKit.swiftmodule/arm64-apple-tvos-simulator.swiftinterface</key>
 		<data>
-		E+4f1d8VnMfG2h5JfuQyoLFoRo8=
+		dxxUPYDxHdY81AGpVpStcqMgKno=
 		</data>
 		<key>Modules/FBAEMKit.swiftmodule/arm64-apple-tvos-simulator.swiftmodule</key>
 		<data>
-		65pLt/sqEvN66f1MIyWNDzXk8mI=
-		</data>
-		<key>Modules/FBAEMKit.swiftmodule/arm64.swiftdoc</key>
-		<data>
-		Mn3/D/d9iVZflfhXIayU6zSqzkw=
-		</data>
-		<key>Modules/FBAEMKit.swiftmodule/arm64.swiftinterface</key>
-		<data>
-		E+4f1d8VnMfG2h5JfuQyoLFoRo8=
-		</data>
-		<key>Modules/FBAEMKit.swiftmodule/arm64.swiftmodule</key>
-		<data>
-		65pLt/sqEvN66f1MIyWNDzXk8mI=
+		BXQfOcYfgSNVV3T8zQejs4G4NPE=
 		</data>
 		<key>Modules/FBAEMKit.swiftmodule/x86_64-apple-tvos-simulator.swiftdoc</key>
 		<data>
-		IgRB2RpXK2t9PDDIoWjLCsDVbt4=
+		wpuPmPR+HmbdhnhJpt93dPLay8A=
 		</data>
 		<key>Modules/FBAEMKit.swiftmodule/x86_64-apple-tvos-simulator.swiftinterface</key>
 		<data>
-		Ld8CilsQXfapZcf7JgpvH3egBOU=
+		7XpxpMjJbtBOkK98r+z2c+fBp/0=
 		</data>
 		<key>Modules/FBAEMKit.swiftmodule/x86_64-apple-tvos-simulator.swiftmodule</key>
 		<data>
-		EMQVI+sZUuuGj+wBixyUJwNzWoE=
-		</data>
-		<key>Modules/FBAEMKit.swiftmodule/x86_64.swiftdoc</key>
-		<data>
-		IgRB2RpXK2t9PDDIoWjLCsDVbt4=
-		</data>
-		<key>Modules/FBAEMKit.swiftmodule/x86_64.swiftinterface</key>
-		<data>
-		Ld8CilsQXfapZcf7JgpvH3egBOU=
-		</data>
-		<key>Modules/FBAEMKit.swiftmodule/x86_64.swiftmodule</key>
-		<data>
-		EMQVI+sZUuuGj+wBixyUJwNzWoE=
+		25IovnfUJUTWw//vBickxjn8+ws=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
-		JELH5jXIzrBpYB3cXkE3/w648tU=
+		Ci3QIdviXpIzxSC88i1rGvW2cSs=
 		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>Headers/FBAEMAdvertiserRuleFactory.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			yKvLFvS6IAEnl4wy2Hr+qpLlTZQ=
-			</data>
-			<key>hash2</key>
-			<data>
-			n4ff1JqmRT9hLIChw9LKJPnHikWNW437YLQcMbqWaNI=
-			</data>
-		</dict>
-		<key>Headers/FBAEMAdvertiserRuleMatching.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			J4XLVbU1QkQ+vsp96NbE2CDglZw=
-			</data>
-			<key>hash2</key>
-			<data>
-			b7OWeUClIk3eMzKQ88dpyks5XwvN2rqz8ma+jGc9aC0=
-			</data>
-		</dict>
-		<key>Headers/FBAEMAdvertiserRuleOperator.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			pxydqvI15BpRVBvfSn9RXFP6zz0=
-			</data>
-			<key>hash2</key>
-			<data>
-			V/lKJil+YXykdXxtDcsdsCAVbcXhTZXclpWuGeikoDA=
-			</data>
-		</dict>
-		<key>Headers/FBAEMAdvertiserRuleProviding.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			oBjpGjCzOkGy0g6v8hbcpjXxy9I=
-			</data>
-			<key>hash2</key>
-			<data>
-			T2S5e1Qb400jRGUaIKao17m6TOTttA7oUvD1YHgFZpo=
-			</data>
-		</dict>
-		<key>Headers/FBAEMAdvertiserSingleEntryRule.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			hLUkAkmODucoUntMPo6uLRF72Lo=
-			</data>
-			<key>hash2</key>
-			<data>
-			MtpELt09rYat78RMDpRCuog7xUYkwdT7soZkIk1MIJI=
-			</data>
-		</dict>
-		<key>Headers/FBAEMInvocation.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			vA7s6hcnI31hKtWSwAIwWaQVe2E=
-			</data>
-			<key>hash2</key>
-			<data>
-			dr9DQsVF22nH0/TalKjpcBPOXpwc9VH2NjSh2s6AVyU=
-			</data>
-		</dict>
-		<key>Headers/FBAEMKit-Prefix-Header.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			K7g/zhr5ZA6vVqsMHKBc4hwRqTs=
-			</data>
-			<key>hash2</key>
-			<data>
-			X95o1ZqRBk75B/twsFPDGwnE0rcJzZZ+aHVXYs2e24Q=
-			</data>
-		</dict>
 		<key>Headers/FBAEMKit-Swift.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			PpLMnFpacN35/sqxwa+Ppy7UDDY=
-			</data>
 			<key>hash2</key>
 			<data>
-			pQytZ0vo3eeI9X30dQrzopwZ9mFqgCscygwnvhz4eLo=
-			</data>
-		</dict>
-		<key>Headers/FBAEMKit.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			gB02kjZCTPSjf3JmciNaczoklC4=
-			</data>
-			<key>hash2</key>
-			<data>
-			w8Gz6WgkveMjXpcHO9d3+sGON32lDdCWFHKYR+7dgas=
-			</data>
-		</dict>
-		<key>Headers/FBAEMKitVersions.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			6axPztwda+5bKIIkkxzurKmP/p4=
-			</data>
-			<key>hash2</key>
-			<data>
-			KWnWNB7wiPlGi15HlfozeaVQOsIDExVCf3foG7AIEjQ=
-			</data>
-		</dict>
-		<key>Headers/FBAEMNetworker.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			1YIulr37EaDtIX9J+Qhun6tLf+U=
-			</data>
-			<key>hash2</key>
-			<data>
-			6ul/TswN5q6XDTJd1EBQZZwZd0BsTpmTidGQ/6qtLiY=
-			</data>
-		</dict>
-		<key>Headers/FBAEMNetworking.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			ghTzHaeILWcH507QH7tTFKT45po=
-			</data>
-			<key>hash2</key>
-			<data>
-			7e2i1241Ft2Xvaut6NIyhoHw6N+wMpOIsbrTDlI81g0=
-			</data>
-		</dict>
-		<key>Headers/FBAEMReporter.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			p+LiA7Shk5uAVBAzAFEy20Rvm/Y=
-			</data>
-			<key>hash2</key>
-			<data>
-			E0wsApaYPPtNFUlZqr8dn+npXeZUlXOuLVvUBbwBAsE=
-			</data>
-		</dict>
-		<key>Headers/FBAEMRequestBody.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			/3dF50huTEGkN3puysyndoBwaSI=
-			</data>
-			<key>hash2</key>
-			<data>
-			9x7kOSgzLDOkVitO5IJz7RCkuY9b5wOZIMnd5i51dKA=
-			</data>
-		</dict>
-		<key>Headers/FBAEMRule.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			vf04ru85SXUoqaOlvLiBjJTWiPw=
-			</data>
-			<key>hash2</key>
-			<data>
-			dmaO4ah5Qj0cVSMksb9T3A8EnGyeQRkKAQqrn0kzUmU=
-			</data>
-		</dict>
-		<key>Headers/FBAEMUtility.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			tYxNbX/UFxFuy8CvDSrX2P7eHnA=
-			</data>
-			<key>hash2</key>
-			<data>
-			jiGNk1M6flw8FBdRaKmRowNraky5j+WeQuqNRmfEXiM=
-			</data>
-		</dict>
-		<key>Headers/FBSKAdNetworkReporting.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			pky/QYIj/dB780WrIohjghUSH/E=
-			</data>
-			<key>hash2</key>
-			<data>
-			elf75HlZ2bDZbULPVssKTSgy8K957SFxGfCuUVz2S6c=
+			Z1M7mr5hXsvvx2GIq9ks6hnu1vYamIrjfBs8J3/W0wU=
 			</data>
 		</dict>
 		<key>Modules/FBAEMKit.swiftmodule/arm64-apple-tvos-simulator.swiftdoc</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Mn3/D/d9iVZflfhXIayU6zSqzkw=
-			</data>
 			<key>hash2</key>
 			<data>
-			wYsVJQNIh5DlHtyughnOsl4+0M615O1WaHJsE3hNn0U=
+			VDFIphO7HF7ulRf6p/yQtVtYU15BlzFZIJObxUBgQZ0=
 			</data>
 		</dict>
 		<key>Modules/FBAEMKit.swiftmodule/arm64-apple-tvos-simulator.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			E+4f1d8VnMfG2h5JfuQyoLFoRo8=
-			</data>
 			<key>hash2</key>
 			<data>
-			mKn0YOy+upHj8071Urt9Fmnv9Jtg9Bs9VYoDQHJvKJ8=
+			nayXh2N7JPDcqHdLUlCQl85n8reRW+BOXuWuCG77SMw=
 			</data>
 		</dict>
 		<key>Modules/FBAEMKit.swiftmodule/arm64-apple-tvos-simulator.swiftmodule</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			65pLt/sqEvN66f1MIyWNDzXk8mI=
-			</data>
 			<key>hash2</key>
 			<data>
-			B8CN4s3ta4Zwtp6GBCfKrGk0tdI8m2w+grqjjav5LqY=
-			</data>
-		</dict>
-		<key>Modules/FBAEMKit.swiftmodule/arm64.swiftdoc</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			Mn3/D/d9iVZflfhXIayU6zSqzkw=
-			</data>
-			<key>hash2</key>
-			<data>
-			wYsVJQNIh5DlHtyughnOsl4+0M615O1WaHJsE3hNn0U=
-			</data>
-		</dict>
-		<key>Modules/FBAEMKit.swiftmodule/arm64.swiftinterface</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			E+4f1d8VnMfG2h5JfuQyoLFoRo8=
-			</data>
-			<key>hash2</key>
-			<data>
-			mKn0YOy+upHj8071Urt9Fmnv9Jtg9Bs9VYoDQHJvKJ8=
-			</data>
-		</dict>
-		<key>Modules/FBAEMKit.swiftmodule/arm64.swiftmodule</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			65pLt/sqEvN66f1MIyWNDzXk8mI=
-			</data>
-			<key>hash2</key>
-			<data>
-			B8CN4s3ta4Zwtp6GBCfKrGk0tdI8m2w+grqjjav5LqY=
+			O7v8/+o3T3JSAd69wkTBk842z9l0ATzFR4CZNrVajjg=
 			</data>
 		</dict>
 		<key>Modules/FBAEMKit.swiftmodule/x86_64-apple-tvos-simulator.swiftdoc</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			IgRB2RpXK2t9PDDIoWjLCsDVbt4=
-			</data>
 			<key>hash2</key>
 			<data>
-			dbINumt5/0S3ORrOEmBkrlRvZmCFQauPp/jesaPyOcY=
+			N6dfdFVFPjjnTpvx7II6uF40zol2No8JrVDFodA605c=
 			</data>
 		</dict>
 		<key>Modules/FBAEMKit.swiftmodule/x86_64-apple-tvos-simulator.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			Ld8CilsQXfapZcf7JgpvH3egBOU=
-			</data>
 			<key>hash2</key>
 			<data>
-			P2OE6hXiskM6t/nUDvMoJOAUQUe12dFuk+0fJcb0ZJg=
+			gBBTSufDydhN5uRa8uocK8+s0PReFXeu7b4CQ/hAOfo=
 			</data>
 		</dict>
 		<key>Modules/FBAEMKit.swiftmodule/x86_64-apple-tvos-simulator.swiftmodule</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			EMQVI+sZUuuGj+wBixyUJwNzWoE=
-			</data>
 			<key>hash2</key>
 			<data>
-			MDdqSAf1jgzeLl70eBKrvBFGiTFo/zuxoJw0Om5c0Wo=
-			</data>
-		</dict>
-		<key>Modules/FBAEMKit.swiftmodule/x86_64.swiftdoc</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			IgRB2RpXK2t9PDDIoWjLCsDVbt4=
-			</data>
-			<key>hash2</key>
-			<data>
-			dbINumt5/0S3ORrOEmBkrlRvZmCFQauPp/jesaPyOcY=
-			</data>
-		</dict>
-		<key>Modules/FBAEMKit.swiftmodule/x86_64.swiftinterface</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			Ld8CilsQXfapZcf7JgpvH3egBOU=
-			</data>
-			<key>hash2</key>
-			<data>
-			P2OE6hXiskM6t/nUDvMoJOAUQUe12dFuk+0fJcb0ZJg=
-			</data>
-		</dict>
-		<key>Modules/FBAEMKit.swiftmodule/x86_64.swiftmodule</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			EMQVI+sZUuuGj+wBixyUJwNzWoE=
-			</data>
-			<key>hash2</key>
-			<data>
-			MDdqSAf1jgzeLl70eBKrvBFGiTFo/zuxoJw0Om5c0Wo=
+			bzAjP95Q1KHJpXXjdgb3jTepe3xXhP5py0n6buPkHbc=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			JELH5jXIzrBpYB3cXkE3/w648tU=
-			</data>
 			<key>hash2</key>
 			<data>
-			WLmw/LmU8blwOPh6slu/vPmQN0rS9XKWqm0gRWm7Kyk=
+			jq+nSulDKiN4tenILjgXg82TzM040TCurYFTCVRKXxM=
 			</data>
 		</dict>
 	</dict>
