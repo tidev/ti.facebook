@@ -275,7 +275,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
   TiThreadPerformOnMainThread(
       ^{
-        [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
+        [FBSDKProfile setIsUpdatedWithAccessTokenChange:YES];
 
         NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
         [nc addObserver:self selector:@selector(logEvents:) name:UIApplicationDidBecomeActiveNotification object:nil];
