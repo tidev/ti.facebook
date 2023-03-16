@@ -805,8 +805,14 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		}
 
 		if (link != null) {
-			shareContent =
-				new ShareLinkContent.Builder().setContentUrl(Uri.parse(link)).setPlaceId(placeId).setRef(ref).build();
+			ShareLinkContent.Builder builder = new ShareLinkContent.Builder().setContentUrl(Uri.parse(link));
+			if (placeId != null) {
+				builder.setPlaceId(placeId);
+			}
+			if (ref != null) {
+				builder.setRef(ref);
+			}
+			shareContent = builder.build();
 		} else {
 			Log.e(TAG, "The \"link\" property is required when showing a share dialog.");
 		}
