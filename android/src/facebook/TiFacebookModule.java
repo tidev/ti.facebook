@@ -133,8 +133,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	@Kroll.constant
 	public static final int LOGIN_BEHAVIOR_DEVICE_AUTH = 2;
 	@Kroll.constant
-	public static final int LOGIN_BEHAVIOR_WEB = 3;
-	@Kroll.constant
 	public static final int LOGIN_BEHAVIOR_NATIVE = 4;
 	// TODO: Expose DIALOG_ONLY and KATANA_ONLY?
 
@@ -466,9 +464,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			case LOGIN_BEHAVIOR_BROWSER:
 				loginBehavior = LoginBehavior.WEB_ONLY;
 				break;
-			case LOGIN_BEHAVIOR_WEB:
-				loginBehavior = LoginBehavior.WEB_VIEW_ONLY;
-				break;
 			case LOGIN_BEHAVIOR_DEVICE_AUTH:
 				loginBehavior = LoginBehavior.DEVICE_AUTH;
 				break;
@@ -491,8 +486,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		switch (loginBehavior) {
 			case WEB_ONLY:
 				return LOGIN_BEHAVIOR_BROWSER;
-			case WEB_VIEW_ONLY:
-				return LOGIN_BEHAVIOR_WEB;
 			case DEVICE_AUTH:
 				return LOGIN_BEHAVIOR_DEVICE_AUTH;
 			case NATIVE_ONLY:
