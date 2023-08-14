@@ -6,6 +6,6 @@ framework module FBSDKShareKit {
 }
 
 module FBSDKShareKit.Swift {
-    header "FBSDKShareKit-Swift.h"
-    requires objc
+  header "FBSDKShareKit-Swift.h"
+  requires objc
 }

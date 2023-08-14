@@ -6,6 +6,6 @@ framework module FBSDKLoginKit {
 }
 
 module FBSDKLoginKit.Swift {
-    header "FBSDKLoginKit-Swift.h"
-    requires objc
+  header "FBSDKLoginKit-Swift.h"
+  requires objc
 }
