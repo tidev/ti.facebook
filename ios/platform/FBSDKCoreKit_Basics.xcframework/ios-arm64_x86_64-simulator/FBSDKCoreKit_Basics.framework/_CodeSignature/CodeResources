@@ -18,11 +18,11 @@
 		</data>
 		<key>Headers/FBSDKCrashHandler.h</key>
 		<data>
-		9qyZhKdBiv/2JqsnbqJjzs6JDp4=
+		CZiEDVm8gHGkALwyjZtYF2K3LGk=
 		</data>
 		<key>Headers/FBSDKCrashHandlerProtocol.h</key>
 		<data>
-		PlP4CtaRgnMKzXyn0Cd6eWV10r8=
+		vSB3Xn5mAIXVnisb8nAGwYKzAe0=
 		</data>
 		<key>Headers/FBSDKCrashObserving.h</key>
 		<data>
@@ -82,7 +82,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		ZY1Gds9YdXXWhmAxA/Kh6+sTfSY=
+		O9TQbPI9H6EtKm8z3JI4j/60f1o=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -93,6 +93,10 @@
 	<dict>
 		<key>Headers/FBSDKBase64.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			4WPA7ov2bAhRn5QP5eZDBYX+spk=
+			</data>
 			<key>hash2</key>
 			<data>
 			ePF4YsPJC4jFg1uvNt6fb83WN1IDTijvBhGt+V0Rh/8=
@@ -100,6 +104,10 @@
 		</dict>
 		<key>Headers/FBSDKBasicUtility.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			3Ij+0qMFvTmtUIuRbymzor6FDzg=
+			</data>
 			<key>hash2</key>
 			<data>
 			4HOJGD9dL2BJIlaj/ej0J6MTNqBvYgF0/XrWiZtsT3E=
@@ -107,6 +115,10 @@
 		</dict>
 		<key>Headers/FBSDKCoreKit_Basics.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			98/O+nEXsNQ8AcNbx/iw8ai/ktE=
+			</data>
 			<key>hash2</key>
 			<data>
 			n96Ist8MxHyeU+TJA3OhwPRry3QcVtumXYCUmhcHycw=
@@ -114,20 +126,32 @@
 		</dict>
 		<key>Headers/FBSDKCrashHandler.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			CZiEDVm8gHGkALwyjZtYF2K3LGk=
+			</data>
 			<key>hash2</key>
 			<data>
-			IVTN0V/IdMwICexRs9MiG/lIQQLOiqU/aXDP+5QfgDY=
+			3ILHiPoEMzce96plPruxswh7D9L+ptDaLZH98MYQ5rY=
 			</data>
 		</dict>
 		<key>Headers/FBSDKCrashHandlerProtocol.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			vSB3Xn5mAIXVnisb8nAGwYKzAe0=
+			</data>
 			<key>hash2</key>
 			<data>
-			woEHrSFdQvUOUdlyH0JGdVNem49byRaZAMw+19Pe+Sc=
+			qZ25WCONiSxncOC5vN2J90QWqM9a21jnkfZjwxq0odA=
 			</data>
 		</dict>
 		<key>Headers/FBSDKCrashObserving.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			UhJc2ZYtB2hcyXxk00KbwKbTgcc=
+			</data>
 			<key>hash2</key>
 			<data>
 			tO6F4Bbijxuct9m9xB8pcqmAlnyPPJ0EqbN+Z8/EM1w=
@@ -135,6 +159,10 @@
 		</dict>
 		<key>Headers/FBSDKDataPersisting.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			DWFuqIbVPgHRhEn7LwXAH88cs1g=
+			</data>
 			<key>hash2</key>
 			<data>
 			OebjtkFnL0ywqbWvKN923EqquhEiUaUb2Ex9fOLH61E=
@@ -142,6 +170,10 @@
 		</dict>
 		<key>Headers/FBSDKFileDataExtracting.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			BQDcfAulsMenmeoahsXxQgOwOH8=
+			</data>
 			<key>hash2</key>
 			<data>
 			s/7qW6G7GCOOyCS4jkWz8szFjT6uujuGXGhTa5JF4G4=
@@ -149,6 +181,10 @@
 		</dict>
 		<key>Headers/FBSDKFileManaging.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			p/4j5P/SU+cTiWeHYIULKGdiaEg=
+			</data>
 			<key>hash2</key>
 			<data>
 			6+3pxgKpUWQwvlj3RwBFPC0rr5+wK651qUwh0n4fPHs=
@@ -156,6 +192,10 @@
 		</dict>
 		<key>Headers/FBSDKInfoDictionaryProviding.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			okxIBK/wxL+ugvqad38fKg7+VyU=
+			</data>
 			<key>hash2</key>
 			<data>
 			udZpX0hlPOkgV99Ck52TrAmlNiyK4r2qtK+kyPsJl8M=
@@ -163,6 +203,10 @@
 		</dict>
 		<key>Headers/FBSDKLibAnalyzer.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			Sr7GpMqIG4HmNNhoU6xSJrR36F8=
+			</data>
 			<key>hash2</key>
 			<data>
 			vcTMWhsIb/z29oxTpsnEfTWCnlgLS7qlPQuTTREW6Ek=
@@ -170,6 +214,10 @@
 		</dict>
 		<key>Headers/FBSDKLinking.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			1OBirQhOiNPiwhFBBuCxquzs+8o=
+			</data>
 			<key>hash2</key>
 			<data>
 			5NmQW3WO6TuTqGtMxocXiOeGiV7p3hyX2Saia2UhhL4=
@@ -177,6 +225,10 @@
 		</dict>
 		<key>Headers/FBSDKNetworkTask.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			0sGmRF6Hdq6tvoAuo8957/Esjbc=
+			</data>
 			<key>hash2</key>
 			<data>
 			WXUdURA38eU1UT+VzBqNd3NJZ/tMnqMgcYFfskguL9w=
@@ -184,6 +236,10 @@
 		</dict>
 		<key>Headers/FBSDKNotificationDelivering.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			H1EtkXfryfCD6P8NlmWazMezAP0=
+			</data>
 			<key>hash2</key>
 			<data>
 			jCbQRKCjKWBaILGHzII7b5E1nAY37YAd0KWD5lhnyBM=
@@ -191,6 +247,10 @@
 		</dict>
 		<key>Headers/FBSDKTypeUtility.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			qgaA6wWpYIa+hM+VZSTB1P0w8Jk=
+			</data>
 			<key>hash2</key>
 			<data>
 			Xm2cMC3iy1kvQn8EXXkZ0eKLNRVCmSlSbefuvvTCTTs=
@@ -198,6 +258,10 @@
 		</dict>
 		<key>Headers/FBSDKURLSession.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			lNyxKy0KC2f37l17PcuP0Gv/EDA=
+			</data>
 			<key>hash2</key>
 			<data>
 			5L3MvrHaYDNtK2zrxdEtZNCRnhTQHNM0bvoh0pAfKg0=
@@ -205,6 +269,10 @@
 		</dict>
 		<key>Headers/FBSDKURLSessionProviding.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			1wsWv3wp81s7ODMRhEscWZBDXkc=
+			</data>
 			<key>hash2</key>
 			<data>
 			O0czQhC3wEX5AKGOHblqZYeevvp4+w3IVFYRSr4Uv9o=
@@ -212,6 +280,10 @@
 		</dict>
 		<key>Headers/FBSDKURLSessionTask.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			aOm3T7/JlTQP0GIRlnLQzT+NKc8=
+			</data>
 			<key>hash2</key>
 			<data>
 			3Efn6F2Y10Aul+I89unuMGdO1GJTM5xkZOglY+a5XtE=
@@ -219,6 +291,10 @@
 		</dict>
 		<key>Headers/NSNotificationCenter+NotificationDelivering.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			7k8yl29uNS0GjwEBkfViBHp6lN0=
+			</data>
 			<key>hash2</key>
 			<data>
 			ODQiUcnulvLSI4AHqIqtQvUPeAp+/9qi2eIHXnVKxh8=
@@ -226,6 +302,10 @@
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			dAKyD+E6uMaCMsZEO7c47okujEM=
+			</data>
 			<key>hash2</key>
 			<data>
 			Ax5EJgz2ae9iwvEaJiJhRzHL4ePWe4qZhIaEdKJk27I=

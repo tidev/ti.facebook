@@ -133,8 +133,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	@Kroll.constant
 	public static final int LOGIN_BEHAVIOR_DEVICE_AUTH = 2;
 	@Kroll.constant
-	public static final int LOGIN_BEHAVIOR_WEB = 3;
-	@Kroll.constant
 	public static final int LOGIN_BEHAVIOR_NATIVE = 4;
 	// TODO: Expose DIALOG_ONLY and KATANA_ONLY?
 
@@ -466,9 +464,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			case LOGIN_BEHAVIOR_BROWSER:
 				loginBehavior = LoginBehavior.WEB_ONLY;
 				break;
-			case LOGIN_BEHAVIOR_WEB:
-				loginBehavior = LoginBehavior.WEB_VIEW_ONLY;
-				break;
 			case LOGIN_BEHAVIOR_DEVICE_AUTH:
 				loginBehavior = LoginBehavior.DEVICE_AUTH;
 				break;
@@ -491,8 +486,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		switch (loginBehavior) {
 			case WEB_ONLY:
 				return LOGIN_BEHAVIOR_BROWSER;
-			case WEB_VIEW_ONLY:
-				return LOGIN_BEHAVIOR_WEB;
 			case DEVICE_AUTH:
 				return LOGIN_BEHAVIOR_DEVICE_AUTH;
 			case NATIVE_ONLY:
@@ -812,8 +805,14 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		}
 
 		if (link != null) {
-			shareContent =
-				new ShareLinkContent.Builder().setContentUrl(Uri.parse(link)).setPlaceId(placeId).setRef(ref).build();
+			ShareLinkContent.Builder builder = new ShareLinkContent.Builder().setContentUrl(Uri.parse(link));
+			if (placeId != null) {
+				builder.setPlaceId(placeId);
+			}
+			if (ref != null) {
+				builder.setRef(ref);
+			}
+			shareContent = builder.build();
 		} else {
 			Log.e(TAG, "The \"link\" property is required when showing a share dialog.");
 		}
