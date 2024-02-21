@@ -7,5 +7,5 @@ buildscript {
 
 dependencies {
 	// https://github.com/facebook/facebook-android-sdk/blob/main/CHANGELOG.md
-	implementation 'com.facebook.android:facebook-android-sdk:16.2.0'
+	implementation 'com.facebook.android:facebook-android-sdk:16.3.0'
 }
