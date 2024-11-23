@@ -609,6 +609,7 @@ NS_ASSUME_NONNULL_BEGIN
     FBSDKProfile *profile = (FBSDKProfile *)result;
     NSDictionary *jsonDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
                                                      profile.userID, @"userID",
+                                                 NULL_IF_NIL(profile.email), @"email",
                                                  NULL_IF_NIL(profile.firstName), @"firstName",
                                                  NULL_IF_NIL(profile.middleName), @"middleName",
                                                  NULL_IF_NIL(profile.lastName), @"lastName",
