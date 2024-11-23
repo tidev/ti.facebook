@@ -25,17 +25,19 @@ public class LoginButtonView extends TiUIView
 {
 
 	private static final String TAG = "LoginButtonView";
-	private LoginButton loginButton;
-	CallbackManager callbackManager;
-	private TiFacebookModule module;
+	private final LoginButton loginButton;
+
+    CallbackManager callbackManager;
 
 	public LoginButtonView(TiViewProxy proxy)
 	{
 		super(proxy);
-		module = TiFacebookModule.getFacebookModule();
+
+        TiFacebookModule module = TiFacebookModule.getFacebookModule();
 		final Activity mActivity = proxy.getActivity();
-		Log.d(TAG, "[VIEW LIFECYCLE EVENT] view");
+
 		loginButton = new LoginButton(mActivity);
+
 		// Callback registration
 		callbackManager = module.getCallbackManager();
 		loginButton.registerCallback(callbackManager, module.getFacebookCallback());
@@ -101,8 +103,8 @@ public class LoginButtonView extends TiUIView
 				case TiFacebookModule.LOGIN_BUTTON_TOOLTIP_BEHAVIOR_DISABLE:
 					loginButton.setToolTipMode(ToolTipMode.NEVER_DISPLAY);
 					break;
-				default:
 				case TiFacebookModule.LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC:
+				default:
 					loginButton.setToolTipMode(ToolTipMode.AUTOMATIC);
 					break;
 			}
@@ -114,8 +116,8 @@ public class LoginButtonView extends TiUIView
 				case TiFacebookModule.LOGIN_BUTTON_TOOLTIP_STYLE_NEUTRAL_GRAY:
 					loginButton.setToolTipStyle(ToolTipPopup.Style.BLACK);
 					break;
-				default:
 				case TiFacebookModule.LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE:
+				default:
 					loginButton.setToolTipStyle(ToolTipPopup.Style.BLUE);
 					break;
 			}
@@ -125,43 +127,47 @@ public class LoginButtonView extends TiUIView
 	@Override
 	public void propertyChanged(String key, Object oldValue, Object newValue, KrollProxy proxy)
 	{
-		if (key.equals("publishPermissions")) {
-			Log.w(TAG, "The 'publishPermissions' property has been deprecated in favor of the 'permissions' property");
-			if (newValue instanceof Object[]) {
-				String[] permissions = TiConvert.toStringArray((Object[]) newValue);
-				loginButton.setPermissions(Arrays.asList(permissions));
-			}
-		} else if (key.equals("readPermissions")) {
-			Log.w(TAG, "The 'readPermissions' property has been deprecated in favor of the 'permissions' property");
-			if (newValue instanceof Object[]) {
-				String[] permissions = TiConvert.toStringArray((Object[]) newValue);
-				loginButton.setPermissions(Arrays.asList(permissions));
-			}
-		} else if (key.equals("permissions")) {
-			if (newValue instanceof Object[]) {
-				String[] permissions = TiConvert.toStringArray((Object[]) newValue);
-				loginButton.setPermissions(Arrays.asList(permissions));
-			}
-		} else if (key.equals("audience")) {
-			int audience = TiConvert.toInt(newValue, TiFacebookModule.AUDIENCE_NONE);
-			switch (audience) {
-				case TiFacebookModule.AUDIENCE_NONE:
-					loginButton.setDefaultAudience(DefaultAudience.NONE);
-					break;
-				case TiFacebookModule.AUDIENCE_ONLY_ME:
-					loginButton.setDefaultAudience(DefaultAudience.ONLY_ME);
-					break;
-				case TiFacebookModule.AUDIENCE_FRIENDS:
-					loginButton.setDefaultAudience(DefaultAudience.FRIENDS);
-					break;
-				case TiFacebookModule.AUDIENCE_EVERYONE:
-					loginButton.setDefaultAudience(DefaultAudience.EVERYONE);
-					break;
-			}
-		} else {
-			super.propertyChanged(key, oldValue, newValue, proxy);
-		}
-
-		Log.d(TAG, "[VIEW LIFECYCLE EVENT] propertyChanged: " + key + ' ' + oldValue + ' ' + newValue);
+        switch (key) {
+            case "publishPermissions":
+                Log.w(TAG, "The 'publishPermissions' property has been deprecated in favor of the 'permissions' property");
+                if (newValue instanceof Object[]) {
+                    String[] permissions = TiConvert.toStringArray((Object[]) newValue);
+                    loginButton.setPermissions(Arrays.asList(permissions));
+                }
+                break;
+            case "readPermissions":
+                Log.w(TAG, "The 'readPermissions' property has been deprecated in favor of the 'permissions' property");
+                if (newValue instanceof Object[]) {
+                    String[] permissions = TiConvert.toStringArray((Object[]) newValue);
+                    loginButton.setPermissions(Arrays.asList(permissions));
+                }
+                break;
+            case "permissions":
+                if (newValue instanceof Object[]) {
+                    String[] permissions = TiConvert.toStringArray((Object[]) newValue);
+                    loginButton.setPermissions(Arrays.asList(permissions));
+                }
+                break;
+            case "audience":
+                int audience = TiConvert.toInt(newValue, TiFacebookModule.AUDIENCE_NONE);
+                switch (audience) {
+                    case TiFacebookModule.AUDIENCE_NONE:
+                        loginButton.setDefaultAudience(DefaultAudience.NONE);
+                        break;
+                    case TiFacebookModule.AUDIENCE_ONLY_ME:
+                        loginButton.setDefaultAudience(DefaultAudience.ONLY_ME);
+                        break;
+                    case TiFacebookModule.AUDIENCE_FRIENDS:
+                        loginButton.setDefaultAudience(DefaultAudience.FRIENDS);
+                        break;
+                    case TiFacebookModule.AUDIENCE_EVERYONE:
+                        loginButton.setDefaultAudience(DefaultAudience.EVERYONE);
+                        break;
+                }
+                break;
+            default:
+                super.propertyChanged(key, oldValue, newValue, proxy);
+                break;
+        }
 	}
 }

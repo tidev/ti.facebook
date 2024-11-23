@@ -17,6 +17,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+
+import androidx.annotation.NonNull;
+
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -44,8 +47,6 @@ import java.util.Arrays;
 import java.util.Currency;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollFunction;
@@ -275,7 +276,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	public void requestWithGraphPath(String path, KrollDict params, String httpMethod, final KrollFunction callback)
 	{
 		HttpMethod method = null;
-		if (httpMethod == null || httpMethod.length() == 0 || httpMethod.equalsIgnoreCase("get")) {
+		if (httpMethod == null || httpMethod.isEmpty() || httpMethod.equalsIgnoreCase("get")) {
 			method = HttpMethod.GET;
 		} else if (httpMethod.equalsIgnoreCase("post")) {
 			method = HttpMethod.POST;
@@ -286,7 +287,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		AccessToken accessToken = AccessToken.getCurrentAccessToken();
 		GraphRequest request = GraphRequest.newGraphPathRequest(accessToken, path, new Callback() {
 			@Override
-			public void onCompleted(GraphResponse response)
+			public void onCompleted(@NonNull GraphResponse response)
 			{
 				FacebookRequestError err = response.getError();
 				KrollDict data = new KrollDict();
@@ -299,7 +300,11 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 				}
 
 				data.put(PROPERTY_SUCCESS, true);
-				data.put(PROPERTY_RESULT, response.getRawResponse().toString());
+
+				if (response.getRawResponse() != null) {
+					data.put(PROPERTY_RESULT, response.getRawResponse());
+				}
+
 				callback.callAsync(getKrollObject(), data);
 			}
 		});
@@ -337,12 +342,10 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		Bundle paramBundle = parameters != null ? Utils.mapToBundle(parameters) : null;
 		Double valueToSum = value != null ? TiConvert.toDouble(value) : null;
 
-		if (logger != null) {
-			if (valueToSum == null) {
-				logger.logEvent(event, paramBundle);
-			} else {
-				logger.logEvent(event, valueToSum, paramBundle);
-			}
+		if (valueToSum == null) {
+			logger.logEvent(event, paramBundle);
+		} else {
+			logger.logEvent(event, valueToSum, paramBundle);
 		}
 	}
 
@@ -354,9 +357,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		Bundle paramBundle = new Bundle();
 		paramBundle.putString(AppEventsConstants.EVENT_PARAM_REGISTRATION_METHOD, registrationMethod);
 
-		if (logger != null) {
-			logger.logEvent(AppEventsConstants.EVENT_NAME_COMPLETED_REGISTRATION, paramBundle);
-		}
+		logger.logEvent(AppEventsConstants.EVENT_NAME_COMPLETED_REGISTRATION, paramBundle);
 	}
 
 	@Kroll.method
@@ -365,9 +366,8 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		Activity activity = TiApplication.getInstance().getCurrentActivity();
 		AppEventsLogger logger = AppEventsLogger.newLogger(activity);
 		Bundle paramBundle = parameters != null ? Utils.mapToBundle(parameters) : null;
-		if (logger != null) {
-			logger.logPurchase(BigDecimal.valueOf(amount), Currency.getInstance(currency), paramBundle);
-		}
+
+		logger.logPurchase(BigDecimal.valueOf(amount), Currency.getInstance(currency), paramBundle);
 	}
 
 	// clang-format off
@@ -448,8 +448,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		AccessToken currentAccessToken = AccessToken.getCurrentAccessToken();
 		if (currentAccessToken != null) {
 			Set<String> permissionsList = currentAccessToken.getPermissions();
-			String[] permissionsArray = permissionsList.toArray(new String[permissionsList.size()]);
-			return permissionsArray;
+            return permissionsList.toArray(new String[0]);
 		}
 		return null;
 	}
@@ -470,8 +469,8 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			case LOGIN_BEHAVIOR_NATIVE:
 				loginBehavior = LoginBehavior.NATIVE_ONLY;
 				break;
-			default:
 			case LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK:
+			default:
 				loginBehavior = LoginBehavior.NATIVE_WITH_FALLBACK;
 				break;
 		}
@@ -490,8 +489,8 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 				return LOGIN_BEHAVIOR_DEVICE_AUTH;
 			case NATIVE_ONLY:
 				return LOGIN_BEHAVIOR_NATIVE;
-			default:
 			case NATIVE_WITH_FALLBACK:
+			default:
 				return LOGIN_BEHAVIOR_NATIVE_WITH_FALLBACK;
 		}
 	}
@@ -519,8 +518,8 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			case TiFacebookModule.AUDIENCE_FRIENDS:
 				audience = DefaultAudience.FRIENDS;
 				break;
-			default:
 			case TiFacebookModule.AUDIENCE_EVERYONE:
+			default:
 				audience = DefaultAudience.EVERYONE;
 				break;
 		}
@@ -550,7 +549,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		}
 		callbackManager = CallbackManager.Factory.create();
 		facebookCallback = new FacebookCallback<LoginResult>() {
-			KrollDict data = new KrollDict();
+			final KrollDict data = new KrollDict();
 			@Override
 			public void onSuccess(LoginResult loginResult)
 			{
@@ -579,7 +578,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			}
 
 			@Override
-			public void onError(FacebookException exception)
+			public void onError(@NonNull FacebookException exception)
 			{
 				Log.e(TAG, "FacebookCallback error: " + exception.getMessage());
 				data.put(PROPERTY_ERROR, exception.getMessage());
@@ -618,9 +617,9 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		return accessTokenRefreshCalled;
 	}
 
-	public boolean setAccessTokenRefreshCalled(boolean bool)
+	public void setAccessTokenRefreshCalled(boolean value)
 	{
-		return (accessTokenRefreshCalled = bool);
+		accessTokenRefreshCalled = value;
 	}
 
 	@Kroll.method
@@ -635,7 +634,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		ShareDialog shareDialog = new ShareDialog(TiApplication.getInstance().getCurrentActivity());
 
 		shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
-			KrollDict data = new KrollDict();
+			final KrollDict data = new KrollDict();
 			@Override
 			public void onCancel()
 			{
@@ -645,7 +644,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			}
 
 			@Override
-			public void onError(FacebookException error)
+			public void onError(@NonNull FacebookException error)
 			{
 				data.put(PROPERTY_SUCCESS, false);
 				data.put(PROPERTY_CANCELLED, false);
@@ -665,22 +664,23 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		});
 
 		Object[] proxyPhotos = (Object[]) args.get("photos");
+		assert proxyPhotos != null;
+
 		KrollDict[] photos = new KrollDict[proxyPhotos.length];
-		SharePhotoContent shareContent = null;
 
 		for (int i = 0; i < proxyPhotos.length; i++) {
 			@SuppressWarnings("unchecked")
-			HashMap<String, Object> obj = (HashMap) proxyPhotos[i];
+			HashMap<String, Object> obj = (HashMap<String, Object>) proxyPhotos[i];
 			KrollDict dict = new KrollDict();
 
 			dict.put("photo", obj.get("photo"));
 
 			if (obj.containsKey("caption")) {
-				dict.put("caption", (String) obj.get("caption"));
+				dict.put("caption", obj.get("caption"));
 			}
 
 			if (obj.containsKey("userGenerated")) {
-				dict.put("userGenerated", (boolean) obj.get("userGenerated"));
+				dict.put("userGenerated", obj.get("userGenerated"));
 			}
 
 			photos[i] = dict;
@@ -700,31 +700,27 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 				if (photo instanceof TiFileProxy) {
 					photo = TiBlob.blobFromFile(((TiFileProxy) photo).getBaseFile());
 				}
-				photoBuilder = photoBuilder.setBitmap(((TiBlob) photo).getImage());
-			} else if (photo instanceof String) {
-				photoBuilder = photoBuilder.setImageUrl(Uri.parse((String) photo));
-			} else {
+                photoBuilder.setBitmap(((TiBlob) photo).getImage());
+            } else if (photo instanceof String) {
+				photoBuilder.setImageUrl(Uri.parse((String) photo));
+			} else if (photo != null) {
 				Log.e(TAG, "Required \"photo\" not found or of unknown type: " + photo.getClass().getName());
 			}
 
 			// An optional caption
 			if (caption != null) {
-				photoBuilder = photoBuilder.setCaption(caption);
-			}
+                photoBuilder.setCaption(caption);
+            }
 
 			// An optional flag indicating if the photo was user generated
-			photoBuilder = photoBuilder.setUserGenerated(userGenerated);
+			photoBuilder.setUserGenerated(userGenerated);
 
-			shareContentBuilder = shareContentBuilder.addPhoto(photoBuilder.build());
+			shareContentBuilder.addPhoto(photoBuilder.build());
 		}
 
-		if (photos != null) {
-			shareContent = shareContentBuilder.build();
-		} else {
-			Log.e(TAG, "The \"photos\" property is required when showing a photo share dialog.");
-		}
+		SharePhotoContent shareContent = shareContentBuilder.build();
 
-		if (shareDialog != null && ShareDialog.canShow(SharePhotoContent.class)) {
+		if (ShareDialog.canShow(SharePhotoContent.class)) {
 			shareDialog.show(shareContent);
 		} else {
 			Log.e(TAG, "Cannot show image share dialog due to unsupported device or configuration!");
@@ -737,7 +733,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		ShareDialog shareDialog = new ShareDialog(TiApplication.getInstance().getCurrentActivity());
 
 		shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
-			KrollDict data = new KrollDict();
+			final KrollDict data = new KrollDict();
 			@Override
 			public void onCancel()
 			{
@@ -747,7 +743,7 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			}
 
 			@Override
-			public void onError(FacebookException error)
+			public void onError(@NonNull FacebookException error)
 			{
 				data.put(PROPERTY_SUCCESS, false);
 				data.put(PROPERTY_CANCELLED, false);
@@ -798,9 +794,8 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			case TiFacebookModule.SHARE_DIALOG_MODE_FEED_WEB:
 				mode = Mode.FEED;
 				break;
-			default:
 			case TiFacebookModule.SHARE_DIALOG_MODE_AUTOMATIC:
-				mode = Mode.AUTOMATIC;
+			default:
 				break;
 		}
 
@@ -815,9 +810,10 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 			shareContent = builder.build();
 		} else {
 			Log.e(TAG, "The \"link\" property is required when showing a share dialog.");
+			return;
 		}
 
-		if (shareDialog != null && shareDialog.canShow(shareContent, mode)) {
+		if (shareDialog.canShow(shareContent, mode)) {
 			shareDialog.show(shareContent, mode);
 		}
 	}
@@ -843,7 +839,9 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 														 data.put("error", "An error occurred. Please try again.");
 													 } else {
 														 data.put("success", true);
-														 data.put("url", appLinkData.getTargetUri().toString());
+														 if (appLinkData.getTargetUri() != null) {
+														 	data.put("url", appLinkData.getTargetUri().toString());
+														 }
 													 }
 
 													 callback.callAsync(getKrollObject(), data);

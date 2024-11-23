@@ -24,7 +24,6 @@ public class LoginButtonProxy extends TiViewProxy
 	public LoginButtonProxy()
 	{
 		super();
-		Log.d(TAG, "[VIEWPROXY LIFECYCLE EVENT] init");
 		defaultValues.put("audience", TiFacebookModule.AUDIENCE_FRIENDS);
 		defaultValues.put("tooltipBehavior", TiFacebookModule.LOGIN_BUTTON_TOOLTIP_BEHAVIOR_AUTOMATIC);
 		defaultValues.put("tooltipColorStyle", TiFacebookModule.LOGIN_BUTTON_TOOLTIP_STYLE_FRIENDLY_BLUE);
@@ -49,8 +48,6 @@ public class LoginButtonProxy extends TiViewProxy
 		// This method is called from handleCreationArgs if there is at least
 		// argument specified for the proxy creation call and the first argument
 		// is a KrollDict object.
-
-		Log.d(TAG, "VIEWPROXY LIFECYCLE EVENT] handleCreationDict " + options);
 
 		// Calling the superclass method ensures that the properties specified
 		// in the dictionary are properly set on the proxy object.

@@ -73,8 +73,6 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
 	@Override
 	public void onCreate(Activity activity, Bundle savedInstanceState)
 	{
-		Log.d(TAG, "onCreate");
-
 		if (activity instanceof TiBaseActivity) {
 			final TiBaseActivity baseActivity = (TiBaseActivity) activity;
 
@@ -86,16 +84,12 @@ public class ActivityWorkerProxy extends KrollProxy implements OnActivityResultE
 	@Override
 	public void onDestroy(Activity activity)
 	{
-		Log.d(TAG, "onDestroy");
-
 		accessTokenTracker.stopTracking();
 	}
 
 	@Override
 	public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data)
 	{
-		Log.d(TAG, "onActivityResult");
-
 		TiFacebookModule.getFacebookModule().getCallbackManager().onActivityResult(requestCode, resultCode, data);
 	}
 }
