@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -52,11 +52,11 @@
 
 /* Begin PBXFileReference section */
 		24DD6D1B1134B66800162E58 /* titanium.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = titanium.xcconfig; sourceTree = "<group>"; };
-		3AE3ED872940DC050039F1A7 /* FBSDKLoginKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FBSDKLoginKit.xcframework; path = platform/FBSDKLoginKit.xcframework; sourceTree = "<group>"; };
-		3AE3ED882940DC050039F1A7 /* FBSDKShareKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FBSDKShareKit.xcframework; path = platform/FBSDKShareKit.xcframework; sourceTree = "<group>"; };
-		3AE3ED892940DC050039F1A7 /* FBSDKCoreKit_Basics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FBSDKCoreKit_Basics.xcframework; path = platform/FBSDKCoreKit_Basics.xcframework; sourceTree = "<group>"; };
-		3AE3ED8A2940DC050039F1A7 /* FBAEMKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FBAEMKit.xcframework; path = platform/FBAEMKit.xcframework; sourceTree = "<group>"; };
-		3AE3ED8B2940DC050039F1A7 /* FBSDKCoreKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FBSDKCoreKit.xcframework; path = platform/FBSDKCoreKit.xcframework; sourceTree = "<group>"; };
+		3AE3ED872940DC050039F1A7 /* FBSDKLoginKit.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:V9WTTPBFK9:Meta Platforms, Inc."; lastKnownFileType = wrapper.xcframework; name = FBSDKLoginKit.xcframework; path = platform/FBSDKLoginKit.xcframework; sourceTree = "<group>"; };
+		3AE3ED882940DC050039F1A7 /* FBSDKShareKit.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:V9WTTPBFK9:Meta Platforms, Inc."; lastKnownFileType = wrapper.xcframework; name = FBSDKShareKit.xcframework; path = platform/FBSDKShareKit.xcframework; sourceTree = "<group>"; };
+		3AE3ED892940DC050039F1A7 /* FBSDKCoreKit_Basics.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:V9WTTPBFK9:Meta Platforms, Inc."; lastKnownFileType = wrapper.xcframework; name = FBSDKCoreKit_Basics.xcframework; path = platform/FBSDKCoreKit_Basics.xcframework; sourceTree = "<group>"; };
+		3AE3ED8A2940DC050039F1A7 /* FBAEMKit.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:V9WTTPBFK9:Meta Platforms, Inc."; lastKnownFileType = wrapper.xcframework; name = FBAEMKit.xcframework; path = platform/FBAEMKit.xcframework; sourceTree = "<group>"; };
+		3AE3ED8B2940DC050039F1A7 /* FBSDKCoreKit.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:V9WTTPBFK9:Meta Platforms, Inc."; lastKnownFileType = wrapper.xcframework; name = FBSDKCoreKit.xcframework; path = platform/FBSDKCoreKit.xcframework; sourceTree = "<group>"; };
 		D2AAC07E0554694100DB518D /* libfacebook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libfacebook.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB34EBE41F2574B70057008D /* FacebookLoginButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookLoginButton.h; sourceTree = "<group>"; };
 		DB34EBE51F2574B70057008D /* FacebookLoginButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookLoginButton.m; sourceTree = "<group>"; };
@@ -213,7 +213,8 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1410;
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
 			};
 			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "titanium-facebook" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -393,6 +394,7 @@
 				DSTROOT = /tmp/Facebook.dst;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -457,6 +459,7 @@
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DSTROOT = /tmp/Facebook.dst;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_MODEL_TUNING = G5;
 				GCC_NO_COMMON_BLOCKS = YES;

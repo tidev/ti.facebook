@@ -1,8 +1,8 @@
 {
   "ABIRoot": {
     "kind": "Root",
-    "name": "TopLevel",
-    "printedName": "TopLevel",
+    "name": "FBAEMKit",
+    "printedName": "FBAEMKit",
     "children": [
       {
         "kind": "Import",
@@ -342,6 +342,20 @@
             "conformances": [
               {
                 "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
+              {
+                "kind": "Conformance",
                 "name": "Equatable",
                 "printedName": "Equatable",
                 "usr": "s:SQ",
@@ -403,6 +417,13 @@
                 "printedName": "Sendable",
                 "usr": "s:s8SendableP",
                 "mangledName": "$ss8SendableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "BitwiseCopyable",
+                "printedName": "BitwiseCopyable",
+                "usr": "s:s15BitwiseCopyableP",
+                "mangledName": "$ss15BitwiseCopyableP"
               }
             ]
           },
@@ -462,12 +483,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Array",
-                "printedName": "[FBAEMKit.AEMAdvertiserRuleMatching]",
+                "printedName": "[any FBAEMKit.AEMAdvertiserRuleMatching]",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "AEMAdvertiserRuleMatching",
-                    "printedName": "FBAEMKit.AEMAdvertiserRuleMatching",
+                    "printedName": "any FBAEMKit.AEMAdvertiserRuleMatching",
                     "usr": "s:8FBAEMKit25AEMAdvertiserRuleMatchingP"
                   }
                 ],
@@ -494,12 +515,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Array",
-                    "printedName": "[FBAEMKit.AEMAdvertiserRuleMatching]",
+                    "printedName": "[any FBAEMKit.AEMAdvertiserRuleMatching]",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "AEMAdvertiserRuleMatching",
-                        "printedName": "FBAEMKit.AEMAdvertiserRuleMatching",
+                        "printedName": "any FBAEMKit.AEMAdvertiserRuleMatching",
                         "usr": "s:8FBAEMKit25AEMAdvertiserRuleMatchingP"
                       }
                     ],
@@ -538,12 +559,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Array",
-                "printedName": "[FBAEMKit.AEMAdvertiserRuleMatching]",
+                "printedName": "[any FBAEMKit.AEMAdvertiserRuleMatching]",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "AEMAdvertiserRuleMatching",
-                    "printedName": "FBAEMKit.AEMAdvertiserRuleMatching",
+                    "printedName": "any FBAEMKit.AEMAdvertiserRuleMatching",
                     "usr": "s:8FBAEMKit25AEMAdvertiserRuleMatchingP"
                   }
                 ],
@@ -769,6 +790,20 @@
           },
           {
             "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "Equatable",
             "printedName": "Equatable",
             "usr": "s:SQ",
@@ -848,12 +883,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBAEMKit.AEMAdvertiserRuleMatching?",
+                "printedName": "(any FBAEMKit.AEMAdvertiserRuleMatching)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "AEMAdvertiserRuleMatching",
-                    "printedName": "FBAEMKit.AEMAdvertiserRuleMatching",
+                    "printedName": "any FBAEMKit.AEMAdvertiserRuleMatching",
                     "usr": "s:8FBAEMKit25AEMAdvertiserRuleMatchingP"
                   }
                 ],
@@ -892,12 +927,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBAEMKit.AEMAdvertiserRuleMatching?",
+                "printedName": "(any FBAEMKit.AEMAdvertiserRuleMatching)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "AEMAdvertiserRuleMatching",
-                    "printedName": "FBAEMKit.AEMAdvertiserRuleMatching",
+                    "printedName": "any FBAEMKit.AEMAdvertiserRuleMatching",
                     "usr": "s:8FBAEMKit25AEMAdvertiserRuleMatchingP"
                   }
                 ],
@@ -1174,6 +1209,20 @@
         "conformances": [
           {
             "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "AEMAdvertiserRuleProviding",
             "printedName": "AEMAdvertiserRuleProviding",
             "usr": "s:8FBAEMKit26AEMAdvertiserRuleProvidingP",
@@ -1249,7 +1298,23 @@
         "declKind": "Protocol",
         "usr": "s:8FBAEMKit25AEMAdvertiserRuleMatchingP",
         "mangledName": "$s8FBAEMKit25AEMAdvertiserRuleMatchingP",
-        "moduleName": "FBAEMKit"
+        "moduleName": "FBAEMKit",
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
+        ]
       },
       {
         "kind": "TypeDecl",
@@ -2148,6 +2213,20 @@
         "conformances": [
           {
             "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "Equatable",
             "printedName": "Equatable",
             "usr": "s:SQ",
@@ -2188,6 +2267,13 @@
             "printedName": "Sendable",
             "usr": "s:s8SendableP",
             "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "BitwiseCopyable",
+            "printedName": "BitwiseCopyable",
+            "usr": "s:s15BitwiseCopyableP",
+            "mangledName": "$ss15BitwiseCopyableP"
           }
         ]
       },
@@ -2214,12 +2300,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBAEMKit.AEMAdvertiserRuleMatching?",
+                "printedName": "(any FBAEMKit.AEMAdvertiserRuleMatching)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "AEMAdvertiserRuleMatching",
-                    "printedName": "FBAEMKit.AEMAdvertiserRuleMatching",
+                    "printedName": "any FBAEMKit.AEMAdvertiserRuleMatching",
                     "usr": "s:8FBAEMKit25AEMAdvertiserRuleMatchingP"
                   }
                 ],
@@ -2258,12 +2344,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBAEMKit.AEMAdvertiserRuleMatching?",
+                "printedName": "(any FBAEMKit.AEMAdvertiserRuleMatching)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "AEMAdvertiserRuleMatching",
-                    "printedName": "FBAEMKit.AEMAdvertiserRuleMatching",
+                    "printedName": "any FBAEMKit.AEMAdvertiserRuleMatching",
                     "usr": "s:8FBAEMKit25AEMAdvertiserRuleMatchingP"
                   }
                 ],
@@ -2306,6 +2392,22 @@
         "moduleName": "FBAEMKit",
         "declAttributes": [
           "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
         ]
       },
       {
@@ -3398,6 +3500,20 @@
           },
           {
             "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "Equatable",
             "printedName": "Equatable",
             "usr": "s:SQ",
@@ -4013,6 +4129,20 @@
             "conformances": [
               {
                 "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
+              {
+                "kind": "Conformance",
                 "name": "Equatable",
                 "printedName": "Equatable",
                 "usr": "s:SQ",
@@ -4074,6 +4204,13 @@
                 "printedName": "Sendable",
                 "usr": "s:s8SendableP",
                 "mangledName": "$ss8SendableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "BitwiseCopyable",
+                "printedName": "BitwiseCopyable",
+                "usr": "s:s15BitwiseCopyableP",
+                "mangledName": "$ss15BitwiseCopyableP"
               }
             ]
           },
@@ -4343,12 +4480,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBAEMKit.AEMAdvertiserRuleMatching?",
+                "printedName": "(any FBAEMKit.AEMAdvertiserRuleMatching)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "AEMAdvertiserRuleMatching",
-                    "printedName": "FBAEMKit.AEMAdvertiserRuleMatching",
+                    "printedName": "any FBAEMKit.AEMAdvertiserRuleMatching",
                     "usr": "s:8FBAEMKit25AEMAdvertiserRuleMatchingP"
                   }
                 ],
@@ -4376,12 +4513,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "FBAEMKit.AEMAdvertiserRuleMatching?",
+                    "printedName": "(any FBAEMKit.AEMAdvertiserRuleMatching)?",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "AEMAdvertiserRuleMatching",
-                        "printedName": "FBAEMKit.AEMAdvertiserRuleMatching",
+                        "printedName": "any FBAEMKit.AEMAdvertiserRuleMatching",
                         "usr": "s:8FBAEMKit25AEMAdvertiserRuleMatchingP"
                       }
                     ],
@@ -4600,12 +4737,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBAEMKit.AEMAdvertiserRuleProviding?",
+                "printedName": "(any FBAEMKit.AEMAdvertiserRuleProviding)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "AEMAdvertiserRuleProviding",
-                    "printedName": "FBAEMKit.AEMAdvertiserRuleProviding",
+                    "printedName": "any FBAEMKit.AEMAdvertiserRuleProviding",
                     "usr": "s:8FBAEMKit26AEMAdvertiserRuleProvidingP"
                   }
                 ],
@@ -4633,12 +4770,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "FBAEMKit.AEMAdvertiserRuleProviding?",
+                    "printedName": "(any FBAEMKit.AEMAdvertiserRuleProviding)?",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "AEMAdvertiserRuleProviding",
-                        "printedName": "FBAEMKit.AEMAdvertiserRuleProviding",
+                        "printedName": "any FBAEMKit.AEMAdvertiserRuleProviding",
                         "usr": "s:8FBAEMKit26AEMAdvertiserRuleProvidingP"
                       }
                     ],
@@ -4671,7 +4808,7 @@
               {
                 "kind": "TypeNominal",
                 "name": "AEMAdvertiserRuleProviding",
-                "printedName": "FBAEMKit.AEMAdvertiserRuleProviding",
+                "printedName": "any FBAEMKit.AEMAdvertiserRuleProviding",
                 "usr": "s:8FBAEMKit26AEMAdvertiserRuleProvidingP"
               }
             ],
@@ -5130,6 +5267,20 @@
           "ObjectiveC.NSObject"
         ],
         "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
           {
             "kind": "Conformance",
             "name": "Equatable",
@@ -5595,6 +5746,20 @@
             "conformances": [
               {
                 "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
+              {
+                "kind": "Conformance",
                 "name": "Equatable",
                 "printedName": "Equatable",
                 "usr": "s:SQ",
@@ -5656,6 +5821,13 @@
                 "printedName": "Sendable",
                 "usr": "s:s8SendableP",
                 "mangledName": "$ss8SendableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "BitwiseCopyable",
+                "printedName": "BitwiseCopyable",
+                "usr": "s:s15BitwiseCopyableP",
+                "mangledName": "$ss15BitwiseCopyableP"
               }
             ]
           },
@@ -6047,6 +6219,20 @@
           "ObjectiveC.NSObject"
         ],
         "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
           {
             "kind": "Conformance",
             "name": "Equatable",
@@ -7994,6 +8180,20 @@
             "conformances": [
               {
                 "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
+              {
+                "kind": "Conformance",
                 "name": "Equatable",
                 "printedName": "Equatable",
                 "usr": "s:SQ",
@@ -8034,6 +8234,13 @@
                 "printedName": "Sendable",
                 "usr": "s:s8SendableP",
                 "mangledName": "$ss8SendableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "BitwiseCopyable",
+                "printedName": "BitwiseCopyable",
+                "usr": "s:s15BitwiseCopyableP",
+                "mangledName": "$ss15BitwiseCopyableP"
               }
             ]
           },
@@ -9204,6 +9411,20 @@
         "conformances": [
           {
             "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "Equatable",
             "printedName": "Equatable",
             "usr": "s:SQ",
@@ -9499,6 +9720,20 @@
             "conformances": [
               {
                 "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
+              {
+                "kind": "Conformance",
                 "name": "Equatable",
                 "printedName": "Equatable",
                 "usr": "s:SQ",
@@ -9524,6 +9759,13 @@
                 "printedName": "Sendable",
                 "usr": "s:s8SendableP",
                 "mangledName": "$ss8SendableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "BitwiseCopyable",
+                "printedName": "BitwiseCopyable",
+                "usr": "s:s15BitwiseCopyableP",
+                "mangledName": "$ss15BitwiseCopyableP"
               }
             ]
           },
@@ -9768,8 +10010,8 @@
             "isInternal": true,
             "declAttributes": [
               "HasInitialValue",
-              "HasStorage",
-              "Final"
+              "Final",
+              "HasStorage"
             ],
             "fixedbinaryorder": 1,
             "hasStorage": true
@@ -9840,7 +10082,7 @@
               {
                 "kind": "TypeFunc",
                 "name": "Function",
-                "printedName": "(Any?, Swift.Error?) -> ()",
+                "printedName": "(Any?, (any Swift.Error)?) -> ()",
                 "children": [
                   {
                     "kind": "TypeNominal",
@@ -9850,7 +10092,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Tuple",
-                    "printedName": "(Any?, Swift.Error?)",
+                    "printedName": "(Any?, (any Swift.Error)?)",
                     "children": [
                       {
                         "kind": "TypeNominal",
@@ -9868,12 +10110,12 @@
                       {
                         "kind": "TypeNominal",
                         "name": "Optional",
-                        "printedName": "Swift.Error?",
+                        "printedName": "(any Swift.Error)?",
                         "children": [
                           {
                             "kind": "TypeNominal",
                             "name": "Error",
-                            "printedName": "Swift.Error",
+                            "printedName": "any Swift.Error",
                             "usr": "s:s5ErrorP"
                           }
                         ],
@@ -9937,12 +10179,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "Swift.Error?",
+                "printedName": "(any Swift.Error)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "Error",
-                    "printedName": "Swift.Error",
+                    "printedName": "any Swift.Error",
                     "usr": "s:s5ErrorP"
                   }
                 ],
@@ -10000,12 +10242,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "Swift.Error?",
+                "printedName": "(any Swift.Error)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "Error",
-                    "printedName": "Swift.Error",
+                    "printedName": "any Swift.Error",
                     "usr": "s:s5ErrorP"
                   }
                 ],
@@ -10123,6 +10365,20 @@
           },
           {
             "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "Equatable",
             "printedName": "Equatable",
             "usr": "s:SQ",
@@ -10169,6 +10425,13 @@
             "printedName": "CustomDebugStringConvertible",
             "usr": "s:s28CustomDebugStringConvertibleP",
             "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
           }
         ]
       },
@@ -10253,7 +10516,7 @@
               {
                 "kind": "TypeFunc",
                 "name": "Function",
-                "printedName": "(Any?, Swift.Error?) -> ()",
+                "printedName": "(Any?, (any Swift.Error)?) -> ()",
                 "children": [
                   {
                     "kind": "TypeNominal",
@@ -10263,7 +10526,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Tuple",
-                    "printedName": "(Any?, Swift.Error?)",
+                    "printedName": "(Any?, (any Swift.Error)?)",
                     "children": [
                       {
                         "kind": "TypeNominal",
@@ -10281,12 +10544,12 @@
                       {
                         "kind": "TypeNominal",
                         "name": "Optional",
-                        "printedName": "Swift.Error?",
+                        "printedName": "(any Swift.Error)?",
                         "children": [
                           {
                             "kind": "TypeNominal",
                             "name": "Error",
-                            "printedName": "Swift.Error",
+                            "printedName": "any Swift.Error",
                             "usr": "s:s5ErrorP"
                           }
                         ],
@@ -10322,6 +10585,22 @@
         "declAttributes": [
           "AccessControl",
           "ObjC"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
         ]
       },
       {
@@ -10354,12 +10633,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBAEMKit.AEMNetworking?",
+                "printedName": "(any FBAEMKit.AEMNetworking)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "AEMNetworking",
-                    "printedName": "FBAEMKit.AEMNetworking",
+                    "printedName": "any FBAEMKit.AEMNetworking",
                     "usr": "c:@M@FBAEMKit@objc(pl)FBAEMNetworking"
                   }
                 ],
@@ -10387,12 +10666,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "FBAEMKit.AEMNetworking?",
+                    "printedName": "(any FBAEMKit.AEMNetworking)?",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "AEMNetworking",
-                        "printedName": "FBAEMKit.AEMNetworking",
+                        "printedName": "any FBAEMKit.AEMNetworking",
                         "usr": "c:@M@FBAEMKit@objc(pl)FBAEMNetworking"
                       }
                     ],
@@ -10424,12 +10703,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "FBAEMKit.AEMNetworking?",
+                    "printedName": "(any FBAEMKit.AEMNetworking)?",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "AEMNetworking",
-                        "printedName": "FBAEMKit.AEMNetworking",
+                        "printedName": "any FBAEMKit.AEMNetworking",
                         "usr": "c:@M@FBAEMKit@objc(pl)FBAEMNetworking"
                       }
                     ],
@@ -10785,12 +11064,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBAEMKit.SKAdNetworkReporting?",
+                "printedName": "(any FBAEMKit.SKAdNetworkReporting)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "SKAdNetworkReporting",
-                    "printedName": "FBAEMKit.SKAdNetworkReporting",
+                    "printedName": "any FBAEMKit.SKAdNetworkReporting",
                     "usr": "c:@M@FBAEMKit@objc(pl)FBSKAdNetworkReporting"
                   }
                 ],
@@ -10818,12 +11097,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "FBAEMKit.SKAdNetworkReporting?",
+                    "printedName": "(any FBAEMKit.SKAdNetworkReporting)?",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "SKAdNetworkReporting",
-                        "printedName": "FBAEMKit.SKAdNetworkReporting",
+                        "printedName": "any FBAEMKit.SKAdNetworkReporting",
                         "usr": "c:@M@FBAEMKit@objc(pl)FBSKAdNetworkReporting"
                       }
                     ],
@@ -10855,12 +11134,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "FBAEMKit.SKAdNetworkReporting?",
+                    "printedName": "(any FBAEMKit.SKAdNetworkReporting)?",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "SKAdNetworkReporting",
-                        "printedName": "FBAEMKit.SKAdNetworkReporting",
+                        "printedName": "any FBAEMKit.SKAdNetworkReporting",
                         "usr": "c:@M@FBAEMKit@objc(pl)FBSKAdNetworkReporting"
                       }
                     ],
@@ -10911,12 +11190,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBSDKCoreKit_Basics.DataPersisting?",
+                "printedName": "(any FBSDKCoreKit_Basics.DataPersisting)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "DataPersisting",
-                    "printedName": "FBSDKCoreKit_Basics.DataPersisting",
+                    "printedName": "any FBSDKCoreKit_Basics.DataPersisting",
                     "usr": "c:objc(pl)FBSDKDataPersisting"
                   }
                 ],
@@ -10944,12 +11223,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "FBSDKCoreKit_Basics.DataPersisting?",
+                    "printedName": "(any FBSDKCoreKit_Basics.DataPersisting)?",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "DataPersisting",
-                        "printedName": "FBSDKCoreKit_Basics.DataPersisting",
+                        "printedName": "any FBSDKCoreKit_Basics.DataPersisting",
                         "usr": "c:objc(pl)FBSDKDataPersisting"
                       }
                     ],
@@ -10981,12 +11260,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "FBSDKCoreKit_Basics.DataPersisting?",
+                    "printedName": "(any FBSDKCoreKit_Basics.DataPersisting)?",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "DataPersisting",
-                        "printedName": "FBSDKCoreKit_Basics.DataPersisting",
+                        "printedName": "any FBSDKCoreKit_Basics.DataPersisting",
                         "usr": "c:objc(pl)FBSDKDataPersisting"
                       }
                     ],
@@ -12509,12 +12788,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBAEMKit.AEMNetworking?",
+                "printedName": "(any FBAEMKit.AEMNetworking)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "AEMNetworking",
-                    "printedName": "FBAEMKit.AEMNetworking",
+                    "printedName": "any FBAEMKit.AEMNetworking",
                     "usr": "c:@M@FBAEMKit@objc(pl)FBAEMNetworking"
                   }
                 ],
@@ -12537,12 +12816,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBAEMKit.SKAdNetworkReporting?",
+                "printedName": "(any FBAEMKit.SKAdNetworkReporting)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "SKAdNetworkReporting",
-                    "printedName": "FBAEMKit.SKAdNetworkReporting",
+                    "printedName": "any FBAEMKit.SKAdNetworkReporting",
                     "usr": "c:@M@FBAEMKit@objc(pl)FBSKAdNetworkReporting"
                   }
                 ],
@@ -12574,12 +12853,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBAEMKit.AEMNetworking?",
+                "printedName": "(any FBAEMKit.AEMNetworking)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "AEMNetworking",
-                    "printedName": "FBAEMKit.AEMNetworking",
+                    "printedName": "any FBAEMKit.AEMNetworking",
                     "usr": "c:@M@FBAEMKit@objc(pl)FBAEMNetworking"
                   }
                 ],
@@ -12602,12 +12881,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBAEMKit.SKAdNetworkReporting?",
+                "printedName": "(any FBAEMKit.SKAdNetworkReporting)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "SKAdNetworkReporting",
-                    "printedName": "FBAEMKit.SKAdNetworkReporting",
+                    "printedName": "any FBAEMKit.SKAdNetworkReporting",
                     "usr": "c:@M@FBAEMKit@objc(pl)FBSKAdNetworkReporting"
                   }
                 ],
@@ -12630,12 +12909,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBSDKCoreKit_Basics.DataPersisting?",
+                "printedName": "(any FBSDKCoreKit_Basics.DataPersisting)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "DataPersisting",
-                    "printedName": "FBSDKCoreKit_Basics.DataPersisting",
+                    "printedName": "any FBSDKCoreKit_Basics.DataPersisting",
                     "usr": "c:objc(pl)FBSDKDataPersisting"
                   }
                 ],
@@ -14067,6 +14346,20 @@
         "conformances": [
           {
             "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "Equatable",
             "printedName": "Equatable",
             "usr": "s:SQ",
@@ -14351,6 +14644,22 @@
         "moduleName": "FBAEMKit",
         "declAttributes": [
           "Final"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
         ]
       },
       {
@@ -14887,6 +15196,20 @@
         "conformances": [
           {
             "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "Equatable",
             "printedName": "Equatable",
             "usr": "s:SQ",
@@ -15107,7 +15430,30 @@
             "usr": "s:8FBAEMKit11AEMSettingsO16TypeDependenciesV",
             "mangledName": "$s8FBAEMKit11AEMSettingsO16TypeDependenciesV",
             "moduleName": "FBAEMKit",
-            "isFromExtension": true
+            "isFromExtension": true,
+            "conformances": [
+              {
+                "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Sendable",
+                "printedName": "Sendable",
+                "usr": "s:s8SendableP",
+                "mangledName": "$ss8SendableP"
+              }
+            ]
           },
           {
             "kind": "Var",
@@ -15370,6 +15716,34 @@
         "conformances": [
           {
             "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "BitwiseCopyable",
+            "printedName": "BitwiseCopyable",
+            "usr": "s:s15BitwiseCopyableP",
+            "mangledName": "$ss15BitwiseCopyableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "DependentAsType",
             "printedName": "DependentAsType",
             "children": [
@@ -15389,13 +15763,6 @@
             ],
             "usr": "s:8FBAEMKit15DependentAsTypeP",
             "mangledName": "$s8FBAEMKit15DependentAsTypeP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "Sendable",
-            "printedName": "Sendable",
-            "usr": "s:s8SendableP",
-            "mangledName": "$ss8SendableP"
           }
         ]
       },
@@ -15570,12 +15937,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBAEMKit.AEMAdvertiserRuleMatching?",
+                "printedName": "(any FBAEMKit.AEMAdvertiserRuleMatching)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "AEMAdvertiserRuleMatching",
-                    "printedName": "FBAEMKit.AEMAdvertiserRuleMatching",
+                    "printedName": "any FBAEMKit.AEMAdvertiserRuleMatching",
                     "usr": "s:8FBAEMKit25AEMAdvertiserRuleMatchingP"
                   }
                 ],
@@ -15772,6 +16139,22 @@
         "moduleName": "FBAEMKit",
         "declAttributes": [
           "Final"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
         ]
       },
       {
@@ -16141,6 +16524,22 @@
         "declAttributes": [
           "DynamicMemberLookup",
           "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
         ]
       },
       {
@@ -16270,6 +16669,20 @@
         "conformances": [
           {
             "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "Error",
             "printedName": "Error",
             "usr": "s:s5ErrorP",
@@ -16288,6 +16701,13 @@
             "printedName": "Sendable",
             "usr": "s:s8SendableP",
             "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "BitwiseCopyable",
+            "printedName": "BitwiseCopyable",
+            "usr": "s:s15BitwiseCopyableP",
+            "mangledName": "$ss15BitwiseCopyableP"
           }
         ]
       },
@@ -16398,6 +16818,22 @@
         "declAttributes": [
           "AccessControl",
           "ObjC"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
         ]
       }
     ],
@@ -16405,1449 +16841,938 @@
   },
   "ConstValues": [
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserMultiEntryRule.swift",
-      "kind": "StringLiteral",
-      "offset": 242,
-      "length": 27,
-      "value": "\"FBAEMKit.AEMAdvertiserMultiEntryRule\""
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserMultiEntryRule.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1245,
+      "length": 4,
+      "value": "true"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
       "kind": "IntegerLiteral",
       "offset": 266,
       "length": 1,
       "value": "0"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
       "kind": "IntegerLiteral",
       "offset": 306,
       "length": 3,
       "value": "1"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
       "kind": "IntegerLiteral",
       "offset": 361,
       "length": 2,
       "value": "2"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
       "kind": "IntegerLiteral",
       "offset": 371,
       "length": 3,
       "value": "3"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
       "kind": "IntegerLiteral",
       "offset": 414,
       "length": 8,
       "value": "4"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
       "kind": "IntegerLiteral",
       "offset": 430,
       "length": 11,
       "value": "5"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
       "kind": "IntegerLiteral",
       "offset": 449,
       "length": 10,
       "value": "6"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
       "kind": "IntegerLiteral",
       "offset": 467,
       "length": 23,
       "value": "7"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
       "kind": "IntegerLiteral",
       "offset": 498,
       "length": 26,
       "value": "8"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
       "kind": "IntegerLiteral",
       "offset": 532,
       "length": 25,
       "value": "9"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
       "kind": "IntegerLiteral",
       "offset": 565,
       "length": 10,
       "value": "10"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
       "kind": "IntegerLiteral",
       "offset": 583,
       "length": 5,
       "value": "11"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
       "kind": "IntegerLiteral",
       "offset": 596,
       "length": 8,
       "value": "12"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
       "kind": "IntegerLiteral",
       "offset": 612,
       "length": 8,
       "value": "13"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
       "kind": "IntegerLiteral",
       "offset": 628,
       "length": 15,
       "value": "14"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
       "kind": "IntegerLiteral",
       "offset": 651,
       "length": 11,
       "value": "15"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
       "kind": "IntegerLiteral",
       "offset": 670,
       "length": 18,
       "value": "16"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
       "kind": "IntegerLiteral",
       "offset": 696,
       "length": 20,
       "value": "17"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
       "kind": "IntegerLiteral",
       "offset": 724,
       "length": 23,
       "value": "18"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
       "kind": "IntegerLiteral",
       "offset": 755,
       "length": 5,
       "value": "19"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
       "kind": "IntegerLiteral",
       "offset": 768,
       "length": 8,
       "value": "20"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 266,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 306,
-      "length": 3,
-      "value": "1"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 361,
-      "length": 2,
-      "value": "2"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 371,
-      "length": 3,
-      "value": "3"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 414,
-      "length": 8,
-      "value": "4"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 430,
-      "length": 11,
-      "value": "5"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 449,
-      "length": 10,
-      "value": "6"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 467,
-      "length": 23,
-      "value": "7"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 498,
-      "length": 26,
-      "value": "8"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 532,
-      "length": 25,
-      "value": "9"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 565,
-      "length": 10,
-      "value": "10"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 583,
-      "length": 5,
-      "value": "11"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 596,
-      "length": 8,
-      "value": "12"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 612,
-      "length": 8,
-      "value": "13"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 628,
-      "length": 15,
-      "value": "14"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 651,
-      "length": 11,
-      "value": "15"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 670,
-      "length": 18,
-      "value": "16"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 696,
-      "length": 20,
-      "value": "17"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 724,
-      "length": 23,
-      "value": "18"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 755,
-      "length": 5,
-      "value": "19"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 768,
-      "length": 8,
-      "value": "20"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 266,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 306,
-      "length": 3,
-      "value": "1"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 361,
-      "length": 2,
-      "value": "2"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 371,
-      "length": 3,
-      "value": "3"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 414,
-      "length": 8,
-      "value": "4"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 430,
-      "length": 11,
-      "value": "5"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 449,
-      "length": 10,
-      "value": "6"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 467,
-      "length": 23,
-      "value": "7"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 498,
-      "length": 26,
-      "value": "8"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 532,
-      "length": 25,
-      "value": "9"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 565,
-      "length": 10,
-      "value": "10"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 583,
-      "length": 5,
-      "value": "11"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 596,
-      "length": 8,
-      "value": "12"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 612,
-      "length": 8,
-      "value": "13"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 628,
-      "length": 15,
-      "value": "14"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 651,
-      "length": 11,
-      "value": "15"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 670,
-      "length": 18,
-      "value": "16"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 696,
-      "length": 20,
-      "value": "17"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 724,
-      "length": 23,
-      "value": "18"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 755,
-      "length": 5,
-      "value": "19"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserRuleOperator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 768,
-      "length": 8,
-      "value": "20"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserSingleEntryRule.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserSingleEntryRule.swift",
       "kind": "StringLiteral",
       "offset": 573,
       "length": 10,
       "value": "\"operator\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserSingleEntryRule.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserSingleEntryRule.swift",
       "kind": "StringLiteral",
       "offset": 607,
       "length": 11,
       "value": "\"param_key\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserSingleEntryRule.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserSingleEntryRule.swift",
       "kind": "StringLiteral",
       "offset": 648,
       "length": 14,
       "value": "\"string_value\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserSingleEntryRule.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserSingleEntryRule.swift",
       "kind": "StringLiteral",
       "offset": 692,
       "length": 14,
       "value": "\"number_value\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserSingleEntryRule.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserSingleEntryRule.swift",
       "kind": "StringLiteral",
       "offset": 735,
       "length": 13,
       "value": "\"array_value\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserSingleEntryRule.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserSingleEntryRule.swift",
       "kind": "StringLiteral",
       "offset": 804,
       "length": 3,
       "value": "\".\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserSingleEntryRule.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserSingleEntryRule.swift",
       "kind": "StringLiteral",
       "offset": 834,
       "length": 5,
       "value": "\"[*]\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserSingleEntryRule.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserSingleEntryRule.swift",
       "kind": "BooleanLiteral",
       "offset": 8907,
       "length": 4,
       "value": "true"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMAdvertiserSingleEntryRule.swift",
-      "kind": "StringLiteral",
-      "offset": 269,
-      "length": 28,
-      "value": "\"FBAEMKit.AEMAdvertiserSingleEntryRule\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMConfiguration.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMConfiguration.swift",
       "kind": "StringLiteral",
       "offset": 354,
       "length": 18,
       "value": "\"default_currency\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMConfiguration.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMConfiguration.swift",
       "kind": "StringLiteral",
       "offset": 395,
       "length": 13,
       "value": "\"cutoff_time\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMConfiguration.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMConfiguration.swift",
       "kind": "StringLiteral",
       "offset": 441,
       "length": 24,
       "value": "\"conversion_value_rules\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMConfiguration.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMConfiguration.swift",
       "kind": "StringLiteral",
       "offset": 487,
       "length": 12,
       "value": "\"valid_from\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMConfiguration.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMConfiguration.swift",
       "kind": "StringLiteral",
       "offset": 516,
       "length": 13,
       "value": "\"config_mode\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMConfiguration.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMConfiguration.swift",
       "kind": "StringLiteral",
       "offset": 554,
       "length": 15,
       "value": "\"advertiser_id\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMConfiguration.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMConfiguration.swift",
       "kind": "StringLiteral",
       "offset": 592,
       "length": 13,
       "value": "\"business_id\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMConfiguration.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMConfiguration.swift",
       "kind": "StringLiteral",
       "offset": 627,
       "length": 12,
       "value": "\"param_rule\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMConfiguration.swift",
-      "kind": "StringLiteral",
-      "offset": 354,
-      "length": 18,
-      "value": "\"default_currency\""
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMConfiguration.swift",
+      "kind": "BooleanLiteral",
+      "offset": 6379,
+      "length": 4,
+      "value": "true"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMConfiguration.swift",
-      "kind": "StringLiteral",
-      "offset": 395,
-      "length": 13,
-      "value": "\"cutoff_time\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMConfiguration.swift",
-      "kind": "StringLiteral",
-      "offset": 441,
-      "length": 24,
-      "value": "\"conversion_value_rules\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMConfiguration.swift",
-      "kind": "StringLiteral",
-      "offset": 487,
-      "length": 12,
-      "value": "\"valid_from\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMConfiguration.swift",
-      "kind": "StringLiteral",
-      "offset": 516,
-      "length": 13,
-      "value": "\"config_mode\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMConfiguration.swift",
-      "kind": "StringLiteral",
-      "offset": 554,
-      "length": 15,
-      "value": "\"advertiser_id\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMConfiguration.swift",
-      "kind": "StringLiteral",
-      "offset": 592,
-      "length": 13,
-      "value": "\"business_id\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMConfiguration.swift",
-      "kind": "StringLiteral",
-      "offset": 627,
-      "length": 12,
-      "value": "\"param_rule\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMConfiguration.swift",
-      "kind": "StringLiteral",
-      "offset": 242,
-      "length": 16,
-      "value": "\"FBAEMKit.AEMConfiguration\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMEvent.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMEvent.swift",
       "kind": "StringLiteral",
       "offset": 339,
       "length": 12,
       "value": "\"event_name\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMEvent.swift",
-      "kind": "StringLiteral",
-      "offset": 339,
-      "length": 12,
-      "value": "\"event_name\""
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMEvent.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1537,
+      "length": 4,
+      "value": "true"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMEvent.swift",
-      "kind": "StringLiteral",
-      "offset": 242,
-      "length": 8,
-      "value": "\"FBAEMKit.AEMEvent\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
       "kind": "IntegerLiteral",
       "offset": 1068,
       "length": 2,
       "value": "24"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
       "kind": "IntegerLiteral",
       "offset": 1085,
       "length": 2,
       "value": "60"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
       "kind": "IntegerLiteral",
       "offset": 1104,
       "length": 2,
       "value": "60"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
       "kind": "IntegerLiteral",
       "offset": 1171,
       "length": 1,
       "value": "8"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
       "kind": "IntegerLiteral",
       "offset": 1211,
       "length": 2,
       "value": "32"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
       "kind": "StringLiteral",
       "offset": 1274,
       "length": 14,
       "value": "\"campaign_ids\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
       "kind": "StringLiteral",
       "offset": 1309,
       "length": 11,
       "value": "\"acs_token\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
       "kind": "StringLiteral",
       "offset": 1348,
       "length": 15,
       "value": "\"shared_secret\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
       "kind": "StringLiteral",
       "offset": 1402,
       "length": 15,
       "value": "\"acs_config_id\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
       "kind": "StringLiteral",
       "offset": 1448,
       "length": 15,
       "value": "\"advertiser_id\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
       "kind": "StringLiteral",
       "offset": 1493,
       "length": 12,
       "value": "\"catalog_id\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
       "kind": "StringLiteral",
       "offset": 1530,
       "length": 15,
       "value": "\"test_deeplink\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
       "kind": "StringLiteral",
       "offset": 1594,
       "length": 13,
       "value": "\"config_mode\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
       "kind": "StringLiteral",
       "offset": 1643,
       "length": 11,
       "value": "\"config_id\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
       "kind": "StringLiteral",
       "offset": 1681,
       "length": 17,
       "value": "\"recorded_events\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
       "kind": "StringLiteral",
       "offset": 1725,
       "length": 17,
       "value": "\"recorded_values\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
       "kind": "StringLiteral",
       "offset": 1770,
       "length": 18,
       "value": "\"conversion_value\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
       "kind": "StringLiteral",
       "offset": 1838,
       "length": 22,
       "value": "\"conversion_timestamp\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
       "kind": "StringLiteral",
       "offset": 1885,
       "length": 15,
       "value": "\"is_aggregated\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
       "kind": "StringLiteral",
       "offset": 1933,
       "length": 10,
       "value": "\"has_skan\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
       "kind": "StringLiteral",
       "offset": 1985,
       "length": 34,
       "value": "\"is_conversion_filtering_eligible\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
       "kind": "StringLiteral",
       "offset": 2047,
       "length": 12,
       "value": "\"fb_content\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
       "kind": "StringLiteral",
       "offset": 2097,
       "length": 15,
       "value": "\"fb_content_id\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
-      "kind": "StringLiteral",
-      "offset": 1274,
-      "length": 14,
-      "value": "\"campaign_ids\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
-      "kind": "StringLiteral",
-      "offset": 1309,
-      "length": 11,
-      "value": "\"acs_token\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
-      "kind": "StringLiteral",
-      "offset": 1348,
-      "length": 15,
-      "value": "\"shared_secret\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
-      "kind": "StringLiteral",
-      "offset": 1402,
-      "length": 15,
-      "value": "\"acs_config_id\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
-      "kind": "StringLiteral",
-      "offset": 1448,
-      "length": 15,
-      "value": "\"advertiser_id\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
-      "kind": "StringLiteral",
-      "offset": 1493,
-      "length": 12,
-      "value": "\"catalog_id\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
-      "kind": "StringLiteral",
-      "offset": 1530,
-      "length": 15,
-      "value": "\"test_deeplink\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
-      "kind": "StringLiteral",
-      "offset": 1594,
-      "length": 13,
-      "value": "\"config_mode\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
-      "kind": "StringLiteral",
-      "offset": 1643,
-      "length": 11,
-      "value": "\"config_id\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
-      "kind": "StringLiteral",
-      "offset": 1681,
-      "length": 17,
-      "value": "\"recorded_events\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
-      "kind": "StringLiteral",
-      "offset": 1725,
-      "length": 17,
-      "value": "\"recorded_values\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
-      "kind": "StringLiteral",
-      "offset": 1770,
-      "length": 18,
-      "value": "\"conversion_value\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
-      "kind": "StringLiteral",
-      "offset": 1838,
-      "length": 22,
-      "value": "\"conversion_timestamp\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
-      "kind": "StringLiteral",
-      "offset": 1885,
-      "length": 15,
-      "value": "\"is_aggregated\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
-      "kind": "StringLiteral",
-      "offset": 1933,
-      "length": 10,
-      "value": "\"has_skan\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
-      "kind": "StringLiteral",
-      "offset": 1985,
-      "length": 34,
-      "value": "\"is_conversion_filtering_eligible\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
-      "kind": "StringLiteral",
-      "offset": 2047,
-      "length": 12,
-      "value": "\"fb_content\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
-      "kind": "StringLiteral",
-      "offset": 2097,
-      "length": 15,
-      "value": "\"fb_content_id\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
       "kind": "StringLiteral",
       "offset": 2174,
       "length": 9,
       "value": "\"DEFAULT\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
       "kind": "StringLiteral",
       "offset": 2201,
       "length": 7,
       "value": "\"BRAND\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
       "kind": "StringLiteral",
       "offset": 2225,
       "length": 6,
       "value": "\"CPAS\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
-      "kind": "StringLiteral",
-      "offset": 2174,
-      "length": 9,
-      "value": "\"DEFAULT\""
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
+      "kind": "BooleanLiteral",
+      "offset": 13879,
+      "length": 4,
+      "value": "true"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
-      "kind": "StringLiteral",
-      "offset": 2201,
-      "length": 7,
-      "value": "\"BRAND\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
-      "kind": "StringLiteral",
-      "offset": 2225,
-      "length": 6,
-      "value": "\"CPAS\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMInvocation.swift",
-      "kind": "StringLiteral",
-      "offset": 294,
-      "length": 13,
-      "value": "\"FBAEMKit.AEMInvocation\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
       "kind": "StringLiteral",
       "offset": 501,
       "length": 6,
       "value": "\"\r\n\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
       "kind": "StringLiteral",
       "offset": 539,
       "length": 8,
-      "value": "\"16.1.3\""
+      "value": "\"17.4.0\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
       "kind": "StringLiteral",
       "offset": 588,
       "length": 7,
-      "value": "\"v16.0\""
+      "value": "\"v17.0\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
       "kind": "StringLiteral",
       "offset": 617,
       "length": 5,
       "value": "\"ios\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
       "kind": "StringLiteral",
       "offset": 654,
       "length": 10,
       "value": "\"FBiOSAEM\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
       "kind": "StringLiteral",
       "offset": 699,
       "length": 35,
-      "value": "\"https:\/\/graph.facebook.com\/v16.0\/\""
+      "value": "\"https:\/\/graph.facebook.com\/v17.0\/\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
       "kind": "StringLiteral",
       "offset": 772,
       "length": 18,
       "value": "\"application\/json\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
       "kind": "StringLiteral",
       "offset": 820,
       "length": 21,
       "value": "\"com.facebook.aemkit\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
       "kind": "StringLiteral",
       "offset": 865,
       "length": 49,
       "value": "\"\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
       "kind": "StringLiteral",
       "offset": 889,
       "length": 1,
       "value": "\".\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
       "kind": "StringLiteral",
       "offset": 913,
       "length": 1,
       "value": "\"\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
       "kind": "StringLiteral",
       "offset": 1122,
       "length": 21,
       "value": "\"\/\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
       "kind": "StringLiteral",
       "offset": 1142,
       "length": 1,
       "value": "\"\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMNetworker.swift",
       "kind": "StringLiteral",
       "offset": 1264,
       "length": 8,
       "value": "\"\/macOS\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 435,
       "length": 15,
       "value": "\"advertiser_id\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 480,
       "length": 16,
       "value": "\"advertiser_ids\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 528,
       "length": 17,
       "value": "\"fb_content_data\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 577,
       "length": 17,
       "value": "\"al_applink_data\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 623,
       "length": 13,
       "value": "\"campaign_id\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 669,
       "length": 17,
       "value": "\"conversion_data\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 720,
       "length": 18,
       "value": "\"consumption_hour\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 762,
       "length": 7,
       "value": "\"token\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 792,
       "length": 6,
       "value": "\"hmac\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 825,
       "length": 11,
       "value": "\"config_id\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 864,
       "length": 12,
       "value": "\"delay_flow\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 916,
       "length": 25,
       "value": "\"is_conversion_filtering\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 972,
       "length": 16,
       "value": "\"fb_content_ids\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 1016,
       "length": 12,
       "value": "\"catalog_id\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 1077,
       "length": 54,
       "value": "\"com.facebook.sdk:FBAEMMinAggregationRequestTimestamp\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 1156,
       "length": 8,
       "value": "\"fields\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 1187,
       "length": 6,
       "value": "\"data\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 1226,
       "length": 17,
       "value": "\"aem_conversions\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 1269,
       "length": 9,
       "value": "\"success\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 1309,
       "length": 16,
       "value": "\"is_valid_match\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 1363,
       "length": 23,
       "value": "\"matched_advertiser_id\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 1419,
       "length": 18,
       "value": "\"in_segment_value\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 1483,
       "length": 34,
       "value": "\"content_id_belongs_to_catalog_id\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 1587,
       "length": 42,
       "value": "\"com.facebook.appevents.AEM.FBAEMReporter\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "IntegerLiteral",
       "offset": 1714,
       "length": 5,
       "value": "86400"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "IntegerLiteral",
       "offset": 1760,
       "length": 1,
       "value": "3"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 1823,
       "length": 27,
       "value": "\"FBSDKAEMReportData.report\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 1878,
       "length": 27,
       "value": "\"FBSDKAEMReportData.config\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 1972,
       "length": 24,
       "value": "\"aem_conversion_configs\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 2034,
       "length": 23,
       "value": "\"aem_conversion_filter\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 2090,
       "length": 17,
       "value": "\"aem_attribution\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 2163,
       "length": 5,
       "value": "\"GET\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 2191,
       "length": 6,
       "value": "\"POST\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "StringLiteral",
       "offset": 2295,
       "length": 8,
       "value": "\"(null)\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "BooleanLiteral",
       "offset": 2541,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "BooleanLiteral",
       "offset": 2585,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "BooleanLiteral",
       "offset": 2635,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "BooleanLiteral",
       "offset": 2681,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "BooleanLiteral",
       "offset": 2739,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "Dictionary",
       "offset": 2958,
       "length": 3,
       "value": "[]"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "Array",
       "offset": 3006,
       "length": 2,
       "value": "[]"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMReporter.swift",
       "kind": "Array",
       "offset": 3157,
       "length": 2,
       "value": "[]"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMRequestBody.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMRequestBody.swift",
       "kind": "StringLiteral",
       "offset": 584,
       "length": 6,
       "value": "\"\r\n\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMRule.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMRule.swift",
       "kind": "StringLiteral",
       "offset": 436,
       "length": 18,
       "value": "\"conversion_value\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMRule.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMRule.swift",
       "kind": "StringLiteral",
       "offset": 484,
       "length": 10,
       "value": "\"priority\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMRule.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMRule.swift",
       "kind": "StringLiteral",
       "offset": 522,
       "length": 8,
       "value": "\"events\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMRule.swift",
-      "kind": "StringLiteral",
-      "offset": 269,
-      "length": 7,
-      "value": "\"FBAEMKit.AEMRule\""
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMRule.swift",
+      "kind": "BooleanLiteral",
+      "offset": 3138,
+      "length": 4,
+      "value": "true"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMUtility.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMUtility.swift",
       "kind": "StringLiteral",
       "offset": 329,
       "length": 12,
       "value": "\"fb_content\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMUtility.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMUtility.swift",
       "kind": "StringLiteral",
       "offset": 369,
       "length": 15,
       "value": "\"fb_content_id\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMUtility.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMUtility.swift",
       "kind": "StringLiteral",
       "offset": 412,
       "length": 12,
       "value": "\"item_price\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMUtility.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMUtility.swift",
       "kind": "StringLiteral",
       "offset": 451,
       "length": 4,
       "value": "\"id\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMUtility.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBAEMKit\/FBAEMKit\/AEMUtility.swift",
       "kind": "StringLiteral",
       "offset": 482,
       "length": 10,

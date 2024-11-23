@@ -1,8 +1,8 @@
 {
   "ABIRoot": {
     "kind": "Root",
-    "name": "TopLevel",
-    "printedName": "TopLevel",
+    "name": "FBSDKShareKit",
+    "printedName": "FBSDKShareKit",
     "children": [
       {
         "kind": "Import",
@@ -200,6 +200,20 @@
             ],
             "enumRawTypeName": "Int",
             "conformances": [
+              {
+                "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
               {
                 "kind": "Conformance",
                 "name": "Equatable",
@@ -877,7 +891,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "ExistentialMetatype",
-                    "printedName": "FBSDKShareKit.ShareValidating.Type",
+                    "printedName": "any FBSDKShareKit.ShareValidating.Type",
                     "children": [
                       {
                         "kind": "TypeNominal",
@@ -906,7 +920,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ExistentialMetatype",
-                        "printedName": "FBSDKShareKit.ShareValidating.Type",
+                        "printedName": "any FBSDKShareKit.ShareValidating.Type",
                         "children": [
                           {
                             "kind": "TypeNominal",
@@ -940,7 +954,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ExistentialMetatype",
-                        "printedName": "FBSDKShareKit.ShareValidating.Type",
+                        "printedName": "any FBSDKShareKit.ShareValidating.Type",
                         "children": [
                           {
                             "kind": "TypeNominal",
@@ -992,7 +1006,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "ErrorCreating",
-                    "printedName": "FBSDKCoreKit.ErrorCreating",
+                    "printedName": "any FBSDKCoreKit.ErrorCreating",
                     "usr": "c:objc(pl)FBSDKErrorCreating"
                   }
                 ],
@@ -1014,7 +1028,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ErrorCreating",
-                        "printedName": "FBSDKCoreKit.ErrorCreating",
+                        "printedName": "any FBSDKCoreKit.ErrorCreating",
                         "usr": "c:objc(pl)FBSDKErrorCreating"
                       }
                     ],
@@ -1041,7 +1055,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ErrorCreating",
-                        "printedName": "FBSDKCoreKit.ErrorCreating",
+                        "printedName": "any FBSDKCoreKit.ErrorCreating",
                         "usr": "c:objc(pl)FBSDKErrorCreating"
                       }
                     ],
@@ -1092,7 +1106,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "ExistentialMetatype",
-                    "printedName": "FBSDKShareKit.ShareValidating.Type",
+                    "printedName": "any FBSDKShareKit.ShareValidating.Type",
                     "children": [
                       {
                         "kind": "TypeNominal",
@@ -1105,7 +1119,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "ErrorCreating",
-                    "printedName": "FBSDKCoreKit.ErrorCreating",
+                    "printedName": "any FBSDKCoreKit.ErrorCreating",
                     "usr": "c:objc(pl)FBSDKErrorCreating"
                   }
                 ],
@@ -1123,6 +1137,20 @@
             "moduleName": "FBSDKShareKit",
             "isFromExtension": true,
             "conformances": [
+              {
+                "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
               {
                 "kind": "Conformance",
                 "name": "Sendable",
@@ -1437,32 +1465,17 @@
         "conformances": [
           {
             "kind": "Conformance",
-            "name": "DependentAsType",
-            "printedName": "DependentAsType",
-            "children": [
-              {
-                "kind": "TypeWitness",
-                "name": "TypeDependencies",
-                "printedName": "TypeDependencies",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "TypeDependencies",
-                    "printedName": "FBSDKShareKit.AppInviteContent.TypeDependencies",
-                    "usr": "s:13FBSDKShareKit16AppInviteContentC16TypeDependenciesV"
-                  }
-                ]
-              }
-            ],
-            "usr": "s:13FBSDKShareKit15DependentAsTypeP",
-            "mangledName": "$s13FBSDKShareKit15DependentAsTypeP"
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
           },
           {
             "kind": "Conformance",
-            "name": "SharingValidatable",
-            "printedName": "SharingValidatable",
-            "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingValidatable",
-            "mangledName": "$s13FBSDKShareKit18SharingValidatableP"
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
           },
           {
             "kind": "Conformance",
@@ -1512,6 +1525,35 @@
             "printedName": "CustomDebugStringConvertible",
             "usr": "s:s28CustomDebugStringConvertibleP",
             "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "DependentAsType",
+            "printedName": "DependentAsType",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "TypeDependencies",
+                "printedName": "TypeDependencies",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "TypeDependencies",
+                    "printedName": "FBSDKShareKit.AppInviteContent.TypeDependencies",
+                    "usr": "s:13FBSDKShareKit16AppInviteContentC16TypeDependenciesV"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:13FBSDKShareKit15DependentAsTypeP",
+            "mangledName": "$s13FBSDKShareKit15DependentAsTypeP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SharingValidatable",
+            "printedName": "SharingValidatable",
+            "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingValidatable",
+            "mangledName": "$s13FBSDKShareKit18SharingValidatableP"
           }
         ]
       },
@@ -1823,6 +1865,20 @@
         "conformances": [
           {
             "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "Equatable",
             "printedName": "Equatable",
             "usr": "s:SQ",
@@ -2093,6 +2149,20 @@
           "ObjectiveC.NSObject"
         ],
         "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
           {
             "kind": "Conformance",
             "name": "Equatable",
@@ -2556,10 +2626,31 @@
         "conformances": [
           {
             "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "Sendable",
             "printedName": "Sendable",
             "usr": "s:s8SendableP",
             "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "BitwiseCopyable",
+            "printedName": "BitwiseCopyable",
+            "usr": "s:s15BitwiseCopyableP",
+            "mangledName": "$ss15BitwiseCopyableP"
           }
         ]
       },
@@ -2930,6 +3021,22 @@
         "declAttributes": [
           "DynamicMemberLookup",
           "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
         ]
       },
       {
@@ -2981,6 +3088,7 @@
             "declAttributes": [
               "HasInitialValue",
               "Final",
+              "Preconcurrency",
               "Custom",
               "HasStorage",
               "AccessControl",
@@ -3086,12 +3194,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBSDKShareKit.SharingContent?",
+                "printedName": "(any FBSDKShareKit.SharingContent)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "SharingContent",
-                    "printedName": "FBSDKShareKit.SharingContent",
+                    "printedName": "any FBSDKShareKit.SharingContent",
                     "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
                   }
                 ],
@@ -3106,6 +3214,7 @@
             "declAttributes": [
               "Final",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -3118,12 +3227,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "FBSDKShareKit.SharingContent?",
+                    "printedName": "(any FBSDKShareKit.SharingContent)?",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "SharingContent",
-                        "printedName": "FBSDKShareKit.SharingContent",
+                        "printedName": "any FBSDKShareKit.SharingContent",
                         "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
                       }
                     ],
@@ -3154,12 +3263,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "FBSDKShareKit.SharingContent?",
+                    "printedName": "(any FBSDKShareKit.SharingContent)?",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "SharingContent",
-                        "printedName": "FBSDKShareKit.SharingContent",
+                        "printedName": "any FBSDKShareKit.SharingContent",
                         "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
                       }
                     ],
@@ -3241,6 +3350,7 @@
             "declAttributes": [
               "Final",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -3311,6 +3421,7 @@
             "declAttributes": [
               "Final",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -3360,6 +3471,7 @@
             "declAttributes": [
               "Final",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -3410,6 +3522,7 @@
             "declAttributes": [
               "Final",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "Override",
               "AccessControl"
@@ -3458,6 +3571,7 @@
             "moduleName": "FBSDKShareKit",
             "declAttributes": [
               "Final",
+              "Preconcurrency",
               "Custom",
               "AccessControl",
               "ObjC"
@@ -3481,6 +3595,7 @@
             "moduleName": "FBSDKShareKit",
             "declAttributes": [
               "Final",
+              "Preconcurrency",
               "Custom",
               "IBAction",
               "RawDocComment",
@@ -3516,6 +3631,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "Override"
             ],
@@ -3557,6 +3673,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "Required"
             ],
@@ -3575,7 +3692,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "InternalUtilityProtocol",
-                    "printedName": "FBSDKCoreKit.InternalUtilityProtocol",
+                    "printedName": "any FBSDKCoreKit.InternalUtilityProtocol",
                     "usr": "c:objc(pl)FBSDKInternalUtility"
                   }
                 ],
@@ -3597,7 +3714,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "InternalUtilityProtocol",
-                        "printedName": "FBSDKCoreKit.InternalUtilityProtocol",
+                        "printedName": "any FBSDKCoreKit.InternalUtilityProtocol",
                         "usr": "c:objc(pl)FBSDKInternalUtility"
                       }
                     ],
@@ -3624,7 +3741,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "InternalUtilityProtocol",
-                        "printedName": "FBSDKCoreKit.InternalUtilityProtocol",
+                        "printedName": "any FBSDKCoreKit.InternalUtilityProtocol",
                         "usr": "c:objc(pl)FBSDKInternalUtility"
                       }
                     ],
@@ -3675,7 +3792,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "InternalUtilityProtocol",
-                    "printedName": "FBSDKCoreKit.InternalUtilityProtocol",
+                    "printedName": "any FBSDKCoreKit.InternalUtilityProtocol",
                     "usr": "c:objc(pl)FBSDKInternalUtility"
                   }
                 ],
@@ -3693,6 +3810,20 @@
             "moduleName": "FBSDKShareKit",
             "isFromExtension": true,
             "conformances": [
+              {
+                "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
               {
                 "kind": "Conformance",
                 "name": "Sendable",
@@ -3730,6 +3861,7 @@
             "declAttributes": [
               "HasInitialValue",
               "Final",
+              "Preconcurrency",
               "Custom",
               "HasStorage"
             ],
@@ -3858,8 +3990,9 @@
             "declAttributes": [
               "HasInitialValue",
               "Final",
-              "Custom",
-              "HasStorage"
+              "HasStorage",
+              "Preconcurrency",
+              "Custom"
             ],
             "isFromExtension": true,
             "hasStorage": true,
@@ -3965,6 +4098,7 @@
         "moduleName": "FBSDKShareKit",
         "objc_name": "FBSDKSendButton",
         "declAttributes": [
+          "Preconcurrency",
           "Custom",
           "Final",
           "AccessControl",
@@ -3990,6 +4124,20 @@
             "printedName": "SharingButton",
             "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingButton",
             "mangledName": "$s13FBSDKShareKit13SharingButtonP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
           },
           {
             "kind": "Conformance",
@@ -4039,6 +4187,13 @@
             "printedName": "CustomDebugStringConvertible",
             "usr": "s:s28CustomDebugStringConvertibleP",
             "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "UITraitChangeObservable",
+            "printedName": "UITraitChangeObservable",
+            "usr": "s:5UIKit23UITraitChangeObservableP",
+            "mangledName": "$s5UIKit23UITraitChangeObservableP"
           },
           {
             "kind": "Conformance",
@@ -4120,6 +4275,7 @@
             "declAttributes": [
               "HasInitialValue",
               "Final",
+              "Preconcurrency",
               "Custom",
               "HasStorage",
               "ObjC"
@@ -4224,12 +4380,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBSDKShareKit.SharingContent?",
+                "printedName": "(any FBSDKShareKit.SharingContent)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "SharingContent",
-                    "printedName": "FBSDKShareKit.SharingContent",
+                    "printedName": "any FBSDKShareKit.SharingContent",
                     "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
                   }
                 ],
@@ -4244,6 +4400,7 @@
             "declAttributes": [
               "Final",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "AccessControl"
             ],
@@ -4256,12 +4413,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "FBSDKShareKit.SharingContent?",
+                    "printedName": "(any FBSDKShareKit.SharingContent)?",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "SharingContent",
-                        "printedName": "FBSDKShareKit.SharingContent",
+                        "printedName": "any FBSDKShareKit.SharingContent",
                         "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
                       }
                     ],
@@ -4292,12 +4449,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "FBSDKShareKit.SharingContent?",
+                    "printedName": "(any FBSDKShareKit.SharingContent)?",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "SharingContent",
-                        "printedName": "FBSDKShareKit.SharingContent",
+                        "printedName": "any FBSDKShareKit.SharingContent",
                         "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
                       }
                     ],
@@ -4377,6 +4534,7 @@
             "moduleName": "FBSDKShareKit",
             "declAttributes": [
               "Final",
+              "Preconcurrency",
               "Custom",
               "AccessControl",
               "ObjC"
@@ -4445,6 +4603,7 @@
             "moduleName": "FBSDKShareKit",
             "declAttributes": [
               "Final",
+              "Preconcurrency",
               "Custom",
               "AccessControl",
               "ObjC"
@@ -4492,6 +4651,7 @@
             "moduleName": "FBSDKShareKit",
             "declAttributes": [
               "Final",
+              "Preconcurrency",
               "Custom",
               "AccessControl",
               "ObjC"
@@ -4542,6 +4702,7 @@
             "declAttributes": [
               "Final",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "Override",
               "AccessControl"
@@ -4590,6 +4751,7 @@
             "moduleName": "FBSDKShareKit",
             "declAttributes": [
               "Final",
+              "Preconcurrency",
               "Custom",
               "AccessControl",
               "ObjC"
@@ -4613,6 +4775,7 @@
             "moduleName": "FBSDKShareKit",
             "declAttributes": [
               "Final",
+              "Preconcurrency",
               "Custom",
               "IBAction",
               "RawDocComment",
@@ -4648,6 +4811,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "Override"
             ],
@@ -4689,6 +4853,7 @@
             "declAttributes": [
               "Dynamic",
               "ObjC",
+              "Preconcurrency",
               "Custom",
               "Required"
             ],
@@ -4707,7 +4872,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "UserInterfaceStringProviding",
-                    "printedName": "FBSDKShareKit.UserInterfaceStringProviding",
+                    "printedName": "any FBSDKShareKit.UserInterfaceStringProviding",
                     "usr": "s:13FBSDKShareKit28UserInterfaceStringProvidingP"
                   }
                 ],
@@ -4729,7 +4894,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "UserInterfaceStringProviding",
-                        "printedName": "FBSDKShareKit.UserInterfaceStringProviding",
+                        "printedName": "any FBSDKShareKit.UserInterfaceStringProviding",
                         "usr": "s:13FBSDKShareKit28UserInterfaceStringProvidingP"
                       }
                     ],
@@ -4756,7 +4921,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "UserInterfaceStringProviding",
-                        "printedName": "FBSDKShareKit.UserInterfaceStringProviding",
+                        "printedName": "any FBSDKShareKit.UserInterfaceStringProviding",
                         "usr": "s:13FBSDKShareKit28UserInterfaceStringProvidingP"
                       }
                     ],
@@ -4807,7 +4972,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "UserInterfaceStringProviding",
-                    "printedName": "FBSDKShareKit.UserInterfaceStringProviding",
+                    "printedName": "any FBSDKShareKit.UserInterfaceStringProviding",
                     "usr": "s:13FBSDKShareKit28UserInterfaceStringProvidingP"
                   }
                 ],
@@ -4823,7 +4988,23 @@
             "usr": "s:13FBSDKShareKit13FBShareButtonC16TypeDependenciesV",
             "mangledName": "$s13FBSDKShareKit13FBShareButtonC16TypeDependenciesV",
             "moduleName": "FBSDKShareKit",
-            "isFromExtension": true
+            "isFromExtension": true,
+            "conformances": [
+              {
+                "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              }
+            ]
           },
           {
             "kind": "Var",
@@ -4853,6 +5034,7 @@
             "declAttributes": [
               "HasInitialValue",
               "Final",
+              "Preconcurrency",
               "Custom",
               "HasStorage"
             ],
@@ -4981,8 +5163,9 @@
             "declAttributes": [
               "HasInitialValue",
               "Final",
-              "Custom",
-              "HasStorage"
+              "HasStorage",
+              "Preconcurrency",
+              "Custom"
             ],
             "isFromExtension": true,
             "hasStorage": true,
@@ -5088,6 +5271,7 @@
         "moduleName": "FBSDKShareKit",
         "objc_name": "FBSDKShareButton",
         "declAttributes": [
+          "Preconcurrency",
           "Custom",
           "Final",
           "AccessControl",
@@ -5113,6 +5297,20 @@
             "printedName": "SharingButton",
             "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingButton",
             "mangledName": "$s13FBSDKShareKit13SharingButtonP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
           },
           {
             "kind": "Conformance",
@@ -5162,6 +5360,13 @@
             "printedName": "CustomDebugStringConvertible",
             "usr": "s:s28CustomDebugStringConvertibleP",
             "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "UITraitChangeObservable",
+            "printedName": "UITraitChangeObservable",
+            "usr": "s:5UIKit23UITraitChangeObservableP",
+            "mangledName": "$s5UIKit23UITraitChangeObservableP"
           },
           {
             "kind": "Conformance",
@@ -5579,6 +5784,20 @@
         "conformances": [
           {
             "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "Equatable",
             "printedName": "Equatable",
             "usr": "s:SQ",
@@ -5715,6 +5934,22 @@
         "moduleName": "FBSDKShareKit",
         "declAttributes": [
           "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
         ]
       },
       {
@@ -5740,7 +5975,7 @@
               {
                 "kind": "TypeNominal",
                 "name": "WeakStorage",
-                "printedName": "FBSDKShareKit.SharingDelegate?"
+                "printedName": "(any FBSDKShareKit.SharingDelegate)?"
               }
             ],
             "declKind": "Var",
@@ -5768,12 +6003,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "FBSDKShareKit.SharingDelegate?",
+                    "printedName": "(any FBSDKShareKit.SharingDelegate)?",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "SharingDelegate",
-                        "printedName": "FBSDKShareKit.SharingDelegate",
+                        "printedName": "any FBSDKShareKit.SharingDelegate",
                         "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingDelegate"
                       }
                     ],
@@ -5805,12 +6040,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "FBSDKShareKit.SharingDelegate?",
+                    "printedName": "(any FBSDKShareKit.SharingDelegate)?",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "SharingDelegate",
-                        "printedName": "FBSDKShareKit.SharingDelegate",
+                        "printedName": "any FBSDKShareKit.SharingDelegate",
                         "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingDelegate"
                       }
                     ],
@@ -5858,12 +6093,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBSDKShareKit.SharingContent?",
+                "printedName": "(any FBSDKShareKit.SharingContent)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "SharingContent",
-                    "printedName": "FBSDKShareKit.SharingContent",
+                    "printedName": "any FBSDKShareKit.SharingContent",
                     "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
                   }
                 ],
@@ -5893,12 +6128,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "FBSDKShareKit.SharingContent?",
+                    "printedName": "(any FBSDKShareKit.SharingContent)?",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "SharingContent",
-                        "printedName": "FBSDKShareKit.SharingContent",
+                        "printedName": "any FBSDKShareKit.SharingContent",
                         "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
                       }
                     ],
@@ -5930,12 +6165,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "FBSDKShareKit.SharingContent?",
+                    "printedName": "(any FBSDKShareKit.SharingContent)?",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "SharingContent",
-                        "printedName": "FBSDKShareKit.SharingContent",
+                        "printedName": "any FBSDKShareKit.SharingContent",
                         "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
                       }
                     ],
@@ -6117,12 +6352,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBSDKShareKit.SharingContent?",
+                "printedName": "(any FBSDKShareKit.SharingContent)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "SharingContent",
-                    "printedName": "FBSDKShareKit.SharingContent",
+                    "printedName": "any FBSDKShareKit.SharingContent",
                     "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
                   }
                 ],
@@ -6131,12 +6366,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBSDKShareKit.SharingDelegate?",
+                "printedName": "(any FBSDKShareKit.SharingDelegate)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "SharingDelegate",
-                    "printedName": "FBSDKShareKit.SharingDelegate",
+                    "printedName": "any FBSDKShareKit.SharingDelegate",
                     "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingDelegate"
                   }
                 ],
@@ -6170,12 +6405,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBSDKShareKit.SharingContent?",
+                "printedName": "(any FBSDKShareKit.SharingContent)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "SharingContent",
-                    "printedName": "FBSDKShareKit.SharingContent",
+                    "printedName": "any FBSDKShareKit.SharingContent",
                     "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
                   }
                 ],
@@ -6184,12 +6419,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBSDKShareKit.SharingDelegate?",
+                "printedName": "(any FBSDKShareKit.SharingDelegate)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "SharingDelegate",
-                    "printedName": "FBSDKShareKit.SharingDelegate",
+                    "printedName": "any FBSDKShareKit.SharingDelegate",
                     "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingDelegate"
                   }
                 ],
@@ -6198,7 +6433,7 @@
               {
                 "kind": "TypeNominal",
                 "name": "ShareDialogConfigurationProtocol",
-                "printedName": "FBSDKShareKit.ShareDialogConfigurationProtocol",
+                "printedName": "any FBSDKShareKit.ShareDialogConfigurationProtocol",
                 "usr": "s:13FBSDKShareKit32ShareDialogConfigurationProtocolP"
               }
             ],
@@ -6222,12 +6457,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBSDKShareKit.SharingContent?",
+                "printedName": "(any FBSDKShareKit.SharingContent)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "SharingContent",
-                    "printedName": "FBSDKShareKit.SharingContent",
+                    "printedName": "any FBSDKShareKit.SharingContent",
                     "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
                   }
                 ],
@@ -6236,12 +6471,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBSDKShareKit.SharingDelegate?",
+                "printedName": "(any FBSDKShareKit.SharingDelegate)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "SharingDelegate",
-                    "printedName": "FBSDKShareKit.SharingDelegate",
+                    "printedName": "any FBSDKShareKit.SharingDelegate",
                     "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingDelegate"
                   }
                 ],
@@ -6276,12 +6511,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBSDKShareKit.SharingContent?",
+                "printedName": "(any FBSDKShareKit.SharingContent)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "SharingContent",
-                    "printedName": "FBSDKShareKit.SharingContent",
+                    "printedName": "any FBSDKShareKit.SharingContent",
                     "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
                   }
                 ],
@@ -6290,12 +6525,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBSDKShareKit.SharingDelegate?",
+                "printedName": "(any FBSDKShareKit.SharingDelegate)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "SharingDelegate",
-                    "printedName": "FBSDKShareKit.SharingDelegate",
+                    "printedName": "any FBSDKShareKit.SharingDelegate",
                     "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingDelegate"
                   }
                 ],
@@ -6475,7 +6710,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "ExistentialMetatype",
-                    "printedName": "FBSDKCoreKit._AccessTokenProviding.Type",
+                    "printedName": "any FBSDKCoreKit._AccessTokenProviding.Type",
                     "children": [
                       {
                         "kind": "TypeNominal",
@@ -6504,7 +6739,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ExistentialMetatype",
-                        "printedName": "FBSDKCoreKit._AccessTokenProviding.Type",
+                        "printedName": "any FBSDKCoreKit._AccessTokenProviding.Type",
                         "children": [
                           {
                             "kind": "TypeNominal",
@@ -6538,7 +6773,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ExistentialMetatype",
-                        "printedName": "FBSDKCoreKit._AccessTokenProviding.Type",
+                        "printedName": "any FBSDKCoreKit._AccessTokenProviding.Type",
                         "children": [
                           {
                             "kind": "TypeNominal",
@@ -6590,7 +6825,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "BridgeAPIRequestCreating",
-                    "printedName": "FBSDKCoreKit.BridgeAPIRequestCreating",
+                    "printedName": "any FBSDKCoreKit.BridgeAPIRequestCreating",
                     "usr": "c:objc(pl)FBSDKBridgeAPIRequestCreating"
                   }
                 ],
@@ -6612,7 +6847,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "BridgeAPIRequestCreating",
-                        "printedName": "FBSDKCoreKit.BridgeAPIRequestCreating",
+                        "printedName": "any FBSDKCoreKit.BridgeAPIRequestCreating",
                         "usr": "c:objc(pl)FBSDKBridgeAPIRequestCreating"
                       }
                     ],
@@ -6639,7 +6874,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "BridgeAPIRequestCreating",
-                        "printedName": "FBSDKCoreKit.BridgeAPIRequestCreating",
+                        "printedName": "any FBSDKCoreKit.BridgeAPIRequestCreating",
                         "usr": "c:objc(pl)FBSDKBridgeAPIRequestCreating"
                       }
                     ],
@@ -6684,7 +6919,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "BridgeAPIRequestOpening",
-                    "printedName": "FBSDKCoreKit.BridgeAPIRequestOpening",
+                    "printedName": "any FBSDKCoreKit.BridgeAPIRequestOpening",
                     "usr": "c:objc(pl)FBSDKBridgeAPIRequestOpening"
                   }
                 ],
@@ -6706,7 +6941,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "BridgeAPIRequestOpening",
-                        "printedName": "FBSDKCoreKit.BridgeAPIRequestOpening",
+                        "printedName": "any FBSDKCoreKit.BridgeAPIRequestOpening",
                         "usr": "c:objc(pl)FBSDKBridgeAPIRequestOpening"
                       }
                     ],
@@ -6733,7 +6968,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "BridgeAPIRequestOpening",
-                        "printedName": "FBSDKCoreKit.BridgeAPIRequestOpening",
+                        "printedName": "any FBSDKCoreKit.BridgeAPIRequestOpening",
                         "usr": "c:objc(pl)FBSDKBridgeAPIRequestOpening"
                       }
                     ],
@@ -6778,7 +7013,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "ErrorCreating",
-                    "printedName": "FBSDKCoreKit.ErrorCreating",
+                    "printedName": "any FBSDKCoreKit.ErrorCreating",
                     "usr": "c:objc(pl)FBSDKErrorCreating"
                   }
                 ],
@@ -6800,7 +7035,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ErrorCreating",
-                        "printedName": "FBSDKCoreKit.ErrorCreating",
+                        "printedName": "any FBSDKCoreKit.ErrorCreating",
                         "usr": "c:objc(pl)FBSDKErrorCreating"
                       }
                     ],
@@ -6827,7 +7062,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ErrorCreating",
-                        "printedName": "FBSDKCoreKit.ErrorCreating",
+                        "printedName": "any FBSDKCoreKit.ErrorCreating",
                         "usr": "c:objc(pl)FBSDKErrorCreating"
                       }
                     ],
@@ -6872,7 +7107,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "ShareEventLogging",
-                    "printedName": "FBSDKShareKit.ShareEventLogging",
+                    "printedName": "any FBSDKShareKit.ShareEventLogging",
                     "usr": "s:13FBSDKShareKit17ShareEventLoggingP"
                   }
                 ],
@@ -6894,7 +7129,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ShareEventLogging",
-                        "printedName": "FBSDKShareKit.ShareEventLogging",
+                        "printedName": "any FBSDKShareKit.ShareEventLogging",
                         "usr": "s:13FBSDKShareKit17ShareEventLoggingP"
                       }
                     ],
@@ -6921,7 +7156,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ShareEventLogging",
-                        "printedName": "FBSDKShareKit.ShareEventLogging",
+                        "printedName": "any FBSDKShareKit.ShareEventLogging",
                         "usr": "s:13FBSDKShareKit17ShareEventLoggingP"
                       }
                     ],
@@ -6966,7 +7201,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "ProtocolComposition",
-                    "printedName": "FBSDKCoreKit.AppAvailabilityChecker & FBSDKCoreKit.InternalUtilityProtocol"
+                    "printedName": "any FBSDKCoreKit.AppAvailabilityChecker & FBSDKCoreKit.InternalUtilityProtocol"
                   }
                 ],
                 "declKind": "Var",
@@ -6987,7 +7222,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ProtocolComposition",
-                        "printedName": "FBSDKCoreKit.AppAvailabilityChecker & FBSDKCoreKit.InternalUtilityProtocol"
+                        "printedName": "any FBSDKCoreKit.AppAvailabilityChecker & FBSDKCoreKit.InternalUtilityProtocol"
                       }
                     ],
                     "declKind": "Accessor",
@@ -7013,7 +7248,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ProtocolComposition",
-                        "printedName": "FBSDKCoreKit.AppAvailabilityChecker & FBSDKCoreKit.InternalUtilityProtocol"
+                        "printedName": "any FBSDKCoreKit.AppAvailabilityChecker & FBSDKCoreKit.InternalUtilityProtocol"
                       }
                     ],
                     "declKind": "Accessor",
@@ -7057,7 +7292,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "ExistentialMetatype",
-                    "printedName": "(FBSDKShareKit.ShareUtilityProtocol & FBSDKShareKit.ShareValidating).Type",
+                    "printedName": "any (FBSDKShareKit.ShareUtilityProtocol & FBSDKShareKit.ShareValidating).Type",
                     "children": [
                       {
                         "kind": "TypeNominal",
@@ -7085,7 +7320,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ExistentialMetatype",
-                        "printedName": "(FBSDKShareKit.ShareUtilityProtocol & FBSDKShareKit.ShareValidating).Type",
+                        "printedName": "any (FBSDKShareKit.ShareUtilityProtocol & FBSDKShareKit.ShareValidating).Type",
                         "children": [
                           {
                             "kind": "TypeNominal",
@@ -7118,7 +7353,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ExistentialMetatype",
-                        "printedName": "(FBSDKShareKit.ShareUtilityProtocol & FBSDKShareKit.ShareValidating).Type",
+                        "printedName": "any (FBSDKShareKit.ShareUtilityProtocol & FBSDKShareKit.ShareValidating).Type",
                         "children": [
                           {
                             "kind": "TypeNominal",
@@ -7175,7 +7410,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "ExistentialMetatype",
-                    "printedName": "FBSDKCoreKit._AccessTokenProviding.Type",
+                    "printedName": "any FBSDKCoreKit._AccessTokenProviding.Type",
                     "children": [
                       {
                         "kind": "TypeNominal",
@@ -7188,36 +7423,36 @@
                   {
                     "kind": "TypeNominal",
                     "name": "BridgeAPIRequestCreating",
-                    "printedName": "FBSDKCoreKit.BridgeAPIRequestCreating",
+                    "printedName": "any FBSDKCoreKit.BridgeAPIRequestCreating",
                     "usr": "c:objc(pl)FBSDKBridgeAPIRequestCreating"
                   },
                   {
                     "kind": "TypeNominal",
                     "name": "BridgeAPIRequestOpening",
-                    "printedName": "FBSDKCoreKit.BridgeAPIRequestOpening",
+                    "printedName": "any FBSDKCoreKit.BridgeAPIRequestOpening",
                     "usr": "c:objc(pl)FBSDKBridgeAPIRequestOpening"
                   },
                   {
                     "kind": "TypeNominal",
                     "name": "ErrorCreating",
-                    "printedName": "FBSDKCoreKit.ErrorCreating",
+                    "printedName": "any FBSDKCoreKit.ErrorCreating",
                     "usr": "c:objc(pl)FBSDKErrorCreating"
                   },
                   {
                     "kind": "TypeNominal",
                     "name": "ShareEventLogging",
-                    "printedName": "FBSDKShareKit.ShareEventLogging",
+                    "printedName": "any FBSDKShareKit.ShareEventLogging",
                     "usr": "s:13FBSDKShareKit17ShareEventLoggingP"
                   },
                   {
                     "kind": "TypeNominal",
                     "name": "ProtocolComposition",
-                    "printedName": "FBSDKCoreKit.AppAvailabilityChecker & FBSDKCoreKit.InternalUtilityProtocol"
+                    "printedName": "any FBSDKCoreKit.AppAvailabilityChecker & FBSDKCoreKit.InternalUtilityProtocol"
                   },
                   {
                     "kind": "TypeNominal",
                     "name": "ExistentialMetatype",
-                    "printedName": "(FBSDKShareKit.ShareUtilityProtocol & FBSDKShareKit.ShareValidating).Type",
+                    "printedName": "any (FBSDKShareKit.ShareUtilityProtocol & FBSDKShareKit.ShareValidating).Type",
                     "children": [
                       {
                         "kind": "TypeNominal",
@@ -7239,7 +7474,23 @@
             "usr": "s:13FBSDKShareKit13MessageDialogC16TypeDependenciesV",
             "mangledName": "$s13FBSDKShareKit13MessageDialogC16TypeDependenciesV",
             "moduleName": "FBSDKShareKit",
-            "isFromExtension": true
+            "isFromExtension": true,
+            "conformances": [
+              {
+                "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              }
+            ]
           },
           {
             "kind": "Var",
@@ -7524,6 +7775,20 @@
           },
           {
             "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "Equatable",
             "printedName": "Equatable",
             "usr": "s:SQ",
@@ -7703,6 +7968,20 @@
         "conformances": [
           {
             "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "Equatable",
             "printedName": "Equatable",
             "usr": "s:SQ",
@@ -7879,6 +8158,20 @@
         "conformances": [
           {
             "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "Error",
             "printedName": "Error",
             "usr": "s:s5ErrorP",
@@ -7897,6 +8190,13 @@
             "printedName": "Sendable",
             "usr": "s:s8SendableP",
             "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "BitwiseCopyable",
+            "printedName": "BitwiseCopyable",
+            "usr": "s:s15BitwiseCopyableP",
+            "mangledName": "$ss15BitwiseCopyableP"
           }
         ]
       },
@@ -8103,10 +8403,31 @@
             "conformances": [
               {
                 "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
+              {
+                "kind": "Conformance",
                 "name": "Sendable",
                 "printedName": "Sendable",
                 "usr": "s:s8SendableP",
                 "mangledName": "$ss8SendableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "BitwiseCopyable",
+                "printedName": "BitwiseCopyable",
+                "usr": "s:s15BitwiseCopyableP",
+                "mangledName": "$ss15BitwiseCopyableP"
               }
             ]
           },
@@ -8369,10 +8690,31 @@
             "conformances": [
               {
                 "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
+              {
+                "kind": "Conformance",
                 "name": "Sendable",
                 "printedName": "Sendable",
                 "usr": "s:s8SendableP",
                 "mangledName": "$ss8SendableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "BitwiseCopyable",
+                "printedName": "BitwiseCopyable",
+                "usr": "s:s15BitwiseCopyableP",
+                "mangledName": "$ss15BitwiseCopyableP"
               }
             ]
           }
@@ -8385,10 +8727,31 @@
         "conformances": [
           {
             "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "Sendable",
             "printedName": "Sendable",
             "usr": "s:s8SendableP",
             "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "BitwiseCopyable",
+            "printedName": "BitwiseCopyable",
+            "usr": "s:s15BitwiseCopyableP",
+            "mangledName": "$ss15BitwiseCopyableP"
           }
         ]
       },
@@ -8519,10 +8882,31 @@
             "conformances": [
               {
                 "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
+              {
+                "kind": "Conformance",
                 "name": "Sendable",
                 "printedName": "Sendable",
                 "usr": "s:s8SendableP",
                 "mangledName": "$ss8SendableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "BitwiseCopyable",
+                "printedName": "BitwiseCopyable",
+                "usr": "s:s15BitwiseCopyableP",
+                "mangledName": "$ss15BitwiseCopyableP"
               }
             ]
           },
@@ -8638,10 +9022,31 @@
             "conformances": [
               {
                 "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
+              {
+                "kind": "Conformance",
                 "name": "Sendable",
                 "printedName": "Sendable",
                 "usr": "s:s8SendableP",
                 "mangledName": "$ss8SendableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "BitwiseCopyable",
+                "printedName": "BitwiseCopyable",
+                "usr": "s:s15BitwiseCopyableP",
+                "mangledName": "$ss15BitwiseCopyableP"
               }
             ]
           },
@@ -8757,10 +9162,31 @@
             "conformances": [
               {
                 "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
+              {
+                "kind": "Conformance",
                 "name": "Sendable",
                 "printedName": "Sendable",
                 "usr": "s:s8SendableP",
                 "mangledName": "$ss8SendableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "BitwiseCopyable",
+                "printedName": "BitwiseCopyable",
+                "usr": "s:s15BitwiseCopyableP",
+                "mangledName": "$ss15BitwiseCopyableP"
               }
             ]
           }
@@ -8773,10 +9199,31 @@
         "conformances": [
           {
             "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "Sendable",
             "printedName": "Sendable",
             "usr": "s:s8SendableP",
             "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "BitwiseCopyable",
+            "printedName": "BitwiseCopyable",
+            "usr": "s:s15BitwiseCopyableP",
+            "mangledName": "$ss15BitwiseCopyableP"
           }
         ]
       },
@@ -8803,12 +9250,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBSDKCoreKit.BridgeAPIRequestProtocol?",
+                "printedName": "(any FBSDKCoreKit.BridgeAPIRequestProtocol)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "BridgeAPIRequestProtocol",
-                    "printedName": "FBSDKCoreKit.BridgeAPIRequestProtocol",
+                    "printedName": "any FBSDKCoreKit.BridgeAPIRequestProtocol",
                     "usr": "c:objc(pl)FBSDKBridgeAPIRequest"
                   }
                 ],
@@ -8932,6 +9379,22 @@
         "moduleName": "FBSDKShareKit",
         "declAttributes": [
           "Final"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
         ]
       },
       {
@@ -10141,7 +10604,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "InternalUtilityProtocol",
-                    "printedName": "FBSDKCoreKit.InternalUtilityProtocol",
+                    "printedName": "any FBSDKCoreKit.InternalUtilityProtocol",
                     "usr": "c:objc(pl)FBSDKInternalUtility"
                   }
                 ],
@@ -10163,7 +10626,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "InternalUtilityProtocol",
-                        "printedName": "FBSDKCoreKit.InternalUtilityProtocol",
+                        "printedName": "any FBSDKCoreKit.InternalUtilityProtocol",
                         "usr": "c:objc(pl)FBSDKInternalUtility"
                       }
                     ],
@@ -10190,7 +10653,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "InternalUtilityProtocol",
-                        "printedName": "FBSDKCoreKit.InternalUtilityProtocol",
+                        "printedName": "any FBSDKCoreKit.InternalUtilityProtocol",
                         "usr": "c:objc(pl)FBSDKInternalUtility"
                       }
                     ],
@@ -10235,7 +10698,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "ErrorCreating",
-                    "printedName": "FBSDKCoreKit.ErrorCreating",
+                    "printedName": "any FBSDKCoreKit.ErrorCreating",
                     "usr": "c:objc(pl)FBSDKErrorCreating"
                   }
                 ],
@@ -10257,7 +10720,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ErrorCreating",
-                        "printedName": "FBSDKCoreKit.ErrorCreating",
+                        "printedName": "any FBSDKCoreKit.ErrorCreating",
                         "usr": "c:objc(pl)FBSDKErrorCreating"
                       }
                     ],
@@ -10284,7 +10747,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ErrorCreating",
-                        "printedName": "FBSDKCoreKit.ErrorCreating",
+                        "printedName": "any FBSDKCoreKit.ErrorCreating",
                         "usr": "c:objc(pl)FBSDKErrorCreating"
                       }
                     ],
@@ -10335,13 +10798,13 @@
                   {
                     "kind": "TypeNominal",
                     "name": "InternalUtilityProtocol",
-                    "printedName": "FBSDKCoreKit.InternalUtilityProtocol",
+                    "printedName": "any FBSDKCoreKit.InternalUtilityProtocol",
                     "usr": "c:objc(pl)FBSDKInternalUtility"
                   },
                   {
                     "kind": "TypeNominal",
                     "name": "ErrorCreating",
-                    "printedName": "FBSDKCoreKit.ErrorCreating",
+                    "printedName": "any FBSDKCoreKit.ErrorCreating",
                     "usr": "c:objc(pl)FBSDKErrorCreating"
                   }
                 ],
@@ -10359,6 +10822,20 @@
             "moduleName": "FBSDKShareKit",
             "isFromExtension": true,
             "conformances": [
+              {
+                "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
               {
                 "kind": "Conformance",
                 "name": "Sendable",
@@ -10738,39 +11215,17 @@
         "conformances": [
           {
             "kind": "Conformance",
-            "name": "DependentAsType",
-            "printedName": "DependentAsType",
-            "children": [
-              {
-                "kind": "TypeWitness",
-                "name": "TypeDependencies",
-                "printedName": "TypeDependencies",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "TypeDependencies",
-                    "printedName": "FBSDKShareKit.ShareCameraEffectContent.TypeDependencies",
-                    "usr": "s:13FBSDKShareKit24ShareCameraEffectContentC16TypeDependenciesV"
-                  }
-                ]
-              }
-            ],
-            "usr": "s:13FBSDKShareKit15DependentAsTypeP",
-            "mangledName": "$s13FBSDKShareKit15DependentAsTypeP"
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
           },
           {
             "kind": "Conformance",
-            "name": "SharingContent",
-            "printedName": "SharingContent",
-            "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent",
-            "mangledName": "$s13FBSDKShareKit14SharingContentP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "SharingValidatable",
-            "printedName": "SharingValidatable",
-            "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingValidatable",
-            "mangledName": "$s13FBSDKShareKit18SharingValidatableP"
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
           },
           {
             "kind": "Conformance",
@@ -10820,6 +11275,42 @@
             "printedName": "CustomDebugStringConvertible",
             "usr": "s:s28CustomDebugStringConvertibleP",
             "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "DependentAsType",
+            "printedName": "DependentAsType",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "TypeDependencies",
+                "printedName": "TypeDependencies",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "TypeDependencies",
+                    "printedName": "FBSDKShareKit.ShareCameraEffectContent.TypeDependencies",
+                    "usr": "s:13FBSDKShareKit24ShareCameraEffectContentC16TypeDependenciesV"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:13FBSDKShareKit15DependentAsTypeP",
+            "mangledName": "$s13FBSDKShareKit15DependentAsTypeP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SharingContent",
+            "printedName": "SharingContent",
+            "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent",
+            "mangledName": "$s13FBSDKShareKit14SharingContentP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SharingValidatable",
+            "printedName": "SharingValidatable",
+            "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingValidatable",
+            "mangledName": "$s13FBSDKShareKit18SharingValidatableP"
           }
         ]
       },
@@ -11087,7 +11578,7 @@
               {
                 "kind": "TypeNominal",
                 "name": "WeakStorage",
-                "printedName": "FBSDKShareKit.SharingDelegate?"
+                "printedName": "(any FBSDKShareKit.SharingDelegate)?"
               }
             ],
             "declKind": "Var",
@@ -11115,12 +11606,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "FBSDKShareKit.SharingDelegate?",
+                    "printedName": "(any FBSDKShareKit.SharingDelegate)?",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "SharingDelegate",
-                        "printedName": "FBSDKShareKit.SharingDelegate",
+                        "printedName": "any FBSDKShareKit.SharingDelegate",
                         "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingDelegate"
                       }
                     ],
@@ -11152,12 +11643,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "FBSDKShareKit.SharingDelegate?",
+                    "printedName": "(any FBSDKShareKit.SharingDelegate)?",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "SharingDelegate",
-                        "printedName": "FBSDKShareKit.SharingDelegate",
+                        "printedName": "any FBSDKShareKit.SharingDelegate",
                         "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingDelegate"
                       }
                     ],
@@ -11205,12 +11696,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBSDKShareKit.SharingContent?",
+                "printedName": "(any FBSDKShareKit.SharingContent)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "SharingContent",
-                    "printedName": "FBSDKShareKit.SharingContent",
+                    "printedName": "any FBSDKShareKit.SharingContent",
                     "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
                   }
                 ],
@@ -11240,12 +11731,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "FBSDKShareKit.SharingContent?",
+                    "printedName": "(any FBSDKShareKit.SharingContent)?",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "SharingContent",
-                        "printedName": "FBSDKShareKit.SharingContent",
+                        "printedName": "any FBSDKShareKit.SharingContent",
                         "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
                       }
                     ],
@@ -11277,12 +11768,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "FBSDKShareKit.SharingContent?",
+                    "printedName": "(any FBSDKShareKit.SharingContent)?",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "SharingContent",
-                        "printedName": "FBSDKShareKit.SharingContent",
+                        "printedName": "any FBSDKShareKit.SharingContent",
                         "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
                       }
                     ],
@@ -11571,12 +12062,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBSDKShareKit.SharingContent?",
+                "printedName": "(any FBSDKShareKit.SharingContent)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "SharingContent",
-                    "printedName": "FBSDKShareKit.SharingContent",
+                    "printedName": "any FBSDKShareKit.SharingContent",
                     "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
                   }
                 ],
@@ -11585,12 +12076,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBSDKShareKit.SharingDelegate?",
+                "printedName": "(any FBSDKShareKit.SharingDelegate)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "SharingDelegate",
-                    "printedName": "FBSDKShareKit.SharingDelegate",
+                    "printedName": "any FBSDKShareKit.SharingDelegate",
                     "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingDelegate"
                   }
                 ],
@@ -11637,12 +12128,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBSDKShareKit.SharingContent?",
+                "printedName": "(any FBSDKShareKit.SharingContent)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "SharingContent",
-                    "printedName": "FBSDKShareKit.SharingContent",
+                    "printedName": "any FBSDKShareKit.SharingContent",
                     "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
                   }
                 ],
@@ -11651,12 +12142,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBSDKShareKit.SharingDelegate?",
+                "printedName": "(any FBSDKShareKit.SharingDelegate)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "SharingDelegate",
-                    "printedName": "FBSDKShareKit.SharingDelegate",
+                    "printedName": "any FBSDKShareKit.SharingDelegate",
                     "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingDelegate"
                   }
                 ],
@@ -11705,12 +12196,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBSDKShareKit.SharingContent?",
+                "printedName": "(any FBSDKShareKit.SharingContent)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "SharingContent",
-                    "printedName": "FBSDKShareKit.SharingContent",
+                    "printedName": "any FBSDKShareKit.SharingContent",
                     "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
                   }
                 ],
@@ -11719,12 +12210,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBSDKShareKit.SharingDelegate?",
+                "printedName": "(any FBSDKShareKit.SharingDelegate)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "SharingDelegate",
-                    "printedName": "FBSDKShareKit.SharingDelegate",
+                    "printedName": "any FBSDKShareKit.SharingDelegate",
                     "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingDelegate"
                   }
                 ],
@@ -11785,7 +12276,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "ShareInternalURLOpening",
-                    "printedName": "FBSDKShareKit.ShareInternalURLOpening",
+                    "printedName": "any FBSDKShareKit.ShareInternalURLOpening",
                     "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKShareInternalURLOpening"
                   }
                 ],
@@ -11807,7 +12298,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ShareInternalURLOpening",
-                        "printedName": "FBSDKShareKit.ShareInternalURLOpening",
+                        "printedName": "any FBSDKShareKit.ShareInternalURLOpening",
                         "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKShareInternalURLOpening"
                       }
                     ],
@@ -11834,7 +12325,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ShareInternalURLOpening",
-                        "printedName": "FBSDKShareKit.ShareInternalURLOpening",
+                        "printedName": "any FBSDKShareKit.ShareInternalURLOpening",
                         "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKShareInternalURLOpening"
                       }
                     ],
@@ -11879,7 +12370,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "InternalUtilityProtocol",
-                    "printedName": "FBSDKCoreKit.InternalUtilityProtocol",
+                    "printedName": "any FBSDKCoreKit.InternalUtilityProtocol",
                     "usr": "c:objc(pl)FBSDKInternalUtility"
                   }
                 ],
@@ -11901,7 +12392,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "InternalUtilityProtocol",
-                        "printedName": "FBSDKCoreKit.InternalUtilityProtocol",
+                        "printedName": "any FBSDKCoreKit.InternalUtilityProtocol",
                         "usr": "c:objc(pl)FBSDKInternalUtility"
                       }
                     ],
@@ -11928,7 +12419,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "InternalUtilityProtocol",
-                        "printedName": "FBSDKCoreKit.InternalUtilityProtocol",
+                        "printedName": "any FBSDKCoreKit.InternalUtilityProtocol",
                         "usr": "c:objc(pl)FBSDKInternalUtility"
                       }
                     ],
@@ -11973,7 +12464,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "SettingsProtocol",
-                    "printedName": "FBSDKCoreKit.SettingsProtocol",
+                    "printedName": "any FBSDKCoreKit.SettingsProtocol",
                     "usr": "c:@M@FBSDKCoreKit@objc(pl)FBSDKSettings"
                   }
                 ],
@@ -11995,7 +12486,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "SettingsProtocol",
-                        "printedName": "FBSDKCoreKit.SettingsProtocol",
+                        "printedName": "any FBSDKCoreKit.SettingsProtocol",
                         "usr": "c:@M@FBSDKCoreKit@objc(pl)FBSDKSettings"
                       }
                     ],
@@ -12022,7 +12513,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "SettingsProtocol",
-                        "printedName": "FBSDKCoreKit.SettingsProtocol",
+                        "printedName": "any FBSDKCoreKit.SettingsProtocol",
                         "usr": "c:@M@FBSDKCoreKit@objc(pl)FBSDKSettings"
                       }
                     ],
@@ -12067,7 +12558,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "ExistentialMetatype",
-                    "printedName": "(FBSDKShareKit.ShareUtilityProtocol & FBSDKShareKit.ShareValidating).Type",
+                    "printedName": "any (FBSDKShareKit.ShareUtilityProtocol & FBSDKShareKit.ShareValidating).Type",
                     "children": [
                       {
                         "kind": "TypeNominal",
@@ -12095,7 +12586,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ExistentialMetatype",
-                        "printedName": "(FBSDKShareKit.ShareUtilityProtocol & FBSDKShareKit.ShareValidating).Type",
+                        "printedName": "any (FBSDKShareKit.ShareUtilityProtocol & FBSDKShareKit.ShareValidating).Type",
                         "children": [
                           {
                             "kind": "TypeNominal",
@@ -12128,7 +12619,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ExistentialMetatype",
-                        "printedName": "(FBSDKShareKit.ShareUtilityProtocol & FBSDKShareKit.ShareValidating).Type",
+                        "printedName": "any (FBSDKShareKit.ShareUtilityProtocol & FBSDKShareKit.ShareValidating).Type",
                         "children": [
                           {
                             "kind": "TypeNominal",
@@ -12179,7 +12670,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "BridgeAPIRequestCreating",
-                    "printedName": "FBSDKCoreKit.BridgeAPIRequestCreating",
+                    "printedName": "any FBSDKCoreKit.BridgeAPIRequestCreating",
                     "usr": "c:objc(pl)FBSDKBridgeAPIRequestCreating"
                   }
                 ],
@@ -12201,7 +12692,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "BridgeAPIRequestCreating",
-                        "printedName": "FBSDKCoreKit.BridgeAPIRequestCreating",
+                        "printedName": "any FBSDKCoreKit.BridgeAPIRequestCreating",
                         "usr": "c:objc(pl)FBSDKBridgeAPIRequestCreating"
                       }
                     ],
@@ -12228,7 +12719,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "BridgeAPIRequestCreating",
-                        "printedName": "FBSDKCoreKit.BridgeAPIRequestCreating",
+                        "printedName": "any FBSDKCoreKit.BridgeAPIRequestCreating",
                         "usr": "c:objc(pl)FBSDKBridgeAPIRequestCreating"
                       }
                     ],
@@ -12273,7 +12764,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "BridgeAPIRequestOpening",
-                    "printedName": "FBSDKCoreKit.BridgeAPIRequestOpening",
+                    "printedName": "any FBSDKCoreKit.BridgeAPIRequestOpening",
                     "usr": "c:objc(pl)FBSDKBridgeAPIRequestOpening"
                   }
                 ],
@@ -12295,7 +12786,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "BridgeAPIRequestOpening",
-                        "printedName": "FBSDKCoreKit.BridgeAPIRequestOpening",
+                        "printedName": "any FBSDKCoreKit.BridgeAPIRequestOpening",
                         "usr": "c:objc(pl)FBSDKBridgeAPIRequestOpening"
                       }
                     ],
@@ -12322,7 +12813,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "BridgeAPIRequestOpening",
-                        "printedName": "FBSDKCoreKit.BridgeAPIRequestOpening",
+                        "printedName": "any FBSDKCoreKit.BridgeAPIRequestOpening",
                         "usr": "c:objc(pl)FBSDKBridgeAPIRequestOpening"
                       }
                     ],
@@ -12367,7 +12858,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "SocialComposeViewControllerFactoryProtocol",
-                    "printedName": "FBSDKShareKit.SocialComposeViewControllerFactoryProtocol",
+                    "printedName": "any FBSDKShareKit.SocialComposeViewControllerFactoryProtocol",
                     "usr": "s:13FBSDKShareKit42SocialComposeViewControllerFactoryProtocolP"
                   }
                 ],
@@ -12389,7 +12880,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "SocialComposeViewControllerFactoryProtocol",
-                        "printedName": "FBSDKShareKit.SocialComposeViewControllerFactoryProtocol",
+                        "printedName": "any FBSDKShareKit.SocialComposeViewControllerFactoryProtocol",
                         "usr": "s:13FBSDKShareKit42SocialComposeViewControllerFactoryProtocolP"
                       }
                     ],
@@ -12416,7 +12907,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "SocialComposeViewControllerFactoryProtocol",
-                        "printedName": "FBSDKShareKit.SocialComposeViewControllerFactoryProtocol",
+                        "printedName": "any FBSDKShareKit.SocialComposeViewControllerFactoryProtocol",
                         "usr": "s:13FBSDKShareKit42SocialComposeViewControllerFactoryProtocolP"
                       }
                     ],
@@ -12461,7 +12952,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "_WindowFinding",
-                    "printedName": "FBSDKCoreKit._WindowFinding",
+                    "printedName": "any FBSDKCoreKit._WindowFinding",
                     "usr": "c:objc(pl)_FBSDKWindowFinding"
                   }
                 ],
@@ -12483,7 +12974,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "_WindowFinding",
-                        "printedName": "FBSDKCoreKit._WindowFinding",
+                        "printedName": "any FBSDKCoreKit._WindowFinding",
                         "usr": "c:objc(pl)_FBSDKWindowFinding"
                       }
                     ],
@@ -12510,7 +13001,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "_WindowFinding",
-                        "printedName": "FBSDKCoreKit._WindowFinding",
+                        "printedName": "any FBSDKCoreKit._WindowFinding",
                         "usr": "c:objc(pl)_FBSDKWindowFinding"
                       }
                     ],
@@ -12555,7 +13046,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "ErrorCreating",
-                    "printedName": "FBSDKCoreKit.ErrorCreating",
+                    "printedName": "any FBSDKCoreKit.ErrorCreating",
                     "usr": "c:objc(pl)FBSDKErrorCreating"
                   }
                 ],
@@ -12577,7 +13068,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ErrorCreating",
-                        "printedName": "FBSDKCoreKit.ErrorCreating",
+                        "printedName": "any FBSDKCoreKit.ErrorCreating",
                         "usr": "c:objc(pl)FBSDKErrorCreating"
                       }
                     ],
@@ -12604,7 +13095,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ErrorCreating",
-                        "printedName": "FBSDKCoreKit.ErrorCreating",
+                        "printedName": "any FBSDKCoreKit.ErrorCreating",
                         "usr": "c:objc(pl)FBSDKErrorCreating"
                       }
                     ],
@@ -12649,7 +13140,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "ShareEventLogging",
-                    "printedName": "FBSDKShareKit.ShareEventLogging",
+                    "printedName": "any FBSDKShareKit.ShareEventLogging",
                     "usr": "s:13FBSDKShareKit17ShareEventLoggingP"
                   }
                 ],
@@ -12671,7 +13162,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ShareEventLogging",
-                        "printedName": "FBSDKShareKit.ShareEventLogging",
+                        "printedName": "any FBSDKShareKit.ShareEventLogging",
                         "usr": "s:13FBSDKShareKit17ShareEventLoggingP"
                       }
                     ],
@@ -12698,7 +13189,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ShareEventLogging",
-                        "printedName": "FBSDKShareKit.ShareEventLogging",
+                        "printedName": "any FBSDKShareKit.ShareEventLogging",
                         "usr": "s:13FBSDKShareKit17ShareEventLoggingP"
                       }
                     ],
@@ -12743,7 +13234,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "MediaLibrarySearching",
-                    "printedName": "FBSDKShareKit.MediaLibrarySearching",
+                    "printedName": "any FBSDKShareKit.MediaLibrarySearching",
                     "usr": "s:13FBSDKShareKit21MediaLibrarySearchingP"
                   }
                 ],
@@ -12765,7 +13256,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "MediaLibrarySearching",
-                        "printedName": "FBSDKShareKit.MediaLibrarySearching",
+                        "printedName": "any FBSDKShareKit.MediaLibrarySearching",
                         "usr": "s:13FBSDKShareKit21MediaLibrarySearchingP"
                       }
                     ],
@@ -12792,7 +13283,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "MediaLibrarySearching",
-                        "printedName": "FBSDKShareKit.MediaLibrarySearching",
+                        "printedName": "any FBSDKShareKit.MediaLibrarySearching",
                         "usr": "s:13FBSDKShareKit21MediaLibrarySearchingP"
                       }
                     ],
@@ -12843,25 +13334,25 @@
                   {
                     "kind": "TypeNominal",
                     "name": "ShareInternalURLOpening",
-                    "printedName": "FBSDKShareKit.ShareInternalURLOpening",
+                    "printedName": "any FBSDKShareKit.ShareInternalURLOpening",
                     "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKShareInternalURLOpening"
                   },
                   {
                     "kind": "TypeNominal",
                     "name": "InternalUtilityProtocol",
-                    "printedName": "FBSDKCoreKit.InternalUtilityProtocol",
+                    "printedName": "any FBSDKCoreKit.InternalUtilityProtocol",
                     "usr": "c:objc(pl)FBSDKInternalUtility"
                   },
                   {
                     "kind": "TypeNominal",
                     "name": "SettingsProtocol",
-                    "printedName": "FBSDKCoreKit.SettingsProtocol",
+                    "printedName": "any FBSDKCoreKit.SettingsProtocol",
                     "usr": "c:@M@FBSDKCoreKit@objc(pl)FBSDKSettings"
                   },
                   {
                     "kind": "TypeNominal",
                     "name": "ExistentialMetatype",
-                    "printedName": "(FBSDKShareKit.ShareUtilityProtocol & FBSDKShareKit.ShareValidating).Type",
+                    "printedName": "any (FBSDKShareKit.ShareUtilityProtocol & FBSDKShareKit.ShareValidating).Type",
                     "children": [
                       {
                         "kind": "TypeNominal",
@@ -12873,43 +13364,43 @@
                   {
                     "kind": "TypeNominal",
                     "name": "BridgeAPIRequestCreating",
-                    "printedName": "FBSDKCoreKit.BridgeAPIRequestCreating",
+                    "printedName": "any FBSDKCoreKit.BridgeAPIRequestCreating",
                     "usr": "c:objc(pl)FBSDKBridgeAPIRequestCreating"
                   },
                   {
                     "kind": "TypeNominal",
                     "name": "BridgeAPIRequestOpening",
-                    "printedName": "FBSDKCoreKit.BridgeAPIRequestOpening",
+                    "printedName": "any FBSDKCoreKit.BridgeAPIRequestOpening",
                     "usr": "c:objc(pl)FBSDKBridgeAPIRequestOpening"
                   },
                   {
                     "kind": "TypeNominal",
                     "name": "SocialComposeViewControllerFactoryProtocol",
-                    "printedName": "FBSDKShareKit.SocialComposeViewControllerFactoryProtocol",
+                    "printedName": "any FBSDKShareKit.SocialComposeViewControllerFactoryProtocol",
                     "usr": "s:13FBSDKShareKit42SocialComposeViewControllerFactoryProtocolP"
                   },
                   {
                     "kind": "TypeNominal",
                     "name": "_WindowFinding",
-                    "printedName": "FBSDKCoreKit._WindowFinding",
+                    "printedName": "any FBSDKCoreKit._WindowFinding",
                     "usr": "c:objc(pl)_FBSDKWindowFinding"
                   },
                   {
                     "kind": "TypeNominal",
                     "name": "ErrorCreating",
-                    "printedName": "FBSDKCoreKit.ErrorCreating",
+                    "printedName": "any FBSDKCoreKit.ErrorCreating",
                     "usr": "c:objc(pl)FBSDKErrorCreating"
                   },
                   {
                     "kind": "TypeNominal",
                     "name": "ShareEventLogging",
-                    "printedName": "FBSDKShareKit.ShareEventLogging",
+                    "printedName": "any FBSDKShareKit.ShareEventLogging",
                     "usr": "s:13FBSDKShareKit17ShareEventLoggingP"
                   },
                   {
                     "kind": "TypeNominal",
                     "name": "MediaLibrarySearching",
-                    "printedName": "FBSDKShareKit.MediaLibrarySearching",
+                    "printedName": "any FBSDKShareKit.MediaLibrarySearching",
                     "usr": "s:13FBSDKShareKit21MediaLibrarySearchingP"
                   }
                 ],
@@ -12925,7 +13416,23 @@
             "usr": "s:13FBSDKShareKit11ShareDialogC16TypeDependenciesV",
             "mangledName": "$s13FBSDKShareKit11ShareDialogC16TypeDependenciesV",
             "moduleName": "FBSDKShareKit",
-            "isFromExtension": true
+            "isFromExtension": true,
+            "conformances": [
+              {
+                "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              }
+            ]
           },
           {
             "kind": "Var",
@@ -13355,7 +13862,7 @@
               {
                 "kind": "TypeNominal",
                 "name": "Error",
-                "printedName": "Swift.Error",
+                "printedName": "any Swift.Error",
                 "usr": "s:s5ErrorP"
               }
             ],
@@ -13613,7 +14120,9 @@
                 "usr": "s:13FBSDKShareKit11ShareDialogC4ModeO3webyA2EmF",
                 "mangledName": "$s13FBSDKShareKit11ShareDialogC4ModeO3webyA2EmF",
                 "moduleName": "FBSDKShareKit",
+                "deprecated": true,
                 "declAttributes": [
+                  "Available",
                   "RawDocComment",
                   "ObjC"
                 ],
@@ -13655,7 +14164,9 @@
                 "usr": "s:13FBSDKShareKit11ShareDialogC4ModeO11feedBrowseryA2EmF",
                 "mangledName": "$s13FBSDKShareKit11ShareDialogC4ModeO11feedBrowseryA2EmF",
                 "moduleName": "FBSDKShareKit",
+                "deprecated": true,
                 "declAttributes": [
+                  "Available",
                   "RawDocComment",
                   "ObjC"
                 ],
@@ -13697,7 +14208,9 @@
                 "usr": "s:13FBSDKShareKit11ShareDialogC4ModeO7feedWebyA2EmF",
                 "mangledName": "$s13FBSDKShareKit11ShareDialogC4ModeO7feedWebyA2EmF",
                 "moduleName": "FBSDKShareKit",
+                "deprecated": true,
                 "declAttributes": [
+                  "Available",
                   "RawDocComment",
                   "ObjC"
                 ],
@@ -13832,6 +14345,20 @@
             "conformances": [
               {
                 "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
+              {
+                "kind": "Conformance",
                 "name": "Equatable",
                 "printedName": "Equatable",
                 "usr": "s:SQ",
@@ -13899,6 +14426,20 @@
             "printedName": "SharingDialog",
             "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingDialog",
             "mangledName": "$s13FBSDKShareKit13SharingDialogP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
           },
           {
             "kind": "Conformance",
@@ -14062,7 +14603,23 @@
         "declKind": "Protocol",
         "usr": "s:13FBSDKShareKit32ShareDialogConfigurationProtocolP",
         "mangledName": "$s13FBSDKShareKit32ShareDialogConfigurationProtocolP",
-        "moduleName": "FBSDKShareKit"
+        "moduleName": "FBSDKShareKit",
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
+        ]
       },
       {
         "kind": "Import",
@@ -14390,6 +14947,20 @@
         "conformances": [
           {
             "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "Equatable",
             "printedName": "Equatable",
             "usr": "s:SQ",
@@ -14519,7 +15090,23 @@
         "declKind": "Protocol",
         "usr": "s:13FBSDKShareKit17ShareEventLoggingP",
         "mangledName": "$s13FBSDKShareKit17ShareEventLoggingP",
-        "moduleName": "FBSDKShareKit"
+        "moduleName": "FBSDKShareKit",
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
+        ]
       },
       {
         "kind": "Import",
@@ -14584,6 +15171,22 @@
         "objc_name": "FBSDKShareInternalURLOpening",
         "declAttributes": [
           "ObjC"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
         ]
       },
       {
@@ -15700,17 +16303,17 @@
         "conformances": [
           {
             "kind": "Conformance",
-            "name": "SharingContent",
-            "printedName": "SharingContent",
-            "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent",
-            "mangledName": "$s13FBSDKShareKit14SharingContentP"
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
           },
           {
             "kind": "Conformance",
-            "name": "SharingValidatable",
-            "printedName": "SharingValidatable",
-            "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingValidatable",
-            "mangledName": "$s13FBSDKShareKit18SharingValidatableP"
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
           },
           {
             "kind": "Conformance",
@@ -15760,6 +16363,20 @@
             "printedName": "CustomDebugStringConvertible",
             "usr": "s:s28CustomDebugStringConvertibleP",
             "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SharingContent",
+            "printedName": "SharingContent",
+            "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent",
+            "mangledName": "$s13FBSDKShareKit14SharingContentP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SharingValidatable",
+            "printedName": "SharingValidatable",
+            "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingValidatable",
+            "mangledName": "$s13FBSDKShareKit18SharingValidatableP"
           }
         ]
       },
@@ -15778,6 +16395,22 @@
           "AccessControl",
           "ObjC",
           "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
         ]
       },
       {
@@ -15810,12 +16443,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Array",
-                "printedName": "[FBSDKShareKit.ShareMedia]",
+                "printedName": "[any FBSDKShareKit.ShareMedia]",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "ShareMedia",
-                    "printedName": "FBSDKShareKit.ShareMedia",
+                    "printedName": "any FBSDKShareKit.ShareMedia",
                     "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKShareMedia"
                   }
                 ],
@@ -15844,12 +16477,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Array",
-                    "printedName": "[FBSDKShareKit.ShareMedia]",
+                    "printedName": "[any FBSDKShareKit.ShareMedia]",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "ShareMedia",
-                        "printedName": "FBSDKShareKit.ShareMedia",
+                        "printedName": "any FBSDKShareKit.ShareMedia",
                         "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKShareMedia"
                       }
                     ],
@@ -15880,12 +16513,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Array",
-                    "printedName": "[FBSDKShareKit.ShareMedia]",
+                    "printedName": "[any FBSDKShareKit.ShareMedia]",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "ShareMedia",
-                        "printedName": "FBSDKShareKit.ShareMedia",
+                        "printedName": "any FBSDKShareKit.ShareMedia",
                         "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKShareMedia"
                       }
                     ],
@@ -16901,17 +17534,17 @@
         "conformances": [
           {
             "kind": "Conformance",
-            "name": "SharingContent",
-            "printedName": "SharingContent",
-            "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent",
-            "mangledName": "$s13FBSDKShareKit14SharingContentP"
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
           },
           {
             "kind": "Conformance",
-            "name": "SharingValidatable",
-            "printedName": "SharingValidatable",
-            "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingValidatable",
-            "mangledName": "$s13FBSDKShareKit18SharingValidatableP"
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
           },
           {
             "kind": "Conformance",
@@ -16961,6 +17594,20 @@
             "printedName": "CustomDebugStringConvertible",
             "usr": "s:s28CustomDebugStringConvertibleP",
             "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SharingContent",
+            "printedName": "SharingContent",
+            "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent",
+            "mangledName": "$s13FBSDKShareKit14SharingContentP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SharingValidatable",
+            "printedName": "SharingValidatable",
+            "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingValidatable",
+            "mangledName": "$s13FBSDKShareKit18SharingValidatableP"
           }
         ]
       },
@@ -17767,7 +18414,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "ErrorCreating",
-                    "printedName": "FBSDKCoreKit.ErrorCreating",
+                    "printedName": "any FBSDKCoreKit.ErrorCreating",
                     "usr": "c:objc(pl)FBSDKErrorCreating"
                   }
                 ],
@@ -17789,7 +18436,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ErrorCreating",
-                        "printedName": "FBSDKCoreKit.ErrorCreating",
+                        "printedName": "any FBSDKCoreKit.ErrorCreating",
                         "usr": "c:objc(pl)FBSDKErrorCreating"
                       }
                     ],
@@ -17816,7 +18463,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ErrorCreating",
-                        "printedName": "FBSDKCoreKit.ErrorCreating",
+                        "printedName": "any FBSDKCoreKit.ErrorCreating",
                         "usr": "c:objc(pl)FBSDKErrorCreating"
                       }
                     ],
@@ -17867,7 +18514,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "ErrorCreating",
-                    "printedName": "FBSDKCoreKit.ErrorCreating",
+                    "printedName": "any FBSDKCoreKit.ErrorCreating",
                     "usr": "c:objc(pl)FBSDKErrorCreating"
                   }
                 ],
@@ -17885,6 +18532,20 @@
             "moduleName": "FBSDKShareKit",
             "isFromExtension": true,
             "conformances": [
+              {
+                "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
               {
                 "kind": "Conformance",
                 "name": "Sendable",
@@ -18630,6 +19291,20 @@
             "conformances": [
               {
                 "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
+              {
+                "kind": "Conformance",
                 "name": "Sendable",
                 "printedName": "Sendable",
                 "usr": "s:s8SendableP",
@@ -18662,6 +19337,20 @@
             "printedName": "ShareMedia",
             "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKShareMedia",
             "mangledName": "$s13FBSDKShareKit10ShareMediaP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
           },
           {
             "kind": "Conformance",
@@ -19767,7 +20456,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "MediaLibrarySearching",
-                    "printedName": "FBSDKShareKit.MediaLibrarySearching",
+                    "printedName": "any FBSDKShareKit.MediaLibrarySearching",
                     "usr": "s:13FBSDKShareKit21MediaLibrarySearchingP"
                   }
                 ],
@@ -19789,7 +20478,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "MediaLibrarySearching",
-                        "printedName": "FBSDKShareKit.MediaLibrarySearching",
+                        "printedName": "any FBSDKShareKit.MediaLibrarySearching",
                         "usr": "s:13FBSDKShareKit21MediaLibrarySearchingP"
                       }
                     ],
@@ -19816,7 +20505,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "MediaLibrarySearching",
-                        "printedName": "FBSDKShareKit.MediaLibrarySearching",
+                        "printedName": "any FBSDKShareKit.MediaLibrarySearching",
                         "usr": "s:13FBSDKShareKit21MediaLibrarySearchingP"
                       }
                     ],
@@ -19861,7 +20550,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "ExistentialMetatype",
-                    "printedName": "FBSDKShareKit.ShareValidating.Type",
+                    "printedName": "any FBSDKShareKit.ShareValidating.Type",
                     "children": [
                       {
                         "kind": "TypeNominal",
@@ -19890,7 +20579,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ExistentialMetatype",
-                        "printedName": "FBSDKShareKit.ShareValidating.Type",
+                        "printedName": "any FBSDKShareKit.ShareValidating.Type",
                         "children": [
                           {
                             "kind": "TypeNominal",
@@ -19924,7 +20613,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ExistentialMetatype",
-                        "printedName": "FBSDKShareKit.ShareValidating.Type",
+                        "printedName": "any FBSDKShareKit.ShareValidating.Type",
                         "children": [
                           {
                             "kind": "TypeNominal",
@@ -19982,13 +20671,13 @@
                   {
                     "kind": "TypeNominal",
                     "name": "MediaLibrarySearching",
-                    "printedName": "FBSDKShareKit.MediaLibrarySearching",
+                    "printedName": "any FBSDKShareKit.MediaLibrarySearching",
                     "usr": "s:13FBSDKShareKit21MediaLibrarySearchingP"
                   },
                   {
                     "kind": "TypeNominal",
                     "name": "ExistentialMetatype",
-                    "printedName": "FBSDKShareKit.ShareValidating.Type",
+                    "printedName": "any FBSDKShareKit.ShareValidating.Type",
                     "children": [
                       {
                         "kind": "TypeNominal",
@@ -20011,7 +20700,23 @@
             "usr": "s:13FBSDKShareKit17SharePhotoContentC16TypeDependenciesV",
             "mangledName": "$s13FBSDKShareKit17SharePhotoContentC16TypeDependenciesV",
             "moduleName": "FBSDKShareKit",
-            "isFromExtension": true
+            "isFromExtension": true,
+            "conformances": [
+              {
+                "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              }
+            ]
           },
           {
             "kind": "Var",
@@ -20325,39 +21030,17 @@
         "conformances": [
           {
             "kind": "Conformance",
-            "name": "DependentAsType",
-            "printedName": "DependentAsType",
-            "children": [
-              {
-                "kind": "TypeWitness",
-                "name": "TypeDependencies",
-                "printedName": "TypeDependencies",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "TypeDependencies",
-                    "printedName": "FBSDKShareKit.SharePhotoContent.TypeDependencies",
-                    "usr": "s:13FBSDKShareKit17SharePhotoContentC16TypeDependenciesV"
-                  }
-                ]
-              }
-            ],
-            "usr": "s:13FBSDKShareKit15DependentAsTypeP",
-            "mangledName": "$s13FBSDKShareKit15DependentAsTypeP"
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
           },
           {
             "kind": "Conformance",
-            "name": "SharingContent",
-            "printedName": "SharingContent",
-            "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent",
-            "mangledName": "$s13FBSDKShareKit14SharingContentP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "SharingValidatable",
-            "printedName": "SharingValidatable",
-            "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingValidatable",
-            "mangledName": "$s13FBSDKShareKit18SharingValidatableP"
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
           },
           {
             "kind": "Conformance",
@@ -20407,6 +21090,42 @@
             "printedName": "CustomDebugStringConvertible",
             "usr": "s:s28CustomDebugStringConvertibleP",
             "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "DependentAsType",
+            "printedName": "DependentAsType",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "TypeDependencies",
+                "printedName": "TypeDependencies",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "TypeDependencies",
+                    "printedName": "FBSDKShareKit.SharePhotoContent.TypeDependencies",
+                    "usr": "s:13FBSDKShareKit17SharePhotoContentC16TypeDependenciesV"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:13FBSDKShareKit15DependentAsTypeP",
+            "mangledName": "$s13FBSDKShareKit15DependentAsTypeP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SharingContent",
+            "printedName": "SharingContent",
+            "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent",
+            "mangledName": "$s13FBSDKShareKit14SharingContentP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SharingValidatable",
+            "printedName": "SharingValidatable",
+            "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingValidatable",
+            "mangledName": "$s13FBSDKShareKit18SharingValidatableP"
           }
         ]
       },
@@ -20433,7 +21152,7 @@
               {
                 "kind": "TypeNominal",
                 "name": "ShareInternalURLOpening",
-                "printedName": "FBSDKShareKit.ShareInternalURLOpening",
+                "printedName": "any FBSDKShareKit.ShareInternalURLOpening",
                 "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKShareInternalURLOpening"
               }
             ],
@@ -20457,7 +21176,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "ShareInternalURLOpening",
-                    "printedName": "FBSDKShareKit.ShareInternalURLOpening",
+                    "printedName": "any FBSDKShareKit.ShareInternalURLOpening",
                     "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKShareInternalURLOpening"
                   }
                 ],
@@ -20483,10 +21202,31 @@
         "conformances": [
           {
             "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "Sendable",
             "printedName": "Sendable",
             "usr": "s:s8SendableP",
             "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "BitwiseCopyable",
+            "printedName": "BitwiseCopyable",
+            "usr": "s:s15BitwiseCopyableP",
+            "mangledName": "$ss15BitwiseCopyableP"
           }
         ]
       },
@@ -20540,7 +21280,7 @@
               {
                 "kind": "TypeNominal",
                 "name": "SharingContent",
-                "printedName": "FBSDKShareKit.SharingContent",
+                "printedName": "any FBSDKShareKit.SharingContent",
                 "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
               }
             ],
@@ -20647,7 +21387,7 @@
               {
                 "kind": "TypeNominal",
                 "name": "SharingContent",
-                "printedName": "FBSDKShareKit.SharingContent",
+                "printedName": "any FBSDKShareKit.SharingContent",
                 "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
               }
             ],
@@ -20734,7 +21474,7 @@
               {
                 "kind": "TypeNominal",
                 "name": "SharingContent",
-                "printedName": "FBSDKShareKit.SharingContent",
+                "printedName": "any FBSDKShareKit.SharingContent",
                 "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
               },
               {
@@ -20775,7 +21515,7 @@
               {
                 "kind": "TypeNominal",
                 "name": "SharingContent",
-                "printedName": "FBSDKShareKit.SharingContent",
+                "printedName": "any FBSDKShareKit.SharingContent",
                 "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
               }
             ],
@@ -20823,7 +21563,23 @@
         "declKind": "Protocol",
         "usr": "s:13FBSDKShareKit20ShareUtilityProtocolP",
         "mangledName": "$s13FBSDKShareKit20ShareUtilityProtocolP",
-        "moduleName": "FBSDKShareKit"
+        "moduleName": "FBSDKShareKit",
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
+        ]
       },
       {
         "kind": "TypeDecl",
@@ -21108,6 +21864,20 @@
         "conformances": [
           {
             "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "Sendable",
             "printedName": "Sendable",
             "usr": "s:s8SendableP",
@@ -21313,7 +22083,7 @@
               {
                 "kind": "TypeNominal",
                 "name": "SharingContent",
-                "printedName": "FBSDKShareKit.SharingContent",
+                "printedName": "any FBSDKShareKit.SharingContent",
                 "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
               },
               {
@@ -21339,7 +22109,23 @@
         "declKind": "Protocol",
         "usr": "s:13FBSDKShareKit15ShareValidatingP",
         "mangledName": "$s13FBSDKShareKit15ShareValidatingP",
-        "moduleName": "FBSDKShareKit"
+        "moduleName": "FBSDKShareKit",
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
+        ]
       },
       {
         "kind": "Import",
@@ -22073,7 +22859,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "ErrorCreating",
-                    "printedName": "FBSDKCoreKit.ErrorCreating",
+                    "printedName": "any FBSDKCoreKit.ErrorCreating",
                     "usr": "c:objc(pl)FBSDKErrorCreating"
                   }
                 ],
@@ -22095,7 +22881,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ErrorCreating",
-                        "printedName": "FBSDKCoreKit.ErrorCreating",
+                        "printedName": "any FBSDKCoreKit.ErrorCreating",
                         "usr": "c:objc(pl)FBSDKErrorCreating"
                       }
                     ],
@@ -22122,7 +22908,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ErrorCreating",
-                        "printedName": "FBSDKCoreKit.ErrorCreating",
+                        "printedName": "any FBSDKCoreKit.ErrorCreating",
                         "usr": "c:objc(pl)FBSDKErrorCreating"
                       }
                     ],
@@ -22173,7 +22959,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "ErrorCreating",
-                    "printedName": "FBSDKCoreKit.ErrorCreating",
+                    "printedName": "any FBSDKCoreKit.ErrorCreating",
                     "usr": "c:objc(pl)FBSDKErrorCreating"
                   }
                 ],
@@ -22191,6 +22977,20 @@
             "moduleName": "FBSDKShareKit",
             "isFromExtension": true,
             "conformances": [
+              {
+                "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
               {
                 "kind": "Conformance",
                 "name": "Sendable",
@@ -22936,6 +23736,20 @@
             "conformances": [
               {
                 "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
+              {
+                "kind": "Conformance",
                 "name": "Sendable",
                 "printedName": "Sendable",
                 "usr": "s:s8SendableP",
@@ -22968,6 +23782,20 @@
             "printedName": "ShareMedia",
             "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKShareMedia",
             "mangledName": "$s13FBSDKShareKit10ShareMediaP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
           },
           {
             "kind": "Conformance",
@@ -24042,7 +24870,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "ExistentialMetatype",
-                    "printedName": "FBSDKShareKit.ShareValidating.Type",
+                    "printedName": "any FBSDKShareKit.ShareValidating.Type",
                     "children": [
                       {
                         "kind": "TypeNominal",
@@ -24071,7 +24899,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ExistentialMetatype",
-                        "printedName": "FBSDKShareKit.ShareValidating.Type",
+                        "printedName": "any FBSDKShareKit.ShareValidating.Type",
                         "children": [
                           {
                             "kind": "TypeNominal",
@@ -24105,7 +24933,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "ExistentialMetatype",
-                        "printedName": "FBSDKShareKit.ShareValidating.Type",
+                        "printedName": "any FBSDKShareKit.ShareValidating.Type",
                         "children": [
                           {
                             "kind": "TypeNominal",
@@ -24157,7 +24985,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "MediaLibrarySearching",
-                    "printedName": "FBSDKShareKit.MediaLibrarySearching",
+                    "printedName": "any FBSDKShareKit.MediaLibrarySearching",
                     "usr": "s:13FBSDKShareKit21MediaLibrarySearchingP"
                   }
                 ],
@@ -24179,7 +25007,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "MediaLibrarySearching",
-                        "printedName": "FBSDKShareKit.MediaLibrarySearching",
+                        "printedName": "any FBSDKShareKit.MediaLibrarySearching",
                         "usr": "s:13FBSDKShareKit21MediaLibrarySearchingP"
                       }
                     ],
@@ -24206,7 +25034,7 @@
                       {
                         "kind": "TypeNominal",
                         "name": "MediaLibrarySearching",
-                        "printedName": "FBSDKShareKit.MediaLibrarySearching",
+                        "printedName": "any FBSDKShareKit.MediaLibrarySearching",
                         "usr": "s:13FBSDKShareKit21MediaLibrarySearchingP"
                       }
                     ],
@@ -24257,7 +25085,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "ExistentialMetatype",
-                    "printedName": "FBSDKShareKit.ShareValidating.Type",
+                    "printedName": "any FBSDKShareKit.ShareValidating.Type",
                     "children": [
                       {
                         "kind": "TypeNominal",
@@ -24270,7 +25098,7 @@
                   {
                     "kind": "TypeNominal",
                     "name": "MediaLibrarySearching",
-                    "printedName": "FBSDKShareKit.MediaLibrarySearching",
+                    "printedName": "any FBSDKShareKit.MediaLibrarySearching",
                     "usr": "s:13FBSDKShareKit21MediaLibrarySearchingP"
                   }
                 ],
@@ -24286,7 +25114,23 @@
             "usr": "s:13FBSDKShareKit17ShareVideoContentC16TypeDependenciesV",
             "mangledName": "$s13FBSDKShareKit17ShareVideoContentC16TypeDependenciesV",
             "moduleName": "FBSDKShareKit",
-            "isFromExtension": true
+            "isFromExtension": true,
+            "conformances": [
+              {
+                "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              }
+            ]
           },
           {
             "kind": "Var",
@@ -24658,39 +25502,17 @@
         "conformances": [
           {
             "kind": "Conformance",
-            "name": "DependentAsType",
-            "printedName": "DependentAsType",
-            "children": [
-              {
-                "kind": "TypeWitness",
-                "name": "TypeDependencies",
-                "printedName": "TypeDependencies",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "TypeDependencies",
-                    "printedName": "FBSDKShareKit.ShareVideoContent.TypeDependencies",
-                    "usr": "s:13FBSDKShareKit17ShareVideoContentC16TypeDependenciesV"
-                  }
-                ]
-              }
-            ],
-            "usr": "s:13FBSDKShareKit15DependentAsTypeP",
-            "mangledName": "$s13FBSDKShareKit15DependentAsTypeP"
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
           },
           {
             "kind": "Conformance",
-            "name": "SharingContent",
-            "printedName": "SharingContent",
-            "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent",
-            "mangledName": "$s13FBSDKShareKit14SharingContentP"
-          },
-          {
-            "kind": "Conformance",
-            "name": "SharingValidatable",
-            "printedName": "SharingValidatable",
-            "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingValidatable",
-            "mangledName": "$s13FBSDKShareKit18SharingValidatableP"
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
           },
           {
             "kind": "Conformance",
@@ -24740,6 +25562,42 @@
             "printedName": "CustomDebugStringConvertible",
             "usr": "s:s28CustomDebugStringConvertibleP",
             "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "DependentAsType",
+            "printedName": "DependentAsType",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "TypeDependencies",
+                "printedName": "TypeDependencies",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "TypeDependencies",
+                    "printedName": "FBSDKShareKit.ShareVideoContent.TypeDependencies",
+                    "usr": "s:13FBSDKShareKit17ShareVideoContentC16TypeDependenciesV"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:13FBSDKShareKit15DependentAsTypeP",
+            "mangledName": "$s13FBSDKShareKit15DependentAsTypeP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SharingContent",
+            "printedName": "SharingContent",
+            "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent",
+            "mangledName": "$s13FBSDKShareKit14SharingContentP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SharingValidatable",
+            "printedName": "SharingValidatable",
+            "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingValidatable",
+            "mangledName": "$s13FBSDKShareKit18SharingValidatableP"
           }
         ]
       },
@@ -24766,7 +25624,7 @@
               {
                 "kind": "TypeNominal",
                 "name": "WeakStorage",
-                "printedName": "FBSDKShareKit.SharingDelegate?"
+                "printedName": "(any FBSDKShareKit.SharingDelegate)?"
               }
             ],
             "declKind": "Var",
@@ -24789,12 +25647,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "FBSDKShareKit.SharingDelegate?",
+                    "printedName": "(any FBSDKShareKit.SharingDelegate)?",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "SharingDelegate",
-                        "printedName": "FBSDKShareKit.SharingDelegate",
+                        "printedName": "any FBSDKShareKit.SharingDelegate",
                         "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingDelegate"
                       }
                     ],
@@ -24827,12 +25685,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "FBSDKShareKit.SharingDelegate?",
+                    "printedName": "(any FBSDKShareKit.SharingDelegate)?",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "SharingDelegate",
-                        "printedName": "FBSDKShareKit.SharingDelegate",
+                        "printedName": "any FBSDKShareKit.SharingDelegate",
                         "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingDelegate"
                       }
                     ],
@@ -24862,12 +25720,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBSDKShareKit.SharingContent?",
+                "printedName": "(any FBSDKShareKit.SharingContent)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "SharingContent",
-                    "printedName": "FBSDKShareKit.SharingContent",
+                    "printedName": "any FBSDKShareKit.SharingContent",
                     "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
                   }
                 ],
@@ -24892,12 +25750,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "FBSDKShareKit.SharingContent?",
+                    "printedName": "(any FBSDKShareKit.SharingContent)?",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "SharingContent",
-                        "printedName": "FBSDKShareKit.SharingContent",
+                        "printedName": "any FBSDKShareKit.SharingContent",
                         "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
                       }
                     ],
@@ -24930,12 +25788,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "FBSDKShareKit.SharingContent?",
+                    "printedName": "(any FBSDKShareKit.SharingContent)?",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "SharingContent",
-                        "printedName": "FBSDKShareKit.SharingContent",
+                        "printedName": "any FBSDKShareKit.SharingContent",
                         "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
                       }
                     ],
@@ -25075,6 +25933,22 @@
           "AccessControl",
           "ObjC",
           "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
         ]
       },
       {
@@ -25100,12 +25974,12 @@
               {
                 "kind": "TypeNominal",
                 "name": "Optional",
-                "printedName": "FBSDKShareKit.SharingContent?",
+                "printedName": "(any FBSDKShareKit.SharingContent)?",
                 "children": [
                   {
                     "kind": "TypeNominal",
                     "name": "SharingContent",
-                    "printedName": "FBSDKShareKit.SharingContent",
+                    "printedName": "any FBSDKShareKit.SharingContent",
                     "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
                   }
                 ],
@@ -25130,12 +26004,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "FBSDKShareKit.SharingContent?",
+                    "printedName": "(any FBSDKShareKit.SharingContent)?",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "SharingContent",
-                        "printedName": "FBSDKShareKit.SharingContent",
+                        "printedName": "any FBSDKShareKit.SharingContent",
                         "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
                       }
                     ],
@@ -25168,12 +26042,12 @@
                   {
                     "kind": "TypeNominal",
                     "name": "Optional",
-                    "printedName": "FBSDKShareKit.SharingContent?",
+                    "printedName": "(any FBSDKShareKit.SharingContent)?",
                     "children": [
                       {
                         "kind": "TypeNominal",
                         "name": "SharingContent",
-                        "printedName": "FBSDKShareKit.SharingContent",
+                        "printedName": "any FBSDKShareKit.SharingContent",
                         "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
                       }
                     ],
@@ -25207,6 +26081,22 @@
           "AccessControl",
           "ObjC",
           "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
         ]
       },
       {
@@ -25995,6 +26885,20 @@
         "conformances": [
           {
             "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "SharingValidatable",
             "printedName": "SharingValidatable",
             "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingValidatable",
@@ -26030,7 +26934,7 @@
               {
                 "kind": "TypeNominal",
                 "name": "Sharing",
-                "printedName": "FBSDKShareKit.Sharing",
+                "printedName": "any FBSDKShareKit.Sharing",
                 "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharing"
               },
               {
@@ -26081,13 +26985,13 @@
               {
                 "kind": "TypeNominal",
                 "name": "Sharing",
-                "printedName": "FBSDKShareKit.Sharing",
+                "printedName": "any FBSDKShareKit.Sharing",
                 "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharing"
               },
               {
                 "kind": "TypeNominal",
                 "name": "Error",
-                "printedName": "Swift.Error",
+                "printedName": "any Swift.Error",
                 "usr": "s:s5ErrorP"
               }
             ],
@@ -26119,7 +27023,7 @@
               {
                 "kind": "TypeNominal",
                 "name": "Sharing",
-                "printedName": "FBSDKShareKit.Sharing",
+                "printedName": "any FBSDKShareKit.Sharing",
                 "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharing"
               }
             ],
@@ -26150,6 +27054,22 @@
           "AccessControl",
           "ObjC",
           "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
         ]
       },
       {
@@ -26259,6 +27179,20 @@
         "conformances": [
           {
             "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "Sharing",
             "printedName": "Sharing",
             "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharing",
@@ -26326,6 +27260,22 @@
           "AccessControl",
           "ObjC",
           "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
         ]
       },
       {
@@ -26394,6 +27344,20 @@
         "conformances": [
           {
             "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "SocialComposeViewControllerFactoryProtocol",
             "printedName": "SocialComposeViewControllerFactoryProtocol",
             "usr": "s:13FBSDKShareKit42SocialComposeViewControllerFactoryProtocolP",
@@ -26442,7 +27406,23 @@
         "declKind": "Protocol",
         "usr": "s:13FBSDKShareKit42SocialComposeViewControllerFactoryProtocolP",
         "mangledName": "$s13FBSDKShareKit42SocialComposeViewControllerFactoryProtocolP",
-        "moduleName": "FBSDKShareKit"
+        "moduleName": "FBSDKShareKit",
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
+        ]
       },
       {
         "kind": "Import",
@@ -26512,7 +27492,23 @@
         "declKind": "Protocol",
         "usr": "s:13FBSDKShareKit28UserInterfaceStringProvidingP",
         "mangledName": "$s13FBSDKShareKit28UserInterfaceStringProvidingP",
-        "moduleName": "FBSDKShareKit"
+        "moduleName": "FBSDKShareKit",
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
+        ]
       },
       {
         "kind": "Import",
@@ -26722,7 +27718,7 @@
               {
                 "kind": "TypeNominal",
                 "name": "SharingContent",
-                "printedName": "FBSDKShareKit.SharingContent",
+                "printedName": "any FBSDKShareKit.SharingContent",
                 "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
               },
               {
@@ -26756,7 +27752,7 @@
               {
                 "kind": "TypeNominal",
                 "name": "SharingContent",
-                "printedName": "FBSDKShareKit.SharingContent",
+                "printedName": "any FBSDKShareKit.SharingContent",
                 "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
               }
             ],
@@ -26878,7 +27874,7 @@
               {
                 "kind": "TypeNominal",
                 "name": "SharingContent",
-                "printedName": "FBSDKShareKit.SharingContent",
+                "printedName": "any FBSDKShareKit.SharingContent",
                 "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
               }
             ],
@@ -26959,7 +27955,7 @@
               {
                 "kind": "TypeNominal",
                 "name": "SharingContent",
-                "printedName": "FBSDKShareKit.SharingContent",
+                "printedName": "any FBSDKShareKit.SharingContent",
                 "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
               },
               {
@@ -26998,7 +27994,7 @@
               {
                 "kind": "TypeNominal",
                 "name": "SharingContent",
-                "printedName": "FBSDKShareKit.SharingContent",
+                "printedName": "any FBSDKShareKit.SharingContent",
                 "usr": "c:@M@FBSDKShareKit@objc(pl)FBSDKSharingContent"
               }
             ],
@@ -27046,6 +28042,20 @@
           "RawDocComment"
         ],
         "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
           {
             "kind": "Conformance",
             "name": "ShareValidating",
@@ -27153,6 +28163,20 @@
             "conformances": [
               {
                 "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
+              {
+                "kind": "Conformance",
                 "name": "Error",
                 "printedName": "Error",
                 "usr": "s:s5ErrorP",
@@ -27240,6 +28264,20 @@
           "ObjectiveC.NSObject"
         ],
         "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
           {
             "kind": "Conformance",
             "name": "Equatable",
@@ -27733,6 +28771,20 @@
         "conformances": [
           {
             "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "_ObjectiveCBridgeable",
             "printedName": "_ObjectiveCBridgeable",
             "children": [
@@ -28141,6 +29193,20 @@
         "conformances": [
           {
             "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "_ObjectiveCBridgeable",
             "printedName": "_ObjectiveCBridgeable",
             "children": [
@@ -28232,6 +29298,20 @@
         "conformances": [
           {
             "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "ShareDialogConfigurationProtocol",
             "printedName": "ShareDialogConfigurationProtocol",
             "usr": "s:13FBSDKShareKit32ShareDialogConfigurationProtocolP",
@@ -28281,6 +29361,20 @@
           "ObjectiveC.NSObject"
         ],
         "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
           {
             "kind": "Conformance",
             "name": "Equatable",
@@ -28350,6 +29444,7 @@
         "intro_iOS": "2.0",
         "objc_name": "UIApplication",
         "declAttributes": [
+          "Preconcurrency",
           "Available",
           "ObjC",
           "NonSendable",
@@ -28364,6 +29459,20 @@
           "ObjectiveC.NSObject"
         ],
         "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
           {
             "kind": "Conformance",
             "name": "Equatable",
@@ -28451,6 +29560,20 @@
         "conformances": [
           {
             "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
             "name": "Equatable",
             "printedName": "Equatable",
             "usr": "s:SQ",
@@ -28512,534 +29635,534 @@
   },
   "ConstValues": [
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/AppInviteContent.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/AppInviteContent.swift",
       "kind": "IntegerLiteral",
       "offset": 560,
       "length": 9,
       "value": "1"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/AppInviteContent.swift",
-      "kind": "IntegerLiteral",
-      "offset": 560,
-      "length": 9,
-      "value": "1"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/AppInviteContent.swift",
-      "kind": "StringLiteral",
-      "offset": 338,
-      "length": 16,
-      "value": "\"FBSDKShareKit.AppInviteContent\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/ContentFlags.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/ContentFlags.swift",
       "kind": "BooleanLiteral",
       "offset": 367,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/ContentFlags.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/ContentFlags.swift",
       "kind": "BooleanLiteral",
       "offset": 401,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/ContentFlags.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/ContentFlags.swift",
       "kind": "BooleanLiteral",
       "offset": 435,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/Hashtag.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/FBSendButton.swift",
       "kind": "StringLiteral",
-      "offset": 354,
-      "length": 7,
-      "value": "\"FBSDKShareKit.Hashtag\""
+      "offset": 991,
+      "length": 6,
+      "value": "\"send\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/MessageDialog.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/FBSendButton.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1096,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/FBSendButton.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1142,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/FBSendButton.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1216,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/FBSendButton.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1253,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/FBShareButton.swift",
+      "kind": "StringLiteral",
+      "offset": 942,
+      "length": 7,
+      "value": "\"share\""
+    },
+    {
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/FBShareButton.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1048,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/FBShareButton.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1094,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/FBShareButton.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1168,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/FBShareButton.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1205,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/Hashtag.swift",
+      "kind": "StringLiteral",
+      "offset": 907,
+      "length": 43,
+      "value": "\"Invalid hashtag '\""
+    },
+    {
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/Hashtag.swift",
+      "kind": "StringLiteral",
+      "offset": 948,
+      "length": 2,
+      "value": "\"'\""
+    },
+    {
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/Hashtag.swift",
+      "kind": "StringLiteral",
+      "offset": 1273,
+      "length": 9,
+      "value": "\"^#\\w+$\""
+    },
+    {
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/MessageDialog.swift",
       "kind": "BooleanLiteral",
       "offset": 1367,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/MessageDialog.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/MessageDialog.swift",
       "kind": "BooleanLiteral",
       "offset": 1508,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventNames.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventNames.swift",
       "kind": "StringLiteral",
       "offset": 341,
       "length": 32,
       "value": "\"fb_messenger_dialog_share_show\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventNames.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventNames.swift",
       "kind": "StringLiteral",
       "offset": 432,
       "length": 34,
       "value": "\"fb_messenger_dialog_share_result\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventNames.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventNames.swift",
       "kind": "StringLiteral",
       "offset": 544,
       "length": 27,
       "value": "\"fb_send_button_impression\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventNames.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventNames.swift",
       "kind": "StringLiteral",
       "offset": 620,
       "length": 24,
       "value": "\"fb_send_button_did_tap\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventNames.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventNames.swift",
       "kind": "StringLiteral",
       "offset": 724,
       "length": 28,
       "value": "\"fb_share_button_impression\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventNames.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventNames.swift",
       "kind": "StringLiteral",
       "offset": 802,
       "length": 25,
       "value": "\"fb_share_button_did_tap\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventNames.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventNames.swift",
       "kind": "StringLiteral",
       "offset": 901,
       "length": 22,
       "value": "\"fb_dialog_share_show\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventNames.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventNames.swift",
       "kind": "StringLiteral",
       "offset": 973,
       "length": 24,
       "value": "\"fb_dialog_share_result\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
       "kind": "StringLiteral",
       "offset": 320,
       "length": 33,
       "value": "\"fb_dialog_outcome_error_message\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
       "kind": "StringLiteral",
       "offset": 402,
       "length": 19,
       "value": "\"fb_dialog_outcome\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
       "kind": "StringLiteral",
       "offset": 479,
       "length": 30,
       "value": "\"fb_dialog_share_content_type\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
       "kind": "StringLiteral",
       "offset": 555,
       "length": 16,
       "value": "\"fb_dialog_mode\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
       "kind": "StringLiteral",
       "offset": 631,
       "length": 33,
       "value": "\"fb_dialog_share_content_page_id\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
       "kind": "StringLiteral",
       "offset": 722,
       "length": 30,
       "value": "\"fb_dialog_share_content_uuid\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
       "kind": "StringLiteral",
       "offset": 844,
       "length": 11,
       "value": "\"Cancelled\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
       "kind": "StringLiteral",
       "offset": 883,
       "length": 11,
       "value": "\"Completed\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
       "kind": "StringLiteral",
       "offset": 919,
       "length": 8,
       "value": "\"Failed\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
       "kind": "StringLiteral",
       "offset": 983,
       "length": 8,
       "value": "\"Status\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
       "kind": "StringLiteral",
       "offset": 1015,
       "length": 7,
       "value": "\"Photo\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
       "kind": "StringLiteral",
       "offset": 1046,
       "length": 7,
       "value": "\"Video\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
       "kind": "StringLiteral",
       "offset": 1078,
       "length": 8,
       "value": "\"Camera\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Reporting\/ShareAppEventParameters.swift",
       "kind": "StringLiteral",
       "offset": 1112,
       "length": 9,
       "value": "\"Unknown\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Bridging\/ShareBridgeAPI.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Bridging\/ShareBridgeAPI.swift",
       "kind": "StringLiteral",
       "offset": 296,
       "length": 8,
       "value": "\"camera\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Bridging\/ShareBridgeAPI.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Bridging\/ShareBridgeAPI.swift",
       "kind": "StringLiteral",
       "offset": 328,
       "length": 7,
       "value": "\"share\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Bridging\/ShareBridgeAPI.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Bridging\/ShareBridgeAPI.swift",
       "kind": "StringLiteral",
       "offset": 389,
       "length": 19,
       "value": "\"completionGesture\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Bridging\/ShareBridgeAPI.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Bridging\/ShareBridgeAPI.swift",
       "kind": "StringLiteral",
       "offset": 438,
       "length": 8,
       "value": "\"cancel\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Bridging\/ShareBridgeAPI.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Bridging\/ShareBridgeAPI.swift",
       "kind": "StringLiteral",
       "offset": 496,
       "length": 8,
       "value": "\"postId\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Bridging\/ShareBridgeAPI.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Bridging\/ShareBridgeAPI.swift",
       "kind": "StringLiteral",
       "offset": 536,
       "length": 9,
       "value": "\"post_id\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/ShareCameraEffectContent.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/ShareCameraEffectContent.swift",
       "kind": "StringLiteral",
       "offset": 523,
       "length": 2,
       "value": "\"\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialog.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialog.swift",
       "kind": "StringLiteral",
       "offset": 676,
-      "length": 6,
-      "value": "\"feed\""
+      "length": 7,
+      "value": "\"share\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialog.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialog.swift",
       "kind": "BooleanLiteral",
-      "offset": 741,
+      "offset": 742,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialog.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialog.swift",
       "kind": "BooleanLiteral",
-      "offset": 856,
+      "offset": 857,
       "length": 4,
       "value": "true"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialog.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialog.swift",
       "kind": "BooleanLiteral",
-      "offset": 1817,
+      "offset": 1818,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialog.swift",
-      "kind": "StringLiteral",
-      "offset": 400,
-      "length": 11,
-      "value": "\"FBSDKShareKit.ShareDialog\""
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialog.swift",
+      "kind": "BooleanLiteral",
+      "offset": 5831,
+      "length": 5,
+      "value": "false"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialog.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialog.swift",
+      "kind": "BooleanLiteral",
+      "offset": 5895,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialog.swift",
+      "kind": "BooleanLiteral",
+      "offset": 5927,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialog.swift",
       "kind": "Array",
-      "offset": 22128,
+      "offset": 22557,
       "length": 2,
       "value": "[]"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialog.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialog.swift",
       "kind": "StringLiteral",
-      "offset": 29908,
+      "offset": 31584,
       "length": 8,
       "value": "\"app_id\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialog.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialog.swift",
       "kind": "StringLiteral",
-      "offset": 29976,
+      "offset": 31652,
       "length": 10,
       "value": "\"hashtags\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialog.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialog.swift",
       "kind": "StringLiteral",
-      "offset": 30047,
+      "offset": 31723,
       "length": 8,
       "value": "\"quotes\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialogMode.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialogMode.swift",
       "kind": "IntegerLiteral",
       "offset": 692,
       "length": 6,
       "value": "1"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialogMode.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialogMode.swift",
       "kind": "IntegerLiteral",
       "offset": 772,
       "length": 10,
       "value": "2"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialogMode.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialogMode.swift",
       "kind": "IntegerLiteral",
       "offset": 832,
       "length": 7,
       "value": "3"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialogMode.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialogMode.swift",
       "kind": "IntegerLiteral",
-      "offset": 909,
+      "offset": 1058,
       "length": 3,
       "value": "4"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialogMode.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialogMode.swift",
       "kind": "IntegerLiteral",
-      "offset": 967,
+      "offset": 1286,
       "length": 11,
       "value": "5"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialogMode.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialogMode.swift",
       "kind": "IntegerLiteral",
-      "offset": 1053,
+      "offset": 1526,
       "length": 7,
       "value": "6"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialogMode.swift",
-      "kind": "IntegerLiteral",
-      "offset": 692,
-      "length": 6,
-      "value": "1"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialogMode.swift",
-      "kind": "IntegerLiteral",
-      "offset": 772,
-      "length": 10,
-      "value": "2"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialogMode.swift",
-      "kind": "IntegerLiteral",
-      "offset": 832,
-      "length": 7,
-      "value": "3"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialogMode.swift",
-      "kind": "IntegerLiteral",
-      "offset": 909,
-      "length": 3,
-      "value": "4"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialogMode.swift",
-      "kind": "IntegerLiteral",
-      "offset": 967,
-      "length": 11,
-      "value": "5"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/ShareDialogMode.swift",
-      "kind": "IntegerLiteral",
-      "offset": 1053,
-      "length": 7,
-      "value": "6"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Core\/ShareError.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Core\/ShareError.swift",
       "kind": "StringLiteral",
       "offset": 399,
       "length": 24,
       "value": "\"com.facebook.sdk.share\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Core\/ShareError.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Core\/ShareError.swift",
       "kind": "IntegerLiteral",
       "offset": 608,
       "length": 3,
       "value": "200"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Core\/ShareError.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Core\/ShareError.swift",
       "kind": "IntegerLiteral",
       "offset": 687,
       "length": 9,
       "value": "201"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Core\/ShareError.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Core\/ShareError.swift",
       "kind": "IntegerLiteral",
       "offset": 845,
       "length": 18,
       "value": "202"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Core\/ShareError.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Core\/ShareError.swift",
       "kind": "IntegerLiteral",
       "offset": 913,
       "length": 7,
       "value": "203"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Core\/ShareError.swift",
-      "kind": "IntegerLiteral",
-      "offset": 608,
-      "length": 3,
-      "value": "200"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Core\/ShareError.swift",
-      "kind": "IntegerLiteral",
-      "offset": 687,
-      "length": 9,
-      "value": "201"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Core\/ShareError.swift",
-      "kind": "IntegerLiteral",
-      "offset": 845,
-      "length": 18,
-      "value": "202"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Core\/ShareError.swift",
-      "kind": "IntegerLiteral",
-      "offset": 913,
-      "length": 7,
-      "value": "203"
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/SharePhoto.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/SharePhoto.swift",
       "kind": "BooleanLiteral",
       "offset": 3009,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/SharePhoto.swift",
-      "kind": "StringLiteral",
-      "offset": 357,
-      "length": 10,
-      "value": "\"FBSDKShareKit.SharePhoto\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/SharePhotoContent.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/SharePhotoContent.swift",
       "kind": "IntegerLiteral",
       "offset": 3474,
       "length": 1,
       "value": "1"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/SharePhotoContent.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/SharePhotoContent.swift",
       "kind": "IntegerLiteral",
       "offset": 3480,
       "length": 1,
       "value": "6"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/ShareVideo.swift",
-      "kind": "StringLiteral",
-      "offset": 344,
-      "length": 10,
-      "value": "\"FBSDKShareKit.ShareVideo\""
-    },
-    {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/SocialComposeViewControllerFactory.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/UserInterface\/SocialComposeViewControllerFactory.swift",
       "kind": "StringLiteral",
       "offset": 367,
       "length": 27,
       "value": "\"com.apple.social.facebook\""
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/_ShareUtility.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/_ShareUtility.swift",
       "kind": "Array",
       "offset": 2340,
       "length": 2,
       "value": "[]"
     },
     {
-      "filePath": "\/Users\/kylinchang\/Workspace\/internal\/facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/_ShareUtility.swift",
+      "filePath": "\/data\/sandcastle\/boxes\/trunk-git-facebook-ios-sdk\/FBSDKShareKit\/FBSDKShareKit\/Content\/_ShareUtility.swift",
       "kind": "Array",
-      "offset": 5265,
+      "offset": 5281,
       "length": 2,
       "value": "[]"
     }

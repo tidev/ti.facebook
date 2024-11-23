@@ -18,7 +18,7 @@
 		</data>
 		<key>Headers/FBSDKLoginKit-Swift.h</key>
 		<data>
-		6ZAocDZc5rBFRDWH1CbFsBvYTvw=
+		lqiKpJRCue2V4MH+lRxbYjn+apo=
 		</data>
 		<key>Headers/FBSDKLoginKit.h</key>
 		<data>
@@ -30,61 +30,53 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		v8juCxxbOy4srXLytjRzOFcWPSU=
+		XDPCKVS0IXCUj9QQKnWLNBzgOzg=
 		</data>
 		<key>Modules/FBSDKLoginKit.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		nZrMu81f17IY8PcqRtdfBXUp9XA=
+		l0uNoQ0eeTUEOttlNk1ZozzuHVU=
 		</data>
 		<key>Modules/FBSDKLoginKit.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		noYDRnnTCIIqL6Qmnudg1l4y6Ik=
+		OdzgwqDm45iohH/hYvxFum0fU0I=
 		</data>
 		<key>Modules/FBSDKLoginKit.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		3o6LltKBbWn6/7S4LQoXF3I7iWw=
+		B3WyN8dCP3wOGxTsxc+GEvg43kk=
 		</data>
 		<key>Modules/FBSDKLoginKit.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		noYDRnnTCIIqL6Qmnudg1l4y6Ik=
-		</data>
-		<key>Modules/FBSDKLoginKit.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
-		<data>
-		wDNdHzLFj0UTI/2jtagqq36idAg=
+		OdzgwqDm45iohH/hYvxFum0fU0I=
 		</data>
 		<key>Modules/FBSDKLoginKit.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		nZrMu81f17IY8PcqRtdfBXUp9XA=
+		l0uNoQ0eeTUEOttlNk1ZozzuHVU=
 		</data>
 		<key>Modules/FBSDKLoginKit.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		SLKnubaQ0ox1U66bFeAbGh2t2mU=
+		skJNsZSomx0MJ7FyyAWRVdz3fHY=
 		</data>
 		<key>Modules/FBSDKLoginKit.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		7dJmu72Vwc3kWyZE9YiQarmD3mI=
+		uqJAomZsy5QONfUfDwE9BgT79ds=
 		</data>
 		<key>Modules/FBSDKLoginKit.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		SLKnubaQ0ox1U66bFeAbGh2t2mU=
-		</data>
-		<key>Modules/FBSDKLoginKit.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
-		<data>
-		4K+2IKuK72DRxytx+AWvmSG3UHs=
+		skJNsZSomx0MJ7FyyAWRVdz3fHY=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
 		KrDKcg24trXz/SqZuZkQjJYkUsc=
+		</data>
+		<key>PrivacyInfo.xcprivacy</key>
+		<data>
+		c/GhFel+DoHL4HradxiX7nIkOl4=
 		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
 		<key>Headers/FBSDKLoginAuthType.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			dbPjG4QiKnnxeSs+knOQIJW0JVg=
-			</data>
 			<key>hash2</key>
 			<data>
 			En8JspBXmCZrSWkWaxJV5tKzr8At6tqf53zIGNa2VYY=
@@ -92,10 +84,6 @@
 		</dict>
 		<key>Headers/FBSDKLoginCompletionParametersBlock.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			fPr6aC3BILzRqRBn1j6oocs3jMc=
-			</data>
 			<key>hash2</key>
 			<data>
 			7WGMXXull6LrlXHwbqyalo/ZMN0JSBtHbC6cWu8k2eI=
@@ -103,10 +91,6 @@
 		</dict>
 		<key>Headers/FBSDKLoginErrorDomain.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			cneem1mczyhnLYxbDjbbR5mEmzM=
-			</data>
 			<key>hash2</key>
 			<data>
 			zFgW2vVnY7X9MEoilZ5/3iQAYiab+N4zlq9kMvgkl/4=
@@ -114,21 +98,13 @@
 		</dict>
 		<key>Headers/FBSDKLoginKit-Swift.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			6ZAocDZc5rBFRDWH1CbFsBvYTvw=
-			</data>
 			<key>hash2</key>
 			<data>
-			Rhp8hd1k9YdH7KbFL4eSC7R4CAYqcUc+ANeC56yPfzo=
+			YREpiuiz7EWSbG7wUjtXLra9vwk+c+NoV1A3QAKE10Q=
 			</data>
 		</dict>
 		<key>Headers/FBSDKLoginKit.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			OUJgU2YPcKajMNRVhOXvWNOomHs=
-			</data>
 			<key>hash2</key>
 			<data>
 			8b6xB2UCDMQ82B5SNTD1CpaH+pyHg+K3Yy0MxzTdgTE=
@@ -136,10 +112,6 @@
 		</dict>
 		<key>Headers/FBSDKLoginManagerLoginResultBlock.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			hdGFhcZwp8w9OhQTkCmMyUDevXU=
-			</data>
 			<key>hash2</key>
 			<data>
 			Zb9GWGgaSc6xOtE0UsSlBLPOxWMfbTeNdSsr0fvIp74=
@@ -147,123 +119,72 @@
 		</dict>
 		<key>Modules/FBSDKLoginKit.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			nZrMu81f17IY8PcqRtdfBXUp9XA=
-			</data>
 			<key>hash2</key>
 			<data>
-			Hfke+UEIA3prKzLElhYu0Btd0xfkC/mFdbyfbsfkqxk=
+			DdCEWwjnUVyauuBIFLXVbuKMRRKFotxaCMuYbzhxOOY=
 			</data>
 		</dict>
 		<key>Modules/FBSDKLoginKit.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			noYDRnnTCIIqL6Qmnudg1l4y6Ik=
-			</data>
 			<key>hash2</key>
 			<data>
-			yshAbNoGcvAEPPU07gNrhGGMPIoCe0QlrqU9ybo/fZs=
+			BzXCfi7d+qlY4GfHrfz+1snYHR/lQp9nSXjkqaGk4WE=
 			</data>
 		</dict>
 		<key>Modules/FBSDKLoginKit.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			3o6LltKBbWn6/7S4LQoXF3I7iWw=
-			</data>
 			<key>hash2</key>
 			<data>
-			tWCjxQ3b9ocHknlIJMn1Lq9pXXAmk4UNfj3zZSOcLak=
+			io1GKpBZeFkr4ckxuzyYCtezbcYWv7Mdkxq8/qbNsak=
 			</data>
 		</dict>
 		<key>Modules/FBSDKLoginKit.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			noYDRnnTCIIqL6Qmnudg1l4y6Ik=
-			</data>
 			<key>hash2</key>
 			<data>
-			yshAbNoGcvAEPPU07gNrhGGMPIoCe0QlrqU9ybo/fZs=
-			</data>
-		</dict>
-		<key>Modules/FBSDKLoginKit.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			wDNdHzLFj0UTI/2jtagqq36idAg=
-			</data>
-			<key>hash2</key>
-			<data>
-			0QOv06VSwb+WzUyqpFIGDKgJ/Y6PaW70+acHG+ROleQ=
+			BzXCfi7d+qlY4GfHrfz+1snYHR/lQp9nSXjkqaGk4WE=
 			</data>
 		</dict>
 		<key>Modules/FBSDKLoginKit.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			nZrMu81f17IY8PcqRtdfBXUp9XA=
-			</data>
 			<key>hash2</key>
 			<data>
-			Hfke+UEIA3prKzLElhYu0Btd0xfkC/mFdbyfbsfkqxk=
+			DdCEWwjnUVyauuBIFLXVbuKMRRKFotxaCMuYbzhxOOY=
 			</data>
 		</dict>
 		<key>Modules/FBSDKLoginKit.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			SLKnubaQ0ox1U66bFeAbGh2t2mU=
-			</data>
 			<key>hash2</key>
 			<data>
-			es+y2vXtdj2KwqS5LfQnIbZnvciMPVCMyB+NltC4qpw=
+			55PqMsGSHEolxzHD7uyT2iFZxpyJY5NAMS4QtfGPfHc=
 			</data>
 		</dict>
 		<key>Modules/FBSDKLoginKit.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			7dJmu72Vwc3kWyZE9YiQarmD3mI=
-			</data>
 			<key>hash2</key>
 			<data>
-			PPM8TtWKr0YO8TEGTcpL8JMPt2FqtXnAchJK/reXzgk=
+			K/Zvo3mJvsBpp0AUR4DG6voSHlC7yZK4Vt/OzR1Hd6o=
 			</data>
 		</dict>
 		<key>Modules/FBSDKLoginKit.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			SLKnubaQ0ox1U66bFeAbGh2t2mU=
-			</data>
 			<key>hash2</key>
 			<data>
-			es+y2vXtdj2KwqS5LfQnIbZnvciMPVCMyB+NltC4qpw=
-			</data>
-		</dict>
-		<key>Modules/FBSDKLoginKit.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			4K+2IKuK72DRxytx+AWvmSG3UHs=
-			</data>
-			<key>hash2</key>
-			<data>
-			vnjTONfEJlY+cl65gVo/cd4HpbkF0KcvxYdn1rDn+/A=
+			55PqMsGSHEolxzHD7uyT2iFZxpyJY5NAMS4QtfGPfHc=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			KrDKcg24trXz/SqZuZkQjJYkUsc=
-			</data>
 			<key>hash2</key>
 			<data>
 			/LNPo6mK3Ap58ptMqxKbx/hlGBOSkSGDoDN3+CL3VlA=
+			</data>
+		</dict>
+		<key>PrivacyInfo.xcprivacy</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			V+yTPiE3CaHxIWdHy5KWEryxwgIcGAfRgIV8XZH0Qpc=
 			</data>
 		</dict>
 	</dict>

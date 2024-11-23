@@ -1,9 +1,11 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)
-// swift-module-flags: -target x86_64-apple-ios12.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name FBSDKCoreKit
-// swift-module-flags-ignorable: -enable-bare-slash-regex
+// swift-compiler-version: Apple Swift version 6.0 effective-5.10 (swiftlang-6.0.0.9.10 clang-1600.0.26.2)
+// swift-module-flags: -target x86_64-apple-ios12.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name FBSDKCoreKit
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface
 import AdSupport
+import AppTrackingTransparency
 import AuthenticationServices
+import CryptoKit
 import FBAEMKit
 @_exported import FBSDKCoreKit
 import FBSDKCoreKit_Basics
@@ -14,6 +16,7 @@ import Swift
 import UIKit
 import _Concurrency
 import _StringProcessing
+import _SwiftConcurrencyShims
 extension FBSDKCoreKit.AccessToken {
   public var permissions: Swift.Set<FBSDKCoreKit.Permission> {
     get
@@ -28,49 +31,45 @@ extension FBSDKCoreKit.AccessToken {
 }
 @objcMembers @objc(FBSDKAppLink) final public class AppLink : ObjectiveC.NSObject, FBSDKCoreKit._AppLinkProtocol {
   @objc final public let sourceURL: Foundation.URL?
-  @objc final public let targets: [FBSDKCoreKit.AppLinkTargetProtocol]
+  @objc final public let targets: [any FBSDKCoreKit.AppLinkTargetProtocol]
   @objc final public let webURL: Foundation.URL?
   @objc final public var isBackToReferrer: Swift.Bool
-  @objc(initWithSourceURL:targets:webURL:) convenience public init(sourceURL: Foundation.URL?, targets: [FBSDKCoreKit.AppLinkTargetProtocol], webURL: Foundation.URL?)
+  @objc(initWithSourceURL:targets:webURL:) convenience public init(sourceURL: Foundation.URL?, targets: [any FBSDKCoreKit.AppLinkTargetProtocol], webURL: Foundation.URL?)
   @available(*, deprecated, message: "Please use designated init to instantiate an AppLink. This method will be removed in future releases.\"")
-  @objc(appLinkWithSourceURL:targets:webURL:) public static func appLink(sourceURL: Foundation.URL?, targets: [FBSDKCoreKit.AppLinkTargetProtocol], webURL: Foundation.URL?) -> FBSDKCoreKit._AppLinkProtocol
-  @objc(initWithSourceURL:targets:webURL:isBackToReferrer:) public init(sourceURL: Foundation.URL?, targets: [FBSDKCoreKit.AppLinkTargetProtocol], webURL: Foundation.URL?, isBackToReferrer: Swift.Bool)
+  @objc(appLinkWithSourceURL:targets:webURL:) public static func appLink(sourceURL: Foundation.URL?, targets: [any FBSDKCoreKit.AppLinkTargetProtocol], webURL: Foundation.URL?) -> any FBSDKCoreKit._AppLinkProtocol
+  @objc(initWithSourceURL:targets:webURL:isBackToReferrer:) public init(sourceURL: Foundation.URL?, targets: [any FBSDKCoreKit.AppLinkTargetProtocol], webURL: Foundation.URL?, isBackToReferrer: Swift.Bool)
   @objc deinit
 }
 @available(iOSApplicationExtension, unavailable, message: "Not available in app extension")
 @objcMembers @objc(FBSDKAppLinkNavigation) final public class AppLinkNavigation : ObjectiveC.NSObject {
   @available(*, deprecated, message: "This property is deprecated and will be removed in the next major release. Use `defaultResolver` instead.")
-  @nonobjc public static var `default`: FBSDKCoreKit.AppLinkResolving {
+  @nonobjc public static var `default`: any FBSDKCoreKit.AppLinkResolving {
     get
     set
   }
-  @objc(defaultResolver) public static var defaultResolver: FBSDKCoreKit.AppLinkResolving {
+  @objc(defaultResolver) public static var defaultResolver: any FBSDKCoreKit.AppLinkResolving {
     @objc get
     @objc set
   }
   @objc final public let extras: [Swift.String : Any]
   @objc final public let appLinkData: [Swift.String : Any]
-  @objc final public let appLink: FBSDKCoreKit.AppLink
+  @objc final public let appLink: FBSDKCoreKit.AppLink?
   @objc final public var navigationType: FBSDKCoreKit.AppLinkNavigationType {
     @objc get
   }
-  @objc(initWithAppLink:extras:appLinkData:) public init(appLink: FBSDKCoreKit.AppLink, extras: [Swift.String : Any], appLinkData: [Swift.String : Any])
+  @objc(initWithAppLink:extras:appLinkData:) public init(appLink: FBSDKCoreKit.AppLink?, extras: [Swift.String : Any], appLinkData: [Swift.String : Any])
   @available(*, deprecated, message: "Please use init(appLink:extras:appLinkData:) to instantiate an `AppLinkNavigation`.\nThis method will be removed in the next major version.\"")
-  @objc(initWithAppLink:extras:appLinkData:settings:) convenience public init(appLink: FBSDKCoreKit.AppLink, extras: [Swift.String : Any], appLinkData: [Swift.String : Any], settings: FBSDKCoreKit.SettingsProtocol)
+  @objc(initWithAppLink:extras:appLinkData:settings:) convenience public init(appLink: FBSDKCoreKit.AppLink, extras: [Swift.String : Any], appLinkData: [Swift.String : Any], settings: any FBSDKCoreKit.SettingsProtocol)
   @available(*, deprecated, message: "Please use designated init to instantiate an AppLinkNavigation. This method will be removed in future releases.\"")
-  @objc(navigationWithAppLink:extras:appLinkData:settings:) public static func navigation(with appLink: FBSDKCoreKit.AppLink, extras: [Swift.String : Any], appLinkData: [Swift.String : Any], settings: FBSDKCoreKit.SettingsProtocol) -> FBSDKCoreKit.AppLinkNavigation
+  @objc(navigationWithAppLink:extras:appLinkData:settings:) public static func navigation(with appLink: FBSDKCoreKit.AppLink?, extras: [Swift.String : Any], appLinkData: [Swift.String : Any], settings: any FBSDKCoreKit.SettingsProtocol) -> FBSDKCoreKit.AppLinkNavigation
   @objc(callbackAppLinkDataForAppWithName:url:) public static func callbackAppLinkData(forApp appName: Swift.String, url: Swift.String) -> [Swift.String : [Swift.String : Swift.String]]
-  @available(swift, obsoleted: 0.1)
-  @objc(navigate:) final public func navigate(error errorPointer: Foundation.NSErrorPointer) -> FBSDKCoreKit.AppLinkNavigationType
-  @nonobjc final public func navigate() throws -> FBSDKCoreKit.AppLinkNavigationType
+  @objc(navigate:) final public func navigate(handler: FBSDKCoreKit.AppLinkNavigationBlock?)
   @objc(resolveAppLink:handler:) public static func resolveAppLink(_ destination: Foundation.URL, handler: @escaping FBSDKCoreKit.AppLinkBlock)
-  @objc(resolveAppLink:resolver:handler:) public static func resolveAppLink(_ destination: Foundation.URL, resolver: FBSDKCoreKit.AppLinkResolving, handler: @escaping FBSDKCoreKit.AppLinkBlock)
-  @available(swift, obsoleted: 0.1)
-  @objc(navigateToAppLink:error:) public static func navigate(to appLink: FBSDKCoreKit.AppLink, errorPointer: Foundation.ErrorPointer) -> FBSDKCoreKit.AppLinkNavigationType
-  @nonobjc public static func navigate(to appLink: FBSDKCoreKit.AppLink) throws -> FBSDKCoreKit.AppLinkNavigationType
+  @objc(resolveAppLink:resolver:handler:) public static func resolveAppLink(_ destination: Foundation.URL, resolver: any FBSDKCoreKit.AppLinkResolving, handler: @escaping FBSDKCoreKit.AppLinkBlock)
+  @objc(navigateToAppLink:handler:) public static func navigate(to appLink: FBSDKCoreKit.AppLink, handler: @escaping FBSDKCoreKit.AppLinkNavigationBlock)
   @objc(navigationTypeForLink:) public static func navigationType(for appLink: FBSDKCoreKit.AppLink) -> FBSDKCoreKit.AppLinkNavigationType
   @objc(navigateToURL:handler:) public static func navigate(to destination: Foundation.URL, handler: @escaping FBSDKCoreKit.AppLinkNavigationBlock)
-  @objc(navigateToURL:resolver:handler:) public static func navigate(to destination: Foundation.URL, resolver: FBSDKCoreKit.AppLinkResolving, handler: @escaping FBSDKCoreKit.AppLinkNavigationBlock)
+  @objc(navigateToURL:resolver:handler:) public static func navigate(to destination: Foundation.URL, resolver: any FBSDKCoreKit.AppLinkResolving, handler: @escaping FBSDKCoreKit.AppLinkNavigationBlock)
   @objc deinit
 }
 @_inheritsConvenienceInitializers @objcMembers @objc(FBSDKAppLinkResolver) final public class AppLinkResolver : ObjectiveC.NSObject, FBSDKCoreKit.AppLinkResolving {
@@ -102,8 +101,8 @@ extension FBSDKCoreKit.AccessToken {
   @objc(application:openURL:sourceApplication:annotation:) final public func application(_ application: UIKit.UIApplication, open url: Foundation.URL, sourceApplication: Swift.String?, annotation: Any?) -> Swift.Bool
   @objc @discardableResult
   final public func application(_ application: UIKit.UIApplication, didFinishLaunchingWithOptions launchOptions: [UIKit.UIApplication.LaunchOptionsKey : Any]? = nil) -> Swift.Bool
-  @objc final public func addObserver(_ observer: FBSDKCoreKit.FBSDKApplicationObserving)
-  @objc final public func removeObserver(_ observer: FBSDKCoreKit.FBSDKApplicationObserving)
+  @objc final public func addObserver(_ observer: any FBSDKCoreKit.FBSDKApplicationObserving)
+  @objc final public func removeObserver(_ observer: any FBSDKCoreKit.FBSDKApplicationObserving)
   @objc deinit
 }
 @_hasMissingDesignatedInitializers @objc(FBSDKAuthenticationTokenClaims) final public class AuthenticationTokenClaims : ObjectiveC.NSObject {
@@ -132,11 +131,11 @@ extension FBSDKCoreKit.AccessToken {
 }
 @objc(FBSDKCAPIReporter) public protocol CAPIReporter {
   @objc func enable()
-  @objc func configure(factory: FBSDKCoreKit.GraphRequestFactoryProtocol, settings: FBSDKCoreKit.SettingsProtocol)
+  @objc func configure(factory: any FBSDKCoreKit.GraphRequestFactoryProtocol, settings: any FBSDKCoreKit.SettingsProtocol)
   @objc func recordEvent(_ parameters: [Swift.String : Any])
 }
 @_inheritsConvenienceInitializers @objcMembers @objc final public class CoreUIApplication : ObjectiveC.NSObject {
-  @objc public static let shared: FBSDKCoreKit._InternalURLOpener
+  @objc public static let shared: any FBSDKCoreKit._InternalURLOpener
   @objc override dynamic public init()
   @objc deinit
 }
@@ -148,28 +147,28 @@ extension FBSDKCoreKit.AccessToken {
   @objc override dynamic public init()
   @objc deinit
 }
-@_inheritsConvenienceInitializers @objcMembers @objc(FBSDKProfilePictureView) @_Concurrency.MainActor(unsafe) final public class FBProfilePictureView : UIKit.UIView {
-  @objc @_Concurrency.MainActor(unsafe) final public var pictureMode: FBSDKCoreKit.Profile.PictureMode {
+@_inheritsConvenienceInitializers @objcMembers @objc(FBSDKProfilePictureView) @_Concurrency.MainActor @preconcurrency final public class FBProfilePictureView : UIKit.UIView {
+  @objc @_Concurrency.MainActor @preconcurrency final public var pictureMode: FBSDKCoreKit.Profile.PictureMode {
     @objc get
     @objc set
   }
-  @objc @_Concurrency.MainActor(unsafe) final public var profileID: Swift.String {
+  @objc @_Concurrency.MainActor @preconcurrency final public var profileID: Swift.String {
     @objc get
     @objc set
   }
-  @_Concurrency.MainActor(unsafe) @objc override final public var bounds: CoreFoundation.CGRect {
+  @_Concurrency.MainActor @preconcurrency @objc override final public var bounds: CoreFoundation.CGRect {
     @objc get
     @objc set
   }
-  @_Concurrency.MainActor(unsafe) @objc override final public var contentMode: UIKit.UIView.ContentMode {
+  @_Concurrency.MainActor @preconcurrency @objc override final public var contentMode: UIKit.UIView.ContentMode {
     @objc get
     @objc set
   }
-  @objc(initWith:profile:) @_Concurrency.MainActor(unsafe) public init(frame: CoreFoundation.CGRect, profile: FBSDKCoreKit.Profile? = nil)
-  @objc(initWithProfile:) @_Concurrency.MainActor(unsafe) convenience public init(profile: FBSDKCoreKit.Profile? = nil)
-  @objc(initWithFrame:) @_Concurrency.MainActor(unsafe) override dynamic public init(frame: CoreFoundation.CGRect)
-  @objc(initWithCoder:) @_Concurrency.MainActor(unsafe) required dynamic public init?(coder: Foundation.NSCoder)
-  @objc @_Concurrency.MainActor(unsafe) final public func setNeedsImageUpdate()
+  @objc(initWith:profile:) @_Concurrency.MainActor @preconcurrency public init(frame: CoreFoundation.CGRect, profile: FBSDKCoreKit.Profile? = nil)
+  @objc(initWithProfile:) @_Concurrency.MainActor @preconcurrency convenience public init(profile: FBSDKCoreKit.Profile? = nil)
+  @objc(initWithFrame:) @_Concurrency.MainActor @preconcurrency override dynamic public init(frame: CoreFoundation.CGRect)
+  @objc(initWithCoder:) @_Concurrency.MainActor @preconcurrency required dynamic public init?(coder: Foundation.NSCoder)
+  @objc @_Concurrency.MainActor @preconcurrency final public func setNeedsImageUpdate()
   @objc deinit
 }
 public typealias AppEventsCAPIManager = FBSDKCoreKit.FBSDKAppEventsCAPIManager
@@ -177,7 +176,7 @@ public typealias CAPIGBlock = (Swift.Bool) -> Swift.Void
 @objc @_inheritsConvenienceInitializers @objcMembers final public class FBSDKAppEventsCAPIManager : ObjectiveC.NSObject, FBSDKCoreKit.CAPIReporter {
   @objc public static let shared: FBSDKCoreKit.FBSDKAppEventsCAPIManager
   @objc override dynamic public init()
-  @objc final public func configure(factory: FBSDKCoreKit.GraphRequestFactoryProtocol, settings: FBSDKCoreKit.SettingsProtocol)
+  @objc final public func configure(factory: any FBSDKCoreKit.GraphRequestFactoryProtocol, settings: any FBSDKCoreKit.SettingsProtocol)
   @objc final public func enable()
   @objc final public func recordEvent(_ parameters: [Swift.String : Any])
   @objc deinit
@@ -199,7 +198,7 @@ public typealias CAPIGBlock = (Swift.Bool) -> Swift.Void
 }
 final public class KeychainStoreFactory : FBSDKCoreKit.KeychainStoreProviding {
   public init()
-  @objc final public func createKeychainStore(service: Swift.String, accessGroup: Swift.String?) -> FBSDKCoreKit.KeychainStoreProtocol
+  @objc final public func createKeychainStore(service: Swift.String, accessGroup: Swift.String?) -> any FBSDKCoreKit.KeychainStoreProtocol
   @objc deinit
 }
 @objc(FBSDKMACARuleMatching) public protocol MACARuleMatching {
@@ -306,13 +305,14 @@ extension FBSDKCoreKit.Profile : Foundation.NSSecureCoding {
   @objc final public let hometown: FBSDKCoreKit.Location?
   @objc final public let location: FBSDKCoreKit.Location?
   @objc final public let gender: Swift.String?
+  @objc final public let permissions: Swift.Set<Swift.String>?
   @objc public static var isUpdatedWithAccessTokenChange: Swift.Bool {
     @objc get
     @objc set
   }
-  @objc(initWithUserID:firstName:middleName:lastName:name:linkURL:refreshDate:) convenience public init(userID: FBSDKCoreKit.UserIdentifier, firstName: Swift.String?, middleName: Swift.String?, lastName: Swift.String?, name: Swift.String?, linkURL: Foundation.URL?, refreshDate: Foundation.Date?)
-  @objc(initWithUserID:firstName:middleName:lastName:name:linkURL:refreshDate:imageURL:email:friendIDs:birthday:ageRange:hometown:location:gender:) convenience public init(userID: FBSDKCoreKit.UserIdentifier, firstName: Swift.String? = nil, middleName: Swift.String? = nil, lastName: Swift.String? = nil, name: Swift.String? = nil, linkURL: Foundation.URL? = nil, refreshDate: Foundation.Date? = Date(), imageURL: Foundation.URL? = nil, email: Swift.String? = nil, friendIDs: [FBSDKCoreKit.UserIdentifier]? = nil, birthday: Foundation.Date? = nil, ageRange: FBSDKCoreKit.UserAgeRange? = nil, hometown: FBSDKCoreKit.Location? = nil, location: FBSDKCoreKit.Location? = nil, gender: Swift.String? = nil)
-  @objc(initWithUserID:firstName:middleName:lastName:name:linkURL:refreshDate:imageURL:email:friendIDs:birthday:ageRange:hometown:location:gender:isLimited:) public init(userID: FBSDKCoreKit.UserIdentifier, firstName: Swift.String?, middleName: Swift.String?, lastName: Swift.String?, name: Swift.String?, linkURL: Foundation.URL?, refreshDate: Foundation.Date?, imageURL: Foundation.URL?, email: Swift.String?, friendIDs: [FBSDKCoreKit.UserIdentifier]?, birthday: Foundation.Date?, ageRange: FBSDKCoreKit.UserAgeRange?, hometown: FBSDKCoreKit.Location?, location: FBSDKCoreKit.Location?, gender: Swift.String?, isLimited: Swift.Bool)
+  @objc(initWithUserID:firstName:middleName:lastName:name:linkURL:refreshDate:permissions:) convenience public init(userID: FBSDKCoreKit.UserIdentifier, firstName: Swift.String?, middleName: Swift.String?, lastName: Swift.String?, name: Swift.String?, linkURL: Foundation.URL?, refreshDate: Foundation.Date?, permissions: Swift.Set<Swift.String>? = nil)
+  @objc(initWithUserID:firstName:middleName:lastName:name:linkURL:refreshDate:imageURL:email:friendIDs:birthday:ageRange:hometown:location:gender:permissions:) convenience public init(userID: FBSDKCoreKit.UserIdentifier, firstName: Swift.String? = nil, middleName: Swift.String? = nil, lastName: Swift.String? = nil, name: Swift.String? = nil, linkURL: Foundation.URL? = nil, refreshDate: Foundation.Date? = Date(), imageURL: Foundation.URL? = nil, email: Swift.String? = nil, friendIDs: [FBSDKCoreKit.UserIdentifier]? = nil, birthday: Foundation.Date? = nil, ageRange: FBSDKCoreKit.UserAgeRange? = nil, hometown: FBSDKCoreKit.Location? = nil, location: FBSDKCoreKit.Location? = nil, gender: Swift.String? = nil, permissions: Swift.Set<Swift.String>? = nil)
+  @objc(initWithUserID:firstName:middleName:lastName:name:linkURL:refreshDate:imageURL:email:friendIDs:birthday:ageRange:hometown:location:gender:isLimited:permissions:) public init(userID: FBSDKCoreKit.UserIdentifier, firstName: Swift.String?, middleName: Swift.String?, lastName: Swift.String?, name: Swift.String?, linkURL: Foundation.URL?, refreshDate: Foundation.Date?, imageURL: Foundation.URL?, email: Swift.String?, friendIDs: [FBSDKCoreKit.UserIdentifier]?, birthday: Foundation.Date?, ageRange: FBSDKCoreKit.UserAgeRange?, hometown: FBSDKCoreKit.Location?, location: FBSDKCoreKit.Location?, gender: Swift.String?, isLimited: Swift.Bool, permissions: Swift.Set<Swift.String>? = nil)
   @available(*, deprecated, message: "This method is deprecated and will be removed in the next major release. Use `isUpdatedWithAccessTokenChange` instead.")
   @objc(enableUpdatesOnAccessTokenChange:) public static func enableUpdatesOnAccessTokenChange(_ enabled: Swift.Bool)
   @objc deinit
@@ -321,7 +321,14 @@ extension FBSDKCoreKit.Profile : Foundation.NSSecureCoding {
   @objc(currentProfile) static var current: FBSDKCoreKit.Profile? { get set }
   @objc static func fetchCachedProfile() -> FBSDKCoreKit.Profile?
 }
-public typealias LoginTooltipBlock = (FBSDKCoreKit.FBSDKLoginTooltip?, Swift.Error?) -> Swift.Void
+@_inheritsConvenienceInitializers @objc(FBSDKProtectedModeManager) final public class ProtectedModeManager : ObjectiveC.NSObject, FBSDKCoreKit._AppEventsParameterProcessing {
+  @objc final public func enable()
+  @objc final public func processParameters(_ parameters: [FBSDKCoreKit.AppEvents.ParameterName : Any]?, eventName: FBSDKCoreKit.AppEvents.Name?) -> [FBSDKCoreKit.AppEvents.ParameterName : Any]?
+  @objc public static func isProtectedModeApplied(parameters: [FBSDKCoreKit.AppEvents.ParameterName : Any]?) -> Swift.Bool
+  @objc override dynamic public init()
+  @objc deinit
+}
+public typealias LoginTooltipBlock = (FBSDKCoreKit.FBSDKLoginTooltip?, (any Swift.Error)?) -> Swift.Void
 public enum LoginTooltipError : Swift.Error {
   case missingTooltipText
   public static func == (a: FBSDKCoreKit.LoginTooltipError, b: FBSDKCoreKit.LoginTooltipError) -> Swift.Bool
@@ -433,6 +440,7 @@ extension FBSDKCoreKit.Settings {
   }
   @objc final public var isAdvertiserTrackingEnabled: Swift.Bool {
     @objc get
+    @available(*, deprecated, message: "The setAdvertiserTrackingEnabled flag is not used for FBSDK v17+ on iOS 17+ as the FBSDK v17+ now relies on ATTrackingManager.trackingAuthorizationStatus.")
     @objc set(isNewlyAllowed)
   }
   @objc final public var advertisingTrackingStatus: FBSDKCoreKit.AdvertisingTrackingStatus {
@@ -477,6 +485,7 @@ extension FBSDKCoreKit.Settings {
   @objc final public var graphAPIDebugParameterValue: Swift.String? {
     @objc get
   }
+  @objc final public var isDomainErrorEnabled: Swift.Bool
   @objc override dynamic public init()
   @objc deinit
 }
@@ -516,6 +525,7 @@ extension FBSDKCoreKit.Settings {
   @objc var isAdvertiserTrackingEnabled: Swift.Bool { get set }
   @objc var shouldUseCachedValuesForExpensiveMetadata: Swift.Bool { get set }
   @objc var persistableDataProcessingOptions: [FBSDKCoreKit.DataProcessingOptionKey.RawValue : Any]? { get }
+  @objc var isDomainErrorEnabled: Swift.Bool { get set }
   @objc func setDataProcessingOptions(_ options: [Swift.String]?)
   @objc func setDataProcessingOptions(_ options: [Swift.String]?, country: Swift.Int32, state: Swift.Int32)
 }
@@ -531,6 +541,13 @@ public struct ShareDialogConfiguration {
   public func shouldUseNativeDialog(forDialogName dialogName: Swift.String) -> Swift.Bool
   public func shouldUseSafariViewController(forDialogName dialogName: Swift.String) -> Swift.Bool
 }
+@_inheritsConvenienceInitializers @objcMembers @objc(FBSDKShimGraphRequestInterceptor) final public class ShimGraphRequestInterceptor : ObjectiveC.NSObject {
+  @objc public static let shared: FBSDKCoreKit.ShimGraphRequestInterceptor
+  @objc(shouldInterceptRequest:) final public func shouldInterceptRequest(_ request: Foundation.URLRequest) -> Swift.Bool
+  @objc(executeWithRequest:completionHandler:) final public func execute(request: Foundation.URLRequest, completionHandler: @escaping FBSDKCoreKit_Basics.UrlSessionTaskBlock)
+  @objc override dynamic public init()
+  @objc deinit
+}
 @objc(FBSDKAEMReporter) public protocol _AEMReporterProtocol {
   @objc static func enable()
   @objc(recordAndUpdateEvent:currency:value:parameters:) static func recordAndUpdate(event: Swift.String, currency: Swift.String?, value: Foundation.NSNumber?, parameters: [Swift.String : Any]?)
@@ -542,7 +559,7 @@ public struct ShareDialogConfiguration {
 extension FBAEMKit.AEMReporter : FBSDKCoreKit._AEMReporterProtocol {
 }
 @objcMembers @objc(_FBSDKAccessTokenExpirer) final public class _AccessTokenExpirer : ObjectiveC.NSObject, FBSDKCoreKit._AccessTokenExpiring {
-  @objc public init(notificationCenter: FBSDKCoreKit._NotificationPosting & FBSDKCoreKit_Basics.NotificationDelivering)
+  @objc public init(notificationCenter: any FBSDKCoreKit._NotificationPosting & FBSDKCoreKit_Basics.NotificationDelivering)
   @objc deinit
 }
 @objc(_FBSDKAccessTokenExpiring) public protocol _AccessTokenExpiring {
@@ -560,26 +577,26 @@ extension FBSDKCoreKit._BridgeAPI {
   @objc final public func application(_ application: UIKit.UIApplication, didFinishLaunchingWithOptions launchOptions: [UIKit.UIApplication.LaunchOptionsKey : Any]? = nil) -> Swift.Bool
 }
 extension FBSDKCoreKit._BridgeAPI {
-  @objc final public func open(_ url: Foundation.URL, sender: FBSDKCoreKit.URLOpening?, handler: @escaping FBSDKCoreKit.SuccessBlock)
-  @objc final public func open(_ request: FBSDKCoreKit.BridgeAPIRequestProtocol, useSafariViewController: Swift.Bool, from fromViewController: UIKit.UIViewController?, completionBlock: @escaping FBSDKCoreKit.BridgeAPIResponseBlock)
-  @objc final public func openURLWithSafariViewController(url: Foundation.URL, sender: FBSDKCoreKit.URLOpening?, from fromViewController: UIKit.UIViewController?, handler: @escaping FBSDKCoreKit.SuccessBlock)
+  @objc final public func open(_ url: Foundation.URL, sender: (any FBSDKCoreKit.URLOpening)?, handler: @escaping FBSDKCoreKit.SuccessBlock)
+  @objc final public func open(_ request: any FBSDKCoreKit.BridgeAPIRequestProtocol, useSafariViewController: Swift.Bool, from fromViewController: UIKit.UIViewController?, completionBlock: @escaping FBSDKCoreKit.BridgeAPIResponseBlock)
+  @objc final public func openURLWithSafariViewController(url: Foundation.URL, sender: (any FBSDKCoreKit.URLOpening)?, from fromViewController: UIKit.UIViewController?, handler: @escaping FBSDKCoreKit.SuccessBlock)
 }
 extension FBSDKCoreKit._BridgeAPI {
   @objc final public func safariViewControllerDidFinish(_ safariViewController: SafariServices.SFSafariViewController)
 }
 @available(iOS 13, *)
 extension FBSDKCoreKit._BridgeAPI : AuthenticationServices.ASWebAuthenticationPresentationContextProviding {
-  @objc final public func presentationAnchor(for session: AuthenticationServices.ASWebAuthenticationSession) -> AuthenticationServices.ASPresentationAnchor
+  @_Concurrency.MainActor @preconcurrency @objc final public func presentationAnchor(for session: AuthenticationServices.ASWebAuthenticationSession) -> AuthenticationServices.ASPresentationAnchor
 }
 @objcMembers @objc(FBSDKBridgeAPIProtocolNativeV1) final public class _BridgeAPIProtocolNativeV1 : ObjectiveC.NSObject, FBSDKCoreKit.BridgeAPIProtocol {
   @objc(initWithAppScheme:) convenience public init(appScheme: Swift.String?)
-  @objc(initWithAppScheme:pasteboard:dataLengthThreshold:includeAppIcon:) public init(appScheme: Swift.String?, pasteboard: FBSDKCoreKit._Pasteboard?, dataLengthThreshold: Swift.UInt, shouldIncludeAppIcon: Swift.Bool)
+  @objc(initWithAppScheme:pasteboard:dataLengthThreshold:includeAppIcon:) public init(appScheme: Swift.String?, pasteboard: (any FBSDKCoreKit._Pasteboard)?, dataLengthThreshold: Swift.UInt, shouldIncludeAppIcon: Swift.Bool)
   @objc deinit
   @objc final public func requestURL(actionID: Swift.String, scheme: Swift.String, methodName: Swift.String, parameters: [Swift.String : Any]) throws -> Foundation.URL
   @objc final public func responseParameters(actionID: Swift.String, queryParameters: [Swift.String : Any], cancelled cancelledRef: Swift.UnsafeMutablePointer<ObjectiveC.ObjCBool>?) throws -> [Swift.String : Any]
 }
 @_inheritsConvenienceInitializers @objcMembers @objc(FBSDKBridgeAPIRequestFactory) final public class _BridgeAPIRequestFactory : ObjectiveC.NSObject, FBSDKCoreKit.BridgeAPIRequestCreating {
-  @objc final public func bridgeAPIRequest(with protocolType: FBSDKCoreKit.FBSDKBridgeAPIProtocolType, scheme: Swift.String, methodName: Swift.String?, parameters: [Swift.String : Any]?, userInfo: [Swift.String : Any]? = nil) -> FBSDKCoreKit.BridgeAPIRequestProtocol?
+  @objc final public func bridgeAPIRequest(with protocolType: FBSDKCoreKit.FBSDKBridgeAPIProtocolType, scheme: Swift.String, methodName: Swift.String?, parameters: [Swift.String : Any]?, userInfo: [Swift.String : Any]? = nil) -> (any FBSDKCoreKit.BridgeAPIRequestProtocol)?
   @objc override dynamic public init()
   @objc deinit
 }
@@ -589,13 +606,13 @@ extension FBSDKCoreKit._BridgeAPI : AuthenticationServices.ASWebAuthenticationPr
   @objc deinit
 }
 @_inheritsConvenienceInitializers @objc(FBSDKErrorFactory) final public class _ErrorFactory : ObjectiveC.NSObject, FBSDKCoreKit.ErrorCreating {
-  @objc(errorWithCode:userInfo:message:underlyingError:) final public func error(code: Swift.Int, userInfo: [Swift.String : Any]? = nil, message: Swift.String?, underlyingError: Swift.Error?) -> Swift.Error
-  @objc(errorWithDomain:code:userInfo:message:underlyingError:) final public func error(domain: Swift.String, code: Swift.Int, userInfo: [Swift.String : Any]? = nil, message: Swift.String?, underlyingError: Swift.Error?) -> Swift.Error
-  @objc(invalidArgumentErrorWithName:value:message:underlyingError:) final public func invalidArgumentError(name: Swift.String, value: Any?, message: Swift.String?, underlyingError: Swift.Error?) -> Swift.Error
-  @objc(invalidArgumentErrorWithDomain:name:value:message:underlyingError:) final public func invalidArgumentError(domain: Swift.String, name: Swift.String, value: Any?, message: Swift.String?, underlyingError: Swift.Error?) -> Swift.Error
-  @objc(requiredArgumentErrorWithName:message:underlyingError:) final public func requiredArgumentError(name: Swift.String, message: Swift.String?, underlyingError: Swift.Error?) -> Swift.Error
-  @objc(requiredArgumentErrorWithDomain:name:message:underlyingError:) final public func requiredArgumentError(domain: Swift.String, name: Swift.String, message: Swift.String?, underlyingError: Swift.Error?) -> Swift.Error
-  @objc(unknownErrorWithMessage:userInfo:) final public func unknownError(message: Swift.String?, userInfo: [Swift.String : Any]? = nil) -> Swift.Error
+  @objc(errorWithCode:userInfo:message:underlyingError:) final public func error(code: Swift.Int, userInfo: [Swift.String : Any]? = nil, message: Swift.String?, underlyingError: (any Swift.Error)?) -> any Swift.Error
+  @objc(errorWithDomain:code:userInfo:message:underlyingError:) final public func error(domain: Swift.String, code: Swift.Int, userInfo: [Swift.String : Any]? = nil, message: Swift.String?, underlyingError: (any Swift.Error)?) -> any Swift.Error
+  @objc(invalidArgumentErrorWithName:value:message:underlyingError:) final public func invalidArgumentError(name: Swift.String, value: Any?, message: Swift.String?, underlyingError: (any Swift.Error)?) -> any Swift.Error
+  @objc(invalidArgumentErrorWithDomain:name:value:message:underlyingError:) final public func invalidArgumentError(domain: Swift.String, name: Swift.String, value: Any?, message: Swift.String?, underlyingError: (any Swift.Error)?) -> any Swift.Error
+  @objc(requiredArgumentErrorWithName:message:underlyingError:) final public func requiredArgumentError(name: Swift.String, message: Swift.String?, underlyingError: (any Swift.Error)?) -> any Swift.Error
+  @objc(requiredArgumentErrorWithDomain:name:message:underlyingError:) final public func requiredArgumentError(domain: Swift.String, name: Swift.String, message: Swift.String?, underlyingError: (any Swift.Error)?) -> any Swift.Error
+  @objc(unknownErrorWithMessage:userInfo:) final public func unknownError(message: Swift.String?, userInfo: [Swift.String : Any]? = nil) -> any Swift.Error
   @objc override dynamic public init()
   @objc deinit
 }
@@ -628,7 +645,7 @@ extension FBSDKCoreKit._BridgeAPI : AuthenticationServices.ASWebAuthenticationPr
   @objc deinit
 }
 @objc(FBSDKPaymentObserver) final public class _PaymentObserver : ObjectiveC.NSObject, FBSDKCoreKit._PaymentObserving {
-  @objc(initWithPaymentQueue:paymentProductRequestorFactory:) public init(paymentQueue: StoreKit.SKPaymentQueue, paymentProductRequestorFactory: FBSDKCoreKit._PaymentProductRequestorCreating)
+  @objc(initWithPaymentQueue:paymentProductRequestorFactory:) public init(paymentQueue: StoreKit.SKPaymentQueue, paymentProductRequestorFactory: any FBSDKCoreKit._PaymentProductRequestorCreating)
   @objc(startObservingTransactions) final public func startObservingTransactions()
   @objc(stopObservingTransactions) final public func stopObservingTransactions()
   @objc deinit
@@ -661,7 +678,7 @@ extension FBSDKCoreKit._PaymentObserver : StoreKit.SKPaymentTransactionObserver 
 }
 @objcMembers @objc(FBSDKWebDialog) final public class _WebDialog : ObjectiveC.NSObject {
   @objc final public var shouldDeferVisibility: Swift.Bool
-  @objc weak final public var delegate: FBSDKCoreKit.WebDialogDelegate?
+  @objc weak final public var delegate: (any FBSDKCoreKit.WebDialogDelegate)?
   @objc public init(name: Swift.String, parameters: [Swift.String : Swift.String]?, webViewFrame: CoreFoundation.CGRect = .zero, path: Swift.String? = nil)
   @objc convenience public init(name: Swift.String)
   @objc final public func show()
@@ -669,12 +686,12 @@ extension FBSDKCoreKit._PaymentObserver : StoreKit.SKPaymentTransactionObserver 
 }
 extension FBSDKCoreKit._WebDialog : FBSDKCoreKit.WebDialogViewDelegate {
   @objc final public func webDialogView(_ webDialogView: FBSDKCoreKit.FBWebDialogView, didCompleteWithResults results: [Swift.String : Any])
-  @objc final public func webDialogView(_ webDialogView: FBSDKCoreKit.FBWebDialogView, didFailWithError error: Swift.Error)
+  @objc final public func webDialogView(_ webDialogView: FBSDKCoreKit.FBWebDialogView, didFailWithError error: any Swift.Error)
   @objc final public func webDialogViewDidCancel(_ webDialogView: FBSDKCoreKit.FBWebDialogView)
   @objc final public func webDialogViewDidFinishLoad(_ webDialogView: FBSDKCoreKit.FBWebDialogView)
 }
 @_inheritsConvenienceInitializers @objcMembers @objc(FBSDKWebViewFactory) final public class _WebViewFactory : ObjectiveC.NSObject, FBSDKCoreKit._WebViewProviding {
-  @objc final public func createWebView(frame: CoreFoundation.CGRect) -> FBSDKCoreKit.WebView
+  @objc final public func createWebView(frame: CoreFoundation.CGRect) -> any FBSDKCoreKit.WebView
   @objc override dynamic public init()
   @objc deinit
 }
