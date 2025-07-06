@@ -294,11 +294,9 @@ To share more information, example:
 
 ```javascript
     var fb = require('facebook');
+    fb.initialize();
     fb.presentShareDialog({
         link: 'https://appcelerator.com/',
-        title: 'great product',
-        description: 'Titanium is a great product',
-        picture: 'http://www.appcelerator.com/wp-content/uploads/scale_triangle1.png'
     });
 ```
 
