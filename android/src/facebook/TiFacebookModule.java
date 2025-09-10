@@ -252,26 +252,6 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		return errorMessage;
 	}
 
-	// clang-format off
-	@Kroll.getProperty
-	@Kroll.method
-	public boolean getCanPresentShareDialog()
-	// clang-format on
-	{
-		Log.w(TAG, "The getCanPresentShareDialog property is deprecated. This always returns true.");
-		return true;
-	}
-
-	// clang-format off
-	@Kroll.getProperty
-	@Kroll.method
-	public boolean getCanPresentOpenGraphActionDialog()
-	// clang-format on
-	{
-		Log.w(TAG, "The getCanPresentOpenGraphActionDialog property is deprecated. This always returns true.");
-		return true;
-	}
-
 	@Kroll.method
 	public void requestWithGraphPath(String path, KrollDict params, String httpMethod, final KrollFunction callback)
 	{
@@ -540,13 +520,8 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 	}
 
 	@Kroll.method
-	public void initialize(@Kroll.argument(optional = true) int timeout)
+	public void initialize()
 	{
-		// Variable `timeout` is not used
-		// When not set, timeout is -1
-		if (timeout >= 0) {
-			Log.w(TAG, "Property `timeout` is deprecated. It is not used.");
-		}
 		callbackManager = CallbackManager.Factory.create();
 		facebookCallback = new FacebookCallback<LoginResult>() {
 			final KrollDict data = new KrollDict();
@@ -766,23 +741,8 @@ public class TiFacebookModule extends KrollModule implements OnActivityResultEve
 		Mode mode = Mode.AUTOMATIC;
 
 		String link = (String) args.get("link");
-		String title = (String) args.get("title");
-		String description = (String) args.get("description");
-		String picture = (String) args.get("picture");
 		String placeId = (String) args.get("placeId");
 		String ref = (String) args.get("ref");
-
-		if (title != null) {
-			Log.w(TAG, "Ti.Facebook.presentShareDialog.title has been deprecated as of the Graph v2.9 changes.");
-		}
-
-		if (description != null) {
-			Log.w(TAG, "Ti.Facebook.presentShareDialog.description has been deprecated as of the Graph v2.9 changes.");
-		}
-
-		if (picture != null) {
-			Log.w(TAG, "Ti.Facebook.presentShareDialog.picture has been deprecated as of the Graph v2.9 changes.");
-		}
 
 		switch (TiConvert.toInt(args.get("mode"), TiFacebookModule.SHARE_DIALOG_MODE_AUTOMATIC)) {
 			case TiFacebookModule.SHARE_DIALOG_MODE_NATIVE:
