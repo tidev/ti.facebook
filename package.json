@@ -67,7 +67,7 @@
     "tmp": "^0.2.5",
     "semver": "^7.7.3",
     "form-data": "^2.5.5",
-    "qs": "^6.15.1",
+    "qs": "^6.15.2",
     "xmldom": "npm:@xmldom/xmldom@^0.9.10"
   },
   "lint-staged": {
